@@ -29,6 +29,34 @@ ROOT = Path(__file__).parent.parent
 HIST_DIR = ROOT / "data" / "historical"
 HIST_DIR.mkdir(parents=True, exist_ok=True)
 
+
+def _load_dotenv(env_path: Path):
+    """Minimal .env loader — 파일에서 환경변수 로드 (이미 설정된 값은 보존).
+    프로젝트 루트 .env (Sixsense/.env)를 우선 사용.
+    """
+    if not env_path.exists():
+        return
+    for line in env_path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        k, v = k.strip(), v.strip()
+        # 따옴표 제거
+        if (v.startswith('"') and v.endswith('"')) or (v.startswith("'") and v.endswith("'")):
+            v = v[1:-1]
+        # 빈 값(또는 미설정)일 때만 .env로 덮어쓰기 — shell의 비어있는 변수 보호
+        if k and not os.environ.get(k):
+            os.environ[k] = v
+
+
+# 프로젝트 루트 .env 우선, 그 다음 backend/.env (legacy)
+_PROJECT_ROOT = ROOT.parent  # Sixsense/
+_load_dotenv(_PROJECT_ROOT / ".env")
+_load_dotenv(ROOT / ".env")  # backend/.env (있다면)
+
 START = "2025-05-01"
 END = "2026-04-30"
 START_D = date.fromisoformat(START)
