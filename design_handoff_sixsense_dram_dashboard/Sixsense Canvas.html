@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Sixsense · 14 화면 일람 (Design Canvas)</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: "Pretendard Variable", -apple-system, system-ui, sans-serif; }
+  body { overflow: hidden; }
+  .frame-iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .dc-card:hover .frame-iframe { pointer-events: auto; }
+  .screen-meta {
+    position: absolute; inset: auto 10px 10px 10px;
+    background: rgba(255,255,255,0.94);
+    padding: 8px 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+  }
+  .screen-meta .label {
+    display: block; font-family: "JetBrains Mono", monospace;
+    font-size: 10px; color: rgba(60,50,40,0.6); text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: 2px;
+  }
+  .screen-meta .purpose { color: rgba(40,30,20,0.85); line-height: 1.45; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+
+// Each artboard hosts an iframe deep-linked to Sixsense.html
+const ScreenFrame = ({ params, purpose }) => {
+  const qs = new URLSearchParams(params).toString();
+  const src = `Sixsense.html?${qs}`;
+  return (
+    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", background: "#fafaf8" }}>
+      <iframe className="frame-iframe" src={src} />
+      {purpose && (
+        <div className="screen-meta">
+          <span className="label">목적</span>
+          <div className="purpose">{purpose}</div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SCREENS = [
+  // S-001 — main dashboard (full-bleed)
+  { id: "s001", label: "S-001 · 메인 대시보드", w: 1480, h: 1900, params: { screen: "S-001" },
+    purpose: "현재가·예측·14개 신호·구리 영향도·이벤트·예측 정확도를 한 화면에서 통합 조회 — 모든 다른 화면의 진입점", section: "메인" },
+
+  // S-002 modal
+  { id: "s002a", label: "S-002 · AI 예측 근거 (1~7주)", w: 1080, h: 1100, params: { screen: "S-001", modal: "S-002", horizon: 7 },
+    purpose: "1~7주 예측의 신호별 기여도·신뢰구간·주별 예측값·AI 종합 판단 + HITL 임계치 조정", section: "예측 근거" },
+  { id: "s002b", label: "S-002 · AI 예측 근거 (8~21주)", w: 1080, h: 1100, params: { screen: "S-001", modal: "S-002", horizon: 21 },
+    purpose: "중장기 21주 예측의 신호 기여도와 신뢰구간 — 단기 대비 신뢰도 74%로 다소 낮음", section: "예측 근거" },
+
+  // S-003 modal
+  { id: "s003-A4", label: "S-003 · Group A 정형 (A-4 재고/출하)", w: 1080, h: 1200, params: { screen: "S-001", modal: "S-003", tab: "A-4" },
+    purpose: "A-4 재고지수 102.4 → Red Alert. 28주 추이 + 월별 원본 데이터 + AI 해석", section: "신호 상세" },
+  { id: "s003-A7", label: "S-003 · Group A 정형 (A-7 구리)", w: 1080, h: 1200, params: { screen: "S-001", modal: "S-003", tab: "A-7" },
+    purpose: "A-7 구리 가격 +8.3%. Graph RAG (S-005) 진입 동선 포함", section: "신호 상세" },
+
+  // S-004 modal
+  { id: "s004-B4", label: "S-004 · Group B 비정형 (B-4 지정학)", w: 1080, h: 1200, params: { screen: "S-001", modal: "S-004", tab: "B-4" },
+    purpose: "B-4 지정학 −0.68 (위험). 주간 뉴스 볼륨 + 탐지 기사 목록", section: "신호 상세" },
+  { id: "s004-B1", label: "S-004 · Group B 비정형 (B-1 Earnings Call)", w: 1080, h: 1200, params: { screen: "S-001", modal: "S-004", tab: "B-1" },
+    purpose: "B-1 Earnings Call +0.81. 메모리 4사 실적콜 감성 분석 8주 추이", section: "신호 상세" },
+
+  // S-005
+  { id: "s005", label: "S-005 · Graph RAG 구리↔DRAM", w: 1080, h: 1100, params: { screen: "S-001", modal: "S-005" },
+    purpose: "구리 vs DRAM 상관계수 +0.72, 최적 선행 시차 10주. 인과관계 경로 (PCB·패키징·DC 투자)", section: "분석" },
+
+  // S-006 page
+  { id: "s006", label: "S-006 · AI 뉴스 분석 전체 목록", w: 1480, h: 1200, params: { screen: "S-006" },
+    purpose: "이번 주 수집 28건 — 영향도·신뢰도·발행일순 정렬, 출처/판정별 필터", section: "뉴스" },
+
+  // S-007 modal
+  { id: "s007", label: "S-007 · 뉴스 원문 & 분석", w: 1080, h: 1100, params: { screen: "S-001", modal: "S-007", newsIdx: 0 },
+    purpose: "개별 뉴스의 AI 요약 + 단기/중기/장기 DRAM 영향 분석 + 연결 신호", section: "뉴스" },
+
+  // S-008 page
+  { id: "s008", label: "S-008 · 거시경제 지표 통합", w: 1480, h: 1100, params: { screen: "S-008", tab: "fed" },
+    purpose: "미국 금리·DXY·PMI·USD/KRW·구리 5개 지표 통합 — 탭 전환", section: "거시경제" },
+
+  // S-009 modal (past week)
+  { id: "s009", label: "S-009 · 주별 신호 스냅샷", w: 1080, h: 1200, params: { screen: "S-001", modal: "S-009", week: -3 },
+    purpose: "차트의 특정 주 클릭 시 그 시점 14개 신호 상태와 예측값·실제값 비교", section: "분석" },
+
+  // S-010 page
+  { id: "s010", label: "S-010 · 글로벌 이벤트 전체", w: 1480, h: 1100, params: { screen: "S-010" },
+    purpose: "전쟁·지진·파업 등 9건 — 위험도별 필터, 영향 방향 (공급↓·수요↑) 표시", section: "이벤트" },
+
+  // S-011 modal
+  { id: "s011", label: "S-011 · 이벤트 개별 상세", w: 1080, h: 1100, params: { screen: "S-001", modal: "S-011", eventIdx: 0 },
+    purpose: "BIS 수출규제 등 이벤트 AI 요약 + 단/중/장기 DRAM 영향 + 영향 받는 신호", section: "이벤트" },
+
+  // S-012 page
+  { id: "s012", label: "S-012 · 예측 정확도 전체 이력", w: 1480, h: 1100, params: { screen: "S-012" },
+    purpose: "AI 예측 누적 MAPE 5.8% — 회차별 예측·실제·오차율 추이", section: "정확도" },
+
+  // S-013 modal
+  { id: "s013", label: "S-013 · 당시 신호 vs 현재 신호", w: 1080, h: 1200, params: { screen: "S-001", modal: "S-013", rowIdx: 5 },
+    purpose: "특정 예측 회차의 14개 신호 — 당시값/판정 vs 현재값/판정 비교 + 오차 원인 AI 분석", section: "정확도" },
+
+  // S-014 page
+  { id: "s014", label: "S-014 · 데이터 수집 현황", w: 1480, h: 900, params: { screen: "S-014" },
+    purpose: "14개 신호별 이번 주 수집 결과 — 출처·일시·신규건수·전주 대비·상태", section: "데이터 운영" },
+];
+
+const SECTIONS = [
+  { id: "main",     title: "01 · 메인",        subtitle: "Server DRAM Price Intelligence 진입점" },
+  { id: "forecast", title: "02 · 예측 근거",   subtitle: "AI 예측의 투명성 — 신호별 기여도 & 신뢰구간" },
+  { id: "signals",  title: "03 · 신호 상세",   subtitle: "14개 프록시 신호의 정형/비정형 데이터 심층 분석" },
+  { id: "graphrag", title: "04 · Graph RAG",  subtitle: "선행지표 상관관계와 인과관계 경로 분석" },
+  { id: "news",     title: "05 · 뉴스",        subtitle: "AI 감성 분석 — 영향도 우선" },
+  { id: "macro",    title: "06 · 거시경제",    subtitle: "DRAM에 영향 주는 5개 거시 변수" },
+  { id: "events",   title: "07 · 글로벌 이벤트", subtitle: "전쟁·지진·파업 등 공급망 리스크 모니터링" },
+  { id: "accuracy", title: "08 · 예측 정확도",  subtitle: "투명한 모델 검증 — MAPE 추적" },
+  { id: "ops",      title: "09 · 데이터 운영",  subtitle: "주간 수집 사이클 가시화" },
+];
+
+const SECTION_MAP = {
+  "메인": "main",
+  "예측 근거": "forecast",
+  "신호 상세": "signals",
+  "분석": null, // depending on screen
+  "뉴스": "news",
+  "거시경제": "macro",
+  "이벤트": "events",
+  "정확도": "accuracy",
+  "데이터 운영": "ops",
+};
+
+function App() {
+  const Art = (s) => (
+    <DCArtboard id={s.id} label={s.label} width={s.w} height={s.h}>
+      <ScreenFrame params={s.params} purpose={s.purpose} />
+    </DCArtboard>
+  );
+
+  return (
+    <DesignCanvas
+      title="Sixsense · 14 화면 일람"
+      subtitle="Server DRAM Price 식스센스 — Strategy/Planning 팀용 — 클릭하여 인터랙션, 전체보기는 우상단 ↗"
+      defaultScale={0.32}
+    >
+      <DCSection id="main" title="01 · 메인 대시보드" subtitle="모든 다른 화면의 진입점 (S-001)">
+        {Art(SCREENS[0])}
+      </DCSection>
+
+      <DCSection id="forecast" title="02 · AI 예측 근거 (S-002)" subtitle="단기 7주 / 중장기 21주 두 탭으로 구성">
+        {Art(SCREENS[1])}
+        {Art(SCREENS[2])}
+      </DCSection>
+
+      <DCSection id="signals" title="03 · 14개 신호 상세 (S-003 / S-004)" subtitle="정형 7종 + 비정형 7종 — 탭 전환으로 모든 신호 접근">
+        {Art(SCREENS[3])}
+        {Art(SCREENS[4])}
+        {Art(SCREENS[5])}
+        {Art(SCREENS[6])}
+      </DCSection>
+
+      <DCSection id="graphrag" title="04 · Graph RAG · 주별 스냅샷 (S-005 / S-009)" subtitle="선행지표 상관관계 + 과거 시점 14개 신호 재현">
+        {Art(SCREENS[7])}
+        {Art(SCREENS[11])}
+      </DCSection>
+
+      <DCSection id="news" title="05 · 뉴스 (S-006 / S-007)" subtitle="전체 목록 + 개별 기사 AI 분석">
+        {Art(SCREENS[8])}
+        {Art(SCREENS[9])}
+      </DCSection>
+
+      <DCSection id="macro" title="06 · 거시경제 (S-008)" subtitle="미국 금리·DXY·PMI·USD/KRW·구리">
+        {Art(SCREENS[10])}
+      </DCSection>
+
+      <DCSection id="events" title="07 · 글로벌 이벤트 (S-010 / S-011)" subtitle="공급망 리스크 모니터링">
+        {Art(SCREENS[12])}
+        {Art(SCREENS[13])}
+      </DCSection>
+
+      <DCSection id="accuracy" title="08 · 예측 정확도 (S-012 / S-013)" subtitle="투명한 모델 검증 — 당시 신호와 비교">
+        {Art(SCREENS[14])}
+        {Art(SCREENS[15])}
+      </DCSection>
+
+      <DCSection id="ops" title="09 · 데이터 수집 운영 (S-014)" subtitle="주간 자동 수집 사이클 가시화">
+        {Art(SCREENS[16])}
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
+</body>
+</html>
