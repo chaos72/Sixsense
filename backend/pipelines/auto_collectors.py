@@ -337,15 +337,15 @@ def collect_B3_reddit():
 # A-3 관세청 수출 — KCS_API_KEY 필요
 # ──────────────────────────────────────────────────────────────────────────────
 def collect_A3_kcs():
-    """관세청 무역통계 API (data.go.kr) — HS 854231 (메모리 IC) 월별 수출액.
+    """관세청 무역통계 API (data.go.kr) — HS 854232 (메모리) 월별 수출액.
 
     엔드포인트: https://apis.data.go.kr/1220000/Itemtrade/getItemtradeList
-    파라미터:
-      - serviceKey: data.go.kr 인증키
-      - strtYymm: YYYYMM 시작
-      - endYymm:  YYYYMM 끝
-      - hsSgn:    HS 코드 (예: 854231 = 메모리 IC)
-      - type:     'json' or 'xml' (기본 XML)
+    HS 코드 정정 (관세청조회코드 Excel 기준):
+      - 854231 = 프로세서/컨트롤러 (잘못된 코드, 이전에 사용)
+      - 854232 = 메모리 ← 정확
+      - 8542321010 = 디램 (DRAM) ← 가장 세부
+    파라미터 정정:
+      - imexTpcd: 수출입구분 (1=수출, 2=수입)
     """
     key = need_env("KCS_API_KEY", "https://www.data.go.kr (활용신청 → Itemtrade 서비스)")
     base_url = os.getenv("KCS_API_URL", "https://apis.data.go.kr/1220000/Itemtrade")
@@ -362,7 +362,8 @@ def collect_A3_kcs():
                 "serviceKey": key,
                 "strtYymm": ym,
                 "endYymm": ym,
-                "hsSgn": "854231",
+                "hsSgn": "854232",     # 메모리 (이전 854231=프로세서 오류)
+                "imexTpcd": "1",       # 수출 (이전 expoImpoTp 잘못된 파라미터명)
                 "type": "json",
             }
             try:
@@ -405,7 +406,7 @@ def collect_A3_kcs():
             "data.go.kr 마이페이지에서 Itemtrade 서비스 활성화 상태 확인 필요."
         )
     data = monthly_to_weekly(monthly)
-    return data, "real", f"관세청 data.go.kr Itemtrade HS 854231 월간 수출 ({len(monthly)}개월)"
+    return data, "real", f"관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 ({len(monthly)}개월, USD)"
 
 
 # ──────────────────────────────────────────────────────────────────────────────
