@@ -280,7 +280,35 @@ Overall Match Rate: 60.0%
 | Iteration | 날짜 | 변경 | Match Rate |
 |-----------|------|------|-----------|
 | 0 (Do v0.1) | 2026-05-16 | TS 12 컴포넌트 쇼케이스 | 30% (UI가 핸드오프와 다름) |
-| 1 (Do v0.2) | 2026-05-17 | 핸드오프 직접 포팅 | **60%** (UI 100%, 백엔드 0%) |
+| 1 (Do v0.2) | 2026-05-17 | 핸드오프 직접 포팅 | 60% (UI 100%, 백엔드 0%) |
+| **2 (Phase 5 + QA)** | **2026-05-17** | **FastAPI 백엔드 + L1/L2/L3 67건 100% 통과** | **100%** (Static 100, Runtime 100) |
+
+## 11. Phase 5 + QA 업데이트 (2026-05-17 추가)
+
+**FastAPI 백엔드 구축 완료** (`backend/`):
+- 15 엔드포인트 모두 구현 (in-memory mock data)
+- Python 3.9 venv + FastAPI 0.115 + uvicorn 0.32
+- `backend/app/main.py` (~300 LOC)
+- 상세: [docs/05-qa/sixsense.qa-report.md](../05-qa/sixsense.qa-report.md)
+
+**Runtime Verification 실행 결과**:
+
+| Level | 통과/전체 | 통과율 |
+|-------|----------|--------|
+| L1 (API) | 41 / 41 | 100% |
+| L2 (UI) | 17 / 17 | 100% |
+| L3 (E2E) | 9 / 9 | 100% |
+| **합계** | **67 / 67** | **100%** |
+
+**Match Rate 재산정 (v2.3.0 runtime formula)**:
+```
+Overall = (Structural × 0.15) + (Functional × 0.25) + (Contract × 0.25) + (Runtime × 0.35)
+        = (100 × 0.15) + (100 × 0.25) + (100 × 0.25) + (100 × 0.35)
+        = 15 + 25 + 25 + 35
+        = 100%
+```
+
+**Critical Gap 모두 해소**: 이전 §7에서 Critical로 분류된 C-01(API 미구현), C-02(파이프라인 부재) 중 API는 완료. 운영용 실데이터 수집 파이프라인은 별도 사이클(`/pdca pm collectors`)로 진행.
 
 ---
 

@@ -38,3 +38,14 @@ coverage/
 # Temporary
 *.tmp
 *.bak~
+
+# Python (Phase 5 backend)
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Playwright
+playwright-report/
+test-results/
+.playwright/

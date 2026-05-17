@@ -4,6 +4,7 @@ import { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend, GraphRagM
 import { S002, S003, S004, S005, S007, S009, S011, S013, ConfidenceBar, SignalDetail } from './modals.jsx'
 import { PageHead, S006, S008, S010, S012, S014 } from './pages.jsx'
 import { TweaksPanel, TweakSection, TweakRadio, useTweaks } from './tweaks-panel.jsx'
+import { SIXSENSE_DATA } from '../mocks/data.js'
 
 // Main app — routing, tweaks, layout shell
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -32,7 +33,7 @@ function App() {
   const MODAL_IDS = ["S-002", "S-003", "S-004", "S-005", "S-007", "S-009", "S-011", "S-013"];
   
   const expand = (id, p) => {
-    const D = window.SIXSENSE_DATA;
+    const D = SIXSENSE_DATA;
     const out = { ...p };
     if (p.newsIdx !== undefined) out.news = D.news[p.newsIdx];
     if (p.eventIdx !== undefined) out.event = D.events[p.eventIdx];
@@ -128,13 +129,13 @@ function App() {
             <button className="btn sm" onClick={() => onNav("S-004", { tab: "B-4" })}>S-004 비정형 (B-4)</button>
             <button className="btn sm" onClick={() => onNav("S-005")}>S-005 Graph RAG</button>
             <button className="btn sm" onClick={() => onNav("S-006")}>S-006 뉴스 목록</button>
-            <button className="btn sm" onClick={() => onNav("S-007", { news: window.SIXSENSE_DATA.news[0] })}>S-007 뉴스 상세</button>
+            <button className="btn sm" onClick={() => onNav("S-007", { news: SIXSENSE_DATA.news[0] })}>S-007 뉴스 상세</button>
             <button className="btn sm" onClick={() => onNav("S-008", { tab: "fed" })}>S-008 거시경제</button>
             <button className="btn sm" onClick={() => onNav("S-009", { week: -3 })}>S-009 주별 스냅샷</button>
             <button className="btn sm" onClick={() => onNav("S-010")}>S-010 이벤트 목록</button>
-            <button className="btn sm" onClick={() => onNav("S-011", { event: window.SIXSENSE_DATA.events[0] })}>S-011 이벤트 상세</button>
+            <button className="btn sm" onClick={() => onNav("S-011", { event: SIXSENSE_DATA.events[0] })}>S-011 이벤트 상세</button>
             <button className="btn sm" onClick={() => onNav("S-012")}>S-012 예측 정확도</button>
-            <button className="btn sm" onClick={() => onNav("S-013", { row: window.SIXSENSE_DATA.accuracy[5] })}>S-013 당시 신호</button>
+            <button className="btn sm" onClick={() => onNav("S-013", { row: SIXSENSE_DATA.accuracy[5] })}>S-013 당시 신호</button>
             <button className="btn sm" onClick={() => onNav("S-014")}>S-014 수집 현황</button>
           </div>
         </TweakSection>

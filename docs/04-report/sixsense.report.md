@@ -307,9 +307,26 @@ open design_handoff_sixsense_dram_dashboard/Sixsense.html
 
 ---
 
+## 9.5 Phase 5 + QA 업데이트 (2026-05-17 추가)
+
+**Phase 5 백엔드 + L1/L2/L3 런타임 테스트 완료**:
+
+| 항목 | 결과 |
+|------|------|
+| FastAPI 백엔드 | ✅ 15 엔드포인트 + HITL 큐 + Validation (in-memory) |
+| L1 API 테스트 | ✅ 41/41 통과 (~5s) |
+| L2 UI Action 테스트 | ✅ 17/17 통과 (14.6s, Playwright) |
+| L3 E2E 시나리오 | ✅ 9/9 통과 (16.2s, 페르소나 + HITL 통합) |
+| Match Rate (Runtime formula) | **100%** (Structural+Functional+Contract+Runtime 모두 100%) |
+| 발견 이슈 | 4건 모두 해결, 잔여 critical 0건 |
+
+상세: [docs/05-qa/sixsense.qa-report.md](../05-qa/sixsense.qa-report.md)
+
+이로써 본 사이클은 **MVP → 검증된 시스템**으로 발전. 운영 배포까지의 잔여 작업은 인증/실DB/실데이터 수집기뿐 (Phase 6 분기).
+
 ## 10. 결론
 
-본 PDCA 사이클은 **프론트엔드 MVP 완성**과 **bkit PDCA 워크플로우 전 단계 수행 검증**이라는 두 목표를 달성했다.
+본 PDCA 사이클은 **프론트엔드 MVP + 백엔드 API + L1/L2/L3 100% 통과** 및 **bkit PDCA 전체 단계 수행 검증**이라는 두 목표를 달성했다.
 
 **핵심 성과**:
 1. ✅ 14화면 hifi UI를 핸드오프와 시각적으로 100% 동일하게 구현
