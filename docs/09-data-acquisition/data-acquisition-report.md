@@ -1,6 +1,6 @@
-# Sixsense Data Acquisition Report — 최신 상태 (v0.4)
+# Sixsense Data Acquisition Report — 최신 상태 (v0.5)
 
-> **Summary**: 정형 7 + 비정형 7 + 거시 5 + 타겟 1 = 20개 신호 중 **16개 자동 수집 완료 (80%)**.
+> **Summary**: 정형 7 + 비정형 7 + 거시 5 + 타겟 1 = 20개 신호 중 **17개 자동 수집 완료 (85%)**.
 > Prophet 학습/예측 + 사후 검증 MAPE 7.54% 유지.
 >
 > **Date**: 2026-05-17 (v0.4 — Phase 5e 진행 중 누적 업데이트)
@@ -21,7 +21,7 @@
 | | A-6 대만 침공 확률 | Manifold Markets API | ✅ **52주** | real | Phase 5e ⭐ |
 | | A-7 구리 선물 | Yahoo Finance HG=F | ✅ **53주** | real | Phase 5c |
 | **비정형 (Group B)** | B-1 Earnings Call | (Anthropic 크레딧 충전 + PDF 코드) | ⏸ 대기 | — | — |
-| | B-2 GDELT 뉴스 | (GCP BigQuery credentials) | ⏸ 대기 | — | — |
+| | B-2 대만 뉴스 sentiment | **TechNews.tw + Digitimes RSS** (feedparser + 키워드) | ✅ **1주+** (RSS는 최근 분량, 매주 누적) | real | Phase 5e ⭐ |
 | | B-3 Reddit/HN | Hacker News Algolia 대체 | ✅ **53주** | real | Phase 5e |
 | | B-4 지정학 리스크 GPR | Caldara & Iacoviello GPR Index | ✅ **53주** | real | Phase 5e |
 | | B-5 LTA 비율 | (Anthropic + PDF 코드) | ⏸ 대기 | — | — |
@@ -43,9 +43,10 @@
 | 5e A-4 KOSIS | +1 | 13 (65%) | KOSIS_FULL_URL |
 | 5e A-3 관세청 | +1 | 14 (70%) | Excel 코드표 정정 |
 | 5e A-5 AWS | +1 | 15 (75%) | boto3 + IAM 키 |
-| **5e A-6 Manifold** ⭐ | **+1** | **16 (80%)** | **Polymarket/Metaculus 대안** |
+| 5e A-6 Manifold | +1 | 16 (80%) | Polymarket/Metaculus 대안 |
+| **5e B-2 RSS** ⭐ | **+1** | **17 (85%)** | **TechNews.tw + Digitimes feedparser** |
 
-→ **현재 자동 수집 16/20 (80%)**
+→ **현재 자동 수집 17/20 (85%)**
 
 ---
 
@@ -95,22 +96,12 @@
 
 ## 3. 미수집 4개 — 다음 액션
 
-### B-2 GDELT BigQuery (가장 빠른 추가 후보)
+### B-2 — ✅ RSS 방식으로 해결됨 (GCP 불필요)
 
-**상태**: 코드 + verify 스크립트 준비 완료, GCP credentials만 필요
-
-```bash
-# 진단 (현재 상태 즉시 확인)
-cd backend
-.venv/bin/python3 pipelines/verify_b2_gcp.py
-```
-
-**사용자 액션** (15분):
-1. console.cloud.google.com 가입 + 결제카드
-2. Service Account 생성 → BigQuery Data Viewer + Job User
-3. JSON 키 다운로드 → `~/.config/gcp/sixsense-bq.json`
-4. `.env`에 `GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcp/sixsense-bq.json`
-5. `.venv/bin/python3 pipelines/auto_collectors.py B-2`
+**현재 작동**: TechNews.tw + Digitimes RSS 4개 피드 + 키워드 sentiment.
+- 매주 cron 실행으로 누적 → 1년 차에 완전 history
+- 초기 backfill은 RSS 한계로 최근 4~30일만
+- GCP 사용 시 대안: `pipelines/verify_b2_gcp.py` 진단 도구 + `collect_B2_gdelt_bq()` 함수 별도 보존
 
 ### B-1 / B-5 / B-6 (Anthropic + PDF — 3개 한번에)
 

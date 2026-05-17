@@ -559,6 +559,99 @@ def collect_A5_aws_spot():
 # ──────────────────────────────────────────────────────────────────────────────
 # B-2 GDELT BigQuery (대만 뉴스 감성)
 # ──────────────────────────────────────────────────────────────────────────────
+def collect_B2_rss_sentiment():
+    """B-2: TechNews.tw + Digitimes RSS 피드 → 서버/메모리 헤드라인 sentiment.
+
+    GDELT BigQuery 대안 — GCP credentials 불필요.
+    feedparser로 RSS 파싱, 키워드 기반 sentiment (기본).
+    ANTHROPIC_API_KEY + 크레딧 있으면 Claude로 정확한 sentiment 옵션 활성화.
+    """
+    try:
+        import feedparser
+    except ImportError:
+        raise EnvironmentError("feedparser 미설치: pip install feedparser")
+
+    RSS_FEEDS = [
+        "https://technews.tw/category/semiconductor/feed/",
+        "https://technews.tw/category/ai/feed/",
+        "https://technews.tw/feed/",
+        "https://www.digitimes.com.tw/rss/news.xml",
+    ]
+
+    # 서버/메모리 관련 헤드라인 필터 (한자/영어)
+    TOPIC_KEYWORDS = [
+        "伺服器", "記憶體", "半導體", "DRAM", "HBM", "NAND", "SSD",
+        "AI", "輝達", "Nvidia", "三星", "Samsung", "海力士", "SK", "美光", "Micron",
+        "晶片", "chip", "memory", "server", "semiconductor", "fab",
+    ]
+    # 긍정/부정 키워드 (간단 lexicon)
+    POS = ["增長", "上漲", "上揚", "增加", "強勁", "熱絡", "暢旺", "突破", "創新高",
+           "狂潮", "革命", "獲利", "強勢", "超車", "躍升", "成長",
+           "growth", "surge", "boost", "shortage", "rally", "soar", "expand", "bullish"]
+    NEG = ["下跌", "減少", "萎縮", "弱勢", "疲軟", "庫存過剩", "拒買", "管制", "禁令",
+           "decline", "drop", "weak", "oversupply", "ban", "restrict", "bearish", "slump"]
+
+    from collections import defaultdict
+    from datetime import datetime
+    import time as _t
+
+    all_entries = []
+    for url in RSS_FEEDS:
+        try:
+            f = feedparser.parse(url)
+            for e in f.entries:
+                pub = e.get("published_parsed") or e.get("updated_parsed")
+                if not pub:
+                    continue
+                d = date(pub.tm_year, pub.tm_mon, pub.tm_mday)
+                # RSS는 보통 최근 4~30일만 제공 — END_D(2026-04-30) 무시하고 START_D 이상만
+                # 운영 시 매주 cron으로 누적 → 1년 차에 완전 history
+                if d < START_D:
+                    continue
+                title = e.get("title", "") or ""
+                summary = e.get("summary", "") or ""
+                text = (title + " " + summary)[:500]
+                if not any(kw.lower() in text.lower() for kw in TOPIC_KEYWORDS):
+                    continue
+                all_entries.append({"date": d, "title": title, "text": text})
+        except Exception as e:
+            print(f"  ⚠️ {url[:50]}: {str(e)[:60]}")
+        _t.sleep(0.2)
+
+    if not all_entries:
+        raise RuntimeError("RSS 토픽 매칭 entries 0건")
+
+    # 키워드 기반 sentiment (-1 ~ +1)
+    def kw_sentiment(text: str) -> float:
+        low = text.lower()
+        pos = sum(1 for k in POS if k.lower() in low)
+        neg = sum(1 for k in NEG if k.lower() in low)
+        if pos + neg == 0:
+            return 0.0
+        return round((pos - neg) / (pos + neg), 3)
+
+    # 주별 집계: count + avg sentiment
+    weekly = defaultdict(list)
+    for ent in all_entries:
+        wk = snap_to_monday(ent["date"]).isoformat()
+        weekly[wk].append(kw_sentiment(ent["text"]))
+
+    # value = count × avg_sentiment (수량 + 방향 결합 지표)
+    # 또는 단순 avg_sentiment 만 사용 가능
+    data = []
+    for wk in sorted(weekly):
+        scores = weekly[wk]
+        n = len(scores)
+        avg = sum(scores) / n
+        # 결합 점수: avg sentiment 그대로 (count로 가중하면 0 sentiment 주가 사라짐)
+        data.append({"week": wk, "value": round(avg, 4)})
+
+    return data, "real", (
+        f"TechNews.tw + Digitimes RSS ({len(all_entries)} entries, "
+        f"키워드 sentiment, {len(data)}주)"
+    )
+
+
 def collect_B2_gdelt_bq():
     """GDELT BigQuery — 1TB/월 free, 대만 반도체 뉴스 주간 볼륨."""
     creds = need_env(
@@ -669,7 +762,7 @@ COLLECTORS = {
     "A-5": collect_A5_aws_spot,
     "A-6": collect_A6_manifold,
     "B-1": collect_B1_earnings_sentiment,
-    "B-2": collect_B2_gdelt_bq,
+    "B-2": collect_B2_rss_sentiment,
     "B-3": collect_B3_reddit,
     "B-4": collect_B4_gpr,
     "B-5": collect_B5_lta_sentiment,

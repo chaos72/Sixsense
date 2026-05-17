@@ -1,0 +1,15 @@
+{
+  "signalId": "B-2",
+  "source": "TechNews.tw + Digitimes RSS (166 entries, \ud0a4\uc6cc\ub4dc sentiment, 1\uc8fc)",
+  "mode": "real",
+  "collectedAt": "2026-05-17",
+  "rangeStart": "2026-05-11",
+  "rangeEnd": "2026-05-11",
+  "note": "Auto-collected via auto_collectors.py",
+  "data": [
+    {
+      "week": "2026-05-11",
+      "value": 0.2289
+    }
+  ]
+}
