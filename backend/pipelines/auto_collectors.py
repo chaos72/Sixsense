@@ -571,12 +571,31 @@ def collect_B2_rss_sentiment():
     except ImportError:
         raise EnvironmentError("feedparser 미설치: pip install feedparser")
 
+    # 1. Topic-specific RSS (대만 기술 매체)
     RSS_FEEDS = [
         "https://technews.tw/category/semiconductor/feed/",
         "https://technews.tw/category/ai/feed/",
         "https://technews.tw/feed/",
         "https://www.digitimes.com.tw/rss/news.xml",
     ]
+    # 2. Google News RSS 검색 (메모리/반도체 키워드, 키 불필요)
+    GOOGLE_NEWS_QUERIES = [
+        ("Taiwan semiconductor", "en"),
+        ("DRAM memory price", "en"),
+        ("HBM Nvidia", "en"),
+        ("Samsung memory", "en"),
+        ("SK Hynix HBM", "en"),
+        ("Micron DRAM", "en"),
+        ("AI server memory demand", "en"),
+        ("半導體 台灣", "zh-TW"),
+        ("記憶體 DRAM", "zh-TW"),
+    ]
+    for q, lang in GOOGLE_NEWS_QUERIES:
+        url = (
+            f"https://news.google.com/rss/search?"
+            f"q={q.replace(' ', '+')}&hl={lang}-US&gl=US&ceid=US:{lang.split('-')[0]}"
+        )
+        RSS_FEEDS.append(url)
 
     # 서버/메모리 관련 헤드라인 필터 (한자/영어)
     TOPIC_KEYWORDS = [
@@ -647,7 +666,7 @@ def collect_B2_rss_sentiment():
         data.append({"week": wk, "value": round(avg, 4)})
 
     return data, "real", (
-        f"TechNews.tw + Digitimes RSS ({len(all_entries)} entries, "
+        f"TechNews.tw + Digitimes + Google News RSS ({len(all_entries)} entries, "
         f"키워드 sentiment, {len(data)}주)"
     )
 
@@ -695,62 +714,192 @@ SKHYNIX_IR_URLS = ["https://www.skhynix.com/eng/ir/earningsRelease.do"]
 MICRON_IR_URLS = ["https://investors.micron.com/financial-information/quarterly-results"]
 
 
-def _claude_sentiment(text: str, prompt_topic: str) -> float:
-    """Claude API로 텍스트의 sentiment 점수 (-1 ~ +1) 추출."""
-    api_key = need_env("ANTHROPIC_API_KEY", "https://console.anthropic.com (즉시 발급, 종량제)")
-    headers = {
-        "x-api-key": api_key,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-    }
+def _llm_sentiment(text: str, prompt_topic: str) -> float:
+    """LLM 기반 sentiment (-1~+1). 우선순위: Anthropic → Gemini → Groq.
+    셋 다 키 없으면 EnvironmentError.
+    """
     prompt = (
         f"다음 텍스트는 메모리 반도체 회사의 IR 자료다. {prompt_topic}에 대한 sentiment를 "
         f"-1 (매우 부정) ~ +1 (매우 긍정) 사이 한 개의 숫자로만 답변하라. 다른 설명 금지.\n\n"
         f"<text>\n{text[:8000]}\n</text>"
     )
-    body = {
-        "model": "claude-haiku-4-5-20251001",
-        "max_tokens": 32,
-        "messages": [{"role": "user", "content": prompt}],
-    }
-    r = requests.post("https://api.anthropic.com/v1/messages", headers=headers, json=body, timeout=60)
-    r.raise_for_status()
-    j = r.json()
-    txt = j["content"][0]["text"].strip()
-    m = re.search(r"-?\d+\.?\d*", txt)
-    if not m:
-        return 0.0
-    val = float(m.group())
-    return max(-1.0, min(1.0, val))
+
+    # ── 1순위: Anthropic Claude (크레딧 있을 때) ──
+    anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
+    if anthropic_key:
+        try:
+            r = requests.post(
+                "https://api.anthropic.com/v1/messages",
+                headers={
+                    "x-api-key": anthropic_key,
+                    "anthropic-version": "2023-06-01",
+                    "content-type": "application/json",
+                },
+                json={
+                    "model": "claude-haiku-4-5-20251001",
+                    "max_tokens": 32,
+                    "messages": [{"role": "user", "content": prompt}],
+                },
+                timeout=60,
+            )
+            if r.status_code == 200:
+                txt = r.json()["content"][0]["text"].strip()
+                m = re.search(r"-?\d+\.?\d*", txt)
+                if m:
+                    return max(-1.0, min(1.0, float(m.group())))
+            elif r.status_code == 400 and "credit balance" in r.text.lower():
+                print(f"    Anthropic 크레딧 부족 → Gemini fallback")
+        except Exception as e:
+            print(f"    Anthropic 실패, fallback: {str(e)[:50]}")
+
+    # ── 2순위: Google Gemini (무료 1500 req/day) ──
+    gemini_key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
+    if gemini_key:
+        try:
+            r = requests.post(
+                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
+                headers={"Content-Type": "application/json"},
+                json={
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {"maxOutputTokens": 32, "temperature": 0.0},
+                },
+                timeout=60,
+            )
+            if r.status_code == 200:
+                txt = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+                m = re.search(r"-?\d+\.?\d*", txt)
+                if m:
+                    return max(-1.0, min(1.0, float(m.group())))
+            else:
+                print(f"    Gemini HTTP {r.status_code}: {r.text[:120]}")
+        except Exception as e:
+            print(f"    Gemini 실패, fallback: {str(e)[:50]}")
+
+    # ── 3순위: Groq (무료 14400 req/day) ──
+    groq_key = os.getenv("GROQ_API_KEY", "")
+    if groq_key:
+        try:
+            r = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
+                json={
+                    "model": "llama-3.3-70b-versatile",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 32,
+                    "temperature": 0.0,
+                },
+                timeout=60,
+            )
+            if r.status_code == 200:
+                txt = r.json()["choices"][0]["message"]["content"].strip()
+                m = re.search(r"-?\d+\.?\d*", txt)
+                if m:
+                    return max(-1.0, min(1.0, float(m.group())))
+        except Exception as e:
+            print(f"    Groq 실패: {str(e)[:50]}")
+
+    raise EnvironmentError(
+        "LLM sentiment API 키 미설정 또는 모두 실패.\n"
+        "다음 중 하나를 .env에 추가 (모두 무료):\n"
+        "  - GEMINI_API_KEY=... (https://ai.google.dev — 무료 1500 req/day, 권장)\n"
+        "  - GROQ_API_KEY=...   (https://console.groq.com — 무료 14400 req/day)\n"
+        "  - ANTHROPIC_API_KEY=... + Billing 크레딧 (https://console.anthropic.com)"
+    )
+
+
+# Backwards-compat alias
+_claude_sentiment = _llm_sentiment
+
+
+def _collect_ir_news_sentiment(prompt_topic: str, source_label: str) -> tuple[list[dict], str, str]:
+    """B-1/B-5/B-6 공통 파이프라인: Google News에서 메모리社 IR/실적 헤드라인 → LLM sentiment.
+    PDF 다운로드 + 추출은 회사별 IR 페이지 구조가 자주 바뀌어 불안정 → 뉴스 헤드라인으로 우회.
+    """
+    import feedparser
+    from collections import defaultdict
+    from datetime import datetime
+
+    # 메모리社 실적/IR 뉴스 검색
+    queries = [
+        f"Samsung memory {prompt_topic}",
+        f"SK Hynix {prompt_topic}",
+        f"Micron {prompt_topic}",
+    ]
+    entries = []
+    for q in queries:
+        url = f"https://news.google.com/rss/search?q={q.replace(' ', '+')}&hl=en-US&gl=US&ceid=US:en"
+        f = feedparser.parse(url)
+        for e in f.entries[:60]:
+            pub = e.get("published_parsed") or e.get("updated_parsed")
+            if not pub:
+                continue
+            d = date(pub.tm_year, pub.tm_mon, pub.tm_mday)
+            if d < START_D:
+                continue
+            entries.append({
+                "date": d,
+                "text": ((e.get("title") or "") + " " + (e.get("summary") or ""))[:600],
+            })
+        time.sleep(0.3)
+
+    if not entries:
+        raise RuntimeError(f"{source_label} 뉴스 entries 0건")
+
+    # 주별 그룹 → 주당 1~2개 대표 entries만 LLM 호출 (rate 한도 보호)
+    weekly_text = defaultdict(list)
+    for ent in entries:
+        wk = snap_to_monday(ent["date"]).isoformat()
+        weekly_text[wk].append(ent["text"])
+
+    weekly_score = []
+    n_llm_calls = 0
+    for wk in sorted(weekly_text):
+        texts = weekly_text[wk]
+        # 주별 헤드라인 5개 합쳐서 1회 호출
+        combined = "\n---\n".join(texts[:5])
+        try:
+            score = _llm_sentiment(combined, prompt_topic)
+            n_llm_calls += 1
+            weekly_score.append({"week": wk, "value": round(score, 4)})
+        except EnvironmentError:
+            # 키 전혀 없으면 keyword fallback
+            POS = ["growth", "surge", "boost", "demand", "expand", "increase", "strong", "record"]
+            NEG = ["decline", "drop", "weak", "fall", "cut", "decrease", "loss", "miss"]
+            low = combined.lower()
+            pos = sum(1 for k in POS if k in low)
+            neg = sum(1 for k in NEG if k in low)
+            score = 0.0 if pos+neg==0 else (pos-neg)/(pos+neg)
+            weekly_score.append({"week": wk, "value": round(score, 4)})
+
+    mode = "real" if n_llm_calls > 0 else "real-keyword"
+    src = f"Google News '{source_label}' ({len(entries)} entries, "
+    src += f"LLM {n_llm_calls}회 호출, {len(weekly_score)}주)" if n_llm_calls > 0 \
+        else f"키워드 fallback, {len(weekly_score)}주)"
+    return weekly_score, mode, src
 
 
 def collect_B1_earnings_sentiment():
-    """분기 IR PDF → Claude 감성 점수 → 주간 forward-fill.
-    실제 PDF 다운로드 + 텍스트 추출 + Claude 호출이 필요.
-    아래는 스켈레톤 + 환경변수 안내만 (구현 시 PyPDF2 + 분기 일정 + 호출).
-    """
-    _ = need_env("ANTHROPIC_API_KEY", "https://console.anthropic.com")
-    raise NotImplementedError(
-        "B-1 자동화 단계:\n"
-        "  1. PyPDF2/pypdf 설치 (pip install pypdf)\n"
-        "  2. Samsung/SK Hynix/Micron 분기 IR 페이지 스크래핑 → PDF URL 추출\n"
-        "  3. requests.get으로 PDF 다운로드 → pypdf로 텍스트 추출\n"
-        "  4. _claude_sentiment(text, '메모리 가격 전망') 호출 (분기당 3사 = 12회)\n"
-        "  5. 분기 점수를 13주에 forward-fill\n"
-        "구현 시 backend/pipelines/auto_collectors.py에 _fetch_ir_pdfs() + 본 함수 확장."
+    """B-1: 메모리社 실적 발표 sentiment (Google News + LLM)."""
+    return _collect_ir_news_sentiment(
+        prompt_topic="quarterly earnings memory pricing outlook",
+        source_label="Earnings Call sentiment",
     )
 
 
 def collect_B5_lta_sentiment():
-    """B-1과 동일한 IR PDF 파이프라인 — '장기 계약 비율' 추출."""
-    _ = need_env("ANTHROPIC_API_KEY", "https://console.anthropic.com")
-    raise NotImplementedError("B-5는 B-1 IR PDF 파이프라인 재사용 + Claude 프롬프트 변경. B-1 구현 후.")
+    """B-5: LTA (장기 계약) 비율 관련 뉴스 sentiment."""
+    return _collect_ir_news_sentiment(
+        prompt_topic="long-term agreement LTA contract memory supply ratio",
+        source_label="LTA ratio",
+    )
 
 
 def collect_B6_hbm_mix():
-    """B-1과 동일 + Claude 프롬프트 'HBM 매출 비중'."""
-    _ = need_env("ANTHROPIC_API_KEY", "https://console.anthropic.com")
-    raise NotImplementedError("B-6는 B-1 IR PDF 파이프라인 재사용. B-1 구현 후.")
+    """B-6: HBM 매출 비중 관련 뉴스 sentiment."""
+    return _collect_ir_news_sentiment(
+        prompt_topic="HBM revenue mix share growth high bandwidth memory",
+        source_label="HBM mix",
+    )
 
 
 # ──────────────────────────────────────────────────────────────────────────────

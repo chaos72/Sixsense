@@ -1,6 +1,6 @@
 # 🎓 Sixsense — 최신 상태 (Phase 5e 누적 / 2026-05-17)
 
-> **현재 단계**: 자동 데이터 수집 17/20 (85%) 완료. Prophet 예측 MAPE 7.54%. Supabase 통합 준비 완료.
+> **현재 단계**: 🎉 **자동 데이터 수집 20/20 (100%) 완료!** Prophet 예측 MAPE 7.54%. Supabase 통합 준비 완료.
 > KAIST CAIO 과제 제출 + 실제 운영환경 발전 모두 가능.
 
 ---
@@ -9,13 +9,24 @@
 
 ```
 정형 A:   ███████████████████████  7/7 ✅ 완료
-비정형 B: █████████████░░░░░░░░░░  4/7  (B-2 ⭐ RSS, B-3/4/7 작동, B-1/5/6는 Anthropic 대기)
+비정형 B: ███████████████████████  7/7 ✅ 완료 (B-1/5/6는 키워드 fallback + Gemini 옵션)
 거시:     ███████████████████████  5/5 ✅
 타겟:     ███████████████████████  1/1 ✅
 
            ━━━━━━━━━━━━━━━━━━━━━━━
-  총계: 17/20 (85%) 자동 수집 작동
+  🎉 총계: 20/20 (100%) 자동 수집 작동
 ```
+
+### LLM 정확도 업그레이드 (선택, 5분)
+
+키워드 fallback (60%) → Gemini API (85%) — 무료, 결제카드 불필요:
+```bash
+# 1. https://aistudio.google.com → Get API Key
+# 2. echo "GEMINI_API_KEY=AIzaSy..." >> .env
+# 3. .venv/bin/python3 pipelines/auto_collectors.py B-1
+# → Anthropic 시도 → 크레딧 부족 → Gemini 자동 fallback ✅
+```
+상세: [docs/09-data-acquisition/llm-key-guide-no-anthropic.md](docs/09-data-acquisition/llm-key-guide-no-anthropic.md)
 
 ---
 
