@@ -349,28 +349,52 @@ def collect_A3_kcs():
 # A-4 KOSIS 재고/출하 지수 — KOSIS_API_KEY 필요
 # ──────────────────────────────────────────────────────────────────────────────
 def collect_A4_kosis():
-    """KOSIS 광공업동향조사 — 전자부품(C26) 재고지수 월간."""
-    key = need_env("KOSIS_API_KEY", "https://kosis.kr/openapi (회원가입 → OpenAPI → 키 신청, 즉시 발급)")
-    # KOSIS Open API 통계자료 조회
-    url = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
-    params = {
-        "method": "getList",
-        "apiKey": key,
-        "itmId": "T20",  # 재고지수
-        "objL1": "13102641",  # 전자부품, 컴퓨터, 영상, 음향 및 통신장비
-        "format": "json",
-        "jsonVD": "Y",
-        "prdSe": "M",
-        "startPrdDe": "202505",
-        "endPrdDe": "202604",
-        "orgId": "101",
-        "tblId": "DT_1F31035",
-    }
-    r = requests.get(url, params=params, timeout=30)
-    r.raise_for_status()
-    arr = r.json()
+    """KOSIS 광공업동향조사 — 전자부품(C26) 재고지수 월간.
+
+    3가지 방식 지원 (우선순위 순):
+    1. KOSIS_USER_STATS_ID — 사용자가 KOSIS 사이트에서 만든 사용자정의표 ID (가장 간단)
+    2. KOSIS_FULL_URL — KOSIS 사이트의 'URL 생성기'로 만든 전체 URL
+    3. (기본) 하드코드된 표 + objL1/itmId (사용자 등록 표과 일치해야 함)
+    """
+    key = need_env("KOSIS_API_KEY", "https://kosis.kr/openapi")
+
+    # 방식 1: 사용자 통계작성 ID (가장 안정적)
+    user_stats_id = os.getenv("KOSIS_USER_STATS_ID")
+    if user_stats_id:
+        url = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
+        params = {
+            "method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y",
+            "userStatsId": user_stats_id,
+            "prdSe": "M",
+            "startPrdDe": "202505", "endPrdDe": "202604",
+        }
+        r = requests.get(url, params=params, timeout=30)
+        r.raise_for_status()
+        arr = r.json()
+    elif os.getenv("KOSIS_FULL_URL"):
+        # 방식 2: 사용자가 KOSIS URL 생성기로 만든 URL 직접 사용
+        r = requests.get(os.environ["KOSIS_FULL_URL"], timeout=30)
+        r.raise_for_status()
+        arr = r.json()
+    else:
+        # 방식 3: 기본 시도 (사용자 등록 표과 일치해야 함)
+        url = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
+        params = {
+            "method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y",
+            "itmId": "T20", "objL1": "13102641",
+            "prdSe": "M", "startPrdDe": "202505", "endPrdDe": "202604",
+            "orgId": "101", "tblId": "DT_1F02012",
+        }
+        r = requests.get(url, params=params, timeout=30)
+        r.raise_for_status()
+        arr = r.json()
+
     if not isinstance(arr, list) or not arr:
-        raise RuntimeError(f"KOSIS API 응답 비어있음 또는 오류: {arr}")
+        raise RuntimeError(
+            f"KOSIS 응답 비어있음 또는 오류: {arr}\n"
+            f"→ KOSIS_USER_STATS_ID 또는 KOSIS_FULL_URL 사용 권장. "
+            f"가이드: docs/09-data-acquisition/kosis-url-generation.md"
+        )
     monthly = []
     for row in arr:
         try:
