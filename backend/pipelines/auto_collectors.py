@@ -337,40 +337,75 @@ def collect_B3_reddit():
 # A-3 관세청 수출 — KCS_API_KEY 필요
 # ──────────────────────────────────────────────────────────────────────────────
 def collect_A3_kcs():
-    """관세청 무역통계 API — HS 854231 (메모리 IC) 월별 수출액."""
-    key = need_env("KCS_API_KEY", "https://unipass.customs.go.kr/ets (가입 → 마이페이지 → OpenAPI 키 신청)")
-    url = "https://unipass.customs.go.kr/ets/hmpg/ets/ats/imAtsReportAjax.do"
+    """관세청 무역통계 API (data.go.kr) — HS 854231 (메모리 IC) 월별 수출액.
+
+    엔드포인트: https://apis.data.go.kr/1220000/Itemtrade/getItemtradeList
+    파라미터:
+      - serviceKey: data.go.kr 인증키
+      - strtYymm: YYYYMM 시작
+      - endYymm:  YYYYMM 끝
+      - hsSgn:    HS 코드 (예: 854231 = 메모리 IC)
+      - type:     'json' or 'xml' (기본 XML)
+    """
+    key = need_env("KCS_API_KEY", "https://www.data.go.kr (활용신청 → Itemtrade 서비스)")
+    base_url = os.getenv("KCS_API_URL", "https://apis.data.go.kr/1220000/Itemtrade")
+    full_url = f"{base_url}/getItemtradeList"
     monthly = []
-    for ym_int in range(202505, 202613):
-        if (ym_int % 100) > 12:
-            continue
-        ym = str(ym_int)
-        params = {
-            "crkyCn": key,
-            "hsSgn": "854231",
-            "expoImpoTp": "1",  # 1=수출
-            "strtYymm": ym,
-            "endYymm": ym,
-        }
-        try:
-            r = requests.get(url, params=params, timeout=30)
-            r.raise_for_status()
-            # 관세청 XML 응답
-            from xml.etree import ElementTree as ET
-            root = ET.fromstring(r.text)
-            for item in root.iter("item"):
-                amt_el = item.find("expDlr")
-                if amt_el is not None and amt_el.text:
-                    d = date(int(ym[:4]), int(ym[4:]), 1)
-                    monthly.append((d, float(amt_el.text)))
-                    break
-        except Exception as e:
-            print(f"  ⚠️ {ym} 실패: {str(e)[:50]}")
-        time.sleep(0.3)
+    for year in (2025, 2026):
+        for month in range(1, 13):
+            if year == 2025 and month < 5:
+                continue
+            if year == 2026 and month > 4:
+                break
+            ym = f"{year}{month:02d}"
+            params = {
+                "serviceKey": key,
+                "strtYymm": ym,
+                "endYymm": ym,
+                "hsSgn": "854231",
+                "type": "json",
+            }
+            try:
+                r = requests.get(full_url, params=params, timeout=30)
+                if r.status_code == 401:
+                    raise RuntimeError(
+                        f"data.go.kr 401 Unauthorized — 다음 중 하나일 가능성:\n"
+                        f"  (1) Itemtrade 서비스 활용신청 미승인 (data.go.kr 마이페이지 확인)\n"
+                        f"  (2) 신청 후 활성화 대기 중 (보통 1~2시간 소요)\n"
+                        f"  (3) encoding/decoding 키 혼동 — 마이페이지에서 두 종류 확인"
+                    )
+                r.raise_for_status()
+                # JSON 응답 우선 시도
+                try:
+                    j = r.json()
+                    items = j.get("response", {}).get("body", {}).get("items", {}).get("item", [])
+                    if isinstance(items, dict):
+                        items = [items]
+                    if items:
+                        amt = float(items[0].get("expDlr", 0))
+                        d = date(year, month, 1)
+                        monthly.append((d, amt))
+                except (ValueError, KeyError):
+                    # XML fallback
+                    from xml.etree import ElementTree as ET
+                    root = ET.fromstring(r.text)
+                    for item in root.iter("item"):
+                        amt_el = item.find("expDlr")
+                        if amt_el is not None and amt_el.text:
+                            monthly.append((date(year, month, 1), float(amt_el.text)))
+                            break
+            except RuntimeError:
+                raise
+            except Exception as e:
+                print(f"  ⚠️ {ym} 실패: {str(e)[:80]}")
+            time.sleep(0.3)
     if not monthly:
-        raise RuntimeError("관세청 API 호출 결과 비어있음. 키 유효성 확인 필요.")
+        raise RuntimeError(
+            "관세청 API 응답에서 데이터 추출 실패. "
+            "data.go.kr 마이페이지에서 Itemtrade 서비스 활성화 상태 확인 필요."
+        )
     data = monthly_to_weekly(monthly)
-    return data, "real", "관세청 무역통계 API HS 854231 월간 수출액 (USD)"
+    return data, "real", f"관세청 data.go.kr Itemtrade HS 854231 월간 수출 ({len(monthly)}개월)"
 
 
 # ──────────────────────────────────────────────────────────────────────────────
