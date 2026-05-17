@@ -1,7 +1,7 @@
 {
   "signalId": "B-5",
-  "source": "Google News 'LTA ratio' (28 entries, \ud0a4\uc6cc\ub4dc fallback, 9\uc8fc)",
-  "mode": "real-keyword",
+  "source": "Google News 'LTA ratio' (28 entries, LLM 1\ud68c \ud638\ucd9c, 9\uc8fc)",
+  "mode": "real",
   "collectedAt": "2026-05-17",
   "rangeStart": "2025-12-08",
   "rangeEnd": "2026-05-11",
@@ -9,7 +9,7 @@
   "data": [
     {
       "week": "2025-12-08",
-      "value": 0.0
+      "value": 0.8
     },
     {
       "week": "2025-12-22",

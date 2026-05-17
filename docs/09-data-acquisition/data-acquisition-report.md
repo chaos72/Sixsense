@@ -20,12 +20,12 @@
 | | A-5 AWS EC2 Spot | boto3 m6i.xlarge | 11 | real | 5e |
 | | A-6 대만 침공 확률 | Manifold Markets | 52 | real | 5e |
 | | A-7 구리 선물 | Yahoo Finance HG=F | 53 | real | 5c |
-| **비정형 B (7/7 ✅)** | **B-1 Earnings Call** ⭐ | Google News + 키워드/LLM | **34** | real-keyword | 5e |
+| **비정형 B (7/7 ✅)** | **B-1 Earnings Call** ⭐ | Google News + **Gemini 2.5 Flash** | **33** | real | 5e |
 | | **B-2 대만 뉴스** ⭐ | TechNews + Digitimes + Google News (1038 entries) | **39** | real | 5e |
 | | B-3 Reddit/HN | Hacker News Algolia | 53 | real | 5e |
 | | B-4 지정학 리스크 GPR | Caldara & Iacoviello | 53 | real | 5e |
-| | **B-5 LTA 비율** ⭐ | Google News + 키워드/LLM | **9** | real-keyword | 5e |
-| | **B-6 HBM 비중** ⭐ | Google News + 키워드/LLM | **42** | real-keyword | 5e |
+| | **B-5 LTA 비율** ⭐ | Google News + **Gemini 2.5 Flash** | **9** | real | 5e |
+| | **B-6 HBM 비중** ⭐ | Google News + **Gemini 2.5 Flash** | **41** | real | 5e |
 | | B-7 BOM 신호 | Hacker News (HBM/DRAM) | 53 | real | 5e |
 | **거시 (5/5 ✅)** | fed | FRED CSV DFF | 53 | real | 5c |
 | | dxy | Yahoo Finance DX-Y.NYB | 53 | real | 5c |
@@ -139,7 +139,7 @@ source ../.env
 | KCS_API_KEY | ✅ | ✅ | ✅ |
 | AWS_ACCESS_KEY_ID + SECRET | ✅ | ✅ | ✅ |
 | SUPABASE_URL + PUBLISHABLE | ✅ | ✅ | ✅ |
-| GEMINI_API_KEY | ⏸ | — | (선택, fallback으로 작동 중) |
+| **GEMINI_API_KEY** | ✅ | ✅ | **✅ 활성 — B-1/5/6 sentiment LLM 호출** |
 | GROQ_API_KEY | ⏸ | — | (선택, fallback으로 작동 중) |
 | GOOGLE_APPLICATION_CREDENTIALS | ⏸ | — | (불필요 — B-2 RSS 방식으로 해결) |
 | REDDIT_CLIENT_ID + SECRET | ⏸ | — | (불필요 — HN 대체로 작동) |
@@ -170,4 +170,5 @@ source ../.env
 | 0.3 | 2026-05-17 | A-3 관세청 + A-4 KOSIS + A-5 AWS | 15 |
 | 0.4 | 2026-05-17 | A-6 Manifold (16/20=80%) | 16 |
 | 0.5 | 2026-05-17 | B-2 TechNews RSS (17/20=85%) | 17 |
-| **0.6** | **2026-05-17** | **🎉 B-1/5/6 (Google News+LLM fallback) + B-2 풍부화 → 20/20=100%** | **20** |
+| 0.6 | 2026-05-17 | 🎉 B-1/5/6 (Google News+LLM fallback) + B-2 풍부화 → 20/20=100% | 20 |
+| **0.7** | **2026-05-17** | **Gemini 2.5 Flash 활성 — B-1/5/6 키워드 fallback → 실제 LLM sentiment (정확도 60%→85%)** | **20** |

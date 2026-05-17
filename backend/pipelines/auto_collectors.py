@@ -756,22 +756,31 @@ def _llm_sentiment(text: str, prompt_topic: str) -> float:
     gemini_key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
     if gemini_key:
         try:
-            r = requests.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
-                headers={"Content-Type": "application/json"},
-                json={
-                    "contents": [{"parts": [{"text": prompt}]}],
-                    "generationConfig": {"maxOutputTokens": 32, "temperature": 0.0},
-                },
-                timeout=60,
-            )
-            if r.status_code == 200:
-                txt = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-                m = re.search(r"-?\d+\.?\d*", txt)
-                if m:
-                    return max(-1.0, min(1.0, float(m.group())))
-            else:
-                print(f"    Gemini HTTP {r.status_code}: {r.text[:120]}")
+            # 모델 우선순위: 2.5-flash (안정) → 2.0-flash → 1.5-flash-8b (한도 다른 풀)
+            for model in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b"):
+                r = requests.post(
+                    f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
+                    headers={"Content-Type": "application/json"},
+                    json={
+                        "contents": [{"parts": [{"text": prompt}]}],
+                        "generationConfig": {"maxOutputTokens": 128, "temperature": 0.0},
+                    },
+                    timeout=60,
+                )
+                if r.status_code == 200:
+                    j = r.json()
+                    parts = j.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+                    if parts and "text" in parts[0]:
+                        txt = parts[0]["text"].strip()
+                        m = re.search(r"-?\d+\.?\d*", txt)
+                        if m:
+                            return max(-1.0, min(1.0, float(m.group())))
+                    break  # 200이지만 text 없으면 다음 시도 무의미
+                elif r.status_code == 429:
+                    continue  # 다른 모델 시도
+                else:
+                    print(f"    Gemini {model} HTTP {r.status_code}: {r.text[:120]}")
+                    break
         except Exception as e:
             print(f"    Gemini 실패, fallback: {str(e)[:50]}")
 
