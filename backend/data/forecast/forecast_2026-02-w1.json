@@ -1,0 +1,270 @@
+{
+  "model": "prophet_v1.3.0",
+  "target": "target-dram (Memory stocks blend, base=100)",
+  "trainedAt": "2026-05-17",
+  "trainCutoff": "2026-01-31",
+  "trainWeeks": 40,
+  "regressors": [
+    "A-1",
+    "A-2",
+    "A-7",
+    "macro-fed",
+    "macro-dxy",
+    "macro-pmi",
+    "macro-krw",
+    "macro-cu"
+  ],
+  "interval_width": 0.8,
+  "forecast": {
+    "short_term_1_7w": [
+      {
+        "week": "2026-02-02",
+        "yhat": 410.298,
+        "yhat_lower": 386.0751,
+        "yhat_upper": 437.5753
+      },
+      {
+        "week": "2026-02-09",
+        "yhat": 421.6749,
+        "yhat_lower": 393.2445,
+        "yhat_upper": 447.4682
+      },
+      {
+        "week": "2026-02-16",
+        "yhat": 433.0518,
+        "yhat_lower": 406.4605,
+        "yhat_upper": 461.1778
+      },
+      {
+        "week": "2026-02-23",
+        "yhat": 444.4287,
+        "yhat_lower": 418.4865,
+        "yhat_upper": 472.9571
+      },
+      {
+        "week": "2026-03-02",
+        "yhat": 455.8057,
+        "yhat_lower": 427.4477,
+        "yhat_upper": 483.5991
+      },
+      {
+        "week": "2026-03-09",
+        "yhat": 467.1826,
+        "yhat_lower": 439.512,
+        "yhat_upper": 492.4027
+      },
+      {
+        "week": "2026-03-16",
+        "yhat": 478.5595,
+        "yhat_lower": 451.5706,
+        "yhat_upper": 504.1195
+      }
+    ],
+    "mid_term_8_21w": [
+      {
+        "week": "2026-03-23",
+        "yhat": 489.9364,
+        "yhat_lower": 460.7785,
+        "yhat_upper": 516.0893
+      },
+      {
+        "week": "2026-03-30",
+        "yhat": 501.3134,
+        "yhat_lower": 472.7844,
+        "yhat_upper": 529.6656
+      },
+      {
+        "week": "2026-04-06",
+        "yhat": 512.6903,
+        "yhat_lower": 480.8717,
+        "yhat_upper": 541.2301
+      },
+      {
+        "week": "2026-04-13",
+        "yhat": 524.0672,
+        "yhat_lower": 496.3594,
+        "yhat_upper": 556.6203
+      },
+      {
+        "week": "2026-04-20",
+        "yhat": 535.4441,
+        "yhat_lower": 507.5552,
+        "yhat_upper": 566.5452
+      },
+      {
+        "week": "2026-04-27",
+        "yhat": 546.8211,
+        "yhat_lower": 514.7219,
+        "yhat_upper": 580.4938
+      },
+      {
+        "week": "2026-05-04",
+        "yhat": 558.198,
+        "yhat_lower": 525.3096,
+        "yhat_upper": 592.8626
+      },
+      {
+        "week": "2026-05-11",
+        "yhat": 569.5749,
+        "yhat_lower": 535.3254,
+        "yhat_upper": 604.9118
+      },
+      {
+        "week": "2026-05-18",
+        "yhat": 580.9518,
+        "yhat_lower": 546.5106,
+        "yhat_upper": 618.0197
+      },
+      {
+        "week": "2026-05-25",
+        "yhat": 592.3288,
+        "yhat_lower": 553.1646,
+        "yhat_upper": 630.3598
+      },
+      {
+        "week": "2026-06-01",
+        "yhat": 603.7057,
+        "yhat_lower": 563.8931,
+        "yhat_upper": 646.1821
+      },
+      {
+        "week": "2026-06-08",
+        "yhat": 615.0826,
+        "yhat_lower": 572.1353,
+        "yhat_upper": 658.8988
+      },
+      {
+        "week": "2026-06-15",
+        "yhat": 626.4595,
+        "yhat_lower": 583.5982,
+        "yhat_upper": 673.5983
+      },
+      {
+        "week": "2026-06-22",
+        "yhat": 637.8365,
+        "yhat_lower": 592.6894,
+        "yhat_upper": 683.4639
+      }
+    ]
+  },
+  "validation_vs_actuals": [
+    {
+      "week": "2026-02-02",
+      "actual": 438.2197,
+      "predicted": 410.298,
+      "lower": 386.0751,
+      "upper": 437.5753,
+      "error_pct": 6.37,
+      "within_ci": false
+    },
+    {
+      "week": "2026-02-09",
+      "actual": 463.6684,
+      "predicted": 421.6749,
+      "lower": 393.2445,
+      "upper": 447.4682,
+      "error_pct": 9.06,
+      "within_ci": false
+    },
+    {
+      "week": "2026-02-16",
+      "actual": 488.3022,
+      "predicted": 433.0518,
+      "lower": 406.4605,
+      "upper": 461.1778,
+      "error_pct": 11.31,
+      "within_ci": false
+    },
+    {
+      "week": "2026-02-23",
+      "actual": 506.3036,
+      "predicted": 444.4287,
+      "lower": 418.4865,
+      "upper": 472.9571,
+      "error_pct": 12.22,
+      "within_ci": false
+    },
+    {
+      "week": "2026-03-02",
+      "actual": 447.724,
+      "predicted": 455.8057,
+      "lower": 427.4477,
+      "upper": 483.5991,
+      "error_pct": 1.81,
+      "within_ci": true
+    },
+    {
+      "week": "2026-03-09",
+      "actual": 478.3173,
+      "predicted": 467.1826,
+      "lower": 439.512,
+      "upper": 492.4027,
+      "error_pct": 2.33,
+      "within_ci": true
+    },
+    {
+      "week": "2026-03-16",
+      "actual": 497.8181,
+      "predicted": 478.5595,
+      "lower": 451.5706,
+      "upper": 504.1195,
+      "error_pct": 3.87,
+      "within_ci": true
+    },
+    {
+      "week": "2026-03-23",
+      "actual": 438.0901,
+      "predicted": 489.9364,
+      "lower": 460.7785,
+      "upper": 516.0893,
+      "error_pct": 11.83,
+      "within_ci": false
+    },
+    {
+      "week": "2026-03-30",
+      "actual": 436.7306,
+      "predicted": 501.3134,
+      "lower": 472.7844,
+      "upper": 529.6656,
+      "error_pct": 14.79,
+      "within_ci": false
+    },
+    {
+      "week": "2026-04-06",
+      "actual": 502.044,
+      "predicted": 512.6903,
+      "lower": 480.8717,
+      "upper": 541.2301,
+      "error_pct": 2.12,
+      "within_ci": true
+    },
+    {
+      "week": "2026-04-13",
+      "actual": 543.3753,
+      "predicted": 524.0672,
+      "lower": 496.3594,
+      "upper": 556.6203,
+      "error_pct": 3.55,
+      "within_ci": true
+    },
+    {
+      "week": "2026-04-20",
+      "actual": 585.6248,
+      "predicted": 535.4441,
+      "lower": 507.5552,
+      "upper": 566.5452,
+      "error_pct": 8.57,
+      "within_ci": false
+    },
+    {
+      "week": "2026-04-27",
+      "actual": 608.9767,
+      "predicted": 546.8211,
+      "lower": 514.7219,
+      "upper": 580.4938,
+      "error_pct": 10.21,
+      "within_ci": false
+    }
+  ],
+  "last_train_value": 462.716
+}
