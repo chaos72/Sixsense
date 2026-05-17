@@ -7,6 +7,7 @@
   "regressors": [
     "A-1",
     "A-2",
+    "A-4",
     "A-7",
     "B-3",
     "B-4",
@@ -23,130 +24,130 @@
       {
         "week": "2026-02-02",
         "yhat": 410.298,
-        "yhat_lower": 382.3275,
-        "yhat_upper": 438.9158
+        "yhat_lower": 382.3339,
+        "yhat_upper": 437.995
       },
       {
         "week": "2026-02-09",
         "yhat": 421.6749,
-        "yhat_lower": 393.9999,
-        "yhat_upper": 447.4238
+        "yhat_lower": 393.8941,
+        "yhat_upper": 445.1253
       },
       {
         "week": "2026-02-16",
         "yhat": 433.0518,
-        "yhat_lower": 405.3875,
-        "yhat_upper": 457.7901
+        "yhat_lower": 406.292,
+        "yhat_upper": 458.95
       },
       {
         "week": "2026-02-23",
         "yhat": 444.4287,
-        "yhat_lower": 416.8284,
-        "yhat_upper": 469.4645
+        "yhat_lower": 418.25,
+        "yhat_upper": 470.1494
       },
       {
         "week": "2026-03-02",
         "yhat": 455.8057,
-        "yhat_lower": 427.2369,
-        "yhat_upper": 483.2895
+        "yhat_lower": 427.6307,
+        "yhat_upper": 482.6012
       },
       {
         "week": "2026-03-09",
         "yhat": 467.1826,
-        "yhat_lower": 438.8845,
-        "yhat_upper": 494.4447
+        "yhat_lower": 439.4928,
+        "yhat_upper": 494.6733
       },
       {
         "week": "2026-03-16",
         "yhat": 478.5595,
-        "yhat_lower": 451.2598,
-        "yhat_upper": 506.1343
+        "yhat_lower": 450.8357,
+        "yhat_upper": 504.4115
       }
     ],
     "mid_term_8_21w": [
       {
         "week": "2026-03-23",
         "yhat": 489.9364,
-        "yhat_lower": 461.3534,
-        "yhat_upper": 516.5515
+        "yhat_lower": 459.7035,
+        "yhat_upper": 517.2995
       },
       {
         "week": "2026-03-30",
         "yhat": 501.3134,
-        "yhat_lower": 471.8353,
-        "yhat_upper": 528.5164
+        "yhat_lower": 473.4365,
+        "yhat_upper": 529.2608
       },
       {
         "week": "2026-04-06",
         "yhat": 512.6903,
-        "yhat_lower": 483.36,
-        "yhat_upper": 542.8494
+        "yhat_lower": 481.1962,
+        "yhat_upper": 542.8994
       },
       {
         "week": "2026-04-13",
         "yhat": 524.0672,
-        "yhat_lower": 495.6227,
-        "yhat_upper": 554.6676
+        "yhat_lower": 494.2311,
+        "yhat_upper": 553.0054
       },
       {
         "week": "2026-04-20",
         "yhat": 535.4441,
-        "yhat_lower": 506.2944,
-        "yhat_upper": 567.0393
+        "yhat_lower": 504.4017,
+        "yhat_upper": 565.8433
       },
       {
         "week": "2026-04-27",
         "yhat": 546.8211,
-        "yhat_lower": 515.8764,
-        "yhat_upper": 576.5515
+        "yhat_lower": 514.8543,
+        "yhat_upper": 578.0361
       },
       {
         "week": "2026-05-04",
         "yhat": 558.198,
-        "yhat_lower": 524.5562,
-        "yhat_upper": 592.4015
+        "yhat_lower": 523.378,
+        "yhat_upper": 589.6448
       },
       {
         "week": "2026-05-11",
         "yhat": 569.5749,
-        "yhat_lower": 534.5737,
-        "yhat_upper": 606.1358
+        "yhat_lower": 533.7965,
+        "yhat_upper": 603.6531
       },
       {
         "week": "2026-05-18",
         "yhat": 580.9518,
-        "yhat_lower": 543.3491,
-        "yhat_upper": 620.2204
+        "yhat_lower": 543.6707,
+        "yhat_upper": 617.8256
       },
       {
         "week": "2026-05-25",
         "yhat": 592.3288,
-        "yhat_lower": 554.5974,
-        "yhat_upper": 632.8884
+        "yhat_lower": 554.6628,
+        "yhat_upper": 628.5294
       },
       {
         "week": "2026-06-01",
         "yhat": 603.7057,
-        "yhat_lower": 563.6491,
-        "yhat_upper": 644.4764
+        "yhat_lower": 563.8259,
+        "yhat_upper": 644.388
       },
       {
         "week": "2026-06-08",
         "yhat": 615.0826,
-        "yhat_lower": 574.712,
-        "yhat_upper": 656.7814
+        "yhat_lower": 571.0005,
+        "yhat_upper": 656.0734
       },
       {
         "week": "2026-06-15",
         "yhat": 626.4595,
-        "yhat_lower": 584.3524,
-        "yhat_upper": 671.5993
+        "yhat_lower": 581.2949,
+        "yhat_upper": 668.9025
       },
       {
         "week": "2026-06-22",
         "yhat": 637.8365,
-        "yhat_lower": 593.0903,
-        "yhat_upper": 686.3615
+        "yhat_lower": 590.189,
+        "yhat_upper": 686.2074
       }
     ]
   },
@@ -155,17 +156,17 @@
       "week": "2026-02-02",
       "actual": 438.2197,
       "predicted": 410.298,
-      "lower": 382.3275,
-      "upper": 438.9158,
+      "lower": 382.3339,
+      "upper": 437.995,
       "error_pct": 6.37,
-      "within_ci": true
+      "within_ci": false
     },
     {
       "week": "2026-02-09",
       "actual": 463.6684,
       "predicted": 421.6749,
-      "lower": 393.9999,
-      "upper": 447.4238,
+      "lower": 393.8941,
+      "upper": 445.1253,
       "error_pct": 9.06,
       "within_ci": false
     },
@@ -173,8 +174,8 @@
       "week": "2026-02-16",
       "actual": 488.3022,
       "predicted": 433.0518,
-      "lower": 405.3875,
-      "upper": 457.7901,
+      "lower": 406.292,
+      "upper": 458.95,
       "error_pct": 11.31,
       "within_ci": false
     },
@@ -182,8 +183,8 @@
       "week": "2026-02-23",
       "actual": 506.3036,
       "predicted": 444.4287,
-      "lower": 416.8284,
-      "upper": 469.4645,
+      "lower": 418.25,
+      "upper": 470.1494,
       "error_pct": 12.22,
       "within_ci": false
     },
@@ -191,8 +192,8 @@
       "week": "2026-03-02",
       "actual": 447.724,
       "predicted": 455.8057,
-      "lower": 427.2369,
-      "upper": 483.2895,
+      "lower": 427.6307,
+      "upper": 482.6012,
       "error_pct": 1.81,
       "within_ci": true
     },
@@ -200,8 +201,8 @@
       "week": "2026-03-09",
       "actual": 478.3173,
       "predicted": 467.1826,
-      "lower": 438.8845,
-      "upper": 494.4447,
+      "lower": 439.4928,
+      "upper": 494.6733,
       "error_pct": 2.33,
       "within_ci": true
     },
@@ -209,8 +210,8 @@
       "week": "2026-03-16",
       "actual": 497.8181,
       "predicted": 478.5595,
-      "lower": 451.2598,
-      "upper": 506.1343,
+      "lower": 450.8357,
+      "upper": 504.4115,
       "error_pct": 3.87,
       "within_ci": true
     },
@@ -218,8 +219,8 @@
       "week": "2026-03-23",
       "actual": 438.0901,
       "predicted": 489.9364,
-      "lower": 461.3534,
-      "upper": 516.5515,
+      "lower": 459.7035,
+      "upper": 517.2995,
       "error_pct": 11.83,
       "within_ci": false
     },
@@ -227,8 +228,8 @@
       "week": "2026-03-30",
       "actual": 436.7306,
       "predicted": 501.3134,
-      "lower": 471.8353,
-      "upper": 528.5164,
+      "lower": 473.4365,
+      "upper": 529.2608,
       "error_pct": 14.79,
       "within_ci": false
     },
@@ -236,8 +237,8 @@
       "week": "2026-04-06",
       "actual": 502.044,
       "predicted": 512.6903,
-      "lower": 483.36,
-      "upper": 542.8494,
+      "lower": 481.1962,
+      "upper": 542.8994,
       "error_pct": 2.12,
       "within_ci": true
     },
@@ -245,8 +246,8 @@
       "week": "2026-04-13",
       "actual": 543.3753,
       "predicted": 524.0672,
-      "lower": 495.6227,
-      "upper": 554.6676,
+      "lower": 494.2311,
+      "upper": 553.0054,
       "error_pct": 3.55,
       "within_ci": true
     },
@@ -254,8 +255,8 @@
       "week": "2026-04-20",
       "actual": 585.6248,
       "predicted": 535.4441,
-      "lower": 506.2944,
-      "upper": 567.0393,
+      "lower": 504.4017,
+      "upper": 565.8433,
       "error_pct": 8.57,
       "within_ci": false
     },
@@ -263,8 +264,8 @@
       "week": "2026-04-27",
       "actual": 608.9767,
       "predicted": 546.8211,
-      "lower": 515.8764,
-      "upper": 576.5515,
+      "lower": 514.8543,
+      "upper": 578.0361,
       "error_pct": 10.21,
       "within_ci": false
     }
