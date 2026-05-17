@@ -1311,8 +1311,8 @@ Phase 0 (기반) ──┬──> Phase 1 (S-001) ──┬──> Phase 2 (드�
 | --- | --- | --- |
 | 언어 | Python 3.11+ | 데이터 수집·전처리 친화 |
 | 웹 프레임워크 | FastAPI | OpenAPI 자동 생성, async 지원 |
-| AI/예측 모델 | Prophet (단기 1~7w) + LSTM/Transformer (중장기 8~21w) | `model: prophet_v2.1` 등 핸드오프 표기와 일치 |
-| 감성 분석 | Anthropic Claude API (Sonnet/Opus) | 뉴스/Earnings Call 텍스트 분석, HITL 임계치 적용 |
+| AI/예측 모델 (Phase 6 멀티 모델 앙상블) | **단기 1~7w**: Prophet + GBR/HistGBR (sklearn) — XGBoost/LightGBM은 OpenMP 가용 시 자동 사용. 우수 모델 자동 선정. / **중장기 8~21w**: Prophet + LSTM (PyTorch 2-layer, hidden=64, seq=12). TFT는 학습데이터 200주+ 확보 시 도입. | 단기 GBR MAPE **4.54%** (Prophet 7.54% 대비 ↑39.7%), 중장기 LSTM held-out MAPE **9.19%**. 상세 docs/10-modeling/modeling-architecture.md |
+| 감성 분석 | Anthropic Claude API 또는 **Google Gemini 2.5 Flash (무료 fallback 1순위)** + Groq Llama 3.3 + 키워드 fallback | B-1/B-5/B-6 IR/뉴스 sentiment, HITL 임계치 적용. 4단계 fallback 체인 |
 | Graph RAG | Neo4j + LangChain | 구리↔DRAM 인과관계 그래프 |
 | 데이터 저장 | PostgreSQL (시계열·메타) + S3 (원본 파일) | TimescaleDB 확장 고려 |
 | 캐시 | Redis | 주간 스냅샷 캐싱 |

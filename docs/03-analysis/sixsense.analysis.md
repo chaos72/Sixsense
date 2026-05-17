@@ -344,3 +344,31 @@ Overall = (Structural × 0.15) + (Functional × 0.25) + (Contract × 0.25) + (Ru
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
 | 0.1 | 2026-05-17 | bkit PDCA Check 단계 — Gap 분석 + Match Rate 60% 산출 | 김영석 |
+
+## 13. Phase 6 — 멀티 모델 도입 결과 (2026-05-17 추가)
+
+사용자 요구로 기존 Prophet 외 단기/중장기 별도 모델 추가, 정확도 개선.
+
+### 검증 결과 (학습 컷오프 2026-01-31, 검증 28주)
+
+**단기 (1~7주)**:
+| 모델 | MAPE | 우수도 |
+|------|------|--------|
+| Prophet | 7.54% | baseline |
+| sklearn HistGBR | 6.86% | 중간 |
+| **sklearn GBR** ⭐ | **4.54%** | **우수 (Prophet 대비 39.7% 개선)** |
+
+**중장기 (8~21주)**:
+| 모델 | held-out MAPE |
+|------|--------------|
+| LSTM (PyTorch 2-layer hidden=64) | **9.19%** |
+
+### 환경 노트
+- macOS libomp 미설치 → XGBoost/LightGBM 자동 fallback (sklearn GBR/HistGBR 사용)
+- `brew install libomp` 후 XGBoost/LightGBM 자동 활성
+- LSTM 학습 6.5초, Tree 4.2초, 전체 ~12초
+
+### Match Rate
+정확도 향상은 운영 가치이나 Match Rate 산식엔 직접 반영 안 됨. **Overall 100% 유지**.
+
+상세: docs/10-modeling/modeling-architecture.md

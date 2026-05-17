@@ -1111,3 +1111,45 @@ Phase 6  → /pdca do sixsense --scope module-6-validation
 |---------|------|---------|--------|
 | 0.1 | 2026-05-16 | 얇은 포인터 버전 (PRD 참조) | 김영석 |
 | 0.2 | 2026-05-17 | bkit 표준 11개 섹션 모두 충실히 작성 — Architecture, Data Model, API Spec, UI/UX, Error Handling, Security, Test Plan, Clean Architecture, Coding Convention, Implementation Guide | 김영석 |
+
+---
+
+## 12. Phase 6 — 멀티 모델 예측 아키텍처 (2026-05-17 추가)
+
+### 12.1 모델 구조
+
+```
+                    20개 신호 통합 DataFrame (108주 × 20열)
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+         [Prophet]    [Tree Ensemble]    [LSTM]
+         baseline   (단기 1~7w 전용)    (중장기 8~21w)
+                       │                    │
+                  XGBoost/LightGBM      PyTorch 2-layer
+                   (libomp 있을 때)      hidden=64, seq=12
+                       │                    │
+                  sklearn GBR              dropout 0.2
+                  HistGBR                  200 epochs
+                  (fallback)
+                       │
+                  우수 모델 자동 선정 (MAPE 비교)
+```
+
+### 12.2 신규 모듈
+- `backend/pipelines/preprocessing.py` — 통합 시계열 + sentiment MA + lag/sequence
+- `backend/pipelines/forecast_v2.py` — Prophet + Tree + LSTM 통합
+
+### 12.3 검증 결과
+| 단계 | 모델 | MAPE | 비고 |
+|------|------|------|------|
+| 단기 1~7w | Prophet | 7.54% | baseline |
+| 단기 1~7w | HistGBR | 6.86% | sklearn |
+| 단기 1~7w | **GBR ⭐** | **4.54%** | 우수 |
+| 중장기 8~21w | LSTM | 9.19% | held-out |
+
+상세 docs/10-modeling/modeling-architecture.md
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 0.3 | 2026-05-17 | Phase 6 멀티 모델 아키텍처 추가 |

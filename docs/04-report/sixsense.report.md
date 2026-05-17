@@ -372,3 +372,25 @@ Phase 5c 백필 (9 신호) 이후 자동 수집 사이클 계속 확장:
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
 | 0.1 | 2026-05-17 | bkit PDCA Report 단계 — PRD~Analysis 통합 보고 | 김영석 |
+
+## 9.7 Phase 6 — 멀티 모델 예측 (2026-05-17 추가)
+
+사용자 요구로 정확도 개선 모델링 아키텍처 도입.
+
+| 단계 | 모델 | MAPE | 변화 |
+|------|------|------|------|
+| 단기 1~7w | Prophet (기존) | 7.54% | baseline |
+| 단기 1~7w | **sklearn GBR (Phase 6)** ⭐ | **4.54%** | **↓ 39.7% 개선** |
+| 중장기 8~21w | LSTM (Phase 6) | 9.19% | (held-out) |
+
+### 핵심 효과
+- 단기 정확도 대폭 향상 (PRD 목표 MAPE ≤20% 가뿐 통과)
+- 중장기는 LSTM이 sentiment + 분기 신호의 변동 반영
+- Prophet은 baseline + 비교 기준으로 계속 사용
+
+### 운영 영향
+- 기존 forecast.py 보존, 신규 forecast_v2.py 추가
+- 둘 다 매주 실행 가능 — 사용자가 우수 모델 선택
+- TFT는 향후 학습 데이터 200주+ 확보 시 도입 권장
+
+상세: docs/10-modeling/modeling-architecture.md

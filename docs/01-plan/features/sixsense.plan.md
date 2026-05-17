@@ -324,3 +324,30 @@ Folder Structure Preview:
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
 | 0.1 | 2026-05-16 | bkit PDCA Plan 단계 초안 — PRD 자동 참조, 디자인 핸드오프 반영 | 김영석 |
+
+---
+
+## 10. Phase 6 — 멀티 모델 예측 아키텍처 (2026-05-17 추가)
+
+사용자 요구: 정확도 개선을 위해 기존 Prophet 외 단기/중장기 별도 모델 도입.
+
+### Architecture Decision
+- **단기 (1~7주)**: 트리 기반 (XGBoost / LightGBM 우선, macOS libomp 없으면 sklearn GBR/HistGBR fallback). 두 모델 학습 후 MAPE 비교로 우수 모델 자동 선정.
+- **중장기 (8~21주)**: LSTM (PyTorch). TFT는 학습 데이터 200주+ 확보 후 도입 (현재 40~80주는 과적합 위험).
+- **기존 Prophet 보존**: baseline + 비교 기준으로 계속 사용.
+
+### Success Criteria 갱신
+- 단기 MAPE ≤ 5% (Phase 5e 7.54% → **달성 4.54%**)
+- 중장기 MAPE ≤ 15% (LSTM held-out **9.19% 달성**)
+- 학습 시간 ≤ 30초 (전체 파이프라인 ~12초 ✅)
+
+### 위험 + 대응
+- **소량 데이터 과적합**: LSTM dropout 0.2, 80주 학습 (cutoff 2026-01-31)
+- **macOS OpenMP 미설치**: sklearn fallback 자동 (XGBoost/LightGBM 무관 운영 보장)
+- **신규 모델 결과 신뢰**: Prophet 동시 출력으로 sanity check
+
+상세: docs/10-modeling/modeling-architecture.md
+
+| Version | Date | Changes | Author |
+|---------|------|---------|--------|
+| 0.2 | 2026-05-17 | Phase 6 멀티 모델 아키텍처 추가 (단기 Tree + 중장기 LSTM) | 김영석 |

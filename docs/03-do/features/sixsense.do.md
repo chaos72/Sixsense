@@ -282,3 +282,35 @@ npm run build       # 프로덕션 빌드 성공
 |---------|------|---------|--------|
 | 0.1 | 2026-05-16 | 컴포넌트 재구현 가이드 — Phase 0 모듈 분할 | 김영석 |
 | 0.2 | 2026-05-17 | **전략 변경**: 핸드오프 직접 포팅으로 재작성. v0.1 쇼케이스는 `_legacy_showcase_v0.1/`로 백업. | 김영석 |
+
+---
+
+## 11. Phase 6 — 멀티 모델 구현 (2026-05-17 추가)
+
+### 신규 파일
+- `backend/pipelines/preprocessing.py` (135 LOC)
+- `backend/pipelines/forecast_v2.py` (370 LOC)
+
+### 의존성 설치
+```bash
+.venv/bin/pip install xgboost lightgbm scikit-learn torch
+# macOS: brew install libomp  (XGBoost/LightGBM 실제 사용 시)
+```
+
+### 실행
+```bash
+cd backend
+.venv/bin/python3 pipelines/forecast_v2.py
+# → Prophet + Tree(GBR/HistGBR) + LSTM 3 모델 동시 학습
+# → backend/data/forecast/forecast_v2_2026-02-w1.json
+# → backend/data/forecast/model_comparison.txt
+```
+
+### 결과
+- 단기 GBR MAPE 4.54% (Prophet 7.54% 대비 39.7% 개선)
+- 중장기 LSTM held-out MAPE 9.19%
+- 학습 시간 ~12초 (전체 파이프라인)
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 0.3 | 2026-05-17 | Phase 6 멀티 모델 구현 (preprocessing + forecast_v2) |
