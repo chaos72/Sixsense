@@ -32,7 +32,7 @@ TRAIN_CUTOFF = "2026-01-31"
 FORECAST_START = "2026-02-02"  # First Monday of Feb 2026
 
 # Regressors (collected signals to use as external regressors)
-REGRESSORS = ["A-1", "A-2", "A-3", "A-4", "A-5", "A-7", "B-3", "B-4", "B-7", "macro-fed", "macro-dxy", "macro-pmi", "macro-krw", "macro-cu"]
+REGRESSORS = ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7", "B-3", "B-4", "B-7", "macro-fed", "macro-dxy", "macro-pmi", "macro-krw", "macro-cu"]
 
 
 def load_series(path: Path) -> pd.DataFrame:

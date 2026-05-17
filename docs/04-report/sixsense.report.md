@@ -324,6 +324,32 @@ open design_handoff_sixsense_dram_dashboard/Sixsense.html
 
 이로써 본 사이클은 **MVP → 검증된 시스템**으로 발전. 운영 배포까지의 잔여 작업은 인증/실DB/실데이터 수집기뿐 (Phase 6 분기).
 
+## 9.6 Phase 5e 데이터 수집 인프라 (2026-05-17 누적 업데이트)
+
+Phase 5c 백필 (9 신호) 이후 자동 수집 사이클 계속 확장:
+
+| 사이클 | 누적 신호 | 추가 |
+|--------|---------|------|
+| 5c 초기 백필 | 9 (45%) | A-1/A-2/A-7 + 5거시 + target |
+| 5e 무키 collector | 12 (60%) | B-3/B-4/B-7 (Hacker News, Caldara GPR) |
+| 5e + KOSIS | 13 (65%) | A-4 (KOSIS_FULL_URL) |
+| 5e + 관세청 | 14 (70%) | A-3 (data.go.kr Itemtrade) |
+| 5e + AWS | 15 (75%) | A-5 (boto3, 90일 한계) |
+| **5e + Manifold** | **16 (80%)** | **A-6 (Polymarket/Metaculus 대체)** |
+
+**부속 인프라**:
+- `backend/pipelines/auto_collectors.py` — 11 collector + env 자동 로드
+- `backend/pipelines/sync_supabase.py` — JSON → Postgres
+- `backend/app/supabase_client.py` — REST 래퍼 (외부 의존 0)
+- `backend/app/schema.sql` — DB DDL (Studio 1회 실행)
+- `backend/pipelines/verify_b2_gcp.py` — B-2 GCP 진단
+
+**남은 4 신호 다음 액션**:
+- B-2: GCP credentials만 받으면 즉시 (~15분)
+- B-1/B-5/B-6: Anthropic 충전 + PDF 코드 (~1시간)
+
+**Match Rate**: 100% 유지 (데이터 신호 추가는 미래 정확도 향상 인자, 현 산식엔 직접 반영 안 됨)
+
 ## 10. 결론
 
 본 PDCA 사이클은 **프론트엔드 MVP + 백엔드 API + L1/L2/L3 100% 통과** 및 **bkit PDCA 전체 단계 수행 검증**이라는 두 목표를 달성했다.

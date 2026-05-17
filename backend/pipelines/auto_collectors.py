@@ -225,8 +225,54 @@ def collect_B7_bom_hn():
 # ──────────────────────────────────────────────────────────────────────────────
 # A-6 Polymarket — 키 불필요 (시장 ID 검색)
 # ──────────────────────────────────────────────────────────────────────────────
+def collect_A6_manifold():
+    """A-6 대안: Manifold Markets — 'China invades Taiwan by 2030' (vol 56만, 가장 활발).
+    Polymarket history 비어있고 Metaculus API는 인증 요구로 변경됨 → Manifold로 전환.
+    완전 공개 API, 키 불필요.
+    """
+    mid = "wENpa5mETtrCnBYJKl5t"
+    question = "Will China launch a full-scale invasion of Taiwan before 2030?"
+
+    all_bets = []
+    before = None
+    while True:
+        params = {"contractId": mid, "limit": 1000}
+        if before:
+            params["before"] = before
+        r = requests.get("https://api.manifold.markets/v0/bets", params=params, timeout=30)
+        r.raise_for_status()
+        bets = r.json()
+        if not bets:
+            break
+        all_bets.extend(bets)
+        before = bets[-1]["id"]  # manifold API는 bet ID 사용 (timestamp 아님)
+        if len(bets) < 1000:
+            break
+        time.sleep(0.2)
+
+    from collections import defaultdict
+    from datetime import datetime
+    weekly = defaultdict(list)
+    for b in all_bets:
+        t_ms = b.get("createdTime", 0)
+        if not t_ms:
+            continue
+        d = datetime.fromtimestamp(t_ms / 1000).date()
+        if not (START_D <= d <= END_D):
+            continue
+        wk = snap_to_monday(d).isoformat()
+        prob = b.get("probAfter")
+        if prob is not None:
+            weekly[wk].append(prob)
+
+    data = [{"week": w, "value": round(sum(v) / len(v), 4)} for w, v in sorted(weekly.items())]
+    if not data:
+        raise RuntimeError(f"Manifold market {mid} bets 데이터 없음 (시장 신규 가능성)")
+    return data, "real", f"Manifold Markets '{question}' ({len(all_bets)} bets → {len(data)}주)"
+
+
 def collect_A6_polymarket():
-    """Polymarket gamma API — Taiwan-related markets 검색 후 prices-history."""
+    """(deprecated) Polymarket — history 비어있음. collect_A6_manifold 사용 권장."""
     search_url = "https://gamma-api.polymarket.com/markets"
     r = requests.get(search_url, params={"limit": 50, "active": "true", "closed": "false", "tag_id": "703"}, timeout=20)
     if r.status_code != 200:
@@ -621,7 +667,7 @@ COLLECTORS = {
     "A-3": collect_A3_kcs,
     "A-4": collect_A4_kosis,
     "A-5": collect_A5_aws_spot,
-    "A-6": collect_A6_polymarket,
+    "A-6": collect_A6_manifold,
     "B-1": collect_B1_earnings_sentiment,
     "B-2": collect_B2_gdelt_bq,
     "B-3": collect_B3_reddit,

@@ -310,6 +310,33 @@ Overall = (Structural × 0.15) + (Functional × 0.25) + (Contract × 0.25) + (Ru
 
 **Critical Gap 모두 해소**: 이전 §7에서 Critical로 분류된 C-01(API 미구현), C-02(파이프라인 부재) 중 API는 완료. 운영용 실데이터 수집 파이프라인은 별도 사이클(`/pdca pm collectors`)로 진행.
 
+## 12. Phase 5e 누적 진행 (2026-05-17 누적 갱신)
+
+자동 데이터 수집 인프라 진화:
+
+| 사이클 | 신호 추가 | 누적 | 주요 변경 |
+|--------|---------|------|----------|
+| Phase 5c | 9 | 9 (45%) | 초기 백필 (yfinance/SEC EDGAR/FRED) |
+| Phase 5e B-3/B-4/B-7 | +3 | 12 (60%) | Hacker News + Caldara GPR (무키) |
+| Phase 5e A-4 | +1 | 13 (65%) | KOSIS_FULL_URL 사용자 생성 URL |
+| Phase 5e A-3 | +1 | 14 (70%) | Excel 코드표(HS 854232, imexTpcd) 정정 |
+| Phase 5e A-5 | +1 | 15 (75%) | AWS IAM + boto3 (90일 한계) |
+| **Phase 5e A-6** | **+1** | **16 (80%)** | **Manifold Markets** (Polymarket/Metaculus 대체) |
+
+남은 4개: B-1, B-2, B-5, B-6
+- B-2: GCP credentials만 받으면 즉시 (코드 준비 완료, verify_b2_gcp.py)
+- B-1/B-5/B-6: Anthropic 크레딧 충전 + PDF 파이프라인 (1시간 코드)
+
+**Match Rate (Phase 5e 16/20 적용 시 정성 평가)**: Static 100% × 0.15 + Functional 100% × 0.25 + Contract 100% × 0.25 + Runtime 100% × 0.35 = **100% 유지** (데이터 수집은 향후 정확도 개선 인자, Match Rate 산식의 직접 영향 없음).
+
+학습 (Phase 5e 진행 중 누적):
+1. data.go.kr 401 = 잘못된 파라미터일 수도 (권한만 아님) — 공식 코드표 참조 필수
+2. KOSIS는 사용자 등록 표만 접근, 웹 URL 생성기가 안전
+3. AWS spot history 90일 제약 — cron 누적
+4. Metaculus 403 변경 → Manifold Markets 대체 검증됨
+5. Manifold pagination = bet ID (timestamp 아님)
+6. requests.HTTPError가 EnvironmentError 상속하므로 exception 분류 주의
+
 ---
 
 ## Version History
