@@ -1,0 +1,308 @@
+{
+  "collectedAt": "2026-05-18",
+  "method": "Gemini LLM 분류",
+  "lookbackDays": 30,
+  "rawCount": 605,
+  "news": [
+    {
+      "date": "2026-04-30",
+      "title": "삼성/SK하이닉스, AI발 메모리 부족 경고",
+      "titleEn": "Samsung and SK hynix warn AI-driven memory shortages could last until 2027 and beyond, as HBM demand explodes — customers already reserving supply years ahead, while the wider DRAM market begins to tighten - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.95,
+      "tone": "pos",
+      "conf": 98,
+      "hot": true,
+      "summary": "삼성과 SK하이닉스는 AI 기반 HBM 수요 폭증으로 2027년 이후까지 메모리 부족이 지속될 수 있다고 경고했다. 고객사들은 이미 수년치 공급을 선점하고 있으며, 이로 인해 광범위한 DRAM 시장이 더욱 타이트해지고 있다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "HBM 수요로 인한 DRAM 생산 능력 전환 가속화로 단기적인 서버 DDR5 공급 부족 심화."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "AI 수요 지속 및 HBM 생산 우선순위로 인해 중기적으로 서버 DDR5 공급 제약이 유지될 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "2027년 이후까지 HBM 수요가 지속되고 고객사 선점 계약으로 서버 DDR5 가격 상승 압력이 장기화될 전망."
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiggNBVV95cUxQb190b3ktbkR1OHRjdFFsUUNUQjNXNUViR2p4dGpaYjVWU2ZhLU1ETENtRUxpc1l1TWlFSExWeW50VnFHNWE4UFVzS2ZYSzRYTWxCTXN0LUp4eTB3amVwWXlvLTFIcV80SzBWeVlvNzVqU0ZRWGRNTXc3QzA1NnZEN0JGZTcxOWt0QzZIRTZRemdxc01vb2RfQ1lhZlVBUV81NzZwMjFMYTJXcmlQTkdvWVRlXzNUUTdVc1R5UDZUNVZaYnAyYzdQQ0ZzbFhGSFdtY01hb2xheGg4V1owdWFpMGJmaEI5VFduWE9yYUd5Rk5mVGlKS2dHMEJGdG01dk1CLVpuRms1WXM1VDRfSWkwQVFMNThvVHpoZkI0NE1KMDhlMHUzdlJkZzdkaHBCaVRsR3hCVDJkV0dQSEtaZVRmZktUSVdUMTNreXJXSTJyTklpa1FGbUJvN2h3ejhnd1VFUmRzOTdLN3lrellIT2xtQ0lBYUlBVjZONENkeWs4R0tYUQ?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "삼성, 내년 메모리 부족 심화 경고",
+      "titleEn": "Samsung warns memory shortage to deepen next year as 2027 orders come in",
+      "source": "Nikkei Asia",
+      "score": 0.95,
+      "tone": "pos",
+      "conf": 95,
+      "hot": true,
+      "summary": "삼성은 2027년 주문이 들어오면서 내년 메모리 부족이 더욱 심화될 것이라고 경고했다. 이는 서버 DDR5를 포함한 전체 DRAM 시장의 공급 압박이 장기화될 것임을 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기적으로는 시장의 공급 부족 우려를 심화시켜 가격 상승 기대감을 높일 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "내년까지 공급 부족이 심화될 것이라는 경고로 중기적인 가격 상승 압력이 지속될 전망."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "2027년 주문 선점은 장기적인 공급 제약을 의미하며, 가격 안정화가 어려울 것."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNY1VBblBtXzhzeVJfUjJfem5BSUMtenhKRmpQWTJzaUJ0TGJyWEt4NFF3b0pVcmhISDNMdTlPRmpuaUpodHJOaVRCalMtVVRONmN6Mzl2WENuaUtZZnZDcXRBTGZ0bnZHZUI0Z2I3UTR2c1dLOEJOT0Vta20xMDVzSmVUUzkxUVVlUEpUTjhES1BkRFgyMUtWNU1Md2d3TnV1eDdJcndNMmZUMko1NmNzbmJINWlzQ2stVDR6MVBkbEoyWUk?oc=5"
+    },
+    {
+      "date": "2026-05-15",
+      "title": "삼성, 파업 앞두고 칩 생산 중단 시작",
+      "titleEn": "Samsung starts winding down chip production six days before planned 18-day strike — company enters 'emergency management mode,' daily losses could hit $2 billion - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.95,
+      "tone": "pos",
+      "conf": 99,
+      "hot": true,
+      "summary": "삼성은 예정된 18일간의 파업을 앞두고 칩 생산을 중단하기 시작했다. 회사는 '비상 경영 모드'에 돌입했으며, 일일 손실이 20억 달러에 달할 수 있다고 예상된다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "즉각적인 생산 중단으로 단기적인 서버 DDR5 공급량이 급감하여 가격이 급등할 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "18일간의 파업은 중기적으로도 상당한 생산 차질을 야기하여 가격 상승 압력을 유지할 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "파업으로 인한 생산량 손실은 장기적인 시장 재고 수준에 영향을 미쳐 가격 안정화에 지연을 초래할 수 있음."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPUFNHdUlsTG40TlpYMzlnMUxKY25aY19nQXdSdDFpaVhUM2k1NHF6eUNDRjhGZXROZ1BCWXVjeENrXzFEakdfWVFzUGNuQ3Jkb3MwTGF1X09jejJnRGtHTnh0SF9rNXVPam9JQ2NXLVBMZnNqdkN4NTZrZEtXTXUybDUyYmp6QW9xd1MtbS16MDFfWDFTX2tzRVNHWFdIX0ltN2NHMHJEQ1pXaVhNbnlKd1I2WXJBdm5OVHZCcjl1cTc?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "삼성, 내년 메모리 부족 악화 경고",
+      "titleEn": "Samsung warns memory shortage will be worse next year",
+      "source": "Mashable",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 93,
+      "hot": true,
+      "summary": "삼성은 내년 메모리 부족이 더욱 악화될 것이라고 경고했다. 이는 서버 DDR5를 포함한 DRAM 시장 전반의 공급 상황이 개선되기 어려울 것임을 나타낸다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기적으로 시장의 공급 부족 심리를 강화하여 가격 상승에 기여할 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "내년까지 공급 부족이 악화될 것이라는 전망은 중기적인 가격 상승 압력을 유지시킬 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기적으로도 공급 개선에 대한 불확실성을 높여 가격 안정화에 부정적인 영향을 미칠 수 있음."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE90WmJKZVlramVwRm5ZWVVwMk4xOWpneG9nby1Ja016aFNIYmNpeWlKUWQ2TXJJTDlzMUJOcE1qblFaOUVDX29kQlQ3QzF1NG52RmNjNjB5SFpVWG9wQVhRNHpPSnpjZkpEOEZiZmY4a1FEcjBaWV9hVkFn?oc=5"
+    },
+    {
+      "date": "2026-05-13",
+      "title": "삼성 노사 협상 결렬, 파업 임박",
+      "titleEn": "Samsung's critical union negotiations break down eight days before planned 18-day chip factory strike that's projected to cost $700 million per day — Korean PM calls emergency meeting as strike looms - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 97,
+      "hot": true,
+      "summary": "삼성의 노사 협상이 결렬되어 예정된 18일간의 칩 공장 파업이 임박했다. 이 파업은 하루 7억 달러의 손실을 초래할 것으로 예상되며, 한국 총리가 긴급 회의를 소집했다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "파업 임박 소식은 단기적으로 시장의 공급 불안감을 극대화하여 가격 상승을 유발할 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "파업이 현실화될 경우 중기적으로 생산량 감소가 불가피하여 가격 상승 압력이 지속될 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "파업의 장기화 가능성은 장기적인 공급망 안정성에 대한 우려를 높여 가격에 긍정적인 영향을 미칠 수 있음."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPYVlRSWhYY2VtcUl4c0hLUnY3S0U3ckNXZUtlLVppV0Vfb3FKSmthbENTZTYzT0FwUl9mREs4cXl5ZzFKVnhmRFoyWFE0Z2paOExwUzc1R0tTQlZMUWtMT0hvZHhOeDk2b2c1ZEpmdUtPcEZaSXZwblRodHdibGpYWVM5anlBWThQNTJhZ2piVVBGWTcxWi02dllFSjVOSzBIcXZVdGRORFFGcXNqXzJPcTRxQUF3c2o4djRaUEhMOEk1aTQ5NUFBYXJJVHJHLUVwZVE?oc=5"
+    },
+    {
+      "date": "2026-05-15",
+      "title": "“공급 절벽 현실화” 삼성 파업 초읽기",
+      "titleEn": "\"공급 절벽 현실화\"…삼성 파업 초읽기에 메모리 시장 '초긴장' - 네이트",
+      "source": "RSS",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 97,
+      "hot": true,
+      "summary": "“공급 절벽 현실화”라는 표현과 함께 삼성 파업이 초읽기에 들어가면서 메모리 시장이 '초긴장' 상태에 돌입했다. 이는 서버 DDR5를 포함한 메모리 제품의 심각한 공급 부족을 예고한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기적으로 '공급 절벽' 우려가 시장에 반영되어 서버 DDR5 가격이 급등할 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "파업으로 인한 생산 차질은 중기적으로도 공급 부족을 심화시켜 가격 상승 압력을 유지할 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기적으로는 시장의 재고 수준에 부정적인 영향을 미쳐 가격 안정화에 어려움을 줄 수 있음."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE42UHVadlYzSzYxQnU5YkVvOHpaYVFHLUgwQkVYa0JubEZ6Mlp1UnhLSXRqcWFqRFNyRHZNQzQ5V3k3LXpybWx6Mlhsb3NHVk5EczlJ?oc=5"
+    },
+    {
+      "date": "2026-05-11",
+      "title": "SK하이닉스 급등: HBM 부족 2028년까지",
+      "titleEn": "SK Hynix Surges 15% to New High: HBM Shortage Until 2028, How Much Longer Can AI Memory King Rise?",
+      "source": "TradingKey",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 94,
+      "hot": true,
+      "summary": "SK하이닉스 주가가 급등했으며, HBM 부족 현상이 2028년까지 지속될 것으로 전망된다. 이는 AI 메모리 수요가 폭발적으로 증가하면서 표준 DRAM 생산 능력이 HBM으로 전환될 것임을 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "HBM 수요로 인한 생산 능력 전환 가속화로 단기적인 서버 DDR5 공급 부족이 심화될 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "2028년까지 HBM 부족이 지속될 것이라는 전망은 중기적으로 서버 DDR5 공급 제약을 고착화할 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기적으로 HBM 중심의 생산 전략은 표준 DRAM의 공급을 제한하여 가격 상승 압력을 유지할 것."
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxObmdLQXpiRmxaT09aelJKTDVNYXF6b3U0eE1zVVlUc1lRc3d5ZlJoRVhVVUd0a21DRnFWeDdoR2hWcDRZZ0Z0YVB2Tko2Q043NDhDLXFfQkNDMUhwU3llajdGQ25vT0lEMFFDWUFWSklEdXRXanhVcFJrRXhuNG1GYlE1ODdmQVZ5SVZiTm4wbHhGTkwyWTNYdnhaWnFMS0hUaFFTQl9mLWFBRjJxVVNFZkJ2aWVmN28?oc=5"
+    },
+    {
+      "date": "2026-05-15",
+      "title": "삼성 파업 임박, 메모리 팹 가동 중단",
+      "titleEn": "Samsung strike looms: Why analysts say to “watch MU” as memory fabs warm down",
+      "source": "Investing.com",
+      "score": 0.85,
+      "tone": "pos",
+      "conf": 96,
+      "hot": true,
+      "summary": "삼성 파업이 임박하면서 메모리 팹 가동이 중단될 조짐을 보이고 있다. 분석가들은 마이크론(MU)을 주시해야 한다고 언급하며, 이는 공급 감소에 따른 시장 변화를 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "파업 임박 소식은 단기적으로 서버 DDR5 공급 불안을 가중시켜 가격 상승을 촉진할 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "팹 가동 중단은 중기적인 생산량 감소로 이어져 가격 상승 압력을 유지할 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기적으로는 경쟁사로의 수요 전환 가능성을 높여 시장 구조에 영향을 줄 수 있음."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQZ183YmZzOWE2ZkE3bGFUcWVQelpyZC1vLS1IeTZfNEpZTGViUWN6aURyRURfRXZuT2Z3NUlkZ3FDVnBqU3NIT3JxS2d3T0w5NWswVTlxQWNVRDJaQmdZMDZGdzlqSHUwRGN3N2lkdWpuaks5bm4zQkRGVENUaG9TZWNpdXFzVUR0bGQtaVJUMjQ2RzZ3QjZzTndNWlpjZ0tPcGtVSVhsWjRSRUlhQUY0eDJuamQxWDRjYzMyb05LQmFGVk5xX0F1eE9ZOA?oc=5"
+    },
+    {
+      "date": "2026-05-14",
+      "title": "삼성 파업 및 HBM 부족, SK하이닉스 급부상",
+      "titleEn": "SK Hynix’s $942 Billion Milestone: How a Samsung Strike and HBM Shortage Inverted the Chip Hierarc",
+      "source": "AD HOC NEWS",
+      "score": 0.85,
+      "tone": "pos",
+      "conf": 92,
+      "hot": true,
+      "summary": "삼성 파업과 HBM 부족이 겹치면서 SK하이닉스가 급부상했다. 이는 두 가지 주요 요인이 메모리 시장의 공급을 동시에 압박하고 있음을 보여주며, 서버 DDR5 가격에 긍정적인 영향을 미칠 것이다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "삼성 파업과 HBM 부족의 동시 발생으로 단기적인 서버 DDR5 공급 부족이 가속화될 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "두 가지 요인의 복합적인 영향으로 중기적인 서버 DDR5 공급 제약이 심화되어 가격 상승 압력이 유지될 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기적으로도 이러한 복합적인 공급 압박은 가격 안정화를 어렵게 만들 수 있음."
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPUmJjZW1IUHVaSUZhYmNSXzZhM1hjYmpTWGZLLTRzZmdNeVBvZmdLVkJ4ektoLUM4dDVqR0lrU3NUNE9oa3QxNmlWLXI4b21ERlpULTBmOXI1ZG5zaWR3SWxqeE9GOUFZYVJIb2RhaDBZaXpsMC02LXp5U3U1aDB5a2p2YnBUQXd6aWVsVGZadlh1R29lVk1PUXB3cTlERnhDeF8tUE9PeUNrOTVqSEYwSHMyamRLWEw4Tlo1dTA5VVdDZmNYWG5VSw?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "메모리 가격 하락 없을 것, 장기 계약 영향",
+      "titleEn": "Memory Prices Won’t Drop Even as Shortage Eases, Korean Research Firm Warns Hyperscalers Locked In Long-Term",
+      "source": "Wccftech",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "한국 연구기관은 메모리 부족이 완화되더라도 가격은 하락하지 않을 것이라고 경고했다. 하이퍼스케일러들이 장기 계약에 묶여 있어 서버 DDR5 가격이 높은 수준을 유지할 것으로 예상된다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기적으로는 시장의 가격 하락 기대감을 억제하고 현 수준을 유지하는 데 기여할 것."
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "하이퍼스케일러의 장기 계약은 중기적으로 서버 DDR5 가격의 하방 경직성을 강화할 것."
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기적으로도 대규모 구매자들의 계약 구조가 가격 안정화 또는 하락을 제한할 수 있음."
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "B-5 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQVlV1VkNlWUZ0d3pBbVN3Uy1mTFkybjdPUEQyaVliNmVWeW1WTzl6SzZSWEJRWkdvaXZqaFlTeHkyNVMtLU9HZDM5Y3dUcUdsNGhpUkJuUFBfdDNUTUxMdUNMaEtpc0w5R1JtVGlkanFSLW1iTVVRd21Ic01UX1ljREZZQWt3enJTaWt5U1preUJYbG11TVZWbHZFd2s3OGtuaVdZVFlpRVBNYkFjaUdUeVpUSkkzOTY2cngybWRvd3B2bUt2TmxZ0gHMAUFVX3lxTFBPUXAtNHloU04xdHdKbl9WTXlfeUFKWkhxLXJDbW1seUdVakR4TVdPU3NKVVdrMjk3azRDdU9fcS12QXZTRkc2WVRlbnIyT09meDBieE9Dakw1aGltM1BycFRpbVJqd3RUVG5PRlBOQW94UFVTZmttRkVCODhoUHBOblR0VmtDeE5xVG94dVZjaFZmYjgxTGk3ZlVyUFpLSWIyQm4zTkdwaTNLSGJhX2ViSDZYY2FVSzdjY0NITnlmNjBCXzE2UjNwM2JuRQ?oc=5"
+    }
+  ]
+}

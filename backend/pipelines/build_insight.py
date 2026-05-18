@@ -1,0 +1,388 @@
+"""build_insight.py — 현재 상태를 LLM(Claude 우선)에게 종합 분석시켜 인사이트 JSON 생성
+
+매주 화요일 06:00 KST 자동 실행 대상 (auto_collectors → collect_news_events →
+forecast_v2 → **build_insight** → build_frontend_data 순서).
+
+입력:
+  - backend/data/historical/{A-*, B-*, macro-*, target-dram}.json (최신값)
+  - backend/data/forecast/forecast_v2_*.json (Multi-model 예측)
+  - backend/data/news/latest.json (Top 10 news headlines)
+
+LLM 우선순위:
+  1. Anthropic Claude (사용자가 KAIST CAIO 과제로 "100% Claude 관점" 요청)
+  2. Gemini 2.5 Flash (fallback)
+  3. 휴리스틱 (둘 다 실패 시)
+
+출력:
+  backend/data/insight/latest.json — meta.insight 로 frontend에 주입됨
+"""
+from __future__ import annotations
+import os
+import re
+import json
+from pathlib import Path
+from datetime import date, datetime
+
+import requests
+
+ROOT = Path(__file__).resolve().parents[2]
+ENV = ROOT / ".env"
+if ENV.exists():
+    for line in ENV.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        k, v = k.strip(), v.strip().strip('"').strip("'")
+        if k and not os.environ.get(k):
+            os.environ[k] = v
+
+HIST = ROOT / "backend/data/historical"
+FORECAST = ROOT / "backend/data/forecast"
+NEWS = ROOT / "backend/data/news/latest.json"
+OUT = ROOT / "backend/data/insight/latest.json"
+OUT.parent.mkdir(parents=True, exist_ok=True)
+
+SIGNAL_NAMES = {
+    "A-1": "대만 공급망", "A-2": "빅테크 CapEx", "A-3": "관세청 수출",
+    "A-4": "재고/출하 지수", "A-5": "AWS Spot", "A-6": "Manifold 봉쇄확률",
+    "A-7": "구리 선물가",
+    "B-1": "Earnings Call 감성", "B-2": "대만 뉴스 감성", "B-3": "Reddit/HN",
+    "B-4": "지정학 리스크 (GPR)", "B-5": "LTA 비율",
+    "B-6": "HBM/D램 믹스", "B-7": "BOM 신호",
+}
+
+
+def latest(sid: str) -> float | None:
+    p = HIST / f"{sid}.json"
+    if not p.exists():
+        return None
+    rows = json.loads(p.read_text()).get("data", [])
+    return rows[-1]["value"] if rows else None
+
+
+def build_prompt() -> tuple[str, dict]:
+    """LLM 입력 프롬프트 + 원시 컨텍스트 빌드."""
+    target_rows = json.loads((HIST / "target-dram.json").read_text())["data"]
+    last_idx = target_rows[-1]["value"]  # base 100 index
+    prev_idx = target_rows[-2]["value"] if len(target_rows) > 1 else last_idx
+    wow = (last_idx - prev_idx) / prev_idx * 100 if prev_idx else 0
+    current_usd = round(last_idx * 0.01, 2)  # build_frontend_data.py 의 SCALE와 동일
+
+    # model_comparison.txt 우선 — build_frontend_data.py 와 동일 소스 사용 (인사이트/대시보드 가격 일치 보장)
+    pred7_idx = pred21_idx = None
+    cmp_file = FORECAST / "model_comparison.txt"
+    if cmp_file.exists():
+        txt = cmp_file.read_text()
+        m = re.search(r"📈 단기.*?\n(.*?)\n단기 MAPE", txt, re.DOTALL)
+        if m:
+            for line in reversed(m.group(1).strip().split("\n")):
+                row = re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
+                if row:
+                    pred7_idx = float(row.group(4))  # GBR 마지막 주
+                    break
+        m = re.search(r"📈 중장기.*?\n(.*?)\nLSTM held-out", txt, re.DOTALL)
+        if m:
+            for line in reversed(m.group(1).strip().split("\n")):
+                row = re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)", line)
+                if row:
+                    pred21_idx = float(row.group(3))  # LSTM 마지막 주
+                    break
+
+    # Fallback: forecast JSON
+    if pred7_idx is None or pred21_idx is None:
+        forecast = json.loads((FORECAST / "forecast_v2_2026-02-w1.json").read_text())
+        models = forecast.get("models", {})
+        prophet = models.get("prophet", {}).get("predictions", [])
+        lstm = models.get("lstm_mid", {}).get("predictions", []) or models.get("lstm", {}).get("predictions", [])
+        if pred7_idx is None and prophet:
+            pred7_idx = prophet[6].get("yhat", last_idx) if len(prophet) >= 7 else last_idx
+        if pred21_idx is None:
+            mid_src = lstm if lstm else prophet
+            pred21_idx = mid_src[20].get("yhat", last_idx) if len(mid_src) >= 21 else (mid_src[-1].get("yhat", last_idx) if mid_src else last_idx)
+
+    pred7 = round(pred7_idx * 0.01, 2)
+    pred7_pct = (pred7 - current_usd) / current_usd * 100 if current_usd else 0
+    pred21 = round(pred21_idx * 0.01, 2)
+    pred21_pct = (pred21 - current_usd) / current_usd * 100 if current_usd else 0
+
+    # 신호 요약
+    sig_lines = []
+    for sid, name in SIGNAL_NAMES.items():
+        v = latest(sid)
+        if v is None:
+            continue
+        if -10 < v < 10:
+            sig_lines.append(f"  {sid} {name}: {v:+.2f}")
+        elif abs(v) >= 1e6:
+            sig_lines.append(f"  {sid} {name}: {v / 1e6:.2f}M")
+        elif abs(v) >= 1e3:
+            sig_lines.append(f"  {sid} {name}: {v / 1e3:.1f}K")
+        else:
+            sig_lines.append(f"  {sid} {name}: {v:.2f}")
+
+    # 거시
+    macro_lines = []
+    for mid, name in [("macro-fed", "Fed Rate"), ("macro-dxy", "DXY"),
+                       ("macro-pmi", "INDPRO/PMI"), ("macro-krw", "USD/KRW"),
+                       ("macro-cu", "Copper")]:
+        v = latest(mid)
+        if v is not None:
+            macro_lines.append(f"  {name}: {v:.2f}")
+
+    # 뉴스 헤드라인 (top 5)
+    news_lines = []
+    if NEWS.exists():
+        news = json.loads(NEWS.read_text()).get("news", [])
+        for n in news[:5]:
+            tag = "📈" if n["tone"] == "pos" else "📉" if n["tone"] == "neg" else "▪"
+            news_lines.append(f"  {tag} [{n['date']}] {n['title']} (score {n['score']:+.2f}, conf {n['conf']}%)")
+
+    ctx = {
+        "current_usd": current_usd,
+        "wow_pct": round(wow, 1),
+        "pred7": pred7, "pred7_pct": round(pred7_pct, 1),
+        "pred21": pred21, "pred21_pct": round(pred21_pct, 1),
+        "signals": sig_lines,
+        "macro": macro_lines,
+        "news": news_lines,
+    }
+
+    prompt = f"""당신은 서버 DRAM 가격 의사결정을 돕는 시장 전략 애널리스트입니다.
+아래 실데이터를 종합하여 KAIST CAIO 6조 Sixsense 대시보드의 "예측분석 인사이트" 카드용 종합 판단을 작성하세요.
+
+【현재 가격】
+  현재가: ${current_usd:.2f} (지난주 대비 {wow:+.1f}%)
+  GBR 단기 예측 7주 후: ${pred7:.2f} ({pred7_pct:+.1f}%)
+  LSTM 중장기 예측 21주 후: ${pred21:.2f} ({pred21_pct:+.1f}%)
+
+【14개 프록시 신호 최신값】
+{chr(10).join(sig_lines)}
+
+【거시경제】
+{chr(10).join(macro_lines)}
+
+【최근 30일 핵심 뉴스 (Top 5)】
+{chr(10).join(news_lines) if news_lines else "  (뉴스 데이터 없음)"}
+
+다음 JSON 스키마로만 답변하세요. 한국어로, 마크다운/설명 금지:
+{{
+  "headline": "22자 이내 강조 메시지 (예: 'AI 수요 견인, 장기 상승 전환')",
+  "summary": "230~260자 사이 종합 분석 — 가격 방향, 핵심 근거 3개(신호+뉴스+거시), 단기와 중장기의 차이, 워치 포인트 1~2개를 자연스럽게 연결한 한 단락. 문장 끝까지 완전히 마무리할 것. **중요한 단어·수치 3~5개**(예: 가격, %, 신호 이름, 핵심 동인)를 **이중 별표**로 감싸서 강조하라. 예: '**AI 수요**가 **+36%**의 **장기 상승**을 견인'.",
+  "tone": "pos|neu|neg",
+  "confidence": 0~100,
+  "horizon_tilt": "short|mid|long — 어느 호라이즌이 가장 결정적인가",
+  "key_signals": ["A-2", "B-4"]
+}}"""
+    return prompt, ctx
+
+
+def call_anthropic(prompt: str) -> tuple[dict | None, str]:
+    key = os.getenv("ANTHROPIC_API_KEY", "")
+    if not key:
+        return None, "Anthropic 키 없음"
+    try:
+        r = requests.post(
+            "https://api.anthropic.com/v1/messages",
+            headers={
+                "x-api-key": key,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json",
+            },
+            json={
+                "model": "claude-haiku-4-5-20251001",
+                "max_tokens": 1024,
+                "messages": [{"role": "user", "content": prompt}],
+            },
+            timeout=60,
+        )
+    except Exception as e:
+        return None, f"Anthropic 네트워크 실패: {str(e)[:80]}"
+    if r.status_code != 200:
+        return None, f"Anthropic HTTP {r.status_code}: {r.text[:120]}"
+    try:
+        txt = r.json()["content"][0]["text"].strip()
+        txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
+        obj = json.loads(txt)
+        return obj, "Anthropic claude-haiku-4-5"
+    except Exception as e:
+        return None, f"Anthropic 파싱 실패: {str(e)[:80]}"
+
+
+def call_gemini(prompt: str) -> tuple[dict | None, str]:
+    key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
+    if not key:
+        return None, "Gemini 키 없음"
+    for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
+        try:
+            r = requests.post(
+                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
+                headers={"Content-Type": "application/json"},
+                json={
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {
+                        "maxOutputTokens": 2048,
+                        "temperature": 0.2,
+                        "responseMimeType": "application/json",
+                    },
+                },
+                timeout=60,
+            )
+        except Exception as e:
+            print(f"  Gemini {model} 네트워크: {str(e)[:60]}")
+            continue
+        if r.status_code != 200:
+            print(f"  Gemini {model} HTTP {r.status_code}")
+            continue
+        try:
+            txt = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+            txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
+            return json.loads(txt), f"Gemini {model}"
+        except Exception as e:
+            print(f"  Gemini {model} 파싱 실패: {str(e)[:60]}")
+    return None, "Gemini 모두 실패"
+
+
+def heuristic(ctx: dict) -> dict:
+    """LLM 실패 시 데이터 기반 250자 요약. 신호+뉴스+모순 해석까지 포함."""
+    short_pct = ctx["pred7_pct"]
+    mid_pct = ctx["pred21_pct"]
+    direction_short = "상승" if short_pct > 2 else "하락" if short_pct < -2 else "횡보"
+    direction_mid = "상승" if mid_pct > 5 else "하락" if mid_pct < -5 else "횡보"
+    # 모순 감지
+    contradiction = (short_pct < -2 and mid_pct > 5) or (short_pct > 2 and mid_pct < -5)
+    tone = "pos" if mid_pct > 0 else "neg" if mid_pct < 0 else "neu"
+    horizon = "long" if abs(mid_pct) > 20 else "short" if abs(short_pct) > abs(mid_pct) else "mid"
+
+    # 헤드라인 — 강조용 짧은 메시지
+    if contradiction and tone == "pos":
+        headline = f"단기 조정 후 중장기 강세 ({mid_pct:+.0f}%)"
+    elif contradiction and tone == "neg":
+        headline = f"단기 반등에도 중장기 약세 ({mid_pct:+.0f}%)"
+    elif tone == "pos":
+        headline = f"{direction_short}·{direction_mid} 동조, 상승 시그널"
+    elif tone == "neg":
+        headline = f"{direction_short}·{direction_mid} 동조, 하락 시그널"
+    else:
+        headline = "뚜렷한 방향성 없음 — 추가 신호 대기"
+
+    # 신호 코멘트
+    sig_text = ""
+    for line in ctx["signals"]:
+        if "A-4" in line:
+            # A-4 재고/출하 — 100 초과면 alert
+            m = re.search(r":\s*([\d.]+)", line)
+            if m and float(m.group(1)) > 100:
+                sig_text = f" A-4 재고지수가 {m.group(1)}(>100)로 공급과잉 경계 신호."
+                break
+            elif m and float(m.group(1)) < 95:
+                sig_text = f" A-4 재고지수 {m.group(1)}(<95)로 공급 타이트 신호."
+                break
+
+    # 거시 코멘트
+    macro_text = ""
+    for line in ctx["macro"]:
+        if "DXY" in line:
+            m = re.search(r":\s*([\d.]+)", line)
+            if m:
+                v = float(m.group(1))
+                macro_text = f" DXY {v:.1f}로 강달러 압력{'↑' if v > 100 else '↓'}."
+                break
+
+    # 뉴스 코멘트
+    news_text = ""
+    if ctx["news"]:
+        news_text = f" 최근 30일 핵심 뉴스 {len(ctx['news'])}건이 동반."
+
+    # 250자 분량 종합 — 핵심 수치/단어에 **bold** 마커
+    summary = (
+        f"단기 **GBR**은 7주 후 **${ctx['pred7']:.2f}** (**{short_pct:+.1f}%**), 중장기 **LSTM**은 21주 후 "
+        f"**${ctx['pred21']:.2f}** (**{mid_pct:+.1f}%**)를 가리킵니다."
+        f"{' **단기와 중장기의 방향이 갈리므로** 호라이즌별 의사결정이 필요합니다.' if contradiction else ''}"
+        f"{sig_text}{macro_text}{news_text} "
+        f"워치 포인트: **AI 서버 수요**·**HBM 캡 증설**·**지정학 리스크**를 주간 단위로 점검하세요. "
+        f"(현재 LLM 분석 미연결 — 데이터 기반 휴리스틱)"
+    )
+    # 270자 cap 보정
+    if len(summary) > 270:
+        summary = summary[:250].rsplit(" ", 1)[0] + "…"
+
+    # 키 신호 — 변화 큰 것 자동 선택
+    key_signals = []
+    if abs(short_pct) > 3 or abs(mid_pct) > 10:
+        key_signals.append("A-2")  # CapEx
+    if news_text:
+        key_signals.append("B-4")  # 지정학
+    if not key_signals:
+        key_signals = ["A-2", "B-1"]
+
+    return {
+        "headline": headline,
+        "summary": summary,
+        "tone": tone,
+        "confidence": 55,
+        "horizon_tilt": horizon,
+        "key_signals": key_signals[:3],
+    }
+
+
+def main():
+    print("[1/3] 컨텍스트 빌드…")
+    prompt, ctx = build_prompt()
+    print(f"  현재 ${ctx['current_usd']:.2f} · 7w ${ctx['pred7']:.2f} ({ctx['pred7_pct']:+.1f}%) · 21w ${ctx['pred21']:.2f} ({ctx['pred21_pct']:+.1f}%)")
+    print(f"  신호 {len(ctx['signals'])}개 · 거시 {len(ctx['macro'])}개 · 뉴스 {len(ctx['news'])}건")
+
+    print("[2/3] LLM 종합 분석 (Anthropic 우선)…")
+    obj, source = call_anthropic(prompt)
+    if not obj:
+        print(f"  ⚠️  {source} → Gemini fallback")
+        obj, source = call_gemini(prompt)
+    if not obj:
+        print(f"  ⚠️  {source} → 휴리스틱 fallback")
+        obj = heuristic(ctx)
+        source = "휴리스틱 (LLM 모두 실패)"
+
+    # 정규화
+    headline = (obj.get("headline") or "").strip()[:50]
+    summary = (obj.get("summary") or "").strip()
+    # 250자 enforce (한글 기준) — 270 초과 시만 컷, 그 미만은 LLM 출력 보존
+    if len(summary) > 270:
+        summary = summary[:250].rsplit(" ", 1)[0] + "…"
+    tone = (obj.get("tone") or "neu").lower()
+    if tone not in {"pos", "neu", "neg"}:
+        tone = "neu"
+    conf = int(obj.get("confidence") or 50)
+    conf = max(0, min(100, conf))
+    horizon = (obj.get("horizon_tilt") or "mid").lower()
+    if horizon not in {"short", "mid", "long"}:
+        horizon = "mid"
+    key_signals = [s for s in (obj.get("key_signals") or []) if isinstance(s, str)][:4]
+
+    payload = {
+        "generatedAt": datetime.now().isoformat(timespec="seconds"),
+        "model": source,
+        "headline": headline,
+        "summary": summary,
+        "tone": tone,
+        "confidence": conf,
+        "horizon": horizon,
+        "keySignals": key_signals,
+        "context": {
+            "current": ctx["current_usd"],
+            "wow": ctx["wow_pct"],
+            "pred7": ctx["pred7"], "pred7_pct": ctx["pred7_pct"],
+            "pred21": ctx["pred21"], "pred21_pct": ctx["pred21_pct"],
+        },
+    }
+
+    print("[3/3] 저장")
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  ✅ {OUT.relative_to(ROOT)}")
+    print(f"     모델: {source}")
+    print(f"     headline: {headline}")
+    print(f"     summary ({len(summary)}자): {summary[:80]}…")
+    print(f"     tone={tone} · conf={conf}% · horizon={horizon} · keySignals={key_signals}")
+
+
+if __name__ == "__main__":
+    main()
