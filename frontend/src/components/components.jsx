@@ -238,7 +238,7 @@ function LineChart({ width = 800, height = 280, series, xLabels, yDomain, refLin
         const path = s.data.map((d, j) => `${j === 0 ? "M" : "L"}${xs(d.x)},${ys(d.value)}`).join(" ");
         return (
           <g key={i}>
-            <path d={path} className="line" stroke={s.color || "var(--text)"} strokeDasharray={s.dashed ? "4 3" : null} strokeWidth={s.strokeWidth || null} />
+            <path d={path} className="line" stroke={s.color || "var(--text)"} strokeDasharray={typeof s.dashed === "string" ? s.dashed : (s.dashed ? "4 3" : null)} strokeWidth={s.strokeWidth || null} />
             {s.dots && s.data.map((d, j) => (
               <circle key={j} cx={xs(d.x)} cy={ys(d.value)} r={s.dotR || 3} className="dot" stroke={s.color || "var(--text)"}
                       onClick={s.onDotClick ? () => s.onDotClick(d) : null} />
@@ -277,10 +277,69 @@ function SectionHead({ icon, num, title, sub, actions }) {
   );
 }
 
+// USER-REQUESTED EXTENSION (2026-05-18 #3) — **bold** 마크다운을 <strong> 으로 렌더링
+function renderInsightEmphasis(text) {
+  if (!text) return null;
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^\*\*([^*]+)\*\*$/);
+    if (m) return <strong key={i} className="insight-emphasis">{m[1]}</strong>;
+    return <span key={i}>{part}</span>;
+  });
+}
+
+// ==== Insight Card (USER-REQUESTED EXTENSION, not in original hand-off) ====
+// 사용자 요청 (2026-05-18): "가격 스냅샷 영역 오른쪽에 예측분석 인사이트 추가, 100% Claude 관점 강조"
+// hand-off 디자인 토큰만 사용 — card / dlabel / num / ai-note 클래스 그대로 활용.
+function InsightCard({ insight }) {
+  if (!insight) {
+    return (
+      <div className="card insight-card" style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-dim)", fontSize: 12 }}>
+        예측분석 인사이트 — 데이터 준비 중
+      </div>
+    );
+  }
+  const toneClass = insight.tone === "pos" ? "pos" : insight.tone === "neg" ? "neg" : "neu";
+  const horizonLabel = insight.horizon === "short" ? "단기 (1~7주) 결정적"
+                     : insight.horizon === "long"  ? "장기 (21주+) 결정적"
+                     : "중장기 (8~21주) 결정적";
+  return (
+    <div className={`card insight-card insight-tone-${toneClass}`}>
+      <div className="insight-h">
+        <div className="insight-title">
+          <span className="insight-glyph">◆</span>
+          <span>예측분석 인사이트</span>
+        </div>
+        <div className="insight-meta">
+          <span className="num">{insight.model || "AI"}</span>
+        </div>
+      </div>
+
+      <div className="insight-main">
+        <div className="insight-body">
+          {renderInsightEmphasis(insight.summary || "(요약 없음)")}
+        </div>
+
+        <div className="ai-note insight-claude">
+          <div className="label">CLAUDE 종합 판단 · 신뢰 <span className="num">{insight.confidence ?? 0}%</span> · {horizonLabel}</div>
+          <div className="insight-headline">{insight.headline || "분석 중"}</div>
+          <div className="insight-keysig">
+            <span className="insight-keysig-label">핵심 신호</span>
+            {(insight.keySignals || []).map((s) => (
+              <span key={s} className="num insight-sig-chip">{s}</span>
+            ))}
+            {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 Object.assign(window, {
   Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES,
-  AiNote, BarRow, LineChart, FilterSelect, SectionHead
+  AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard
 });
 
 
-export { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead }
+export { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard }

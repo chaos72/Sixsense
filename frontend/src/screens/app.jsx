@@ -176,8 +176,15 @@ function Topbar({ pageLabel, pageId, onHome, t, setTweak }) {
       <div className="meta">
         <span><span className="dot"></span>매주 화요일 06:00 자동 수집</span>
         <span className="mono">마지막 갱신 · 2026-04-22 06:00</span>
-        <button className="btn sm" onClick={() => setTweak("theme", t.theme === "dark" ? "light" : "dark")}>
-          {t.theme === "dark" ? "☀ 라이트" : "☾ 다크"}
+        {/* USER-REQUESTED EXTENSION (2026-05-18 #6) — hand-off의 테마 토글 가시성 강화 (.theme-toggle 클래스) */}
+        <button
+          className="theme-toggle"
+          onClick={() => setTweak("theme", t.theme === "dark" ? "light" : "dark")}
+          aria-label={t.theme === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환"}
+          title={t.theme === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환"}
+        >
+          <span className="ic">{t.theme === "dark" ? "☀" : "☾"}</span>
+          <span>{t.theme === "dark" ? "라이트 모드" : "다크 모드"}</span>
         </button>
       </div>
     </div>

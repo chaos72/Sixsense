@@ -1,316 +1,285 @@
-# sixsense Implementation Guide
+# Sixsense — Do (Implementation Guide)
 
-> **Summary**: bkit `/pdca do sixsense` 산출물 (v0.2). **전략 변경**: 핸드오프 코드를 **직접 포팅**하여 14화면 UI를 100% 재현. 컴포넌트 재구현 금지.
+> **Hand-off SSOT Edition** (v0.3, 2026-05-18) — bkit `/pdca do sixsense` 산출물.
 >
-> **Project**: Server DRAM Price 식스센스
-> **Date**: 2026-05-17
-> **Phase**: Do (bkit PDCA 4단계)
-> **Scope**: `--scope module-0-foundation` (현재 세션)
-> **Strategy**: Direct Port (참조: PRD §7.4)
+> **불변 원칙**: `design_handoff_sixsense_dram_dashboard/` 가 UI 단일 진실원이다. UI 컴포넌트·레이아웃·색상·간격을 1px도 변경하지 않는다. 신규 UI 디자인을 만들지 않는다. (이 규칙 위반 시 PRD §4 위반.)
+>
+> 본 v0.3은 (v0.2의 hand-off 직접 포팅 전략을 유지하면서) **실데이터 주입 파이프라인**을 추가했다: backend가 `frontend/src/mocks/data.js` 를 자동 생성하고, hand-off React 앱이 ESM import + Vite HMR 로 즉시 반영한다.
 
 ---
 
-## ⚠️ 전략 변경 이력 (v0.2 — 2026-05-17)
-
-**v0.1 (폐기)**: "공유 컴포넌트 12종을 핸드오프에서 영감을 받아 TypeScript로 처음부터 새로 작성" → 결과적으로 **컴포넌트 카탈로그(쇼케이스)**가 만들어졌고 실제 14화면 UI가 아니었음.
-
-**v0.2 (현재)**: "핸드오프의 React 코드를 그대로 frontend/src/에 복사 + Vite 호환 최소 조정". 핸드오프와 100% 동일한 UI 보장. 사용자 요청: "무조건 UI는 claude design에서 만든 결과물 hand-off를 사용해야 해" (2026-05-17).
-
----
-
-## Context Anchor
-
-| Key | Value |
-|-----|-------|
-| **WHY** | 반도체 가격 예측을 위한 데이터 수집·분석에 사람·시간·비용이 과다 투입되고 시장 급변에 대응 못함 |
-| **WHO** | 반도체 부서 50대 임원 5명 |
-| **RISK** | 핸드오프 코드 포팅 시 React 19 호환성 + Vite JSX 처리 |
-| **SUCCESS** | dev 서버에서 핸드오프 `Sixsense.html`과 시각적으로 동일한 14화면 표시 |
-| **SCOPE** | Phase 0 (핸드오프 직접 포팅) → Phase 5 (API 연결) → Phase 6 (검증) |
-
----
-
-## Design Anchor
-
-**100% 핸드오프 동일 — 디자인 토큰/컴포넌트/레이아웃 모두 핸드오프에서 그대로 가져옴.** 변경 금지.
-
-- 시각 SSOT: `design_handoff_sixsense_dram_dashboard/Sixsense.html` (인터랙티브 프로토타입)
-- 코드 SSOT: `design_handoff_sixsense_dram_dashboard/src/*.{css,js,jsx}`
-
----
-
-## Session Scope
-
-### Current Session Modules
-
-**선택된 scope**: `module-0-foundation` (재정의)
-
-| Sub-task | 작업 | 출처 (hand-off) | 대상 (frontend) |
-|----------|------|----------------|-----------------|
-| 0a-backup | 기존 v0.1 쇼케이스 백업 | `src/App.tsx`, `src/design-system/` | `src/_legacy_showcase_v0.1/` |
-| 0b-css | CSS 전체 복사 | `src/styles.css` | `src/styles/styles.css` |
-| 0c-data | mock 데이터 복사 | `src/data.js` | `src/mocks/data.js` |
-| 0d-components | 공유 컴포넌트 포팅 | `src/components.jsx` | `src/components/components.jsx` |
-| 0e-dashboard | S-001 메인 포팅 | `src/dashboard.jsx` | `src/screens/dashboard.jsx` |
-| 0f-modals | 8 모달 포팅 | `src/modals.jsx` | `src/screens/modals.jsx` |
-| 0g-pages | 5 풀페이지 포팅 | `src/pages.jsx` | `src/screens/pages.jsx` |
-| 0h-app | 라우팅/테마/스택 포팅 | `src/app.jsx` | `src/screens/app.jsx` |
-| 0i-entry | 엔트리 래퍼 | — | `src/App.tsx` (5 라인) |
-
-**총 9개 sub-task, 예상 시간**: 2~3시간 (포팅 + 호환성 조정)
-
----
-
-## Upstream Context Chain
-
-### Documents Loaded
-
-- ✅ PRD v0.2: `docs/00-pm/sixsense.prd.md` (§7.4 직접 포팅 전략 명시)
-- ✅ Plan: `docs/01-plan/features/sixsense.plan.md`
-- ✅ Design: `docs/02-design/features/sixsense.design.md`
-- ✅ Hand-off (시각/코드 SSOT): `design_handoff_sixsense_dram_dashboard/`
-
-### Decision Record Chain
+## 1. 아키텍처 한 줄
 
 ```
-📋 Decision Record Chain
-─────────────────────────────────────────────────────
-[PRD §07]   UI 정의: 14화면 모두 핸드오프 그대로 사용
-[PRD §7.4]  구현 전략: Direct Port (재구현 금지)
-[Plan §7.2] 기술 스택: React + TS + Vite (Vite는 .jsx 네이티브 지원)
-[Design §9] 폴더 구조: src/components/, src/screens/, src/mocks/, src/styles/
-[Do v0.2]   엔트리 전략: TS App.tsx가 JSX hand-off-app을 래핑
-─────────────────────────────────────────────────────
+backend/data/*.json  ──[build_frontend_data.py]──►  frontend/src/mocks/data.js  ──[Vite HMR]──►  hand-off 14 화면
 ```
 
----
+UI 코드는 `design_handoff_sixsense_dram_dashboard/src/` 의 JSX를 `frontend/src/screens/` 와 `frontend/src/components/` 로 직접 복사·이동한 것이다. 데이터 주입 외에 코드 수정 없음.
 
-## 1. Pre-Implementation Checklist
+**사용자 명시 확장 (예외, 2026-05-18 누적)**:
 
-### 1.1 Documents Verified
+| # | 영역 | 변경 | 추가 파일/심볼 |
+|---|---|---|---|
+| #1 | S-001 §01 가격 스냅샷 | 4번째 슬롯에 "예측분석 인사이트" 카드 (초기 5분화 3:2) | `<InsightCard>` · `.grid-snapshot` · `.insight-*` · `build_insight.py` |
+| #2 | 인사이트 강조 | 헤드라인 큰 굵은 tone-color, ai-note border 굵게 | `.insight-headline` · `.insight-tone-{pos\|neu\|neg}` |
+| #3a | 인사이트 추가 강화 | 본문 14px(13→14), summary 내 `**bold**` 마크다운을 tone 컬러 chip으로 렌더, 6분화로 확장 (3:3 = 1fr 1fr 1fr 3fr) | `renderInsightEmphasis` (components.jsx) · `.insight-emphasis` · `.grid-snapshot` 변경 |
+| #3b | S-001 §02 DRAM 차트 | 차트 카드 아래에 Phase 6 Multi-Model 검증 패널 추가 | `<ModelValidationPanel>` (dashboard.jsx) · `meta.modelValidation` (build_frontend_data.py) · `.model-*` CSS |
+| #4a | 인사이트 카드 | 본문/CLAUDE 박스 위·아래 → 좌·우 분할 (3:2), 헤드라인 17px→15px(두 포인트 축소) | `.insight-main` (styles.css), components.jsx wrapper |
+| #4b | §02 검증 패널 정리 | "🎉 Phase 6…" 헤드라인 배너 / "🏗️ 아키텍처" ASCII 카드 / "⚙️ 환경 처리" AiNote 삭제. MAPE 표 2개 + 학습 시간만 유지 | dashboard.jsx ModelValidationPanel 단순화 |
+| #4c | §02 차트 | 4개 모델 결과 동시 표시 (Prophet baseline 1~21w 회색 dotted + HistGBR 1~7w 옅은 dashed + GBR★ 1~7w + LSTM★ 8~21w). model_comparison.txt 파싱 | `parse_model_comparison_series()` (build_frontend_data.py), `forecast_prophet` / `forecast_histgbr` 시계열 추가, DramChart + ChartLegend 4-line 지원 |
+| #4d | 인사이트/대시보드 일치성 | build_insight.py 도 동일 model_comparison.txt 우선 파싱 → 두 영역의 GBR/LSTM 가격이 항상 일치 | build_insight.py:build_prompt() 보강 |
+| #5  | §01 가격 스냅샷 가독성 | 그리드 6분화(3:3) → **7분화(3:4 = 1fr 1fr 1fr 4fr)**. 가격 3카드 제목("현재 계약가" / "1~7주 AI 예측가" / "8~21주 AI 예측가") 11px → 12px + 색상 `var(--text-dim)` → `var(--text-mid)` + weight 500 → 600 (인사이트 헤더와 통일). hand-off `.card-h` 글로벌 영향 회피 위해 `.grid-snapshot > .card > .card-h` 스코프 셀렉터로 한정. `.code` (🔍 클릭 표시)는 10px/text-faint 원본 보존 | styles.css `.grid-snapshot` + scoped `.card-h` 셀렉터만 |
+| #6a | §02 차트 라인 구분 | Prophet baseline 회색 1.0px → **황색 `var(--chart-baseline)` 1.6px dotted (`2 4` 촘촘점)**, HistGBR 회색 1.2px → **보라 `var(--chart-secondary)` 1.8px long-dash (`7 3`)**. GBR★ 청색·LSTM★ 초록은 변경 없음. 차트와 범례 둘 다 동일 색/패턴 적용 | LineChart `dashed` prop이 string도 받도록 확장 (`s.dashed`가 string이면 그대로 strokeDasharray, boolean이면 기본 "4 3"). 새 토큰 `--chart-baseline` / `--chart-secondary` (light·dark 둘 다) |
+| #6b | Topbar 테마 토글 가시성 | hand-off에 이미 존재했으나 `.btn.sm` 작은 회색이라 묻혀 보임 → **`.theme-toggle` 클래스 강화** (12px / weight 600 / border-strong / surface-2 배경 / 호버 시 accent 반전), 라벨 "☀ 라이트" → "☀ 라이트 모드" 확장, aria-label/title 추가 | styles.css `.theme-toggle` + app.jsx 토글 버튼 |
+| #7  | §09 풋바 수동 갱신 버튼 | "이번 주 새 수집 데이터 현황" 풋바 아래에 **🔄 수동 갱신 실행** 패널 추가. 클릭 시 5단계 파이프라인 백그라운드 실행 (auto_collectors → collect_news_events → forecast_v2 → build_insight → build_frontend_data). 진행률 바 + 단계별 ✅ 로그 + 완료 시 자동 페이지 새로고침. 백엔드 신규 endpoint 3개 (`POST /api/refresh`, `GET /api/refresh/jobs/{id}`, `GET /api/refresh/stages`) | `<RefreshPanel>` (dashboard.jsx) · `.refresh-*` CSS · main.py `_run_refresh_pipeline` (threading, subprocess, timeout 10분) |
 
-- [x] PRD §7.4 직접 포팅 전략 명시
-- [x] Design Hand-off 폴더 존재 확인
-- [x] v0.1 쇼케이스를 백업할 위치 결정 (`src/_legacy_showcase_v0.1/`)
-
-### 1.2 Environment Ready
-
-- [x] Node.js v24.15.0 + npm 11.12.1
-- [x] frontend/ 프로젝트 이미 초기화됨 (v0.1에서)
-- [x] 의존성 모두 설치됨 (react, react-router-dom, recharts, vitest 등)
-
----
-
-## 2. Implementation Strategy: Direct Port
-
-### 2.1 핵심 원칙
-
-1. **재작성 금지** — 핸드오프 JSX 코드를 그대로 사용. 컴포넌트 분해·리팩토링 금지.
-2. **CSS 전체 복사** — 디자인 토큰만이 아닌 컴포넌트 스타일까지 모두.
-3. **Mock 데이터 그대로** — `data.js`는 변경 없이 import.
-4. **JSX 확장자 유지** — TypeScript로 변환 안 함 (변환 시 디버그 시간 폭증). 향후 Phase 6에서 점진적 TS 마이그레이션.
-5. **최소 호환 조정** — Vite는 .jsx를 네이티브 처리. import 경로만 보정.
-
-### 2.2 잠재 호환성 이슈와 대응
-
-| 이슈 | 원인 | 대응 |
-|------|------|------|
-| React 18 vs 19 | 핸드오프는 React 18, 우리는 19 | 19는 18 하위호환. `<StrictMode>` 정도만 주의 |
-| `useState` hook 명시 import 누락 | 핸드오프 코드가 글로벌 React 사용 가정 | 각 파일 상단에 `import React, {useState, useEffect, ...} from 'react'` 추가 |
-| CSS 클래스명 (kebab-case) | 핸드오프는 일반 CSS, 우리는 CSS Module 옵션도 있음 | **CSS Module 사용 안 함** — 전역 styles.css로 import |
-| Tweaks 패널 | 개발 전용 | 일단 포함, 나중에 프로덕션 빌드에서 제거 |
+데이터: `backend/pipelines/build_insight.py` 가 Claude(우선) → Gemini → 휴리스틱 fallback chain으로 `meta.insight` 생성. modelValidation은 `build_frontend_data.py:build_model_validation()` 가 `forecast/model_comparison.txt` 를 파싱(없으면 사용자 명세 fallback).
 
 ---
 
-## 3. Key Files to Create/Modify
+## 2. 디렉토리 매핑 (hand-off ↔ frontend)
 
-### 3.1 New Files (이번 세션)
+| hand-off (SSOT) | frontend (포팅본) | 수정 정책 |
+|---|---|---|
+| `src/app.jsx` | `frontend/src/screens/app.jsx` | 변경 금지 |
+| `src/dashboard.jsx` | `frontend/src/screens/dashboard.jsx` | 변경 금지 |
+| `src/modals.jsx` | `frontend/src/screens/modals.jsx` | 변경 금지 |
+| `src/pages.jsx` | `frontend/src/screens/pages.jsx` | 변경 금지 |
+| `src/components.jsx` | `frontend/src/components/components.jsx` | 변경 금지 |
+| `src/tweaks-panel.jsx` | `frontend/src/screens/tweaks-panel.jsx` | 변경 금지 (운영 시 제거) |
+| `src/styles.css` | `frontend/src/styles/styles.css` | 변경 금지 |
+| `src/data.js` (mock) | `frontend/src/mocks/data.js` (★ AUTO-GENERATED) | **이 파일만 백엔드가 갱신** |
 
-```
-frontend/src/
-├── App.tsx                          [REWRITE: 5라인 래퍼]
-├── main.tsx                         [MODIFY: import styles/styles.css]
-├── styles/
-│   ├── styles.css                   [NEW: hand-off 전체 복사]
-│   ├── tokens.css                   [KEEP: 이미 있음, 호환 위해 유지 가능]
-│   └── globals.css                  [REMOVE: styles.css에 통합됨]
-├── mocks/
-│   └── data.js                      [NEW: hand-off 복사]
-├── components/
-│   └── components.jsx               [NEW: hand-off 복사 + import 조정]
-├── screens/
-│   ├── dashboard.jsx                [NEW: hand-off 복사]
-│   ├── modals.jsx                   [NEW: hand-off 복사]
-│   ├── pages.jsx                    [NEW: hand-off 복사]
-│   ├── app.jsx                      [NEW: hand-off 복사 — 라우팅 + 모달 스택]
-│   └── tweaks-panel.jsx             [NEW: 개발 전용]
-└── _legacy_showcase_v0.1/           [NEW: v0.1 백업]
-    ├── App.tsx
-    └── design-system/...
-```
-
-### 3.2 Files to Modify
-
-- `src/main.tsx`: 새 styles.css 경로 import
-- `src/App.tsx`: 쇼케이스 코드 제거, JSX 앱 마운트 래퍼만
+`frontend/src/App.tsx` 와 `frontend/src/main.tsx` 만 thin TypeScript wrapper로 신규 작성 (hand-off의 ReactDOM 부트스트랩을 Vite ESM 환경으로 옮기는 7~10줄).
 
 ---
 
-## 4. Dependencies
+## 3. 실데이터 → hand-off 주입 (핵심)
 
-추가 설치 없음. v0.1에서 이미 react, react-router-dom, recharts 모두 설치됨. 단, 핸드오프 차트는 자체 SVG이므로 recharts는 Phase 1 이후에만 사용.
+### 3.1 데이터 변환 파이프라인
 
----
+`backend/pipelines/build_frontend_data.py` 는 다음을 수행:
 
-## 5. Implementation Notes
+1. `backend/data/historical/{A-1…A-7, B-1…B-7, macro-*, target-dram}.json` 읽기
+2. `backend/data/forecast/forecast_v2_2026-02-w1.json` (Prophet + GBR + LSTM) 읽기
+3. hand-off `data.js` 의 `SIXSENSE_DATA` 객체 스키마에 1:1 매핑:
+   - `meta` — 현재가/1~7w 예측/8~21w 예측/모델명/신뢰도
+   - `history` — target-dram 최근 52주 (index/100 = $-단가 환산)
+   - `forecast7` — GBR 1~7주 (CI band 포함)
+   - `forecast21` — LSTM 8~21주 (CI band 포함)
+   - `signalsA` / `signalsB` — 각 7개 신호 카드 (latest value + 8주 sparkline + tone)
+   - `macro` — 5개 거시지표 (latest + 7주 추세)
+   - `accuracy` — forecast vs actual 비교 (21건)
+   - `snapshotPast` — 8주 전 시점 14신호 vs 현재 비교 (S-009/S-013 데이터)
+   - `collection` — 20/20 수집 현황 (S-014 데이터)
+   - `news` / `events` — 실시간 RSS (TechNews + Digitimes + Google News 14쿼리) → Gemini 2.5 Flash 분류 → 최근 30일 상위 10건 + 이벤트형 ≤8건. 산출물: `backend/data/news/latest.json` + `backend/data/events/latest.json` ([collect_news_events.py](backend/pipelines/collect_news_events.py))
+4. ESM `export const SIXSENSE_DATA = {...};` 로 `frontend/src/mocks/data.js` 출력
 
-### 5.1 Why Direct Port
+### 3.2 실행
 
-| 비교축 | 재작성 (v0.1 시도) | 직접 포팅 (v0.2) |
-|--------|-------------------|------------------|
-| UI 정확성 | ❌ 카탈로그가 나옴 | ✅ 100% 동일 |
-| 개발 시간 | 7일 (Phase 0만) | 2~3시간 (Phase 0 전체) |
-| 유지보수 | TS 타입 + Storybook | 향후 점진적 TS 변환 |
-| 위험 | 디자인 변경 가능성 | 핸드오프와 격리됨 |
-
-### 5.2 v0.1 쇼케이스 처리
-
-v0.1의 12개 컴포넌트(TypeScript)는 **참고용으로 보존**(`src/_legacy_showcase_v0.1/`). 향후 점진적 TS 마이그레이션 시 참고. 단 실제 라우트에서는 사용 안 함.
-
-### 5.3 Code-to-Design Traceability
-
-각 포팅된 .jsx 파일 상단에 다음 주석 추가:
-
-```javascript
-// PORTED FROM: design_handoff_sixsense_dram_dashboard/src/<file>.jsx
-// DO NOT MODIFY UI WITHOUT UPDATING DESIGN HAND-OFF FIRST
-// Design Ref: PRD §07, §7.4 Direct Port Strategy
+```bash
+cd /Users/youngseok.kim@dataiku.com/Documents/CAIO/Sixsense/backend
+source ../.env
+.venv/bin/python3 pipelines/build_frontend_data.py
+# → ✅ frontend/src/mocks/data.js 생성 완료 (29,190 bytes)
+#    - 현재가: $6.09 (지난주 대비 +4.0%)
+#    - 1~7주 예측: $5.64 (-7.4%)
+#    - 8~21주 예측: $8.29 (+36.2%)
+#    - history: 52주, forecast7: 7주, forecast21: 14주
 ```
 
-### 5.4 Things to Avoid
+Vite dev server가 실행 중이면 HMR 자동 반영 → 브라우저 새로고침 불필요.
 
-- ❌ 핸드오프 JSX를 "정리"하거나 "리팩토링"
-- ❌ CSS 클래스를 CSS Module로 변환
-- ❌ "더 나은" 색상/간격/타이포 적용
-- ❌ 새 화면 추가 (S-015 등)
-- ❌ 핸드오프에 있지만 "필요 없어 보이는" 기능 제거
+### 3.3 신호 변환 규칙
 
-### 5.5 Checklist (구현 중 매 단계 자가 검증)
+| 포맷 | 규칙 | tone 판정 |
+|---|---|---|
+| `sent` (감성, -1~+1) | 표시: `+0.75` / `+0.00` | pos ≥ 0.30, neg ≤ -0.30, 그 외 neu |
+| `sent_neg` (GPR 등 높을수록 부정) | 표시: `152.3` | neg ≥ 150, neu ≥ 100, 그 외 pos |
+| `pct` (4주 % 변화) | 표시: `+17.2%` | pos ≥ +3%, neg ≤ -3%, 그 외 neu |
+| `pct100` (이미 %) | 표시: `18%` | neu (Manifold 확률) |
+| `usd` ($-가격) | 표시: `$4.82` | 4주 변화 기준 pos/neg/neu |
+| `usd_b` (USD billions) | 표시: `$80.0B` | pos (CapEx 강세) |
+| `raw` (원시 수치) | 표시: 자동 단위 (M/K/raw) | A-4만 alert (>100), 그 외 neu |
 
-- [ ] dev 서버에서 화면을 핸드오프 `Sixsense.html`과 나란히 띄워 비교
-- [ ] 픽셀 단위 일치 (오차 ±2px 허용)
-- [ ] 모든 클릭/호버 인터랙션 동일하게 작동
-- [ ] 라이트/다크 + 편안/컴팩트 4조합 모두 동작
-- [ ] 모달 ESC + 바깥클릭 닫힘
-- [ ] 콘솔에 에러 0건
+스파크라인은 최근 8개 값을 0~1 정규화 (LineChart 컴포넌트가 그대로 그림).
 
 ---
 
-## 6. Testing Checklist
+## 4. Frontend 빌드 & 실행
 
-### 6.1 Visual Acceptance (필수)
-
-브라우저 2개 띄워 비교:
-1. `open design_handoff_sixsense_dram_dashboard/Sixsense.html`
-2. `open http://localhost:5173/`
-
-확인:
-- [ ] S-001 메인 대시보드 레이아웃 동일
-- [ ] 가격 카드 3개 (현재/1-7w/8-21w) 위치·스타일 동일
-- [ ] DRAM 차트 + 범위 필터 동일
-- [ ] 14신호 카드 (Group A·B) 동일
-- [ ] Graph RAG 카드 동일
-- [ ] 뉴스/거시/이벤트/정확도/수집 푸터 모두 동일
-- [ ] 각 화면 모달 진입 동일하게 작동
-
-### 6.2 Functional Acceptance
-
-- [ ] 모든 클릭 가능 카드가 클릭 시 적절한 화면 전환
-- [ ] 차트 범위 필터 3 모드 작동
-- [ ] HITL 패널 저장 버튼 작동 (mock)
-- [ ] 테마/밀도 토글 즉시 반영
-- [ ] 모달 스택 (모달 위 모달) 작동
-
-### 6.3 Code Quality
+### 4.1 개발 모드
 
 ```bash
 cd frontend
-npm run typecheck   # .tsx만 검사 (.jsx는 타입 검사 안 함)
-npm run lint        # ESLint 0 errors
-npm run build       # 프로덕션 빌드 성공
+npm install   # 1회
+npm run dev
+# → http://localhost:5173
 ```
 
----
+`App.tsx` (10줄) 는 `screens/app.jsx` 의 hand-off 루트 컴포넌트를 마운트만 한다:
 
-## 7. Progress Tracking
+```tsx
+// PORTED FROM: design_handoff_sixsense_dram_dashboard/Sixsense.html
+// @ts-expect-error — JSX module without explicit types (intentional)
+import HandoffApp from './screens/app.jsx'
+export default function App() {
+  return <HandoffApp />
+}
+```
 
-### 7.1 Current Session Tasks
+### 4.2 프로덕션 빌드
 
-| Sub-task | 상태 |
-|----------|------|
-| 0a-backup | 진행 예정 |
-| 0b-css | 진행 예정 |
-| 0c-data | 진행 예정 |
-| 0d-components | 진행 예정 |
-| 0e-dashboard | 진행 예정 |
-| 0f-modals | 진행 예정 |
-| 0g-pages | 진행 예정 |
-| 0h-app | 진행 예정 |
-| 0i-entry | 진행 예정 |
-
-### 7.2 Blockers (사전 예측)
-
-- **JSX의 글로벌 React 의존성**: 핸드오프 코드가 글로벌 `React`를 가정하면 각 .jsx 파일에 `import React from 'react'` 추가 필요. Vite는 자동 JSX runtime 사용하지만, hook 사용 시 명시 import 필요.
-- **CSS 클래스 충돌**: 핸드오프의 `.card`, `.btn` 등이 우리 v0.1 design-system의 CSS Module과 겹치면 안 됨 → v0.1을 `_legacy_showcase_v0.1/`로 격리하여 import 트리에서 제외하면 해결.
-
----
-
-## ✅ Checkpoint 4 — Implementation Approval
-
-**범위 요약**:
-- 신규 파일: 9개 (CSS 1 + data 1 + components 1 + screens 4 + app entry 1 + legacy 백업 1)
-- 수정 파일: 2개 (App.tsx, main.tsx)
-- 삭제 파일: 0개 (v0.1은 백업, 추후 점진 마이그레이션)
-- 예상 LOC: ~2,500 (핸드오프 그대로 복사 + 작은 호환 조정)
-- 예상 시간: 2~3시간
-
----
-
-## Version History
-
-| Version | Date | Changes | Author |
-|---------|------|---------|--------|
-| 0.1 | 2026-05-16 | 컴포넌트 재구현 가이드 — Phase 0 모듈 분할 | 김영석 |
-| 0.2 | 2026-05-17 | **전략 변경**: 핸드오프 직접 포팅으로 재작성. v0.1 쇼케이스는 `_legacy_showcase_v0.1/`로 백업. | 김영석 |
-
----
-
-## 11. Phase 6 — 멀티 모델 구현 (2026-05-17 추가)
-
-### 신규 파일
-- `backend/pipelines/preprocessing.py` (135 LOC)
-- `backend/pipelines/forecast_v2.py` (370 LOC)
-
-### 의존성 설치
 ```bash
-.venv/bin/pip install xgboost lightgbm scikit-learn torch
-# macOS: brew install libomp  (XGBoost/LightGBM 실제 사용 시)
+npm run build   # vite build → dist/
+npm run preview # 정적 서빙 미리보기
 ```
 
-### 실행
+---
+
+## 5. Backend 빌드 & 실행
+
+### 5.1 의존성
+
 ```bash
 cd backend
-.venv/bin/python3 pipelines/forecast_v2.py
-# → Prophet + Tree(GBR/HistGBR) + LSTM 3 모델 동시 학습
-# → backend/data/forecast/forecast_v2_2026-02-w1.json
-# → backend/data/forecast/model_comparison.txt
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+# fastapi, uvicorn, requests, pandas, scikit-learn, prophet, torch, plotly (대시보드 PoC만 사용), pyarrow, supabase
 ```
 
-### 결과
-- 단기 GBR MAPE 4.54% (Prophet 7.54% 대비 39.7% 개선)
-- 중장기 LSTM held-out MAPE 9.19%
-- 학습 시간 ~12초 (전체 파이프라인)
+### 5.2 실행
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 0.3 | 2026-05-17 | Phase 6 멀티 모델 구현 (preprocessing + forecast_v2) |
+```bash
+.venv/bin/uvicorn app.main:app --port 8000
+# → http://localhost:8000/api/health
+```
+
+### 5.3 주간 자동 갱신 (cron 권장)
+
+매주 화요일 06:00 KST:
+
+```bash
+0 6 * * 2 cd /path/to/Sixsense/backend && source ../.env && \
+  .venv/bin/python3 pipelines/auto_collectors.py --all && \
+  .venv/bin/python3 pipelines/collect_news_events.py && \
+  .venv/bin/python3 pipelines/forecast_v2.py && \
+  .venv/bin/python3 pipelines/build_insight.py && \
+  .venv/bin/python3 pipelines/build_frontend_data.py
+```
+
+---
+
+## 6. 컴포넌트별 데이터 매핑 (검증용)
+
+### 6.1 S-001 메인 대시보드
+
+| Hand-off 위젯 | data.js 필드 | 백엔드 소스 |
+|---|---|---|
+| `<MetricCard>` × 3 (가격 스냅샷) | `meta.{current, pred7, pred21, *Change}` | `target-dram.json` last + `forecast_v2_*.json` |
+| `<InsightCard>` (사용자 확장 #1/#2/#3a) | `meta.insight.{headline, summary, tone, confidence, horizon, keySignals, model}` (summary 내 `**bold**`) | `insight/latest.json` (Claude→Gemini→휴리스틱) |
+| `<ModelValidationPanel>` (사용자 확장 #3b) | `meta.modelValidation.{headline, shortRows, midRows, trainTimes, trainTotal, architecture, envNote}` | `forecast/model_comparison.txt` 파싱 |
+| DRAM 52주 + 1~7w/8~21w `<LineChart>` | `history`, `forecast7`, `forecast21` | target-dram + forecast_v2 |
+| 14 신호 `<SignalCard>` 그리드 | `signalsA[]`, `signalsB[]` | `historical/{A,B}-*.json` last value + sparkline |
+| Graph RAG 미니 차트 | (hand-off mock 유지) | (운영 시 macro-cu + target-dram 상관) |
+| AI 뉴스 카드 3건 | `news[].hot=true` | `news/latest.json` (RSS+Gemini, 30일 윈도우 top 10) |
+| 거시 카드 5건 | `macro[]` | `historical/macro-*.json` |
+| 이벤트 칩 3건 | `events[]` | `events/latest.json` (지정학·군사·재해·파업 분류) |
+| 정확도 3건 | `accuracy[].actual !== null` | forecast_v2 vs target-dram |
+| 수집 풋바 | `collection.summary` | `_summary.json` + 신호별 카운트 |
+
+### 6.2 S-008 거시경제 5탭
+
+| Tab | `macro[].id` | 실데이터 |
+|---|---|---|
+| 미국 금리 | `fed` | FRED DFF |
+| 달러 인덱스 | `dxy` | Yahoo DX-Y.NYB |
+| 산업생산지수 (PMI 대체) | `pmi` | FRED INDPRO |
+| USD/KRW | `krw` | Yahoo KRW=X |
+| 구리 | `cu` | Yahoo HG=F |
+
+### 6.3 S-012 정확도 + S-014 수집 현황
+
+- S-012: `accuracy[]` 21건 → MAPE 누적 라인 + 표
+- S-014: `collection.groupA[]` + `collection.groupB[]` → 신호별 마지막 수집/신규 건수/상태
+
+---
+
+## 7. 변경 금지 / 변경 허용 매트릭스
+
+| 변경 대상 | 허용? | 이유 |
+|---|---|---|
+| `frontend/src/screens/*.jsx` (포팅본) | ⚠ 사용자 명시 확장만 | hand-off SSOT — §1 확장 영역 외 변경 금지 |
+| `frontend/src/components/components.jsx` | ⚠ 사용자 명시 확장만 | hand-off SSOT — 신규 컴포넌트는 hand-off 토큰만 사용 |
+| `frontend/src/styles/styles.css` | ⚠ 사용자 명시 확장만 | hand-off SSOT — 신규 CSS는 hand-off CSS 변수만 사용 |
+| `frontend/src/mocks/data.js` | ⚠ 자동 갱신만 | `build_frontend_data.py` 출력 |
+| `frontend/src/App.tsx` / `main.tsx` | ✅ Vite 마운트 코드만 | thin wrapper |
+| `backend/pipelines/*.py` | ✅ 데이터 파이프라인 강화 OK | UI에 영향 없음 |
+| `backend/app/main.py` (FastAPI) | ✅ API 추가/수정 OK | UI는 mocks/data.js만 봄 |
+| `backend/data/*.json` | ⚠ 수집기 출력만 | 손으로 수정 금지 |
+| 새 화면 추가 | ❌ 원칙 금지 | hand-off 14화면이 전부. 추가가 필요하면 hand-off부터 갱신 |
+| 새 컴포넌트 추가 | ❌ 원칙 금지 | hand-off `components.jsx` 가 전부 |
+| 새 시각화 라이브러리 (Plotly 등) | ❌ 금지 | hand-off LineChart (SVG) 사용 |
+
+---
+
+## 8. 검증 절차
+
+### 8.1 L1 자동
+```bash
+cd backend
+.venv/bin/python3 -m pytest tests/
+bash tests/l1_api_test.sh
+.venv/bin/python3 pipelines/build_frontend_data.py   # 종료코드 0 확인
+```
+
+### 8.2 L2 브라우저 수동
+```bash
+# 1. 데이터 최신화
+cd backend && source ../.env && \
+  .venv/bin/python3 pipelines/build_frontend_data.py
+
+# 2. dev server (이미 실행 중이면 HMR 자동)
+cd ../frontend && npm run dev
+
+# 3. http://localhost:5173 접속 후 §6 체크리스트 수행
+```
+
+### 8.3 L3 정합성
+- 단기 MAPE ≤ 7% (현재 4.54% ✅)
+- 중장기 MAPE ≤ 12% (현재 9.19% ✅)
+- 자동 수집 20/20 (100% ✅)
+- news/events 카드에 "[데모]" 라벨 확인 (운영 시 실시간 크롤러로 교체)
+
+---
+
+## 9. 운영 단계 후속 (P2)
+
+| # | 작업 | 영향 |
+|---|---|---|
+| OP-1 | Supabase Postgres 동기화 (`sync_supabase.py`) — `signals` / `signal_data` / `forecasts` 테이블 | UI는 mocks 그대로 사용 (서버 캐시 도입 시 변경 가능) |
+| OP-2 | Tweaks 패널 제거, 어드민 페이지로 분리 | 운영 환경 정리 |
+| OP-3 | HITL 임계치 저장 → 재학습 트리거 (백엔드 endpoint) | hand-off `<HITL>` 컴포넌트가 이미 UI에 있음 |
+| OP-4 | cron / GitHub Actions 주간 자동 실행 (auto_collectors + collect_news_events + forecast_v2 + build_frontend_data) | 매주 화요일 06:00 KST |
+| OP-5 | 뉴스/이벤트 누적 history 구축 (RSS 30일 윈도우 한계 보완) | 매주 cron 누적 → 1년 차 완전 history |
+
+---
+
+## 10. 흔한 함정 (Pitfalls)
+
+1. **Hand-off UI를 "더 예쁘게" 만들고 싶은 충동** — 절대 금지. 사용자가 직접 디자인한 14화면이 SSOT다. 같은 실수를 두 번 했다 (TS 컴포넌트 쇼케이스 v0.1, Plotly HTML 대시보드).
+2. **`data.js` 를 손으로 편집** — `build_frontend_data.py` 출력으로 자동 갱신. 수동 편집은 다음 실행 시 덮어쓰임.
+3. **Plotly / Recharts / D3 외부 차트 라이브러리 추가** — 금지. hand-off의 SVG 기반 `<LineChart>` 사용.
+4. **새 시각화 HTML 파일 생성** — 금지. UI는 오직 `http://localhost:5173` (hand-off 포팅본).
+5. **`forecast_v2.py` 의 인덱스 (438, 506...) 를 그대로 표시** — `build_frontend_data.py` 가 `× 0.01` 스케일링으로 `$X.XX` 형태로 변환 (1.00 ~ 8.29 범위).
+6. **A-4 Red Alert 누락** — `> 100` 이면 자동 `tone="alert"`, hand-off CSS의 pulsing dot 애니메이션이 작동.
+
+---
+
+## 11. 변경 이력
+
+| Ver | 일자 | 변경 |
+|---|---|---|
+| 0.1 | 2026-05-15 | 초안 (TS 컴포넌트 쇼케이스) — ❌ hand-off 무시, 폐기 |
+| 0.2 | 2026-05-16 | 핸드오프 직접 포팅 전환 (14 화면 동작) |
+| **0.3** | **2026-05-18** | **실데이터 주입 파이프라인 추가 (`build_frontend_data.py`), 변경 금지/허용 매트릭스 명문화, news/events 데모 더미 표시 규칙 추가** |

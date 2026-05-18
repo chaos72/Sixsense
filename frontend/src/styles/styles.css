@@ -36,6 +36,11 @@
   --radius: 6px;
   --radius-lg: 10px;
 
+  /* USER-REQUESTED EXTENSION (2026-05-18 #6) — 차트용 보조 토큰 (Prophet 황색 baseline, HistGBR 보라 보조) */
+  --chart-baseline: var(--sig-neu);
+  --chart-secondary: #9333ea;
+  --chart-secondary-bg: rgba(147, 51, 234, 0.10);
+
   --font-sans: "Pretendard Variable", Pretendard, "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 
@@ -86,6 +91,11 @@
 
   --forecast-mid: #6ee7b7;
   --forecast-mid-bg: rgba(16, 185, 129, 0.18);
+
+  /* USER-REQUESTED EXTENSION (2026-05-18 #6) — 차트 보조 토큰 (다크 모드) */
+  --chart-baseline: var(--sig-neu);
+  --chart-secondary: #c084fc;
+  --chart-secondary-bg: rgba(192, 132, 252, 0.18);
 
   --accent: #f4f3ef;
   --grid: #232326;
@@ -257,6 +267,175 @@ button { font-family: inherit; cursor: pointer; }
 /* ===== Grid ===== */
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #3 → #5) — 가격 스냅샷 3카드 + 예측분석 인사이트 (7분화 3:4) */
+.grid-snapshot {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 4fr;
+  gap: var(--gap);
+}
+@media (max-width: 1280px) {
+  .grid-snapshot { grid-template-columns: 1fr 1fr; }
+}
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #5) — §01 가격 스냅샷 카드 제목을 인사이트 헤더와 통일 (size↑ + tone-mid 컬러) */
+.grid-snapshot > .card > .card-h {
+  font-size: 12px;
+  color: var(--text-mid);
+  font-weight: 600;
+}
+.grid-snapshot > .card > .card-h .code {
+  font-size: 10px;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+/* 인사이트 카드 헤더도 같은 스코프 안에 있으나 .insight-h 별도 클래스라 영향 없음 — 이미 통일 컬러 */
+
+/* Insight Card — hand-off card/dlabel/ai-note 토큰을 조합 */
+.insight-card {
+  display: flex; flex-direction: column; gap: 10px;
+  border-color: var(--border-strong);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+}
+/* USER-REQUESTED EXTENSION (2026-05-18 #4) — summary 본문(좌) | CLAUDE 종합 판단(우) 좌우 분할 */
+.insight-main {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 12px;
+  flex: 1;
+  align-items: stretch;
+}
+@media (max-width: 1400px) {
+  .insight-main { grid-template-columns: 1fr; }
+}
+.insight-h {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; flex-wrap: wrap;
+}
+.insight-title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text-mid);
+}
+.insight-glyph {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 4px;
+  background: var(--accent); color: var(--bg);
+  font-size: 10px;
+}
+.insight-meta { font-size: 10px; color: var(--text-dim); }
+.insight-meta .num { font-size: 10px; }
+.insight-body {
+  font-size: 14px; line-height: 1.7;
+  color: var(--text); word-break: keep-all;
+  flex: 1;
+}
+/* USER-REQUESTED EXTENSION (2026-05-18 #3) — summary 내 강조 단어 굵게 + tone 컬러 */
+.insight-emphasis {
+  font-weight: 700;
+  color: var(--sig-info);
+  background: var(--sig-info-bg);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+.insight-tone-pos .insight-emphasis { color: var(--sig-pos); background: var(--sig-pos-bg); }
+.insight-tone-neg .insight-emphasis { color: var(--sig-neg); background: var(--sig-neg-bg); }
+.insight-tone-neu .insight-emphasis { color: var(--sig-neu); background: var(--sig-neu-bg); }
+.insight-claude {
+  border-left-width: 4px;
+  border-left-color: var(--sig-info);
+  background: var(--sig-info-bg);
+  padding: 12px 14px 11px;
+}
+.insight-claude .label {
+  color: var(--sig-info);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #2, #4) — 인사이트 강조 헤드라인 굵게 + 액센트 컬러. #4: 17 → 15px (두 포인트 축소) */
+.insight-headline {
+  margin: 8px 0 10px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--sig-info);
+  word-break: keep-all;
+}
+/* tone별 헤드라인/보더 컬러 변형 */
+.insight-tone-pos .insight-claude { border-left-color: var(--sig-pos); background: var(--sig-pos-bg); }
+.insight-tone-pos .insight-claude .label,
+.insight-tone-pos .insight-headline { color: var(--sig-pos); }
+
+.insight-tone-neg .insight-claude { border-left-color: var(--sig-neg); background: var(--sig-neg-bg); }
+.insight-tone-neg .insight-claude .label,
+.insight-tone-neg .insight-headline { color: var(--sig-neg); }
+
+.insight-tone-neu .insight-claude { border-left-color: var(--sig-neu); background: var(--sig-neu-bg); }
+.insight-tone-neu .insight-claude .label,
+.insight-tone-neu .insight-headline { color: var(--sig-neu); }
+
+.insight-keysig {
+  margin-top: 4px;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  font-size: 11px; color: var(--text-mid);
+}
+.insight-keysig-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.insight-sig-chip {
+  display: inline-flex; align-items: center;
+  padding: 2px 7px; border-radius: 3px;
+  background: var(--surface); border: 1px solid var(--border-strong);
+  font-size: 10.5px; font-weight: 700; color: var(--text);
+}
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #3) — §02 Phase 6 Multi-Model 검증 패널 */
+.model-validation { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.model-headline {
+  font-size: 14px; font-weight: 700;
+  background: var(--sig-pos-bg); color: var(--sig-pos);
+  border-left: 4px solid var(--sig-pos);
+  padding: 10px 14px; border-radius: 0 var(--radius) var(--radius) 0;
+}
+.model-headline .num { font-size: 14px; font-weight: 800; color: inherit; }
+
+.model-table {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+}
+.model-table th, .model-table td {
+  text-align: left; padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.model-table th {
+  font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text-dim);
+  background: var(--surface-2);
+}
+.model-table td.num-cell {
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.model-table tr.winner td { background: var(--sig-pos-bg); font-weight: 700; }
+.model-table tr.winner td:first-child::after { content: " ⭐"; }
+.model-table .model-note { color: var(--text-dim); font-size: 11px; }
+
+.model-arch-card { padding: 14px 16px; }
+.model-arch {
+  font-family: var(--font-mono); font-size: 11px;
+  line-height: 1.5; color: var(--text-mid);
+  white-space: pre; overflow-x: auto;
+  margin: 0; padding: 0;
+}
+.model-train-time {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-size: 11.5px; color: var(--text-mid);
+}
+.model-train-time .num { font-size: 11.5px; font-weight: 600; color: var(--text); }
 .grid-7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--gap); }
 .grid-8 { display: grid; grid-template-columns: repeat(8, 1fr); gap: var(--gap); }
 .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gap); }
@@ -305,6 +484,103 @@ button { font-family: inherit; cursor: pointer; }
 .btn.ghost { border-color: transparent; background: transparent; color: var(--text-mid); }
 .btn.ghost:hover { background: var(--surface-2); color: var(--text); }
 .btn.sm { padding: 4px 8px; font-size: 11px; }
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #6) — 다크/라이트 토글 버튼을 topbar 에서 잘 띄게 강화 */
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+.theme-toggle:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+.theme-toggle .ic { font-size: 14px; line-height: 1; }
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 패널 (§09 풋바 아래) */
+.refresh-panel {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+.refresh-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.refresh-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px;
+  font-size: 13px; font-weight: 700;
+  background: var(--accent); color: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.refresh-btn:hover:not(:disabled) { opacity: 0.85; }
+.refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.refresh-btn.running { background: var(--sig-info); border-color: var(--sig-info); }
+.refresh-ic { font-size: 14px; display: inline-block; }
+.refresh-ic.spin { animation: refresh-spin 1.4s linear infinite; }
+@keyframes refresh-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.refresh-hint {
+  font-size: 11.5px; color: var(--text-dim); flex: 1; min-width: 240px;
+}
+
+.refresh-progress { margin-top: 12px; }
+.refresh-progress-bar {
+  height: 6px; border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.refresh-progress-fill {
+  height: 100%; background: var(--sig-info);
+  transition: width 0.4s ease;
+}
+.refresh-progress-fill.done   { background: var(--sig-pos); }
+.refresh-progress-fill.failed { background: var(--sig-neg); }
+.refresh-progress-meta {
+  display: flex; justify-content: space-between;
+  margin-top: 6px;
+  font-size: 11.5px; color: var(--text-mid);
+}
+
+.refresh-log {
+  margin: 10px 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 11.5px; line-height: 1.5;
+}
+.refresh-log li {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 4px 8px; border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+}
+.refresh-log li.fail { border-color: var(--sig-neg); background: var(--sig-neg-bg); color: var(--sig-neg); }
+.refresh-log-tag { flex-shrink: 0; font-size: 11px; }
+
+.refresh-error {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: var(--sig-neg-bg); color: var(--sig-neg);
+  border-left: 3px solid var(--sig-neg);
+  font-size: 12px; line-height: 1.5;
+}
 .btn .ic { width: 12px; height: 12px; }
 .btn.link {
   border: none; background: none; padding: 0;

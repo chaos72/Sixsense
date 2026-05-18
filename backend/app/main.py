@@ -11,12 +11,16 @@ Implementation notes:
 - HITL POST queues a fake retrain job for L1/L3 test purposes
 """
 import json
+import os
+import subprocess
+import sys
+import threading
 import time
 import uuid
 from pathlib import Path
 from typing import Any, Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -40,6 +44,80 @@ app.add_middleware(
 
 # In-memory HITL retrain queue (for POST + polling tests)
 RETRAIN_JOBS: dict[str, dict[str, Any]] = {}
+
+# USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 작업 큐 (S-001 풋바 "🔄 수동 갱신")
+REFRESH_JOBS: dict[str, dict[str, Any]] = {}
+REPO_ROOT = Path(__file__).resolve().parents[2]
+BACKEND_DIR = REPO_ROOT / "backend"
+VENV_PY = BACKEND_DIR / ".venv/bin/python3"
+
+REFRESH_STAGES = [
+    ("auto_collectors",      "데이터 수집 (정형 7 + 비정형 7 + 거시 5 + 타겟 1 = 20 신호)", ["--all"]),
+    ("collect_news_events",  "뉴스/이벤트 수집 (RSS 14쿼리 → LLM 분류)",                    []),
+    ("forecast_v2",          "예측 모델 재학습 (Prophet + GBR + LSTM)",                      []),
+    ("build_insight",        "예측분석 인사이트 생성 (LLM 종합 판단)",                       []),
+    ("build_frontend_data",  "프론트엔드 데이터 빌드 (data.js)",                             []),
+]
+
+
+def _run_refresh_pipeline(job_id: str):
+    job = REFRESH_JOBS[job_id]
+    job["status"] = "running"
+    job["startedAt"] = time.time()
+    env = {**os.environ}
+    # 프로젝트 루트 .env 로드 (각 스크립트가 자체적으로도 읽지만 안전 차원)
+    env_file = REPO_ROOT / ".env"
+    if env_file.exists():
+        for line in env_file.read_text().splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            env[k.strip()] = v.strip().strip('"').strip("'")
+
+    try:
+        for idx, (stage_id, stage_label, extra_args) in enumerate(REFRESH_STAGES, start=1):
+            job["currentStep"] = idx
+            job["stage"] = stage_label
+            script = BACKEND_DIR / f"pipelines/{stage_id}.py"
+            if not script.exists():
+                job["status"] = "failed"
+                job["error"] = f"파이프라인 스크립트 없음: {script}"
+                return
+            t0 = time.time()
+            result = subprocess.run(
+                [str(VENV_PY), str(script), *extra_args],
+                cwd=str(BACKEND_DIR),
+                env=env,
+                capture_output=True,
+                text=True,
+                timeout=600,
+            )
+            dur = round(time.time() - t0, 1)
+            tail = (result.stdout or result.stderr or "").strip().splitlines()
+            last_line = tail[-1][:200] if tail else "(no output)"
+            log_entry = {
+                "step": idx, "stage": stage_label, "durSec": dur,
+                "ok": result.returncode == 0, "lastLine": last_line,
+            }
+            job["logs"].append(log_entry)
+            if result.returncode != 0:
+                job["status"] = "failed"
+                job["error"] = (result.stderr or result.stdout or "")[-800:]
+                job["finishedAt"] = time.time()
+                return
+        job["status"] = "done"
+        job["stage"] = "완료"
+        job["finishedAt"] = time.time()
+        job["totalDurSec"] = round(job["finishedAt"] - job["startedAt"], 1)
+    except subprocess.TimeoutExpired:
+        job["status"] = "failed"
+        job["error"] = f"타임아웃 (10분 초과) — 단계: {job.get('stage')}"
+        job["finishedAt"] = time.time()
+    except Exception as e:
+        job["status"] = "failed"
+        job["error"] = f"{type(e).__name__}: {str(e)[:500]}"
+        job["finishedAt"] = time.time()
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -330,3 +408,69 @@ def get_hitl_job(job_id: str):
         job["beforeResult"] = {"matchRate": 0.85}
         job["afterResult"] = {"matchRate": 0.92}
     return job
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 (S-001 §09 풋바 버튼)
+# ──────────────────────────────────────────────────────────────────────────────
+@app.post("/api/refresh", status_code=202)
+def post_refresh():
+    """5단계 파이프라인 백그라운드 실행 (auto_collectors → news → forecast → insight → build).
+    이미 진행 중인 작업이 있으면 그 job_id 반환 (중복 실행 방지)."""
+    for jid, j in REFRESH_JOBS.items():
+        if j["status"] in ("queued", "running"):
+            return {
+                "queueId": jid, "status": j["status"], "stage": j.get("stage"),
+                "currentStep": j.get("currentStep", 0), "totalSteps": len(REFRESH_STAGES),
+                "pollUrl": f"/api/refresh/jobs/{jid}", "reused": True,
+            }
+    job_id = f"rf_{uuid.uuid4().hex[:12]}"
+    REFRESH_JOBS[job_id] = {
+        "status": "queued",
+        "stage": "대기 중",
+        "currentStep": 0,
+        "totalSteps": len(REFRESH_STAGES),
+        "logs": [],
+        "createdAt": time.time(),
+    }
+    # subprocess가 길어 BackgroundTasks 보다 스레드 사용 (uvicorn worker 차단 방지)
+    threading.Thread(target=_run_refresh_pipeline, args=(job_id,), daemon=True).start()
+    return {
+        "queueId": job_id, "status": "queued",
+        "totalSteps": len(REFRESH_STAGES),
+        "pollUrl": f"/api/refresh/jobs/{job_id}",
+    }
+
+
+@app.get("/api/refresh/jobs/{job_id}")
+def get_refresh_job(job_id: str):
+    if job_id not in REFRESH_JOBS:
+        raise HTTPException(
+            status_code=404,
+            detail={"error": "JOB_NOT_FOUND", "message": "수동 갱신 작업 없음"},
+        )
+    job = REFRESH_JOBS[job_id]
+    return {
+        "queueId": job_id,
+        "status": job["status"],
+        "stage": job.get("stage"),
+        "currentStep": job.get("currentStep", 0),
+        "totalSteps": job.get("totalSteps", len(REFRESH_STAGES)),
+        "logs": job.get("logs", []),
+        "error": job.get("error"),
+        "totalDurSec": job.get("totalDurSec"),
+        "createdAt": job.get("createdAt"),
+        "finishedAt": job.get("finishedAt"),
+    }
+
+
+@app.get("/api/refresh/stages")
+def get_refresh_stages():
+    """수동 갱신 파이프라인의 단계 메타데이터 (UI 사전 표시용)."""
+    return {
+        "stages": [
+            {"step": i + 1, "id": sid, "label": label}
+            for i, (sid, label, _) in enumerate(REFRESH_STAGES)
+        ],
+        "totalSteps": len(REFRESH_STAGES),
+    }

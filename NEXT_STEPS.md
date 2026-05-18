@@ -1,176 +1,161 @@
-# 🎓 Sixsense — 최신 상태 (Phase 5e 누적 / 2026-05-17)
+# 🎓 Sixsense — Phase 7 누적 (2026-05-18)
 
-> **현재 단계**: 🎉 **자동 데이터 수집 20/20 (100%) 완료!** Multi-model: 단기 GBR MAPE **4.54%**, 중장기 LSTM **9.19%**. Supabase 통합 준비 완료.
-> KAIST CAIO 과제 제출 + 실제 운영환경 발전 모두 가능.
+> **현재 상태**: 자동 데이터 수집 **20/20 (100%)** + Multi-model 단기 GBR MAPE **4.54%**, 중장기 LSTM MAPE **9.19%** + hand-off 14화면 **실데이터 주입 완료** + 뉴스/이벤트 RSS+LLM 자동 수집 + **수동 갱신 버튼**.
+>
+> KAIST CAIO 6조 과제 제출 가능 + 실제 운영환경 발전 모두 가능.
 
 ---
 
-## 📊 현재 수집 현황 (한눈에)
+## 📊 한눈에
 
 ```
-정형 A:   ███████████████████████  7/7 ✅ 완료
-비정형 B: ███████████████████████  7/7 ✅ 완료 (B-1/5/6는 키워드 fallback + Gemini 옵션)
+정형 A:   ███████████████████████  7/7 ✅
+비정형 B: ███████████████████████  7/7 ✅
 거시:     ███████████████████████  5/5 ✅
 타겟:     ███████████████████████  1/1 ✅
+            ━━━━━━━━━━━━━━━━━━━━━━━
+  🎉 총계: 20/20 (100%) 자동 수집
 
-           ━━━━━━━━━━━━━━━━━━━━━━━
-  🎉 총계: 20/20 (100%) 자동 수집 작동
+News:    ██████████ 10건 (RSS+Gemini, 최근 30일 Top 10)
+Events:  ████       4건  (RSS+Gemini, 지정학·군사·재해·파업)
+Insight: ████       250자 (Claude→Gemini→휴리스틱 fallback chain)
 ```
 
-### LLM 정확도 업그레이드 (선택, 5분)
+---
 
-키워드 fallback (60%) → Gemini API (85%) — 무료, 결제카드 불필요:
+## 🖥️ 핵심 실행 (한 줄)
+
 ```bash
-# 1. https://aistudio.google.com → Get API Key
-# 2. echo "GEMINI_API_KEY=AIzaSy..." >> .env
-# 3. .venv/bin/python3 pipelines/auto_collectors.py B-1
-# → Anthropic 시도 → 크레딧 부족 → Gemini 자동 fallback ✅
+cd /Users/youngseok.kim@dataiku.com/Documents/CAIO/Sixsense/backend && \
+  source ../.env && \
+  .venv/bin/python3 pipelines/auto_collectors.py --all && \
+  .venv/bin/python3 pipelines/collect_news_events.py && \
+  .venv/bin/python3 pipelines/forecast_v2.py && \
+  .venv/bin/python3 pipelines/build_insight.py && \
+  .venv/bin/python3 pipelines/build_frontend_data.py
+# (매주 화요일 06:00 KST cron 자동 실행 대상 — 또는 S-001 풋바 "🔄 수동 갱신" 버튼)
 ```
-상세: [docs/09-data-acquisition/llm-key-guide-no-anthropic.md](docs/09-data-acquisition/llm-key-guide-no-anthropic.md)
+
+### Frontend (이미 실행 중일 가능성)
+```bash
+cd frontend && npm run dev   # → http://localhost:5173
+```
+
+### Backend API (수동 갱신 + 15 기본 endpoint)
+```bash
+cd backend && .venv/bin/uvicorn app.main:app --port 8000 --reload
+# → http://localhost:8000/docs (OpenAPI Swagger)
+```
+
+---
+
+## 🎯 hand-off SSOT (UI 진실원)
+
+> **무조건** `design_handoff_sixsense_dram_dashboard/` (Claude Design hifi 14화면)이 UI 단일 진실원. 신규 UI 디자인 금지. 외부 차트 라이브러리(Plotly/Recharts/D3) 금지.
+
+### 7가지 사용자 명시 확장 (예외 — `frontend/src/` 만 수정, hand-off 토큰만 사용)
+| # | 영역 | 변경 |
+|---|---|---|
+| #1 | S-001 §01 가격 스냅샷 | 4번째 슬롯에 `<InsightCard>` 추가 (초기 5분화 3:2) |
+| #2 | 인사이트 강조 | 헤드라인 큰 굵은 tone-color + ai-note 강화 |
+| #3 | 인사이트 + §02 차트 | 본문 14px + `**bold**` 마크다운 → tone chip. 6분화로 확장. §02에 Multi-Model 검증 패널 추가 |
+| #4 | 차트 + 인사이트 | 차트에 4개 모델 동시 표시 (Prophet/HistGBR/GBR★/LSTM★). 인사이트 본문/CLAUDE 좌·우 분할. 헤드라인 15px. 검증 패널 정리 (헤드라인/아키텍처/AiNote 제거) |
+| #5 | §01 그리드 | 7분화(3:4). 가격 카드 제목 12px + text-mid 컬러 (인사이트 헤더와 통일) |
+| #6 | 차트 색상 + 토글 | Prophet 황색 dotted + HistGBR 보라 long-dash로 명확 구분. 다크/라이트 토글 버튼 가시성 강화 (`.theme-toggle`) |
+| #7 | §09 풋바 | **🔄 수동 갱신 실행** 버튼 + 진행률 바 + 단계별 로그 + 완료 시 자동 새로고침 |
+
+---
+
+## 🔄 데이터 흐름 (실데이터 → hand-off UI)
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  매주 화요일 06:00 KST (또는 §09 풋바 "🔄 수동 갱신" 버튼)             │
+│                                                                          │
+│  ① auto_collectors.py --all   → backend/data/historical/*.json          │
+│  ② collect_news_events.py     → backend/data/news/latest.json           │
+│                                  backend/data/events/latest.json         │
+│  ③ forecast_v2.py             → backend/data/forecast/forecast_v2_*.json│
+│                                  backend/data/forecast/model_comparison.txt
+│  ④ build_insight.py           → backend/data/insight/latest.json        │
+│  ⑤ build_frontend_data.py     → frontend/src/mocks/data.js              │
+│                                              ↓ ESM import (Vite HMR)     │
+│                                  http://localhost:5173 (14화면 hand-off) │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🤖 LLM Chain (build_insight.py / collect_news_events.py)
+
+| 순위 | LLM | 상태 (2026-05-18 11:30 KST) | 회복 |
+|---|---|---|---|
+| 1 | Anthropic Claude (haiku-4-5) | ❌ HTTP 400 "credit balance too low" | console.anthropic.com → Billing 충전 (영구) |
+| 2 | Google Gemini 2.5 Flash | ⏳ HTTP 429 RPM 20/min 초과 (분당 한도) | 32~60초 후 자동 회복 |
+| 2' | Google Gemini 2.0 Flash | ⏳ 동일 RPM 한도 | 동일 |
+| 3 | Groq llama-3.3-70b | ❌ `.env`에 키 미설정 | console.groq.com 가입 (무료 14400/day, 가장 빠른 해결) |
+| 4 | **휴리스틱** | ✅ 현재 사용 중 | 데이터 기반 250자 자동 생성, `**bold**` 강조 포함 |
+
+**현재 인사이트** (휴리스틱, 250자):
+> headline: "**하락·하락 동조, 하락 시그널**"
+> 단기 GBR은 7주 후 $5.06 (-16.9%), 중장기 LSTM은 21주 후 $5.08 (-16.6%)를 가리킵니다. A-4 재고지수 4.75(<95)로 공급 타이트 신호. DXY 98.1로 강달러 압력↓. 최근 30일 핵심 뉴스 5건이 동반. 워치 포인트: AI 서버 수요·HBM 캡 증설·지정학 리스크를 주간 단위로 점검하세요.
 
 ---
 
 ## 📦 PDCA 산출물 (KAIST CAIO 제출용)
 
-| 단계 | 파일 | 줄수 | 비고 |
-|------|------|------|------|
-| PM (PRD) | [docs/00-pm/sixsense.prd.md](docs/00-pm/sixsense.prd.md) | 1,641 | 18 섹션 종합 |
-| Plan | [docs/01-plan/features/sixsense.plan.md](docs/01-plan/features/sixsense.plan.md) | 326 | 요구사항·아키텍처·위험 |
-| Design | [docs/02-design/features/sixsense.design.md](docs/02-design/features/sixsense.design.md) | 1,113 | bkit 11 섹션 |
-| Do (v0.2) | [docs/03-do/features/sixsense.do.md](docs/03-do/features/sixsense.do.md) | 284 | 핸드오프 직접 포팅 |
-| Analysis | [docs/03-analysis/sixsense.analysis.md](docs/03-analysis/sixsense.analysis.md) | 320+ | Phase 5e 진행 반영 |
-| QA | [docs/05-qa/sixsense.qa-report.md](docs/05-qa/sixsense.qa-report.md) | 230 | L1/L2/L3 67건 통과 |
-| Report | [docs/04-report/sixsense.report.md](docs/04-report/sixsense.report.md) | 340+ | 통합 보고 |
-
----
-
-## 🖥️ 실행 가능한 산출물
-
-### 1. 프론트엔드 (14화면 핸드오프 그대로)
-
-```bash
-cd frontend && npm run dev
-# → http://localhost:5173
-```
-
-### 2. 백엔드 API (FastAPI 15 엔드포인트)
-
-```bash
-cd backend
-.venv/bin/uvicorn app.main:app --port 8000
-# → http://localhost:8000/api/health
-```
-
-### 3. 자동 데이터 수집 (16개 신호)
-
-```bash
-cd backend
-source ../.env
-.venv/bin/python3 pipelines/auto_collectors.py --all
-```
-
-### 4. Prophet 예측 (매주 재학습)
-
-```bash
-.venv/bin/python3 pipelines/forecast.py
-# → backend/data/forecast/forecast_2026-02-w1.json
-# → MAPE 7.54%, 단기 1~7주 + 중장기 8~21주
-```
-
-### 5. Supabase 동기화 (스키마 1회 실행 후)
-
-```bash
-# Step 1 (1회): Supabase Studio → SQL Editor → backend/app/schema.sql 실행
-# Step 2 (매주): JSON → Postgres push
-.venv/bin/python3 pipelines/sync_supabase.py
-```
+| 단계 | 파일 | 비고 |
+|------|------|------|
+| PM (PRD) | [prd.md](prd.md) (사본 [docs/00-pm/sixsense.prd.md](docs/00-pm/sixsense.prd.md)) | Hand-off SSOT Edition, 18 섹션 + 7가지 확장 표 |
+| Plan | [docs/01-plan/features/sixsense.plan.md](docs/01-plan/features/sixsense.plan.md) | 요구사항·아키텍처·위험 |
+| Design | [docs/02-design/features/sixsense.design.md](docs/02-design/features/sixsense.design.md) | hand-off 그대로 |
+| Do | [docs/03-do/features/sixsense.do.md](docs/03-do/features/sixsense.do.md) | hand-off 직접 포팅 + 실데이터 주입 + 7가지 확장 매트릭스 |
+| Check | [docs/03-analysis/sixsense.analysis.md](docs/03-analysis/sixsense.analysis.md) | Phase 5e 진행 반영 |
+| QA | [docs/05-qa/sixsense.qa-report.md](docs/05-qa/sixsense.qa-report.md) | L1/L2/L3 67/67 |
+| Report | [docs/04-report/sixsense.report.md](docs/04-report/sixsense.report.md) | 통합 보고 |
 
 ---
 
 ## 🔑 등록된 API 키 (.env, gitignored)
 
-| 키 | 상태 | 활용 신호 |
-|----|------|----------|
-| ANTHROPIC_API_KEY | ✅ 등록 / ⚠️ 크레딧 0 | B-1, B-5, B-6 (충전 후 활성) |
+| 키 | 상태 | 활용 |
+|----|------|------|
+| ANTHROPIC_API_KEY | ✅ 등록 / ⚠️ 크레딧 0 | LLM 1순위 — 충전 후 활성 |
+| GEMINI_API_KEY | ✅ 작동 (RPM 한도) | LLM 2순위 — 분당 20 req |
 | KOSIS_API_KEY + KOSIS_FULL_URL | ✅ 작동 | A-4 (53주) |
-| KCS_API_KEY (관세청 data.go.kr) | ✅ 작동 | A-3 (53주) |
+| KCS_API_KEY (관세청) | ✅ 작동 | A-3 (53주) |
 | AWS_ACCESS_KEY_ID + SECRET | ✅ 작동 | A-5 (11주, 90일 한계) |
-| SUPABASE_URL + PUBLISHABLE_KEY | ✅ 작동 | DB 통합 (스키마 1회 실행 대기) |
-| GOOGLE_APPLICATION_CREDENTIALS | ⏸ 미설정 | B-2 (GDELT BigQuery) |
-| REDDIT_CLIENT_ID + SECRET | ⏸ 미설정 | B-3 정확도 (현재 HN 대체) |
+| SUPABASE_URL + PUBLISHABLE_KEY | ✅ 작동 | DB 통합 (schema.sql 1회 실행 대기) |
+| GROQ_API_KEY | ⏸ 미설정 | LLM 3순위 fallback (무료 14400/day, **추천 추가**) |
 
 ---
 
-## 🎯 남은 4개 신호 — 다음 액션
-
-### Priority 1: B-2 GDELT (15분, 가장 빠름)
-
-```bash
-# 진단
-cd backend && .venv/bin/python3 pipelines/verify_b2_gcp.py
-
-# 가이드: docs/09-data-acquisition/key-acquisition-guide.md §2
-# 핵심 단계:
-# 1. console.cloud.google.com 가입 + 결제카드
-# 2. 프로젝트 생성 → IAM → Service Accounts
-# 3. BigQuery Data Viewer + Job User 역할
-# 4. JSON 키 다운로드 → ~/.config/gcp/sixsense-bq.json
-# 5. .env에 GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcp/sixsense-bq.json
-# 6. .venv/bin/python3 pipelines/auto_collectors.py B-2
-```
-
-→ +1 신호 (17/20)
-
-### Priority 2: Anthropic 크레딧 충전 (5분, 가장 가성비)
-
-```bash
-# 1. https://console.anthropic.com/settings/billing → 카드 + $5 충전
-# 2. (추가 코드 작업: PDF 다운로드 + Claude sentiment 추출 — 1시간)
-# 3. .venv/bin/python3 pipelines/auto_collectors.py B-1
-```
-
-→ +3 신호 (B-1+B-5+B-6 = 20/20 완성)
-
-### Priority 3: Reddit PRAW (5분, 선택)
-
-```bash
-# 1. reddit.com/prefs/apps → script 앱 생성
-# 2. .env에 REDDIT_CLIENT_ID/SECRET
-# 3. 자동 B-3가 HN 대체 → Reddit으로 전환됨
-```
-
-→ B-3 정확도 향상 (신호 수 동일)
-
----
-
-## 📁 핵심 자산 (디렉토리 구조)
+## 📁 핵심 자산 구조
 
 ```
 Sixsense/
-├── .env                              # 모든 API 키 (gitignored)
-├── prd.md / prd.docx / prd.md.bak    # PRD 18섹션
-├── NEXT_STEPS.md                     # 본 파일
-├── design_handoff_.../               # 14화면 hifi 디자인 (SSOT)
-├── frontend/                         # React 19 + TS + Vite (14화면 동작)
+├── .env                                # 모든 API 키 (gitignored)
+├── prd.md                              # PRD Hand-off SSOT Edition
+├── NEXT_STEPS.md                       # 본 파일
+├── design_handoff_sixsense_dram_dashboard/   # ★ UI SSOT (변경 금지)
+├── frontend/                           # React 19 + TS + Vite (hand-off 직접 포팅)
+│   └── src/{App.tsx, screens/, components/, mocks/data.js, styles/}
 ├── backend/
-│   ├── app/
-│   │   ├── main.py                   # FastAPI 15 endpoints
-│   │   ├── data.json                 # mock 데이터
-│   │   ├── supabase_client.py        # Supabase REST 래퍼
-│   │   └── schema.sql                # DB DDL (Studio에서 1회)
+│   ├── app/{main.py, schema.sql, supabase_client.py}
 │   ├── pipelines/
-│   │   ├── backfill.py               # 초기 백필 (1회)
-│   │   ├── auto_collectors.py        # 11개 자동 collector
-│   │   ├── upload_manual.py          # 수동 CSV 업로드
-│   │   ├── forecast.py               # Prophet 학습/예측
-│   │   ├── sync_supabase.py          # JSON → DB
-│   │   └── verify_b2_gcp.py          # B-2 GCP 진단
-│   ├── data/
-│   │   ├── historical/               # 16개 신호 시계열
-│   │   ├── forecast/                 # Prophet 출력
-│   │   └── manual/                   # 사용자 CSV 템플릿
-│   └── tests/
-│       └── l1_api_test.sh            # 41 API 테스트 (모두 통과)
+│   │   ├── auto_collectors.py          # ① 20 신호 수집
+│   │   ├── collect_news_events.py      # ② RSS + Gemini → news/events
+│   │   ├── forecast_v2.py              # ③ Prophet + GBR + LSTM
+│   │   ├── build_insight.py            # ④ LLM 종합 인사이트
+│   │   ├── build_frontend_data.py      # ⑤ 실데이터 → frontend mocks
+│   │   ├── sync_supabase.py            # (선택) JSON → Postgres
+│   │   └── backfill.py
+│   └── data/
+│       ├── historical/{A-*, B-*, macro-*, target-dram}.json
+│       ├── forecast/forecast_v2_*.json + model_comparison.txt
+│       ├── news/latest.json            # 10건 (Gemini 분류)
+│       ├── events/latest.json          # 4건 (high-risk 분류)
+│       └── insight/latest.json         # 250자 (LLM/휴리스틱)
 └── docs/
     ├── 00-pm/sixsense.prd.md
     ├── 01-plan/features/sixsense.plan.md
@@ -179,65 +164,42 @@ Sixsense/
     ├── 03-analysis/sixsense.analysis.md
     ├── 04-report/sixsense.report.md
     ├── 05-qa/sixsense.qa-report.md
-    └── 09-data-acquisition/
-        ├── data-acquisition-report.md   # v0.4 최신 수집 현황
-        ├── auto-upload-guide.md         # 11신호 자동화
-        ├── manual-upload-guide.md       # 수동 CSV
-        ├── key-acquisition-guide.md     # 8개 키 발급 절차
-        ├── kosis-url-generation.md      # KOSIS 사용자 URL
-        ├── data-go-kr-troubleshooting.md # 관세청 디버그
-        └── supabase-integration.md      # DB 통합
+    ├── 09-data-acquisition/
+    └── 10-modeling/modeling-architecture.md
 ```
 
 ---
 
-## 📅 커밋 히스토리 (최근 10개)
+## 🚀 즉시 데모 가능
 
 ```bash
-git log --oneline -10
-```
-
-```
-(최신)  feat(phase5e): A-6 Manifold + B-2 GCP 진단 + 문서 통합 갱신
-        feat(phase5e): A-5 AWS EC2 Spot 11주 수집 성공
-        feat(phase5e): A-3 관세청 53주 수집 성공 (Excel 코드 참조)
-        feat(phase5e): A-3 data.go.kr Itemtrade 엔드포인트 적용
-        feat(phase5f): Supabase 통합 — REST + 스키마 + sync
-        feat(phase5e): collector가 루트 .env 자동 로드
-        feat(phase5e): A-4 KOSIS 재고지수 53주 수집 성공
-        feat(phase5e): KOSIS collector 3가지 입력 방식 지원
-        feat(phase5e): 11신호 자동 collector + 3개 즉시 수집
-        feat: Phase 5 backend + L1/L2/L3 runtime tests 100% (67/67)
-(첫)    chore: initial commit — Sixsense DRAM Dashboard MVP
-```
-
----
-
-## ✅ 즉시 데모 가능 (단일 명령)
-
-```bash
-# 1. 데이터 + 예측 갱신
+# 1. 데이터 + 예측 + 인사이트 갱신
 cd /Users/youngseok.kim@dataiku.com/Documents/CAIO/Sixsense/backend
 source ../.env
 .venv/bin/python3 pipelines/auto_collectors.py --all && \
-  .venv/bin/python3 pipelines/forecast.py && \
-  cat data/forecast/forecast_summary.txt
+  .venv/bin/python3 pipelines/collect_news_events.py && \
+  .venv/bin/python3 pipelines/forecast_v2.py && \
+  .venv/bin/python3 pipelines/build_insight.py && \
+  .venv/bin/python3 pipelines/build_frontend_data.py
 
 # 2. 백엔드 + 프론트엔드 동시 기동
-.venv/bin/uvicorn app.main:app --port 8000 &
+.venv/bin/uvicorn app.main:app --port 8000 --reload &
 cd ../frontend && npm run dev
 ```
 
-→ http://localhost:5173 에서 14화면 시연 + 백엔드 API 호출 + Prophet 예측 결과 확인
+→ http://localhost:5173 → S-001 메인 대시보드에서:
+- §01 가격 스냅샷 7분화 (3 카드 + 인사이트 카드 좌우 분할, 250자 강조 본문 + CLAUDE 종합 판단)
+- §02 DRAM 차트 4개 모델 동시 표시 (Prophet 황색 + HistGBR 보라 + GBR★ 청색 + LSTM★ 초록) + MAPE 검증 표
+- §03 14 신호 카드, §04 Graph RAG, §05 뉴스/거시, §06 이벤트/정확도, §07 수집 풋바 + **🔄 수동 갱신** 버튼
 
 ---
 
-## Version History
+## 📅 Phase 히스토리
 
-| Version | Date | 누적 신호 | 주요 변경 |
-|---------|------|---------|----------|
-| 0.1 | 2026-05-16 | 9 | 초기 백필 + Phase 5 backend |
-| 0.2 | 2026-05-17 | 12 | B-3/B-4/B-7 자동 수집 |
-| 0.3 | 2026-05-17 | 14 | A-4 KOSIS + A-3 관세청 |
-| 0.4 | 2026-05-17 | 15 | A-5 AWS EC2 Spot |
-| **0.5** | **2026-05-17** | **16** | **A-6 Manifold + B-2 GCP 진단 + 문서 통합** |
+| Phase | 일자 | 주요 변경 |
+|---|---|---|
+| 5 | 2026-05-16 | Backend FastAPI 15 endpoint + L1/L2/L3 67/67 |
+| 5e | 2026-05-17 | 20/20 자동 수집 (KOSIS·KCS·AWS·Manifold·RSS) |
+| 5f | 2026-05-17 | Supabase REST 통합 |
+| 6 | 2026-05-17 | Multi-model (Prophet + GBR + LSTM, MAPE 4.54%) |
+| **7** | **2026-05-18** | **Hand-off SSOT 재정렬 + 실데이터 주입 + News/Events RSS+LLM + 7가지 UI 확장 + 수동 갱신 endpoint** |

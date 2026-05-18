@@ -1,9 +1,179 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
-import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead } from '../components/components.jsx'
+import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard } from '../components/components.jsx'
 
 // S-001 Main Dashboard
 const D = SIXSENSE_DATA;
+
+// USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 패널 (§09 풋바 바로 아래)
+// 백엔드 /api/refresh POST → polling /api/refresh/jobs/{id} → 완료 시 page reload
+const API_BASE = (typeof window !== "undefined" && window.location.hostname === "localhost")
+  ? "http://localhost:8000" : "";
+
+function RefreshPanel() {
+  const [job, setJob] = useState(null);     // {queueId, status, stage, currentStep, totalSteps, logs, error, totalDurSec}
+  const [error, setError] = useState(null);
+  const pollRef = useRef(null);
+
+  // 컴포넌트 마운트 시 단계 메타 가져오기 (사전 표시용) — 실패해도 무시
+  const [stages, setStages] = useState([]);
+  useEffect(() => {
+    fetch(`${API_BASE}/api/refresh/stages`).then(r => r.ok ? r.json() : null).then(j => {
+      if (j && j.stages) setStages(j.stages);
+    }).catch(() => {});
+  }, []);
+
+  const stopPolling = () => {
+    if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+  };
+
+  const startPolling = (queueId) => {
+    stopPolling();
+    pollRef.current = setInterval(async () => {
+      try {
+        const r = await fetch(`${API_BASE}/api/refresh/jobs/${queueId}`);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const j = await r.json();
+        setJob(j);
+        if (j.status === "done") {
+          stopPolling();
+          // 완료 — data.js 가 갱신되었으므로 페이지 새로고침으로 신규 데이터 반영
+          setTimeout(() => window.location.reload(), 1200);
+        } else if (j.status === "failed") {
+          stopPolling();
+        }
+      } catch (e) {
+        setError(e.message);
+        stopPolling();
+      }
+    }, 2000);
+  };
+
+  useEffect(() => () => stopPolling(), []);
+
+  const trigger = async () => {
+    setError(null);
+    try {
+      const r = await fetch(`${API_BASE}/api/refresh`, { method: "POST" });
+      if (!r.ok) throw new Error(`HTTP ${r.status}: ${await r.text()}`);
+      const j = await r.json();
+      setJob({ ...j, logs: [], currentStep: j.currentStep || 0 });
+      startPolling(j.queueId);
+    } catch (e) {
+      setError(`백엔드 호출 실패 — uvicorn(:8000) 이 실행 중인지 확인하세요. (${e.message})`);
+    }
+  };
+
+  const isRunning = job && (job.status === "queued" || job.status === "running");
+  const isDone = job && job.status === "done";
+  const isFailed = job && job.status === "failed";
+  const progressPct = job ? Math.round((job.currentStep / Math.max(1, job.totalSteps || stages.length || 5)) * 100) : 0;
+
+  return (
+    <div className="refresh-panel">
+      <div className="refresh-row">
+        <button
+          className={`btn refresh-btn ${isRunning ? "running" : ""}`}
+          onClick={trigger}
+          disabled={isRunning}
+          title="현재까지 수집된 모든 데이터와 예측 모델을 즉시 재학습합니다 (~1~2분)"
+        >
+          <span className={`refresh-ic ${isRunning ? "spin" : ""}`}>🔄</span>
+          <span>{isRunning ? "갱신 중…" : isDone ? "✅ 갱신 완료 — 새로고침 중" : isFailed ? "⚠ 다시 시도" : "수동 갱신 실행"}</span>
+        </button>
+        <div className="refresh-hint">
+          모든 신호 수집 + 뉴스 분류 + 모델 재학습 + 인사이트 + 빌드 (5단계, 약 1~2분)
+        </div>
+      </div>
+
+      {job && (
+        <div className="refresh-progress">
+          <div className="refresh-progress-bar">
+            <div className={`refresh-progress-fill ${isFailed ? "failed" : isDone ? "done" : ""}`} style={{ width: `${progressPct}%` }} />
+          </div>
+          <div className="refresh-progress-meta">
+            <span>
+              <strong>단계 {job.currentStep}/{job.totalSteps || stages.length || 5}</strong> · {job.stage || "초기화"}
+            </span>
+            {job.totalDurSec && <span className="muted">총 {job.totalDurSec}초</span>}
+          </div>
+        </div>
+      )}
+
+      {job && job.logs && job.logs.length > 0 && (
+        <ul className="refresh-log">
+          {job.logs.map((l) => (
+            <li key={l.step} className={l.ok ? "ok" : "fail"}>
+              <span className="refresh-log-tag">{l.ok ? "✅" : "❌"}</span>
+              <span><strong>{l.stage}</strong> <span className="muted">({l.durSec}s)</span> — {l.lastLine}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {(error || (isFailed && job.error)) && (
+        <div className="refresh-error">
+          <strong>오류:</strong> {error || job.error}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// USER-REQUESTED EXTENSION (2026-05-18 #3, #4) — §02 Multi-Model 검증 표 (헤드라인/아키텍처/환경처리는 #4에서 삭제)
+function ModelValidationPanel({ mv }) {
+  if (!mv) return null;
+  return (
+    <div className="model-validation">
+      <div className="grid-2">
+        <div className="card">
+          <div className="dlabel" style={{ marginBottom: 8 }}>단기 (1~7주) — 우수 모델 자동 선정</div>
+          <table className="model-table">
+            <thead>
+              <tr><th>모델</th><th>MAPE</th><th>평가</th></tr>
+            </thead>
+            <tbody>
+              {mv.shortRows.map((r) => (
+                <tr key={r.model} className={r.winner ? "winner" : ""}>
+                  <td>{r.model}</td>
+                  <td className="num-cell">{r.mape.toFixed(2)}%</td>
+                  <td>{r.eval}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="card">
+          <div className="dlabel" style={{ marginBottom: 8 }}>중장기 (8~21주)</div>
+          <table className="model-table">
+            <thead>
+              <tr><th>모델</th><th>held-out MAPE</th></tr>
+            </thead>
+            <tbody>
+              {mv.midRows.map((r) => (
+                <tr key={r.model}>
+                  <td>{r.model}</td>
+                  <td className="num-cell">{r.mape.toFixed(2)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="model-train-time">
+            ⏱ 학습 시간 (전체 파이프라인): <span className="num">~{mv.trainTotal}초</span>{" "}
+            ({mv.trainTimes.map((t, i) => (
+              <Fragment key={t.name}>
+                {i > 0 && " + "}
+                {t.name} <span className="num">{t.sec}s</span>
+              </Fragment>
+            ))})
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Dashboard({ onNav }) {
   const m = D.meta;
@@ -13,9 +183,9 @@ function Dashboard({ onNav }) {
     <div className="content">
       {/* Top 3 cards */}
       <div className="section">
-        <SectionHead num="01" icon="◉" title="가격 스냅샷" sub="2026-04-22 (화) 기준 — 매주 화요일 06:00 자동 갱신" />
-        <div className="grid-3">
-          <MetricCard 
+        <SectionHead num="01" icon="◉" title="가격 스냅샷" sub={`${m.updated || "최신"} 기준 — 매주 화요일 06:00 자동 갱신`} />
+        <div className="grid-snapshot">
+          <MetricCard
             label="현재 계약가"
             code="SPOT · DDR5 8Gb"
             value={`$${m.current.toFixed(2)}`}
@@ -25,7 +195,7 @@ function Dashboard({ onNav }) {
           />
           <MetricCard
             label="1~7주 AI 예측가"
-            code="prophet_v2.1 · 신뢰 81%"
+            code={`GBR · 신뢰 ${m.confidence ?? 81}%`}
             value={`$${m.pred7.toFixed(2)}`}
             unit="/ GB"
             change={`${m.pred7Change} 예상`}
@@ -35,7 +205,7 @@ function Dashboard({ onNav }) {
           />
           <MetricCard
             label="8~21주 AI 예측가"
-            code="prophet_v2.1 · 신뢰 74%"
+            code={`LSTM · 신뢰 ${(m.confidence ?? 81) - 7}%`}
             value={`$${m.pred21.toFixed(2)}`}
             unit="/ GB"
             change={`${m.pred21Change} 예상`}
@@ -43,6 +213,7 @@ function Dashboard({ onNav }) {
             sub="🔍 클릭하여 근거 보기"
             onClick={() => onNav("S-002", { horizon: 21 })}
           />
+          <InsightCard insight={m.insight} />
         </div>
       </div>
 
@@ -53,6 +224,7 @@ function Dashboard({ onNav }) {
           <DramChart range={chartRange} onPointClick={(d) => onNav("S-009", { week: d.x })} />
           <ChartLegend range={chartRange} />
         </div>
+        <ModelValidationPanel mv={m.modelValidation} />
       </div>
 
       {/* 14 signals */}
@@ -194,6 +366,8 @@ function Dashboard({ onNav }) {
             <span className="num" style={{ marginLeft: 8, fontWeight: 600 }}>6일 22시간</span>
           </div>
         </div>
+        {/* USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 버튼 (전체 파이프라인 즉시 재실행) */}
+        <RefreshPanel />
       </div>
     </div>
   );
@@ -281,7 +455,19 @@ function DramChart({ range = "all", onPointClick }) {
   
   // Always show history up to current
   series.push({ data: histSeries, color: "var(--text)" });
-  
+
+  // USER-REQUESTED EXTENSION (2026-05-18 #4 → #6) — 4개 모델 동시 표시. #6: Prophet 황색 dotted / HistGBR 보라 dashed-long으로 명확 구분
+  // Prophet baseline (1~21w 전 구간) — 황색 dotted (촘촘한 점)
+  if (D.forecast_prophet && D.forecast_prophet.length) {
+    const prophetData = [{ x: 0, value: last.value }, ...D.forecast_prophet.filter(d => d.week <= xMax).map(d => ({ x: d.week, value: d.value }))];
+    series.push({ data: prophetData, color: "var(--chart-baseline)", strokeWidth: 1.6, dashed: "2 4" });
+  }
+  // HistGBR (1~7w, 단기 보조 모델) — 보라 long-dash
+  if (D.forecast_histgbr && D.forecast_histgbr.length && range !== "mid") {
+    const histgbrData = [{ x: 0, value: last.value }, ...D.forecast_histgbr.filter(d => d.week <= xMax).map(d => ({ x: d.week, value: d.value }))];
+    series.push({ data: histgbrData, color: "var(--chart-secondary)", strokeWidth: 1.8, dashed: "7 3" });
+  }
+
   // Short range: only 1-7 forecast (blue)
   if (range === "short") {
     const f7 = [{ x: 0, value: last.value }, ...f7Data.map(d => ({ x: d.week, value: d.value }))];
@@ -335,21 +521,32 @@ function DramChart({ range = "all", onPointClick }) {
 }
 
 function ChartLegend({ range }) {
+  // USER-REQUESTED EXTENSION (2026-05-18 #4) — Prophet baseline + HistGBR 범례 추가
   return (
-    <div style={{ display: "flex", gap: 24, marginTop: 12, paddingLeft: 44, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
+    <div style={{ display: "flex", gap: 18, marginTop: 12, paddingLeft: 44, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
       <span className="chart-legend-item">
         <svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="var(--text)" strokeWidth="1.75"/></svg> 실측 ({range === "short" ? "26주" : range === "mid" ? "13주" : "52주"})
       </span>
+      <span className="chart-legend-item">
+        <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--chart-baseline)" strokeWidth="1.6" strokeDasharray="2 4"/></svg>
+        <span style={{ color: "var(--chart-baseline)", fontWeight: 600 }}>Prophet baseline</span> (1~21w)
+      </span>
+      {range !== "mid" && (
+        <span className="chart-legend-item">
+          <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--chart-secondary)" strokeWidth="1.8" strokeDasharray="7 3"/></svg>
+          <span style={{ color: "var(--chart-secondary)", fontWeight: 600 }}>HistGBR</span> (1~7w · 6.86%)
+        </span>
+      )}
       {(range === "short" || range === "mid" || range === "all") && (
         <span className="chart-legend-item">
           <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="var(--sig-info)" strokeWidth="1.75" strokeDasharray="4 3"/></svg>
-          1~7주 예측 · 신뢰구간
+          <strong style={{ color: "var(--sig-info)" }}>GBR ★</strong> (1~7w · 4.54%) · 신뢰구간
         </span>
       )}
       {(range === "mid" || range === "all") && (
         <span className="chart-legend-item">
           <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="var(--forecast-mid)" strokeWidth={range === "mid" ? "2.4" : "1.75"} strokeDasharray={range === "mid" ? null : "4 3"}/></svg>
-          8~21주 예측 · 신뢰구간 {range === "mid" && <span style={{ color: "var(--forecast-mid)", fontWeight: 600, marginLeft: 4 }}>(중점)</span>}
+          <strong style={{ color: "var(--forecast-mid)" }}>LSTM ★</strong> (8~21w · 9.19%) {range === "mid" && <span style={{ color: "var(--forecast-mid)", fontWeight: 600, marginLeft: 4 }}>(중점)</span>}
         </span>
       )}
       <span className="muted" style={{ marginLeft: "auto", whiteSpace: "nowrap" }}>예측 데이터 포인트 클릭 → S-009</span>
