@@ -168,7 +168,7 @@ def build_prompt() -> tuple[str, dict]:
 다음 JSON 스키마로만 답변하세요. 한국어로, 마크다운/설명 금지:
 {{
   "headline": "22자 이내 강조 메시지 (예: 'AI 수요 견인, 장기 상승 전환')",
-  "summary": "230~260자 사이 종합 분석 — 가격 방향, 핵심 근거 3개(신호+뉴스+거시), 단기와 중장기의 차이, 워치 포인트 1~2개를 자연스럽게 연결한 한 단락. 문장 끝까지 완전히 마무리할 것. **중요한 단어·수치 3~5개**(예: 가격, %, 신호 이름, 핵심 동인)를 **이중 별표**로 감싸서 강조하라. 예: '**AI 수요**가 **+36%**의 **장기 상승**을 견인'.",
+  "summary": "**280~360자** 사이 종합 분석 — 가격 방향, 핵심 근거 3개(신호+뉴스+거시), 단기와 중장기의 차이, 워치 포인트 1~2개를 자연스럽게 연결한 한 단락. ★ **반드시 마지막을 마침표(.)로 완결**할 것. '...' '…' '등' '강력한' 처럼 끊긴 어구로 끝내지 말 것 (잘림 금지). 모든 문장이 주어+서술어로 완결되어야 함. **중요한 단어·수치 3~5개**를 **이중 별표**로 감싸서 강조하라. 예: '**AI 수요**가 **+36%**의 **장기 상승**을 견인합니다.'",
   "tone": "pos|neu|neg",
   "confidence": 0~100,
   "horizon_tilt": "short|mid|long — 어느 호라이즌이 가장 결정적인가",
@@ -294,15 +294,15 @@ def heuristic(ctx: dict) -> dict:
     if ctx["news"]:
         news_text = f" 최근 30일 핵심 뉴스 {len(ctx['news'])}건이 동반."
 
-    # 250자 분량 종합 — 핵심 수치/단어에 **bold** 마커
+    # USER-REQUESTED EXTENSION (#12) — 280~360자 분량, 완결 문장으로 마무리
     summary = (
-        f"단기 **GBR**은 7주 후 **${ctx['pred7']:.2f}** (**{short_pct:+.1f}%**), 중장기 **LSTM**은 21주 후 "
-        f"**${ctx['pred21']:.2f}** (**{mid_pct:+.1f}%**)를 가리킵니다."
-        f"{' **단기와 중장기의 방향이 갈리므로** 호라이즌별 의사결정이 필요합니다.' if contradiction else ''}"
-        f"{sig_text}{macro_text}{news_text} "
-        f"워치 포인트: **AI 서버 수요**·**HBM 캡 증설**·**지정학 리스크**를 주간 단위로 점검하세요. "
-        f"(현재 LLM 분석 미연결 — 데이터 기반 휴리스틱)"
-    )
+        f"단기 **GBR** 모델은 7주 후 **${ctx['pred7']:.2f}** (**{short_pct:+.1f}%**)를, "
+        f"중장기 **LSTM** 모델은 21주 후 **${ctx['pred21']:.2f}** (**{mid_pct:+.1f}%**)를 가리킵니다. "
+        f"{'단기와 중장기의 방향이 **상반**되므로 호라이즌별 의사결정이 필요합니다. ' if contradiction else ''}"
+        f"{sig_text.strip()}{macro_text.strip()}{news_text.strip()} "
+        f"종합적으로 향후 **AI 서버 수요** 증가세와 **HBM 캡 증설** 속도, **지정학 리스크** 변화를 "
+        f"주간 단위로 모니터링하며 호라이즌별로 차별화된 대응이 필요합니다."
+    ).strip()
     # 270자 cap 보정
     if len(summary) > 270:
         summary = summary[:250].rsplit(" ", 1)[0] + "…"
@@ -345,9 +345,20 @@ def main():
     # 정규화
     headline = (obj.get("headline") or "").strip()[:50]
     summary = (obj.get("summary") or "").strip()
-    # 250자 enforce (한글 기준) — 270 초과 시만 컷, 그 미만은 LLM 출력 보존
-    if len(summary) > 270:
-        summary = summary[:250].rsplit(" ", 1)[0] + "…"
+    # USER-REQUESTED EXTENSION (#12) — 완결 문장 보장
+    # 1) 미완성 표기 검출 ("…", "...", "등", "강력한", "포함한") → 마지막 마침표까지만 사용
+    truncation_markers = ("…", "...", "등 강력한", "강력한 등", "강력한.", "등.")
+    if any(summary.endswith(m) for m in truncation_markers) or summary.endswith("…"):
+        last_period = max(summary.rfind("."), summary.rfind("다."), summary.rfind("요."), summary.rfind("니다."))
+        if last_period > len(summary) * 0.4:
+            summary = summary[:last_period + 1].strip()
+    # 2) 마침표 없이 끝나면 자동 추가
+    if summary and not summary.rstrip().endswith((".", "!", "?", "다", "요")):
+        summary = summary.rstrip(" ,;:·") + "."
+    # 3) 최대 400자 cap (안전 장치, 그 이상은 마지막 마침표까지 절단)
+    if len(summary) > 400:
+        cutoff = summary[:400].rfind(".")
+        summary = summary[:cutoff + 1] if cutoff > 200 else summary[:380] + "…"
     tone = (obj.get("tone") or "neu").lower()
     if tone not in {"pos", "neu", "neg"}:
         tone = "neu"
