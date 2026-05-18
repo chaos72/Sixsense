@@ -387,6 +387,39 @@ def collect_macro_copper():
     return collect_A7_copper()  # same source
 
 
+# USER-REQUESTED EXTENSION (#10) — 미국 10년물 국채금리 추가
+def collect_macro_ust10():
+    """FRED DGS10 (10-Year Treasury Constant Maturity Rate) — no API key needed via fredgraph.csv.
+    일간 데이터 → 주간 평균(월요일 기준). 단위: %."""
+    try:
+        url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd={START}&coed={END}"
+        r = requests.get(url, timeout=20)
+        r.raise_for_status()
+        lines = r.text.strip().split("\n")[1:]
+        from collections import defaultdict
+        weekly = defaultdict(list)
+        for ln in lines:
+            parts = ln.split(",")
+            if len(parts) != 2:
+                continue
+            d_str, val = parts[0].strip(), parts[1].strip()
+            if not val or val == ".":  # FRED 휴일/결측 표시
+                continue
+            try:
+                v = float(val)
+            except ValueError:
+                continue
+            d = date.fromisoformat(d_str)
+            mon = d - timedelta(days=d.weekday())
+            weekly[mon.isoformat()].append(v)
+        out = [{"week": w, "value": round(sum(v) / len(v), 4)} for w, v in sorted(weekly.items())]
+        if not out:
+            raise RuntimeError("DGS10 empty")
+        return out, "real", "FRED CSV DGS10 (10-Year Treasury Constant Maturity Rate, %)"
+    except Exception as e:
+        raise RuntimeError(f"FRED DGS10 failed: {e}")
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Target Y — DRAM price proxy
 # ──────────────────────────────────────────────────────────────────────────────
@@ -442,6 +475,7 @@ COLLECTORS = [
     ("macro-pmi", collect_macro_pmi, "거시"),
     ("macro-krw", collect_macro_krw, "거시"),
     ("macro-cu", collect_macro_copper, "거시"),
+    ("macro-ust10", collect_macro_ust10, "거시"),
     ("target-dram", collect_target_dram_proxy, "타겟"),
 ]
 

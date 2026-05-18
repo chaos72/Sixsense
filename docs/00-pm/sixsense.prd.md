@@ -60,7 +60,8 @@
 | S-001 §01 가격 스냅샷 | 4번째 슬롯에 "예측분석 인사이트" 카드 추가, 그리드 7분화 (1fr 1fr 1fr 4fr = 가격 3 : 인사이트 4, #5). 본문 14px, summary 내 `**bold**` 강조 단어는 tone 컬러 + 배경 chip, 헤드라인 15px / weight 800 / tone 색상. §01 가격 3카드의 제목("현재 계약가" 등) 11px → 12px + 색상 `--text-mid` (인사이트 헤더와 통일, #5) | `<InsightCard>` + `renderInsightEmphasis` (components.jsx) | `.grid-snapshot`, `.insight-card`, `.insight-headline`, `.insight-emphasis`, `.insight-tone-{pos\|neu\|neg}`, `.grid-snapshot > .card > .card-h` (styles.css) |
 | S-001 §02 DRAM 차트 | 차트 카드 아래에 MAPE 비교 표 2개 (단기 Prophet/HistGBR/GBR★ + 중장기 LSTM + 학습 시간). 차트 자체에 4개 모델 라인 동시 표시 — **Prophet baseline 황색 dotted (2 4)** + **HistGBR 보라 long-dash (7 3)** + **GBR★ 청색** + **LSTM★ 초록** (#6a 색·패턴 강화). 인사이트 헤드라인 17px→15px, 본문/CLAUDE 박스 좌·우 분할. **Topbar 다크/라이트 모드 토글 버튼 가시성 강화** (#6b) | `<ModelValidationPanel>` · DramChart 4-line · LineChart `dashed` string 지원 | `.model-validation`, `.model-table`, `.model-train-time`, `.insight-main`, `--chart-baseline`/`--chart-secondary` 토큰, `.theme-toggle` (styles.css) |
 | S-001 §09 풋바 | **수동 갱신 패널** 추가 (#7) — "🔄 수동 갱신 실행" 버튼 클릭 시 백엔드가 5단계 파이프라인을 백그라운드 실행, 진행률 바 + 단계별 로그를 풋바 아래 표시, 완료 시 자동 페이지 새로고침으로 신규 데이터 반영 | `<RefreshPanel>` (dashboard.jsx) | `.refresh-*` (styles.css) + backend `POST /api/refresh` / `GET /api/refresh/jobs/{id}` / `GET /api/refresh/stages` |
-| S-001 §07 글로벌 이벤트 | **5 카테고리 다양화 + 10건 보장 + 한국어 요약** (#8/#9) — 사용자 정의 5 카테고리(**국내 반도체** / 물리적 충돌 / 기상이변 / 금융 위기 / 기타)로 LLM·휴리스틱 강제 분류. **국내 반도체 1순위** (삼성/하이닉스 파업·정전·화재) — 회사명+이벤트 키워드 조합 매칭. RSS 쿼리 42개 (국내 반도체 10 + 글로벌 17 추가). diversify_events() 5 카테고리 각 1건 강제 보장 + 라운드-로빈 + 부족 시 placeholder. **`korean_summary()` 휴리스틱 한국어 요약 자동 생성** — LLM 비활성 시에도 모든 요약 한국어. UI에 **유형 칩(보라/적색/황색/청색/회색)** + 위험도 + 제목 + 지역 4-column 그리드 | collect_news_events.py + dashboard.jsx §07 events-row | `.events-type-domestic/conflict/weather/financial/other` |
+| S-001 §07 글로벌 이벤트 | **5 카테고리 다양화 + 10건 보장 + 한국어 요약** (#8/#9) — 사용자 정의 5 카테고리(**국내 반도체** / 물리적 충돌 / 기상이변 / 금융 위기 / 기타)로 LLM·휴리스틱 강제 분류. **국내 반도체 1순위** (삼성/하이닉스 파업·정전·화재) — 회사명+이벤트 키워드 조합 매칭. diversify_events() 5 카테고리 각 1건 강제 보장 + 라운드-로빈 + 부족 시 placeholder. **`korean_summary()` 휴리스틱 한국어 요약 자동 생성** — LLM 비활성 시에도 모든 요약 한국어. UI에 **유형 칩(보라/적색/황색/청색/회색)** + 위험도 + 제목 + 지역 4-column 그리드 | collect_news_events.py + dashboard.jsx §07 events-row | `.events-type-domestic/conflict/weather/financial/other` |
+| §05 AI 뉴스 + §07 글로벌 이벤트 풀 분리 + §06 UST10 추가 (#10) | (1) news/events 가 같은 enriched pool 에서 동시 생성되던 구조 → entry 단계부터 완전 분리. NEWS_QUERIES (DRAM 산업 직접 14개) vs EVENTS_QUERIES (글로벌+국내반도체 이벤트성 31개). LLM 호출 단일화하되 `{news:[], events:[]}` 분리 출력 강제. news 중복 제거 후 events 처리. (2) 거시경제 §06에 **미국 10년물 국채금리 (FRED DGS10)** 신규 — 위험자산 선호도 지표, ↑ 시 DRAM 부정 | collect_news_events.py NEWS/EVENTS 풀 분리 · backfill.py collect_macro_ust10 | MACRO_META 6개 |
 
 **디자인 토큰** (hand-off `src/styles.css` 발췌):
 - 색상: Warm white `#fafaf8` / Pure white `#ffffff` 배경, monochrome 액센트 `#1a1a1a` (light) / `#f4f3ef` (dark)
@@ -133,6 +134,7 @@
 | macro-pmi | 산업생산지수 (PMI 대체) | FRED INDPRO | `historical/macro-pmi.json` |
 | macro-krw | USD/KRW | Yahoo Finance KRW=X | `historical/macro-krw.json` |
 | macro-cu | 구리 가격 | Yahoo Finance HG=F | `historical/macro-cu.json` |
+| macro-ust10 | 미국 10년물 국채금리 | FRED DGS10 (10-Year Treasury Constant Maturity) | `historical/macro-ust10.json` |
 
 ### 6.4 타겟
 

@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-05-18T06:57:18.419900Z
+// 생성 시각: 2026-05-18T08:30:08.189988Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-05-18) · events 10건
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
@@ -28,7 +28,7 @@ export const SIXSENSE_DATA = {
         "B-4"
       ],
       "model": "휴리스틱 (LLM 모두 실패)",
-      "generatedAt": "2026-05-18T15:57:18"
+      "generatedAt": "2026-05-18T16:13:30"
     },
     "modelValidation": {
       "headline": "🎉 Phase 6 멀티 모델 예측 아키텍처 완료 — 단기 MAPE 7.54% → 4.54% (39.8% 개선)",
@@ -906,300 +906,302 @@ export const SIXSENSE_DATA = {
   ],
   "news": [
     {
-      "date": "2026-05-13",
-      "title": "삼성전자 노조 협상 결렬, 총리 파업 경고",
-      "titleEn": "Samsung Electronics union talks collapse, PM warns against strike",
-      "source": "Free Malaysia Today",
-      "score": -0.9,
-      "tone": "neg",
+      "date": "2026-04-30",
+      "title": "삼성·SK하이닉스, AI 메모리 부족 경고",
+      "titleEn": "Samsung and SK hynix warn AI-driven memory shortages could last until 2027 and beyond, as HBM demand explodes — customers already reserving supply years ahead, while the wider DRAM market begins to tighten - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.98,
+      "tone": "pos",
+      "conf": 99,
+      "hot": true,
+      "summary": "삼성과 SK하이닉스는 AI 기반 메모리 부족이 2027년 이후까지 지속될 수 있다고 경고했다. HBM 수요가 폭발적으로 증가하면서 고객사들이 수년치 공급을 미리 확보하고 있으며, 전체 DRAM 시장도 타이트해지고 있다. 이는 DRAM 가격에 강력한 상승 요인이다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-2 관련",
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiggNBVV95cUxQb190b3ktbkR1OHRjdFFsUUNUQjNXNUViR2p4dGpaYjVWU2ZhLU1ETENtRUxpc1l1TWlFSExWeW50VnFHNWE4UFVzS2ZYSzRYTWxCTXN0LUp4eTB3amVwWXlvLTFIcV80SzBWeVlvNzVqU0ZRWGRNTXc3QzA1NnZEN0JGZTcxOWt0QzZIRTZRemdxc01vb2RfQ1lhZlVBUV81NzZwMjFMYTJXcmlQTkdvWVRlXzNUUTdVc1R5UDZUNVZaYnAyYzdQQ0ZzbFhGSFdtY01hb2xheGg4V1owdWFpMGJmaEI5VFduWE9yYUd5Rk5mVGlKS2dHMEJGdG01dk1CLVpuRms1WXM1VDRfSWkwQVFMNThvVHpoZkI0NE1KMDhlMHUzdlJkZzdkaHBCaVRsR3hCVDJkV0dQSEtaZVRmZktUSVdUMTNreXJXSTJyTklpa1FGbUJvN2h3ejhnd1VFUmRzOTdLN3lrellIT2xtQ0lBYUlBVjZONENkeWs4R0tYUQ?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "삼성 1분기 실적, 메모리 이익 50배↑",
+      "titleEn": "Samsung Q1 2026 Results: Memory Profit Up Nearly 50x, Warns of 2027 Shortage",
+      "source": "TechPowerUp",
+      "score": 0.95,
+      "tone": "pos",
+      "conf": 98,
+      "hot": true,
+      "summary": "삼성전자의 2026년 1분기 메모리 부문 이익이 거의 50배 증가했으며, 2027년까지 메모리 부족을 경고했다. 이는 강력한 수요와 가격 상승으로 인한 수익성 개선을 보여준다. 향후 DRAM 시장의 긍정적인 전망을 뒷받침한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-1 관련",
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQUFdpVEYtZzM4dFREMGowVmlGRFBLUm1SUnhTUk5hZXltbDl4cnpKN1k3cHJlQlBtelFMY0kycVNoZ0pLTnJQMkt4LUVULVMxR0swbHltWmxVVU5NV2doNmlBc1hQNEx2YzFhTnJhYm84Wnk4bVgxdXBWbnRUWWFacHN4bHJpaDc4YldxaTM5TkxEVFJaWXNLdXJINmlpT2RrSG1MUmhJTDl3NTAwVEHSAbMBQVVfeXFMTlNITGJjaVBRMUlpcXgwZzZ2QU5Nd0wwUGEza1BmUHFYd3BULS01a2QzQk9SbzBaVmgyREtMVlIxNUpZOGJsT3Npb0pnTllkM1ZYN1lHcVFTLUZrRHNIczI2bC14clBSckRzTHdmS1pKaFVudU1HcUNYQjhsTnAzd0s2RTRzOGMzZ3RWbWZLQjE2WHpDTUtqcnd2ZjJhLVBVdFFUVWkzUlNGWWEydnJnZzhadjg?oc=5"
+    },
+    {
+      "date": "2026-05-11",
+      "title": "SK하이닉스 HBM 부족 2028년까지",
+      "titleEn": "SK Hynix Surges 15% to New High: HBM Shortage Until 2028, How Much Longer Can AI Memory King Rise?",
+      "source": "TradingKey",
+      "score": 0.9,
+      "tone": "pos",
       "conf": 95,
       "hot": true,
-      "summary": "삼성전자 노조 협상이 결렬되어 파업 가능성이 커졌다. 이는 한국의 주요 메모리 반도체 생산에 직접적인 위협이 될 수 있으며, 정부도 우려를 표명했다.",
+      "summary": "SK하이닉스 주가가 15% 급등하며 신고가를 기록했고, HBM 부족 현상이 2028년까지 지속될 것으로 전망된다. AI 메모리 수요가 폭발적으로 증가하면서 HBM 시장의 강세가 이어질 것으로 보인다. 이는 DRAM 가격에도 긍정적인 영향을 미칠 것이다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxObmdLQXpiRmxaT09aelJKTDVNYXF6b3U0eE1zVVlUc1lRc3d5ZlJoRVhVVUd0a21DRnFWeDdoR2hWcDRZZ0Z0YVB2Tko2Q043NDhDLXFfQkNDMUhwU3llajdGQ25vT0lEMFFDWUFWSklEdXRXanhVcFJrRXhuNG1GYlE1ODdmQVZ5SVZiTm4wbHhGTkwyWTNYdnhaWnFMS0hUaFFTQl9mLWFBRjJxVVNFZkJ2aWVmN28?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "삼성, 내년 메모리 부족 심화 경고",
+      "titleEn": "Samsung warns memory shortage will be worse next year",
+      "source": "Mashable",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 95,
+      "hot": true,
+      "summary": "삼성이 내년에는 메모리 부족 현상이 더욱 심화될 것이라고 경고했다. 이는 AI 및 고성능 컴퓨팅 수요 증가에 따른 공급 부족이 지속될 것임을 의미한다. DRAM 시장의 강세가 장기화될 가능성이 높다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE90WmJKZVlramVwRm5ZWVVwMk4xOWpneG9nby1Ja016aFNIYmNpeWlKUWQ2TXJJTDlzMUJOcE1qblFaOUVDX29kQlQ3QzF1NG52RmNjNjB5SFpVWG9wQVhRNHpPSnpjZkpEOEZiZmY4a1FEcjBaWV9hVkFn?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "삼성, 2027년 주문으로 부족 심화",
+      "titleEn": "Samsung warns memory shortage to deepen next year as 2027 orders come in",
+      "source": "Nikkei Asia",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 95,
+      "hot": true,
+      "summary": "삼성이 2027년 주문이 들어오면서 내년 메모리 부족이 심화될 것이라고 경고했다. 이는 장기적인 수요 강세와 공급 제약이 맞물려 DRAM 가격 상승 압력을 가중시킬 것임을 시사한다. 시장의 불확실성이 커지고 있다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNY1VBblBtXzhzeVJfUjJfem5BSUMtenhKRmpQWTJzaUJ0TGJyWEt4NFF3b0pVcmhISDNMdTlPRmpuaUpodHJOaVRCalMtVVRONmN6Mzl2WENuaUtZZnZDcXRBTGZ0bnZHZUI0Z2I3UTR2c1dLOEJOT0Vta20xMDVzSmVUUzkxUVVlUEpUTjhES1BkRFgyMUtWNU1Md2d3TnV1eDdJcndNMmZUMko1NmNzbmJINWlzQ2stVDR6MVBkbEoyWUk?oc=5"
+    },
+    {
+      "date": "2026-05-16",
+      "title": "에이수스, RAM 시장 진출",
+      "titleEn": "Asus enters the RAM market during the largest memory shortage in history, 48GB kit lands at $880 — brand's first DDR5 kit makes the RTX 5070 Ti look like a bargain - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 88,
+      "hot": true,
+      "summary": "에이수스가 역사상 가장 큰 메모리 부족 시기에 RAM 시장에 진출하며 48GB 키트가 880달러에 출시되었다. 이는 현재 RAM 시장의 심각한 공급 부족과 높은 가격을 반영한다. 신규 진입은 장기적으로 공급을 늘릴 수 있으나 단기적으로는 시장의 과열을 보여준다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxNOF85VDM1OE5JZkdPbVNmS09DN0tzZVVEQ19TSWJRUF9tQ0M0bHlEc2x1a2RaZmhHeWpBUk5jT0hZRVBIOXAzam1EV0I3QWVpR1g2V043Q0lCNldhdHZ0eUhKYVRzVXpibFpJUXVUVXU0RFFQQ0Y4bXYxalhNdkNwS1YyNF9RSkxaSHZhbmFVQmQ2Q0ZPaVl0a21UeC1xcHFVdXduVEN5dm1FWlJyaDBFaUZSckgxSUg0c3pWS2ZMYVNzUF9UNG1FbGY2cE5OM0U3NFJ4WmlpMlZaMzdmYlhuZ1lnVTNTclVFR05DUG91WWtxVHhzaU1KMVlTb0tKejlhcnFoWkRJVUw0M1NiQkcyYQ?oc=5"
+    },
+    {
+      "date": "2026-04-30",
+      "title": "메모리 가격, 부족 완화에도 하락 안 해",
+      "titleEn": "Memory Prices Won’t Drop Even as Shortage Eases, Korean Research Firm Warns Hyperscalers Locked In Long-Term",
+      "source": "Wccftech",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 92,
+      "hot": true,
+      "summary": "한국 연구기관은 메모리 부족 현상이 완화되더라도 가격은 하락하지 않을 것이라고 경고했다. 하이퍼스케일러들이 장기 계약에 묶여 있어 가격 하방 압력이 제한적일 것으로 분석된다. 이는 DRAM 가격의 안정적인 상승세를 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-5 관련",
+        "B-5 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQVlV1VkNlWUZ0d3pBbVN3Uy1mTFkybjdPUEQyaVliNmVWeW1WTzl6SzZSWEJRWkdvaXZqaFlTeHkyNVMtLU9HZDM5Y3dUcUdsNGhpUkJuUFBfdDNUTUxMdUNMaEtpc0w5R1JtVGlkanFSLW1iTVVRd21Ic01UX1ljREZZQWt3enJTaWt5U1preUJYbG11TVZWbHZFd2s3OGtuaVdZVFlpRVBNYkFjaUdUeVpUSkkzOTY2cngybWRvd3B2bUt2TmxZ0gHMAUFVX3lxTFBPUXAtNHloU04xdHdKbl9WTXlfeUFKWkhxLXJDbW1seUdVakR4TVdPU3NKVVdrMjk3azRDdU9fcS12QXZTRkc2WVRlbnIyT09meDBieE9Dakw1aGltM1BycFRpbVJqd3RUVG5PRlBOQW94UFVTZmttRkVCODhoUHBOblR0VmtDeE5xVG94dVZjaFZmYjgxTGk3ZlVyUFpLSWIyQm4zTkdwaTNLSGJhX2ViSDZYY2FVSzdjY0NITnlmNjBCXzE2UjNwM2JuRQ?oc=5"
+    },
+    {
+      "date": "2026-05-08",
+      "title": "마이크론 주가 급등, 메모리 랠리",
+      "titleEn": "Micron surges nearly 38% on week as memory chip rally goes parabolic",
+      "source": "CNBC",
+      "score": 0.75,
+      "tone": "pos",
+      "conf": 87,
+      "hot": true,
+      "summary": "마이크론 주가가 한 주 동안 거의 38% 급등하며 메모리 칩 랠리가 가파르게 진행되고 있다. 이는 전반적인 메모리 시장의 강한 수요와 가격 상승 기대를 반영한다. 투자자들의 긍정적인 심리가 시장에 영향을 미치고 있다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPSFR2TlNXbk9JR2tmX1ozLUk3VkF2YXlwU3FyLWdSaW5CWE5EbmNHSFdkS2hORUJFbUthaklaUDViQlZpWnVlTnZORzl0dmZWRXgyWDR5OWNPWDMxWmc2QWwtWTFDalk1aGROMWpYTXNNSEFyZ2VuM0l3MjJqR3RuQkVLTHZfWHg4UVhwcGlRWkVIV1hPZ1BpY01fRDlTYXV2a2lZZWdCcE5rbDVBQzU1UHlDSXXSAboBQVVfeXFMTkxGa2lENlo2bWhUa0pMd2VZSXdUOHpGNHVCMEkyN0QwTlVVOVotN2tCSU9YdXBDZE1UWXRSQ2FOSGhmMms0RDN5RGl3ckNSOXUydUd6VTRibGJLSXdsV1VPNjUtUm9CTDhXSkk3R2NMQTNNeVp6LWtYMVBDSGdTTi11a3EzelUxTnppakZkMklpQXJ5MjkxbklqS2pNdzZVQlFQOG1FdjE0MXpUYWtNTGR0N0tlMEtLNjZ3?oc=5"
+    },
+    {
+      "date": "2026-05-17",
+      "title": "삼성, 온디바이스 AI용 HBM 계획",
+      "titleEn": "Samsung Plans To Transform Your Smartphone & Tablet Into On-Device AI Powerhouses With High-Bandwidth Memory Chips Using Complex Packaging",
+      "source": "Wccftech",
+      "score": 0.7,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "삼성은 복잡한 패키징 기술을 사용하여 스마트폰과 태블릿을 온디바이스 AI 기기로 전환할 고대역폭 메모리(HBM) 칩을 계획하고 있다. 이는 모바일 기기에서의 HBM 수요를 증가시키고, 전체 메모리 시장의 기술 트렌드를 선도할 것이다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPcC1kRF9BdC12ZTh6WGJDbW0wUnFnUS0xbGdTeE9WLVpQTTZtRHF0MVkwc1YwekNJTjlCRnppNGRPOTNBck9xQkFKUDUtamhVQTZsZnY1OXA3Tk9aMF8tOFJoRUgtTTZ0LUNHbFctZGZHQVdtWElvWkZNQkx3QktxeHlBYVJSSlV6TGNlOHEzV1pNOGdNTHhMZm0zWdIBoAFBVV95cUxQQmFleGNOdHNsd001elMzN3BXYmIxQ3BpUHJLZ3hFTlZWNjZCUEtya21yV1NHTTRwWFlxeEF3bW5PLTJxdXUzN19LaVllRjBoWVhzbVNkLTJxRGk3TVBiZEtmaGsxMk9neHdrSC1IeFh0dk5VLXh6S1AycEFxRFMyT3JMU29kU1pZZTVRUVVOV2JILTRVcDdIaGdveGhlX0xF?oc=5"
+    },
+    {
+      "date": "2026-04-19",
+      "title": "새 HUDIMM 메모리 규격 등장",
+      "titleEn": "New HUDIMM memory specification debuts with goal of slashing DDR5 prices during RAM shortages — A new, cheaper memory standard with half the bandwidth and half the capacity - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.6,
+      "tone": "neg",
+      "conf": 85,
+      "hot": true,
+      "summary": "새로운 HUDIMM 메모리 규격이 출시되어 DDR5 가격 인하를 목표로 한다. 이 규격은 대역폭과 용량이 절반 수준으로, RAM 부족 시기에 더 저렴한 대안을 제공할 수 있다. 이는 시장에 새로운 가격 경쟁을 유발할 가능성이 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 파업 현실화 시 생산 차질로 DRAM 공급 감소 및 가격 상승 압박이 예상된다."
+          "text": "단기 분석"
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로 노사 갈등이 장기화될 경우 생산량 회복 지연 및 시장 불확실성 증대로 DRAM 가격에 부정적 영향을 미칠 수 있다."
+          "text": "중기 분석"
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 한국 반도체 산업의 안정성에 대한 우려를 키워 글로벌 공급망 재편 논의를 촉발할 수 있다."
+          "text": "장기 분석"
         }
       },
       "linked": [
         "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWHRVeGVsN3FlWGljdk5kMXVlVFlZcm05YVJVdV8xTUxJR0gzN3hINDh3aWU0MHYwZ1cxWnNNMHJCMGxwdnZPY3BqdjVueWZNSEp3Wi0yUHU5b0QtUWliVXdxOExuak14QjhuUUtvME44LXBhaXpJZGloLWNwZE9PZ1FnOGd4aHdmeFBpc0lqdTdpWWl1VG9ad3Jva2ZsRmwwbHFkYTBPdElVMVhjMDNqMzhqLXE1cFhNQlYxcGdvMnNCaUpVd3c?oc=5"
-    },
-    {
-      "date": "2026-05-18",
-      "title": "트럼프, 이란 추가 공습 시사로 유가·국채 요동",
-      "titleEn": "트럼프 ‘이란 추가 공습’ 또 시사…글로벌 국채·국제유가 요동 [이슈+] - 에너지경제신문",
-      "source": "RSS",
-      "score": -0.9,
-      "tone": "neg",
-      "conf": 95,
-      "hot": true,
-      "summary": "트럼프 전 대통령이 이란에 대한 추가 공습 가능성을 시사하며 국제유가와 글로벌 국채 시장이 크게 요동쳤다. 이는 중동 지역의 지정학적 긴장을 고조시키고 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 중동 긴장 고조로 유가 급등 및 물류 비용 상승이 예상되며, 이는 DRAM 생산 및 운송 비용 증가로 이어질 수 있다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 군사적 충돌이 현실화될 경우 글로벌 경제 불확실성 증대로 기업 투자 위축 및 DRAM 수요 감소를 야기할 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 중동 정세 불안이 지속될 경우 에너지 공급망 불안정으로 인한 인플레이션 압박이 DRAM 시장 전반에 부정적 영향을 미칠 수 있다."
-        }
-      },
-      "linked": [
-        "B-4 관련",
-        "A-7 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBXcTBBT3ZUMnd5bkhGRGtyaVJEc2V4OVFkUHpZc3UwNFFkd3lWdTJsWVo3VWxuZkVvenlvem9FLVJjRDBZX2tiT0ZVNjJBMUJXV0MyRzFEWnpHT3c?oc=5"
-    },
-    {
-      "date": "2026-05-18",
-      "title": "유가 충격: 트럼프 이란 경고, UAE 공습으로 브렌트유 $111 돌파",
-      "titleEn": "Oil Shock: Brent Crude rockets past $111 as Trump’s Iran warning, UAE strike stoke supply concerns",
-      "source": "financialexpress.com",
-      "score": -0.9,
-      "tone": "neg",
-      "conf": 95,
-      "hot": true,
-      "summary": "트럼프의 이란 경고와 UAE 공습으로 인해 브렌트유 가격이 배럴당 111달러를 돌파하며 유가 충격이 발생했다. 이는 중동 지역의 공급 우려를 심화시키고 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 유가 급등은 DRAM 생산에 필요한 에너지 비용과 운송 비용을 증가시켜 가격 상승 압박을 가할 것이다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로 고유가 지속은 글로벌 인플레이션을 심화시키고 소비 심리를 위축시켜 IT 제품 및 서버 DRAM 수요 감소로 이어질 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 에너지 안보에 대한 우려가 커지면서 기업들의 투자 계획에 영향을 미쳐 DRAM 시장의 성장 동력을 약화시킬 수 있다."
-        }
-      },
-      "linked": [
-        "B-4 관련",
-        "A-7 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOX01qRGE2UDBBOWpYakNNdEJoR29iZWRpa0kzSGJfX3dDNVBDbVd4bE5WRHZGUlFSQTlHU1B2Ml9XcE81M25zSDhuT3FzM3FOSHVPMWtEZTlZWXJfbmh0YVpXeF9jMHdHdVJ6Z3lod1pzTlpkVFk1ZjNZZ2FGTHZ3VGdqcVFLVHgxczRBYndWWWRCWTFXOS1CR2Z5ZDZZYlhIXzhmQXFYZTB2R2RoTVZyOXBNUXItbEEwSFBwbnRfRXo1ZEtoYlFRRnZ0NGpnaTRaaTFKeWlfOExDSGfSAeIBQVVfeXFMTWtOT3BqQzNVUFlhTlZ4TDNXcVZlc0Y3YzA2R1pQLXVJSmx5WEFDLTc4SzluSUNzMWd6ZThtRmdBVUpPdDJBckpnd243d0NsTU50SUVaQ19EQ0pmMXFwbndkLUhPQTl5aFhxeHp5MS1CT2xhemZqQnR2YVQ0NnhXWmZPclMwcTdGZVFSN0RFU2xKaUhnZHIzbmhKOUpEM1I0eGRDOVpKUGV3Uk92aVY0Z1hRNmNpMFNhWFpPZUpCNDhybjlhSDJ3YXBxRG53NXUyLXdlUHlDU1dKaVpzLXllMl85UQ?oc=5"
-    },
-    {
-      "date": "2026-05-16",
-      "title": "이스라엘, 휴전 연장 후 레바논 남부 공습",
-      "titleEn": "Israel strikes southern Lebanon hours after ceasefire extension",
-      "source": "France 24",
-      "score": -0.8,
-      "tone": "neg",
-      "conf": 90,
-      "hot": true,
-      "summary": "이스라엘이 휴전 연장 몇 시간 만에 레바논 남부를 공습했다. 이는 중동 지역의 불안정한 정세를 다시 한번 부각시키며 확전 우려를 키우고 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 중동 지역의 군사적 긴장 고조는 유가 상승 압력을 가중시켜 DRAM 생산 및 물류 비용에 부정적 영향을 줄 수 있다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 분쟁이 확대될 경우 글로벌 경제 심리 위축으로 IT 투자 감소 및 DRAM 수요 둔화로 이어질 가능성이 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 중동 지역의 지속적인 불안정은 글로벌 공급망에 대한 불확실성을 높여 DRAM 시장에 간접적인 영향을 미칠 수 있다."
-        }
-      },
-      "linked": [
-        "B-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQcXl3dEY2cVRMVTJJcWE3c2FtSkVSSXJwM0x4cDdUeFAtYmh4OTA4STdsZV93YVQ2NUo2VVhSbTZ0c2phQ0k1ZzdaS3ZYVnRSTkEzLTNhNW43b1dTVVVPUmotY1VDUk0tZUtOUGZfQ3lDc1NDeTUxRGU3V2VqazR4c3pYa1JiVS0yS001WFRhbkpwZE9JUjNjaGZNejJSZmJkRTNKVVhyUnd0YzA?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "미 인플레이션 압력으로 연준 금리 인하 2027년 9월까지 지연",
-      "titleEn": "Grayscale report: US inflation pressures delay Fed rate cuts until Sept 2027",
-      "source": "Crypto Briefing",
-      "score": -0.8,
-      "tone": "neg",
-      "conf": 92,
-      "hot": true,
-      "summary": "그레이스케일 보고서에 따르면 미국 인플레이션 압력으로 인해 연준의 금리 인하가 2027년 9월까지 지연될 것으로 예상된다. 이는 고금리 환경의 장기화를 의미한다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 고금리 장기화는 기업의 자금 조달 비용을 높여 IT 투자 및 서버 증설 계획에 부정적인 영향을 미쳐 DRAM 수요를 둔화시킬 수 있다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 높은 금리가 지속될 경우 경기 침체 우려가 커져 전반적인 소비 심리 위축과 기업 실적 악화로 DRAM 수요가 감소할 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 고금리 환경이 기술 혁신 및 신규 데이터센터 구축 속도를 늦춰 DRAM 시장의 구조적 성장에 제약을 가할 수 있다."
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQQzFuSkUya1dlcXpFRU1Kb21TOEdCVTBmYnh3Wnc2Q0lHNzFrbVlVdm83VURaT0szOERkVVpmS1o4X05HZWl5ZUpwV3pndlFBbzZDS09ubzNBdHlSZXAzR3RUVkx6MXVZZDZPSm5fZ2dHYzUydWhEOWhwQXhZY0s2UVZyRXo0Q2U3QWZDNWlVVm1LeWxCNnRscTFJa1pqb2gyX0NRZmd3?oc=5"
-    },
-    {
-      "date": "2026-05-18",
-      "title": "이란 전쟁 불확실성 속 미 국채 금리 급등, AI 기술주 경고",
-      "titleEn": "U.S. Treasury Yields Surge Amid Iran War Uncertainty... Warning Signs for AI Tech Stock Rally - 아시아경제",
-      "source": "RSS",
-      "score": -0.8,
-      "tone": "neg",
-      "conf": 90,
-      "hot": true,
-      "summary": "이란 전쟁 불확실성으로 미국 국채 금리가 급등하며 AI 기술주 랠리에 경고등이 켜졌다. 이는 지정학적 리스크가 금융 시장에 미치는 영향을 보여준다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 국채 금리 급등은 자본 시장의 불안정성을 높여 AI 관련 기업들의 투자 심리를 위축시키고 DRAM 수요에 부정적 영향을 줄 수 있다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 고금리 환경과 지정학적 리스크가 복합적으로 작용하여 빅테크 기업들의 CapEx 축소로 이어져 서버 DRAM 수요 둔화를 야기할 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 글로벌 경제의 불확실성 증대가 기술 혁신 속도를 늦추고 DRAM 시장의 성장 잠재력을 저해할 수 있다."
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1lTVRxbUJJQ3BJVlJFUG9hWEM3WkdZUEVhX3ZOQlU0OVhQNml3S1BEOVdIYy1RZ182UkdZVzc2azEzSVdIb0lUVmpsTEw3UmN3VFVxZGpyVVVEUU1FYzZKR0pmcXJ2MmtvREk4RGtVcWo3UjVwaUtJ?oc=5"
-    },
-    {
-      "date": "2026-05-16",
-      "title": "이란 전쟁 긴장 고조로 유가 주간 8% 급등, $110 근접",
-      "titleEn": "Crude oil surges 8% in a week to near $110 as Iran war tensions simmer again. Where are prices headed?",
-      "source": "The Economic Times",
-      "score": -0.8,
-      "tone": "neg",
-      "conf": 90,
-      "hot": true,
-      "summary": "이란 전쟁 긴장이 다시 고조되면서 국제유가가 한 주 만에 8% 급등하여 배럴당 110달러에 근접했다. 이는 에너지 시장의 불안정성을 심화시키고 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 유가 급등은 DRAM 생산에 필요한 에너지 비용과 운송 비용을 증가시켜 가격 상승 압박을 가할 것이다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로 고유가 지속은 글로벌 인플레이션을 심화시키고 소비 심리를 위축시켜 IT 제품 및 서버 DRAM 수요 감소로 이어질 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 에너지 안보에 대한 우려가 커지면서 기업들의 투자 계획에 영향을 미쳐 DRAM 시장의 성장 동력을 약화시킬 수 있다."
-        }
-      },
-      "linked": [
-        "A-7 관련",
-        "B-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxPTnp3RGI3akFZbE5CTlVMZ3RQeGxUemdCLVBhUGpvY3JpMXo2ci1xRW80bVdCYlVHWEl6ZDQ2Q3gwNjJtOWpIZmR6bUlxSFFFWnlfNENiZndTOFdZXzlXcTNyTFJOeXE5QWlVOFd0bENwN3g3Rm03MmJONTBoS0JQTGVxUWpBREZkQUtxQ3lGY29wcnd0ZTRyQjVoVnNFbjJVbTlGdUlTUHY0MDA0MUtmb2RzQUFFTHBpYW1zNVhRdzhnSFBodnloaXlOVm9wSlp2azR1bndmQlJ6SGlveWsyaDNDcjMyaEVBMTlMUVEzbTJ5MHVWMTRjSmhvRllKOGpLTi1pOTZQblNLZS1CcDM2ZNIBlgJBVV95cUxPVU5tZ085N3JLNmp4eU9TT3Bnb0RnT3dLN1I1OGFZMm5lUUFOZ3ZqMUR5LUljWjhvVk1rUFpuZmdDU2VBRXllVmlHSTBKZklhNU9YMzlySGhHbVJ6dWFtQ2F0UG5UMUQ4VVg4S0lKRlpsaDdMcWY4aXIzck5PbXpTN0JqYUl5VW5MVWxhMkxWMF9vOWFRWWVONEpJenV1RXhYazVEd0pPQWdsemlMMEZ4ZlNWeVlLTVVmaE43all4UjlodjByTkF5bjk5bXd5dEpQdlhuY2o4TVE5MTNyYVA5SFF3bkRPcGplTGtvMVlXRmtGNU01cnNXdEtlalRQRm5DZGVZMHJtYzhXbEZnS3FhWFh4YTV2UQ?oc=5"
-    },
-    {
-      "date": "2026-04-20",
-      "title": "일본 해안 7.4 지진, 쓰나미 경보 발령",
-      "titleEn": "Tsunami warning issued as 7.4 magnitude earthquake strikes off Japanese coast, USGS says",
-      "source": "Everett Post",
-      "score": -0.7,
-      "tone": "neg",
-      "conf": 90,
-      "hot": true,
-      "summary": "일본 해안에서 규모 7.4의 강진이 발생하여 쓰나미 경보가 발령되었다. 이는 일본 내 주요 산업 시설 및 물류에 영향을 미칠 수 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 일본 내 반도체 소재 및 장비 공급망에 일시적인 차질을 빚어 DRAM 생산에 간접적인 영향을 줄 수 있다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 항만 및 도로 복구 지연 시 물류 비용 상승 및 부품 조달 지연으로 DRAM 생산 비용에 영향을 미칠 수 있다."
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기적으로는 일본의 재해 복구 능력과 산업 인프라의 회복 탄력성에 따라 영향이 제한적일 수 있다."
-        }
-      },
-      "linked": [
-        "A-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPb3BwNkRoNlNOaV93S1RaOHJnZ0FadDFWcXZxazFDZ1MyVllfMmtFVlNoelE5dnVRdGtmNjZWZDNwX0VxUE9EZUthcTNxS2c0czN5XzBKTFc5NHJzRU9uaER2Y0NzY0I1NGcxbEdwRlNDRTVEWFh2VFFMdXRVUjRxb1U0NnBhMVNPTXpPUTRXQ0I5eDFnbC1ITzFlMTd6UlE0bUM4aldQeXZPLWZoM2FreXRhOS05MXgxZW9CQTBzZw?oc=5"
-    },
-    {
-      "date": "2026-05-17",
-      "title": "우크라이나 전쟁: 러시아 드론 공격, 미 러 석유 제재 유예 만료",
-      "titleEn": "Ukraine war briefing: more than 500 drones strike at Russia, killing 3; US allows Russian oil sanctions waiver to lapse",
-      "source": "The Guardian",
-      "score": -0.7,
-      "tone": "neg",
-      "conf": 88,
-      "hot": true,
-      "summary": "우크라이나 전쟁에서 러시아에 대한 대규모 드론 공격이 있었고, 미국은 러시아 석유 제재 유예를 만료시켰다. 이는 전쟁의 장기화와 에너지 시장의 불안정성을 시사한다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 러시아 석유 제재 유예 만료는 국제 유가 상승 압력을 가중시켜 DRAM 생산 및 운송 비용 증가로 이어질 수 있다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 전쟁 장기화로 인한 유럽 경제 둔화는 IT 수요를 위축시켜 DRAM 시장에 간접적인 부정적 영향을 미칠 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 지정학적 리스크가 지속될 경우 글로벌 공급망 재편 및 원자재 가격 변동성 확대로 DRAM 시장에 불확실성을 더할 수 있다."
-        }
-      },
-      "linked": [
-        "B-4 관련",
-        "A-7 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNMXlGZUpub1ZraGlSQWowWC1OMUdsYXFmODhMVUpmT2N0ajAyTU5DYkxZWWJPSGc4eHVub29YSnVMeFVpUkZ0RzFheG4yZFVGbWRHTV91OEt4SU9NdTFEcjdlbzBRYmRBQTFNanZsVXJhVEc1OVBQMHpiTFhLLXdYT3B3aXBIdWd5bVZleWtidFBWb0xHQmV6SXZXYlpDanMxbVFHYTRUSjRORGVHYURkRjR2cUk?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "일본 5개 현에 경보 발령된 6.7 지진",
-      "titleEn": "Japan hit by powerful 6.7-magnitude earthquake as warnings issued for five prefectures",
-      "source": "The Independent",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 85,
-      "hot": false,
-      "summary": "일본에서 규모 6.7의 강진이 발생했으며 5개 현에 경보가 발령되었다. 직접적인 피해는 보고되지 않았으나, 지속적인 지진 활동은 잠재적 위험을 내포한다.",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "단기적으로는 직접적인 반도체 생산 시설 피해가 없어 DRAM 가격에 미치는 영향은 미미할 것으로 예상된다."
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기적으로는 반복적인 지진 발생 시 산업 활동에 대한 불확실성을 높일 수 있으나, 큰 영향은 없을 것이다."
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기적으로는 일본의 내진 설계 및 재해 대비 시스템으로 인해 DRAM 공급망에 구조적인 변화를 주지는 않을 것이다."
-        }
-      },
-      "linked": [
-        "A-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNUVRsTmxzemFrMHBXQ3dmYjhDMWJUVkxlbllOMndEQ2tvZVJwZ2ozc2oyMFB0YUhTZEo3STRHQ1dEWGwyWENMbER5bmNIb2Qzd2xfdEw5QjhKUmZMRUdBWTNQWGxsZjk5MTh4TDNaNzh5RnhMMEhXSUR2S2Q0MFZ5VVJwVk94Z1ctNy1YRlBJWTRyOWgzcDllUllR?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiygJBVV95cUxPLWVESnpIZHN1emM3LV8talRGOVJPZGVEM284emRCZUdLSWpVZkhqRUFMcEhUc051SjhOdjNKZEJlWl94Z2NzVW16ekVKSkZ1aXlfTVRyY1dnLWZHaHBmZ2Z1ZzlVODhfZ25XTW1ucnN6d2pBc3ROdjB0RUVVYS0xUldES0ZOREVYTGtpZkxWZEp5YlB4UHVsOVpJTUpjaGNrRG9TNlh6aHM2d09WaktVNUpDR3I4OTB0MElCUTU4WjNRQ0FpUjJBak1IWDBZU3VZR1BvOWNFMVFmdXZxcFFueDJ0a1JlQV8zZHJhWVJpTGJqRU1jTHcwTnpHaW1hdXQwczYzSXBfU0hTd3JqZ0Zhc0QyRi11cGRmcmpxN1Z6MksxR1ZMQWR5WV9lbHVUV2ZoeUhmV3BQeWhSdXJvbDIySXprLUoxS1M1d0E?oc=5"
     }
   ],
   "macro": [
@@ -1242,7 +1244,7 @@ export const SIXSENSE_DATA = {
       "name": "산업생산지수",
       "value": "102.5",
       "change": "동결",
-      "tone": "neg",
+      "tone": "neu",
       "desc": "FRED INDPRO (PMI 대체)",
       "history": [
         101.81,
@@ -1287,6 +1289,23 @@ export const SIXSENSE_DATA = {
         6.02,
         5.93
       ]
+    },
+    {
+      "id": "ust10",
+      "name": "미국 10년물 국채금리",
+      "value": "4.38%",
+      "change": "↑ 부정",
+      "tone": "neg",
+      "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)",
+      "history": [
+        4.27,
+        4.38,
+        4.33,
+        4.31,
+        4.29,
+        4.3,
+        4.38
+      ]
     }
   ],
   "events": [
@@ -1295,58 +1314,56 @@ export const SIXSENSE_DATA = {
       "type": "국내 반도체",
       "region": "한국",
       "risk": "high",
-      "title": "삼성전자 노조 협상 결렬, 총리 파업 경고",
+      "title": "삼성전자 노사, 파업 막기 위한 최종 협상",
       "impact": "공급↓",
       "date": "2026-05-13",
-      "summary": "삼성전자 노조 협상이 결렬되어 파업 가능성이 커졌다. 이는 한국의 주요 메모리 반도체 생산에 직접적인 위협이 될 수 있으며, 정부도 우려를 표명했다.",
+      "summary": "삼성전자 노사가 글로벌 공급망을 위협하는 파업을 막기 위한 최후의 협상을 진행 중이다. 협상 결렬 시 대규모 파업이 발생하여 DRAM 생산에 차질을 빚을 수 있다. 이는 전 세계 반도체 시장에 큰 영향을 미칠 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 파업 현실화 시 생산 차질로 DRAM 공급 감소 및 가격 상승 압박이 예상된다."
+          "text": "단기적으로 생산 차질 우려로 DRAM 공급 감소 및 가격 상승 압력이 발생할 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로 노사 갈등이 장기화될 경우 생산량 회복 지연 및 시장 불확실성 증대로 DRAM 가격에 부정적 영향을 미칠 수 있다."
+          "text": "파업 장기화 시 글로벌 공급망에 심각한 혼란을 초래하여 DRAM 가격 상승세가 지속될 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 한국 반도체 산업의 안정성에 대한 우려를 키워 글로벌 공급망 재편 논의를 촉발할 수 있다."
+          "text": "장기적으로는 한국 메모리 산업의 경쟁력 약화 및 고객사 이탈 가능성도 배제할 수 없다."
         }
       },
-      "links": [
-        0
-      ],
+      "links": [],
       "affects": [
-        "B-6"
+        "A-4",
+        "A-1"
       ]
     },
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "이스라엘",
+      "region": "중동",
       "risk": "high",
-      "title": "이스라엘, 휴전 연장 후 레바논 남부 공습",
+      "title": "유가 충격: 브렌트유 $111 돌파",
       "impact": "물류↑",
-      "date": "2026-05-16",
-      "summary": "이스라엘이 휴전 연장 몇 시간 만에 레바논 남부를 공습했다. 이는 중동 지역의 불안정한 정세를 다시 한번 부각시키며 확전 우려를 키우고 있다.",
+      "date": "2026-05-18",
+      "summary": "트럼프의 이란 경고와 UAE 파업으로 공급 우려가 커지면서 브렌트유 가격이 111달러를 넘어섰다. 유가 급등은 전반적인 물류 비용과 생산 비용을 증가시켜 DRAM 제조 원가에 영향을 미칠 수 있다. 이는 인플레이션 압력을 가중시킬 것이다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 중동 지역의 군사적 긴장 고조는 유가 상승 압력을 가중시켜 DRAM 생산 및 물류 비용에 부정적 영향을 줄 수 있다."
+          "text": "단기적으로 유가 상승은 물류 비용을 증가시켜 DRAM 운송 및 생산 비용에 부담을 줄 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 분쟁이 확대될 경우 글로벌 경제 심리 위축으로 IT 투자 감소 및 DRAM 수요 둔화로 이어질 가능성이 있다."
+          "text": "중기적으로 고유가 지속은 전반적인 인플레이션을 유발하여 소비 심리를 위축시키고 DRAM 수요에 부정적 영향을 미칠 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 중동 지역의 지속적인 불안정은 글로벌 공급망에 대한 불확실성을 높여 DRAM 시장에 간접적인 영향을 미칠 수 있다."
+          "text": "장기적으로는 에너지 안보 문제와 지정학적 리스크가 글로벌 경제 성장을 둔화시켜 DRAM 시장에 지속적인 하방 압력을 가할 수 있다."
         }
       },
-      "links": [
-        4
-      ],
+      "links": [],
       "affects": [
+        "A-7",
         "B-4"
       ]
     },
@@ -1354,28 +1371,26 @@ export const SIXSENSE_DATA = {
       "id": "ev-3",
       "type": "기상이변",
       "region": "일본",
-      "risk": "mid",
-      "title": "일본 해안 7.4 지진, 쓰나미 경보 발령",
-      "impact": "물류↑",
+      "risk": "high",
+      "title": "일본, 7.4 강진 후 쓰나미 경보 발령",
+      "impact": "공급↓",
       "date": "2026-04-20",
-      "summary": "일본 해안에서 규모 7.4의 강진이 발생하여 쓰나미 경보가 발령되었다. 이는 일본 내 주요 산업 시설 및 물류에 영향을 미칠 수 있다.",
+      "summary": "일본에서 강력한 규모 7.4의 지진이 발생하여 쓰나미 경보가 발령되었다. 일본은 주요 반도체 소재 및 장비 공급국이므로, 지진 피해가 심각할 경우 글로벌 반도체 공급망에 차질이 발생할 수 있다. 이는 DRAM 생산에도 영향을 미칠 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 일본 내 반도체 소재 및 장비 공급망에 일시적인 차질을 빚어 DRAM 생산에 간접적인 영향을 줄 수 있다."
+          "text": "단기적으로 일본 내 반도체 관련 시설 및 물류에 피해가 발생할 경우, DRAM 생산에 필요한 부품 공급에 차질이 생길 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 항만 및 도로 복구 지연 시 물류 비용 상승 및 부품 조달 지연으로 DRAM 생산 비용에 영향을 미칠 수 있다."
+          "text": "중기적으로는 피해 복구에 시간이 소요되어 글로벌 반도체 공급망의 병목 현상이 심화될 수 있다."
         },
         "long": {
-          "tone": "neu",
-          "text": "장기적으로는 일본의 재해 복구 능력과 산업 인프라의 회복 탄력성에 따라 영향이 제한적일 수 있다."
+          "tone": "neg",
+          "text": "장기적으로는 일본의 생산 능력 회복 여부에 따라 DRAM 시장의 공급 안정성에 영향을 미칠 것이다."
         }
       },
-      "links": [
-        1
-      ],
+      "links": [],
       "affects": [
         "A-1"
       ]
@@ -1384,211 +1399,199 @@ export const SIXSENSE_DATA = {
       "id": "ev-4",
       "type": "금융 위기",
       "region": "미국",
-      "risk": "mid",
-      "title": "미 인플레이션 압력으로 연준 금리 인하 2027년 9월까지 지연",
+      "risk": "high",
+      "title": "그레이스케일: 美 인플레, 금리 인하 지연",
       "impact": "수요↓",
       "date": "2026-05-15",
-      "summary": "그레이스케일 보고서에 따르면 미국 인플레이션 압력으로 인해 연준의 금리 인하가 2027년 9월까지 지연될 것으로 예상된다. 이는 고금리 환경의 장기화를 의미한다.",
+      "summary": "그레이스케일 보고서에 따르면 미국 인플레이션 압력으로 인해 연준의 금리 인하가 2027년 9월까지 지연될 수 있다. 고금리 장기화는 기업의 투자 비용을 증가시키고 소비 심리를 위축시켜 DRAM 수요에 부정적인 영향을 미칠 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 고금리 장기화는 기업의 자금 조달 비용을 높여 IT 투자 및 서버 증설 계획에 부정적인 영향을 미쳐 DRAM 수요를 둔화시킬 수 있다."
+          "text": "단기적으로 고금리 지속은 기업의 설비 투자(CapEx)를 위축시켜 서버 DRAM 수요 증가세를 둔화시킬 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 높은 금리가 지속될 경우 경기 침체 우려가 커져 전반적인 소비 심리 위축과 기업 실적 악화로 DRAM 수요가 감소할 수 있다."
+          "text": "중기적으로는 소비 심리 위축과 경기 둔화로 인해 PC 및 모바일 DRAM 수요에도 부정적인 영향을 미칠 것이다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 고금리 환경이 기술 혁신 및 신규 데이터센터 구축 속도를 늦춰 DRAM 시장의 구조적 성장에 제약을 가할 수 있다."
+          "text": "장기적으로는 고금리 환경이 기술 혁신 속도를 늦추고 전반적인 경제 성장을 저해하여 DRAM 시장의 성장 잠재력을 약화시킬 수 있다."
         }
       },
-      "links": [
-        7
-      ],
+      "links": [],
       "affects": [
-        "A-2",
-        "B-1"
+        "A-2"
       ]
     },
     {
       "id": "ev-5",
       "type": "기타",
-      "region": "글로벌",
-      "risk": "low",
-      "title": "[모니터링] 글로벌 무역 정책 추적",
-      "impact": "가격?",
-      "date": "2026-05-13",
-      "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 기타)",
+      "region": "미국",
+      "risk": "high",
+      "title": "기술 전쟁: 美, 대중국 수출 통제 강화",
+      "impact": "공급↓",
+      "date": "2026-05-15",
+      "summary": "미국 의회가 중국에 대한 '가장 큰' 수출 통제 강화를 추진하고 있다. 이는 미중 기술 전쟁의 심화를 의미하며, 중국의 반도체 산업 발전을 저해하고 글로벌 반도체 공급망에 큰 영향을 미칠 것이다. DRAM 시장에도 불확실성을 가중시킨다.",
       "effects": {
         "short": {
-          "tone": "neu",
-          "text": "(placeholder)"
+          "tone": "neg",
+          "text": "단기적으로 중국 기업들의 반도체 조달에 어려움을 주어 DRAM 수요 패턴에 변화를 가져올 수 있다."
         },
         "mid": {
-          "tone": "neu",
-          "text": "(placeholder)"
+          "tone": "neg",
+          "text": "중기적으로는 중국의 자체 반도체 생산 능력 강화 노력을 가속화시키거나, 글로벌 공급망 재편을 유도할 수 있다."
         },
         "long": {
-          "tone": "neu",
-          "text": "(placeholder)"
+          "tone": "neg",
+          "text": "장기적으로는 미중 기술 패권 경쟁이 심화되어 글로벌 반도체 시장의 분열과 비효율성을 초래할 수 있다."
         }
       },
       "links": [],
-      "affects": []
+      "affects": [
+        "A-1",
+        "B-4"
+      ]
     },
     {
       "id": "ev-6",
-      "type": "물리적 충돌",
-      "region": "이란",
+      "type": "국내 반도체",
+      "region": "한국",
       "risk": "high",
-      "title": "트럼프, 이란 추가 공습 시사로 유가·국채 요동",
-      "impact": "물류↑",
-      "date": "2026-05-18",
-      "summary": "트럼프 전 대통령이 이란에 대한 추가 공습 가능성을 시사하며 국제유가와 글로벌 국채 시장이 크게 요동쳤다. 이는 중동 지역의 지정학적 긴장을 고조시키고 있다.",
+      "title": "삼성, 파업 앞두고 칩 생산 축소 시작",
+      "impact": "공급↓",
+      "date": "2026-05-15",
+      "summary": "삼성이 예정된 18일간의 파업을 6일 앞두고 칩 생산을 축소하기 시작했다. 회사는 '비상 경영 모드'에 돌입했으며, 일일 손실이 20억 달러에 달할 수 있다고 예상된다. 이는 DRAM 공급에 즉각적인 영향을 미쳐 가격 상승을 유발할 것이다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 중동 긴장 고조로 유가 급등 및 물류 비용 상승이 예상되며, 이는 DRAM 생산 및 운송 비용 증가로 이어질 수 있다."
+          "text": "생산 축소로 인해 단기적으로 DRAM 공급량이 감소하고 가격이 급등할 가능성이 높다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 군사적 충돌이 현실화될 경우 글로벌 경제 불확실성 증대로 기업 투자 위축 및 DRAM 수요 감소를 야기할 수 있다."
+          "text": "파업이 계획대로 진행될 경우, 중기적으로 글로벌 DRAM 시장의 공급 부족이 심화될 것이다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 중동 정세 불안이 지속될 경우 에너지 공급망 불안정으로 인한 인플레이션 압박이 DRAM 시장 전반에 부정적 영향을 미칠 수 있다."
+          "text": "장기적으로는 삼성의 생산 능력 회복과 시장 안정화에 시간이 걸릴 수 있다."
         }
       },
-      "links": [
-        3
-      ],
+      "links": [],
       "affects": [
-        "B-4",
-        "A-7"
+        "A-4",
+        "A-1"
       ]
     },
     {
       "id": "ev-7",
+      "type": "물리적 충돌",
+      "region": "우크라이나",
+      "risk": "mid",
+      "title": "우크라이나 전쟁: 모스크바 드론 공격",
+      "impact": "물류↑",
+      "date": "2026-05-18",
+      "summary": "우크라이나 전쟁 브리핑에 따르면 모스크바 지역이 드론 공격을 받았다. 이는 전쟁의 확전 가능성을 높이며 지정학적 불안정성을 심화시킨다. 글로벌 공급망과 경제 전반에 불확실성을 가중시킬 수 있다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 지정학적 긴장 고조는 투자 심리를 위축시키고 원자재 가격 변동성을 높일 수 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로 전쟁 장기화는 글로벌 경제 성장을 둔화시키고 반도체 수요에 간접적인 부정적 영향을 미칠 수 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 국제 정세 불안정성이 지속되어 글로벌 공급망 재편 및 무역 환경 변화를 야기할 수 있다."
+        }
+      },
+      "links": [],
+      "affects": [
+        "B-4"
+      ]
+    },
+    {
+      "id": "ev-8",
       "type": "기상이변",
       "region": "일본",
       "risk": "low",
-      "title": "일본 5개 현에 경보 발령된 6.7 지진",
+      "title": "일본 동북부 해역 6.3 지진 발생",
       "impact": "가격?",
       "date": "2026-05-15",
-      "summary": "일본에서 규모 6.7의 강진이 발생했으며 5개 현에 경보가 발령되었다. 직접적인 피해는 보고되지 않았으나, 지속적인 지진 활동은 잠재적 위험을 내포한다.",
+      "summary": "일본 동북부 해역에서 규모 6.3의 지진이 발생했으나 쓰나미 경보는 발령되지 않았다. 비교적 낮은 강도의 지진으로 즉각적인 대규모 피해는 없을 것으로 예상된다. 하지만 일본의 지진 활동은 항상 반도체 공급망에 잠재적 위험으로 작용한다.",
       "effects": {
         "short": {
           "tone": "neu",
-          "text": "단기적으로는 직접적인 반도체 생산 시설 피해가 없어 DRAM 가격에 미치는 영향은 미미할 것으로 예상된다."
+          "text": "단기적으로는 직접적인 DRAM 생산 차질은 없을 것으로 보이나, 지속적인 지진 활동은 시장에 불안감을 줄 수 있다."
         },
         "mid": {
           "tone": "neu",
-          "text": "중기적으로는 반복적인 지진 발생 시 산업 활동에 대한 불확실성을 높일 수 있으나, 큰 영향은 없을 것이다."
+          "text": "중기적으로는 일본의 지진 대비 시스템이 잘 갖춰져 있어 큰 영향은 없을 것으로 예상된다."
         },
         "long": {
           "tone": "neu",
-          "text": "장기적으로는 일본의 내진 설계 및 재해 대비 시스템으로 인해 DRAM 공급망에 구조적인 변화를 주지는 않을 것이다."
+          "text": "장기적으로는 일본의 지진 리스크가 반도체 기업들의 생산 기지 다변화 전략에 영향을 미칠 수 있다."
         }
       },
-      "links": [
-        2
-      ],
+      "links": [],
       "affects": [
         "A-1"
       ]
     },
     {
-      "id": "ev-8",
-      "type": "금융 위기",
-      "region": "이란",
-      "risk": "mid",
-      "title": "이란 전쟁 긴장 고조로 유가 주간 8% 급등, $110 근접",
-      "impact": "물류↑",
-      "date": "2026-05-16",
-      "summary": "이란 전쟁 긴장이 다시 고조되면서 국제유가가 한 주 만에 8% 급등하여 배럴당 110달러에 근접했다. 이는 에너지 시장의 불안정성을 심화시키고 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기적으로 유가 급등은 DRAM 생산에 필요한 에너지 비용과 운송 비용을 증가시켜 가격 상승 압박을 가할 것이다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로 고유가 지속은 글로벌 인플레이션을 심화시키고 소비 심리를 위축시켜 IT 제품 및 서버 DRAM 수요 감소로 이어질 수 있다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 에너지 안보에 대한 우려가 커지면서 기업들의 투자 계획에 영향을 미쳐 DRAM 시장의 성장 동력을 약화시킬 수 있다."
-        }
-      },
-      "links": [
-        9
-      ],
-      "affects": [
-        "A-7",
-        "B-4"
-      ]
-    },
-    {
       "id": "ev-9",
-      "type": "물리적 충돌",
-      "region": "이란",
-      "risk": "high",
-      "title": "유가 충격: 트럼프 이란 경고, UAE 공습으로 브렌트유 $111 돌파",
-      "impact": "물류↑",
-      "date": "2026-05-18",
-      "summary": "트럼프의 이란 경고와 UAE 공습으로 인해 브렌트유 가격이 배럴당 111달러를 돌파하며 유가 충격이 발생했다. 이는 중동 지역의 공급 우려를 심화시키고 있다.",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "美 증시 마감: 유가 급등, 채권 시장 매도",
+      "impact": "수요↓",
+      "date": "2026-05-15",
+      "summary": "미국 증시 마감 시 유가 급등이 채권 시장 매도세를 촉발하며 주요 지수가 1% 이상 하락했다. 이는 인플레이션 우려와 금리 인상 압력을 반영하며, 전반적인 금융 시장의 불안정성을 높인다. 반도체 기업의 투자 환경에도 영향을 줄 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기적으로 유가 급등은 DRAM 생산에 필요한 에너지 비용과 운송 비용을 증가시켜 가격 상승 압박을 가할 것이다."
+          "text": "단기적으로 금융 시장의 불안정성은 투자 심리를 위축시켜 반도체 관련 주식에 부정적인 영향을 미칠 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로 고유가 지속은 글로벌 인플레이션을 심화시키고 소비 심리를 위축시켜 IT 제품 및 서버 DRAM 수요 감소로 이어질 수 있다."
+          "text": "중기적으로 유가 상승과 채권 시장의 변동성은 기업의 자금 조달 비용을 높여 CapEx 계획에 영향을 줄 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 에너지 안보에 대한 우려가 커지면서 기업들의 투자 계획에 영향을 미쳐 DRAM 시장의 성장 동력을 약화시킬 수 있다."
+          "text": "장기적으로는 거시 경제의 불확실성이 지속되어 DRAM 시장의 성장 동력을 약화시킬 수 있다."
         }
       },
-      "links": [
-        6
-      ],
+      "links": [],
       "affects": [
-        "B-4",
+        "A-2",
         "A-7"
       ]
     },
     {
       "id": "ev-10",
-      "type": "금융 위기",
+      "type": "기타",
       "region": "미국",
       "risk": "mid",
-      "title": "이란 전쟁 불확실성 속 미 국채 금리 급등, AI 기술주 경고",
-      "impact": "수요↓",
-      "date": "2026-05-18",
-      "summary": "이란 전쟁 불확실성으로 미국 국채 금리가 급등하며 AI 기술주 랠리에 경고등이 켜졌다. 이는 지정학적 리스크가 금융 시장에 미치는 영향을 보여준다.",
+      "title": "Arm, 자사 칩 개발로 美 FTC 반독점 조사",
+      "impact": "가격?",
+      "date": "2026-05-15",
+      "summary": "Arm이 자체 칩 개발에 나서면서 미국 연방거래위원회(FTC)의 반독점 조사를 받게 되었다. 이는 반도체 설계 시장의 경쟁 구도에 영향을 미칠 수 있으며, 장기적으로는 칩 산업 전반의 혁신과 시장 역학에 변화를 가져올 수 있다.",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "단기적으로 국채 금리 급등은 자본 시장의 불안정성을 높여 AI 관련 기업들의 투자 심리를 위축시키고 DRAM 수요에 부정적 영향을 줄 수 있다."
+          "tone": "neu",
+          "text": "단기적으로는 Arm의 사업 전략에 불확실성을 더하지만, DRAM 가격에 직접적인 영향은 제한적이다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 고금리 환경과 지정학적 리스크가 복합적으로 작용하여 빅테크 기업들의 CapEx 축소로 이어져 서버 DRAM 수요 둔화를 야기할 수 있다."
+          "text": "중기적으로는 반독점 조사가 Arm의 시장 지배력에 영향을 미쳐 칩 설계 라이선스 비용에 변화를 줄 수 있다."
         },
         "long": {
-          "tone": "neg",
-          "text": "장기적으로는 글로벌 경제의 불확실성 증대가 기술 혁신 속도를 늦추고 DRAM 시장의 성장 잠재력을 저해할 수 있다."
+          "tone": "neu",
+          "text": "장기적으로는 칩 설계 시장의 경쟁 환경 변화가 전체 반도체 생태계에 영향을 미칠 수 있다."
         }
       },
-      "links": [
-        8
-      ],
+      "links": [],
       "affects": [
-        "A-2",
-        "B-4"
+        "B-7"
       ]
     }
   ],

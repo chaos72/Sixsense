@@ -35,11 +35,13 @@ SIGNAL_META = {
     "B-7": {"name": "BOM 신호",           "desc": "PCB·기판 가격 (공급망 트랜스크립트)",     "fmt": "sent"},
 }
 MACRO_META = {
-    "macro-fed":  {"name": "미국 금리",        "desc": "Effective Federal Funds Rate (FRED DFF)", "unit": "%",   "scale": 1.0},
-    "macro-dxy":  {"name": "달러 인덱스 (DXY)", "desc": "강달러 = DRAM 수출 부정 (DX-Y.NYB)",      "unit": "",    "scale": 1.0},
-    "macro-pmi":  {"name": "산업생산지수",      "desc": "FRED INDPRO (PMI 대체)",                   "unit": "",    "scale": 1.0},
-    "macro-krw":  {"name": "USD/KRW",          "desc": "원화 약세 = 수입 원가↑ (Yahoo KRW=X)",     "unit": "원",  "scale": 1.0},
-    "macro-cu":   {"name": "구리 가격",        "desc": "LME 대체 (COMEX HG=F)",                    "unit": "$",   "scale": 1.0},
+    "macro-fed":   {"name": "미국 금리",            "desc": "Effective Federal Funds Rate (FRED DFF)",                 "unit": "%",  "scale": 1.0},
+    "macro-dxy":   {"name": "달러 인덱스 (DXY)",     "desc": "강달러 = DRAM 수출 부정 (DX-Y.NYB)",                        "unit": "",   "scale": 1.0},
+    "macro-pmi":   {"name": "산업생산지수",          "desc": "FRED INDPRO (PMI 대체)",                                    "unit": "",   "scale": 1.0},
+    "macro-krw":   {"name": "USD/KRW",              "desc": "원화 약세 = 수입 원가↑ (Yahoo KRW=X)",                       "unit": "원", "scale": 1.0},
+    "macro-cu":    {"name": "구리 가격",            "desc": "LME 대체 (COMEX HG=F)",                                     "unit": "$",  "scale": 1.0},
+    # USER-REQUESTED EXTENSION (2026-05-18 #10) — 미국 10년물 국채금리 추가
+    "macro-ust10": {"name": "미국 10년물 국채금리",   "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)", "unit": "%",  "scale": 1.0},
 }
 
 
@@ -240,15 +242,17 @@ def build_macro() -> list[dict]:
             continue
         last = rows[-1]["value"]
         prev = rows[-5]["value"] if len(rows) >= 5 else last
-        change = "↑ 부정" if (mid == "macro-dxy" or mid == "macro-krw") and last > prev else \
+        # USER-REQUESTED EXTENSION (#10) — macro-ust10 도 강달러 계열(높을수록 위험자산 선호↓→DRAM 부정)
+        NEGATIVE_WHEN_UP = ("macro-dxy", "macro-krw", "macro-ust10")
+        change = "↑ 부정" if mid in NEGATIVE_WHEN_UP and last > prev else \
                  "↑ 긍정" if last > prev else \
-                 "↓ 부정" if (mid == "macro-dxy" or mid == "macro-krw") and last < prev else \
+                 "↓ 부정" if mid in NEGATIVE_WHEN_UP and last < prev else \
                  "↓ 긍정" if last < prev else "동결"
         tone = "neu"
-        if mid in ("macro-dxy", "macro-krw"):
-            tone = "neg" if last > prev else "pos"
+        if mid in NEGATIVE_WHEN_UP:
+            tone = "neg" if last > prev else "pos" if last < prev else "neu"
         elif mid in ("macro-pmi", "macro-cu"):
-            tone = "pos" if last > prev else "neg"
+            tone = "pos" if last > prev else "neg" if last < prev else "neu"
         elif mid == "macro-fed":
             tone = "neu"
 

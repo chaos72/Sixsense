@@ -39,15 +39,19 @@ OUT_EVENTS.parent.mkdir(parents=True, exist_ok=True)
 
 LOOKBACK_DAYS = 30
 
-# auto_collectors.collect_B2_rss_sentiment 의 RSS 피드 재사용
-RSS_FEEDS = [
+# USER-REQUESTED EXTENSION (2026-05-18 #10) — news 풀과 events 풀을 entry 단계부터 분리
+# news 풀: DRAM/반도체 산업 직접 뉴스 (가격·수요·공급·기술 트렌드)
+# events 풀: 글로벌 이벤트 + 국내 반도체 이벤트성 (파업/정전/화재 등)
+# 사용자 요청: "AI 뉴스 & 감성 분석"과 "글로벌 이벤트 모니터링"은 겹치지 않고 독립 운영
+
+# ── NEWS 풀 (DRAM/반도체 산업 직접, "AI 뉴스 & 감성 분석"에 표시) ──
+NEWS_RSS_FEEDS = [
     "https://technews.tw/category/semiconductor/feed/",
     "https://technews.tw/category/ai/feed/",
     "https://technews.tw/feed/",
     "https://www.digitimes.com.tw/rss/news.xml",
 ]
-GOOGLE_NEWS_QUERIES = [
-    # ── DRAM / 반도체 직접 관련 (news 후보) ──
+NEWS_QUERIES = [
     ("Taiwan semiconductor", "en"),
     ("DRAM memory price", "en"),
     ("HBM Nvidia", "en"),
@@ -57,12 +61,17 @@ GOOGLE_NEWS_QUERIES = [
     ("AI server memory demand", "en"),
     ("DDR5 server", "en"),
     ("chip export ban China", "en"),
-    ("Taiwan Strait tension", "en"),
     ("半導體 台灣", "zh-TW"),
     ("記憶體 DRAM", "zh-TW"),
     ("메모리 반도체", "ko"),
     ("DDR5 서버", "ko"),
-    # ── USER-REQUESTED EXTENSION (2026-05-18 #9) — 국내 반도체 이슈 (파업/정전/화재) 직접 쿼리 ──
+    ("HBM 수요", "ko"),
+]
+
+# ── EVENTS 풀 (글로벌 이벤트 + 국내 반도체 이벤트성, "글로벌 이벤트 모니터링"에 표시) ──
+EVENTS_RSS_FEEDS = []  # Google News RSS 만 사용 (전용 사이트 RSS 없음)
+EVENTS_QUERIES = [
+    # 국내 반도체 이벤트성 (#9)
     ("Samsung union strike", "en"),
     ("SK Hynix labor strike", "en"),
     ("Korea chip fab blackout", "en"),
@@ -73,22 +82,22 @@ GOOGLE_NEWS_QUERIES = [
     ("반도체 공장 정전", "ko"),
     ("반도체 공장 화재", "ko"),
     ("평택 화성 청주 공장", "ko"),
-    # ── USER-REQUESTED EXTENSION (2026-05-18 #8) — 글로벌 이벤트 후보 (events 다양화) ──
-    # 물리적 충돌 (전쟁/테러/쿠데타)
+    # 물리적 충돌 (#8)
     ("Ukraine war", "en"),
     ("Israel Iran conflict", "en"),
     ("Middle East war", "en"),
     ("terror attack", "en"),
     ("coup d'etat", "en"),
+    ("Taiwan Strait tension", "en"),
     ("우크라이나 전쟁", "ko"),
     ("이스라엘 이란", "ko"),
-    # 기상이변 (지진/태풍/쓰나미)
+    # 기상이변
     ("major earthquake", "en"),
     ("typhoon Asia", "en"),
     ("tsunami warning", "en"),
     ("지진 규모", "ko"),
     ("태풍 일본 대만", "ko"),
-    # 금융 위기 (환율/유가/금리)
+    # 금융 위기
     ("Fed rate decision", "en"),
     ("crude oil price surge", "en"),
     ("US Treasury 10-year yield", "en"),
@@ -98,10 +107,16 @@ GOOGLE_NEWS_QUERIES = [
     ("원달러 환율", "ko"),
     ("10년물 국채", "ko"),
 ]
-for q, lang in GOOGLE_NEWS_QUERIES:
-    RSS_FEEDS.append(
-        f"https://news.google.com/rss/search?q={q.replace(' ', '+')}&hl={lang}-US&gl=US&ceid=US:{lang.split('-')[0]}"
-    )
+
+
+def build_rss_urls(rss_feeds: list[str], queries: list[tuple[str, str]]) -> list[str]:
+    """RSS URL 리스트 빌드 (전용 피드 + Google News 쿼리 변환)."""
+    urls = list(rss_feeds)
+    for q, lang in queries:
+        urls.append(
+            f"https://news.google.com/rss/search?q={q.replace(' ', '+')}&hl={lang}-US&gl=US&ceid=US:{lang.split('-')[0]}"
+        )
+    return urls
 
 TOPIC_KEYWORDS = [
     # DRAM/반도체
@@ -310,17 +325,21 @@ def korean_summary(category: str, region: str, title: str, raw_summary: str) -> 
     return f"{region} {category} 관련 보도 — 추가 분석 필요.{suffix}"
 
 
-def fetch_entries() -> list[dict]:
+def fetch_entries(rss_urls: list[str] | None = None) -> list[dict]:
+    """주어진 RSS URL 리스트에서 entries 수집 (default = NEWS+EVENTS 통합)."""
     try:
         import feedparser
     except ImportError:
         raise SystemExit("feedparser 미설치: pip install feedparser")
 
+    if rss_urls is None:
+        rss_urls = build_rss_urls(NEWS_RSS_FEEDS, NEWS_QUERIES) + build_rss_urls(EVENTS_RSS_FEEDS, EVENTS_QUERIES)
+
     cutoff = date.today() - timedelta(days=LOOKBACK_DAYS)
     seen_titles = set()
     entries = []
 
-    for url in RSS_FEEDS:
+    for url in rss_urls:
         try:
             f = feedparser.parse(url)
             for e in f.entries:
@@ -717,44 +736,295 @@ def heuristic_fallback(entries: list[dict]) -> tuple[list[dict], list[dict]]:
     return news, events
 
 
+# USER-REQUESTED EXTENSION (#10) — news/events 풀 분리 LLM 호출 + 분리 휴리스틱
+def llm_enrich_split(news_pool: list[dict], events_pool: list[dict]) -> dict | None:
+    """단일 LLM 호출에 두 풀 명확히 분리 출력 요청. {"news": [...10], "events": [...10]}."""
+    gemini_key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
+    if not gemini_key or not (news_pool or events_pool):
+        return None
+
+    news_bullets = "\n".join(
+        f"N{i+1}. [{e['date']} · {e['source']}] {e['title']} — {e['summary'][:140]}"
+        for i, e in enumerate(news_pool)
+    )
+    events_bullets = "\n".join(
+        f"E{i+1}. [{e['date']} · {e['source']}] {e['title']} — {e['summary'][:140]}"
+        for i, e in enumerate(events_pool)
+    )
+
+    schema = """{
+  "news": [   // 풀 A (DRAM/반도체 산업 직접 뉴스). 점수 절댓값 큰 순 10건.
+    {
+      "idx": 1,                    // N1~N{len_a} 중
+      "title_ko": "한국어 제목 (30자 이내)",
+      "summary_ko": "한국어 요약 2-3문장",
+      "score": 0.85,               // -1.0 ~ +1.0 (DRAM 가격 영향)
+      "tone": "pos|neu|neg",
+      "conf": 82,
+      "linked": ["A-2", "B-4"]     // 관련 신호 ID 1~3개
+    }
+  ],
+  "events": [   // 풀 B (이벤트). 5 카테고리 다양성으로 10건.
+    {
+      "idx": 1,                    // E1~E{len_b} 중
+      "title_ko": "한국어 제목 (30자 이내)",
+      "summary_ko": "한국어 요약 2-3문장",
+      "score": 0.85,
+      "tone": "pos|neu|neg",
+      "conf": 82,
+      "type": "국내 반도체|물리적 충돌|기상이변|금융 위기|기타",
+      "region": "한국|미국|중국|대만|일본|우크라이나|이스라엘|이란|중동|러시아|유럽|글로벌",
+      "risk": "high|mid|low",
+      "impact": "공급↓|공급↑|수요↑|수요↓|물류↑|가격?",
+      "short": {"tone":"pos|neu|neg", "text":"1~7주 영향 1문장"},
+      "mid":   {"tone":"pos|neu|neg", "text":"8~21주 영향 1문장"},
+      "long":  {"tone":"pos|neu|neg", "text":"21주 이후 영향 1문장"},
+      "linked": ["A-2", "B-4"]
+    }
+  ]
+}"""
+
+    prompt = f"""너는 서버 DRAM 가격 의사결정을 돕는 시장 정보 애널리스트다.
+**두 개의 헤드라인 풀**을 받고, 각 풀에서 **각각 10건씩** 골라 아래 JSON 으로만 답변하라.
+풀 A (news) 결과는 풀 B (events)에 포함하지 말 것. 두 출력 절대 겹치지 않게 분리.
+마크다운/설명 금지. 모든 한국어 필드는 반드시 한국어로 작성.
+
+★ events type 분류 (정확히 5가지 중 하나):
+  - "국내 반도체": 삼성/SK하이닉스 파업·노조·정전·화재 등 한국 메모리 산업 직접 이슈
+  - "물리적 충돌": 전쟁, 테러, 쿠데타, 군사 충돌
+  - "기상이변": 지진, 태풍, 쓰나미
+  - "금융 위기": 환율, 유가, 10년물 국채금리, Fed 금리, 인플레이션
+  - "기타": 위 4개에 안 맞는 것 (무역 분쟁, 정책 등)
+★ events 5 카테고리에서 각 1~2건씩 분포되도록 선택 (다양성).
+
+★ news 는 DRAM/반도체 가격·수요·공급·기술 트렌드 뉴스만. 절대 이벤트성(파업/전쟁/지진/금리)은 events 로만.
+
+신호 ID 참조:
+  A-1 대만 공급망 | A-2 빅테크 CapEx | A-3 관세청 수출 | A-4 재고/출하 | A-5 AWS Spot | A-6 봉쇄확률 | A-7 구리
+  B-1 Earnings Call | B-2 대만 뉴스 | B-3 Reddit/HN | B-4 지정학(GPR) | B-5 LTA비율 | B-6 HBM/D램 | B-7 BOM
+
+━━━━━━━━━━ 풀 A: NEWS 후보 ({len(news_pool)}건) ━━━━━━━━━━
+{news_bullets}
+
+━━━━━━━━━━ 풀 B: EVENTS 후보 ({len(events_pool)}건) ━━━━━━━━━━
+{events_bullets}
+
+스키마:
+{schema}
+"""
+
+    for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
+        try:
+            r = requests.post(
+                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
+                headers={"Content-Type": "application/json"},
+                json={
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {
+                        "maxOutputTokens": 32768,
+                        "temperature": 0.0,
+                        "responseMimeType": "application/json",
+                    },
+                },
+                timeout=90,
+            )
+        except Exception as exc:
+            print(f"  ⚠️  Gemini {model} 네트워크: {str(exc)[:80]}")
+            continue
+        if r.status_code != 200:
+            print(f"  ⚠️  Gemini {model} HTTP {r.status_code}: {r.text[:160]}")
+            continue
+        try:
+            j = r.json()
+            txt = j["candidates"][0]["content"]["parts"][0]["text"].strip()
+            txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
+            obj = json.loads(txt)
+            if isinstance(obj, dict) and ("news" in obj or "events" in obj):
+                print(f"  ✅ Gemini {model} → news {len(obj.get('news', []))}건 + events {len(obj.get('events', []))}건")
+                return obj
+        except Exception as exc:
+            print(f"  ⚠️  Gemini {model} 파싱 실패: {str(exc)[:120]}")
+            continue
+    return None
+
+
+def merge_news_only(enriched_news: list[dict], pool: list[dict]) -> list[dict]:
+    """enriched news → news[] (events 분리 없음)."""
+    out = []
+    for item in enriched_news:
+        idx = item.get("idx", 0) - 1
+        if not (0 <= idx < len(pool)):
+            continue
+        src = pool[idx]
+        tone = (item.get("tone") or "neu").lower()
+        if tone not in {"pos", "neu", "neg"}:
+            tone = "neu"
+        score = max(-1.0, min(1.0, float(item.get("score") or 0.0)))
+        summary_ko = item.get("summary_ko") or src["summary"][:200]
+        if not re.search(r"[가-힣]", summary_ko):
+            summary_ko = f"({src['source']}) {summary_ko[:160]}"  # 영문 잔여 시 source prefix
+        out.append({
+            "date": src["date"],
+            "title": item.get("title_ko") or src["title"][:60],
+            "titleEn": src["title"],
+            "source": src["source"],
+            "score": round(score, 2),
+            "tone": tone,
+            "conf": int(item.get("conf") or 70),
+            "hot": abs(score) >= 0.6,
+            "summary": summary_ko,
+            "effects": {
+                "short": {"tone": tone, "text": "단기 분석"},
+                "mid":   {"tone": tone, "text": "중기 분석"},
+                "long":  {"tone": tone, "text": "장기 분석"},
+            },
+            "linked": [f"{s} 관련" for s in (item.get("linked") or [])[:3]],
+            "link": src.get("link", ""),
+        })
+    out.sort(key=lambda n: -abs(n["score"]))
+    return out[:10]
+
+
+def merge_events_only(enriched_events: list[dict], pool: list[dict]) -> list[dict]:
+    """enriched events → events[] (5 카테고리 강제 + diversify)."""
+    ALLOWED = {"국내 반도체", "물리적 충돌", "기상이변", "금융 위기", "기타"}
+    raw = []
+    for item in enriched_events:
+        idx = item.get("idx", 0) - 1
+        if not (0 <= idx < len(pool)):
+            continue
+        src = pool[idx]
+        tone = (item.get("tone") or "neu").lower()
+        if tone not in {"pos", "neu", "neg"}:
+            tone = "neu"
+        ev_type = item.get("type", "")
+        if ev_type not in ALLOWED:
+            ev_type, _ = classify_category(src["title"] + " " + src["summary"])
+        ev_region = item.get("region") or classify_region(src["title"] + " " + src["summary"])
+        summary_ko = item.get("summary_ko") or src["summary"][:200]
+        if not re.search(r"[가-힣]", summary_ko):
+            summary_ko = korean_summary(ev_type, ev_region, src["title"], src["summary"])
+        raw.append({
+            "id": "ev-tmp",
+            "type": ev_type,
+            "region": ev_region,
+            "risk": (item.get("risk") or EVENT_CATEGORIES.get(ev_type, {}).get("default_risk", "mid")).lower(),
+            "title": item.get("title_ko") or src["title"][:80],
+            "impact": item.get("impact") or "가격?",
+            "date": src["date"],
+            "summary": summary_ko,
+            "effects": {
+                "short": item.get("short") or {"tone": tone, "text": "단기 영향 분석 중"},
+                "mid":   item.get("mid")   or {"tone": tone, "text": "중기 영향 분석 중"},
+                "long":  item.get("long")  or {"tone": tone, "text": "장기 영향 분석 중"},
+            },
+            "links": [], "affects": item.get("linked") or [],
+        })
+    return diversify_events(raw, target=10)
+
+
+def heuristic_news_only(entries: list[dict]) -> list[dict]:
+    """LLM 실패 시 NEWS 풀만 휴리스틱으로 10건 추출. DRAM 가격 영향 점수 기반."""
+    POS = ("growth", "surge", "rally", "shortage", "boost", "expand", "investment",
+           "감산", "증설", "강세", "투자")
+    NEG = ("ban", "restrict", "decline", "drop", "oversupply", "수출규제",
+           "weak", "약세", "bearish", "둔화", "감소")
+    out = []
+    for e in entries[:10]:
+        text = (e["title"] + " " + e["summary"]).lower()
+        pos = sum(1 for w in POS if w in text)
+        neg = sum(1 for w in NEG if w in text)
+        score = round((pos - neg) / max(1, pos + neg + 1), 2)
+        tone = "pos" if score > 0.2 else "neg" if score < -0.2 else "neu"
+        # 휴리스틱 한국어 요약 (DRAM 산업 뉴스용)
+        summary_ko = e["summary"][:180]
+        if not re.search(r"[가-힣]", summary_ko):
+            summary_ko = f"DRAM/반도체 산업 동향 — {e['source']} 보도. 가격 영향 점수 {score:+.2f}. (LLM 비활성 — 휴리스틱 요약)"
+        out.append({
+            "date": e["date"],
+            "title": e["title"][:70],
+            "titleEn": e["title"],
+            "source": e["source"],
+            "score": score,
+            "tone": tone,
+            "conf": 50,
+            "hot": abs(score) >= 0.5,
+            "summary": summary_ko,
+            "effects": {
+                "short": {"tone": tone, "text": "LLM 비활성 — 휴리스틱 분류"},
+                "mid":   {"tone": tone, "text": "LLM 비활성 — 휴리스틱 분류"},
+                "long":  {"tone": tone, "text": "LLM 비활성 — 휴리스틱 분류"},
+            },
+            "linked": [],
+            "link": e.get("link", ""),
+        })
+    out.sort(key=lambda n: -abs(n["score"]))
+    return out
+
+
 def main():
-    print(f"[1/4] RSS 수집 (최근 {LOOKBACK_DAYS}일)…")
-    entries = fetch_entries()
-    print(f"  → 토픽 매칭 {len(entries)}건 (중복 제거 후)")
-    if not entries:
+    # USER-REQUESTED EXTENSION (#10) — news 풀과 events 풀을 entry 단계부터 완전 분리
+    print(f"[1/5] NEWS RSS 수집 (DRAM/반도체 직접, 최근 {LOOKBACK_DAYS}일)…")
+    news_urls = build_rss_urls(NEWS_RSS_FEEDS, NEWS_QUERIES)
+    news_entries = fetch_entries(news_urls)
+    print(f"  → {len(news_entries)}건 (NEWS_QUERIES {len(NEWS_QUERIES)}개)")
+
+    print(f"[2/5] EVENTS RSS 수집 (글로벌 + 국내 반도체 이벤트성)…")
+    events_urls = build_rss_urls(EVENTS_RSS_FEEDS, EVENTS_QUERIES)
+    events_entries_raw = fetch_entries(events_urls)
+    # NEWS 풀과 중복 제거 (titles)
+    news_titles = {e["title"] for e in news_entries}
+    events_entries = [e for e in events_entries_raw if e["title"] not in news_titles]
+    print(f"  → {len(events_entries)}건 (EVENTS_QUERIES {len(EVENTS_QUERIES)}개, news 중복 {len(events_entries_raw) - len(events_entries)}건 제거)")
+
+    if not news_entries and not events_entries:
         raise SystemExit("❌ RSS 결과 0건 — 네트워크/피드 확인")
 
-    print(f"[2/4] 휴리스틱 사전 랭킹 → 상위 30건")
-    top30 = pre_rank(entries)
-    print(f"  → {len(top30)}건 선정")
+    # NEWS 풀 처리
+    print(f"[3/5] NEWS 풀 처리 (휴리스틱 우선, LLM 실패 시 휴리스틱)")
+    news_top = pre_rank(news_entries) if news_entries else []
+    # EVENTS 풀 처리
+    print(f"[4/5] EVENTS 풀 처리 (5 카테고리 분류 + 다양성)")
+    events_top = pre_rank(events_entries) if events_entries else []
 
-    print(f"[3/4] Gemini 일괄 enrich (1 LLM call)…")
-    enriched = llm_enrich(top30)
-    if enriched:
-        news, events = merge(enriched, top30)
-        method = "Gemini LLM 분류"
+    # LLM 호출 — 두 풀을 하나의 호출에 분리 출력 요청 (LLM 한도 절약)
+    method_news = method_events = "키워드 휴리스틱"
+    enriched = llm_enrich_split(news_top, events_top)
+    if enriched and (enriched.get("news") or enriched.get("events")):
+        if enriched.get("news"):
+            news = merge_news_only(enriched["news"], news_top)
+            method_news = "Gemini LLM 분류"
+        else:
+            news = heuristic_news_only(news_top)
+        if enriched.get("events"):
+            events = merge_events_only(enriched["events"], events_top)
+            method_events = "Gemini LLM 분류"
+        else:
+            _, events = heuristic_fallback(events_top)
     else:
-        print(f"  ⚠️  LLM 실패 → 휴리스틱 fallback")
-        news, events = heuristic_fallback(top30)
-        method = "키워드 휴리스틱"
+        news = heuristic_news_only(news_top)
+        _, events = heuristic_fallback(events_top)
 
-    print(f"[4/4] 저장")
+    print(f"[5/5] 저장")
     payload_news = {
         "collectedAt": date.today().isoformat(),
-        "method": method,
+        "method": method_news,
         "lookbackDays": LOOKBACK_DAYS,
-        "rawCount": len(entries),
+        "rawCount": len(news_entries),
+        "pool": "NEWS (DRAM/반도체 직접)",
         "news": news,
     }
     payload_events = {
         "collectedAt": date.today().isoformat(),
-        "method": method,
+        "method": method_events,
+        "rawCount": len(events_entries),
+        "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성)",
         "events": events,
     }
     OUT_NEWS.write_text(json.dumps(payload_news, ensure_ascii=False, indent=2), encoding="utf-8")
     OUT_EVENTS.write_text(json.dumps(payload_events, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"  ✅ {OUT_NEWS.relative_to(ROOT)} ({len(news)}건)")
-    print(f"  ✅ {OUT_EVENTS.relative_to(ROOT)} ({len(events)}건)")
+    print(f"  ✅ {OUT_NEWS.relative_to(ROOT)} ({len(news)}건, {method_news})")
+    print(f"  ✅ {OUT_EVENTS.relative_to(ROOT)} ({len(events)}건, {method_events})")
 
 
 if __name__ == "__main__":
