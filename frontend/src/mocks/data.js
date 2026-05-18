@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-05-18T08:30:08.189988Z
+// 생성 시각: 2026-05-18T08:39:32.317929Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-05-18) · events 10건
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
@@ -18,17 +18,17 @@ export const SIXSENSE_DATA = {
     "model": "GBR (단기) + LSTM (중장기) + Prophet (베이스)",
     "confidence": 81,
     "insight": {
-      "headline": "하락·하락 동조, 하락 시그널",
-      "summary": "단기 **GBR**은 7주 후 **$5.06** (**-16.9%**), 중장기 **LSTM**은 21주 후 **$5.08** (**-16.6%**)를 가리킵니다. A-4 재고지수 4.75(<95)로 공급 타이트 신호. DXY 98.1로 강달러 압력↓. 최근 30일 핵심 뉴스 5건이 동반. 워치 포인트: **AI 서버 수요**·**HBM 캡 증설**·**지정학 리스크**를 주간 단위로 점검하세요. (현재 LLM 분석 미연결 — 데이터 기반 휴리스틱)",
-      "tone": "neg",
-      "confidence": 55,
-      "horizon": "short",
+      "headline": "AI 수요 견인, 장기 상승 전환",
+      "summary": "서버 DRAM 가격은 지난주 상승에도 불구하고, GBR 및 LSTM 모델은 단기 및 중장기적으로 약 **17%**의 **하락**을 예측하며 조정 국면을 시사합니다. 이는 **재고/출하 지수(A-4)**의 부담과 거시경제 불확실성(Fed Rate)이 일부 반영된 것으로 보입니다. 그러나, **AI 수요** 폭증으로 인한 메모리 부족 현상 심화(뉴스)와 **빅테크 CapEx(A-2)** 증가, AWS Spot 가격 상승(A-5) 등 강력한…",
+      "tone": "pos",
+      "confidence": 75,
+      "horizon": "long",
       "keySignals": [
         "A-2",
-        "B-4"
+        "A-4"
       ],
-      "model": "휴리스틱 (LLM 모두 실패)",
-      "generatedAt": "2026-05-18T16:13:30"
+      "model": "Gemini gemini-2.5-flash",
+      "generatedAt": "2026-05-18T17:39:16"
     },
     "modelValidation": {
       "headline": "🎉 Phase 6 멀티 모델 예측 아키텍처 완료 — 단기 MAPE 7.54% → 4.54% (39.8% 개선)",

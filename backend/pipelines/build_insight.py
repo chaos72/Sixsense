@@ -221,7 +221,7 @@ def call_gemini(prompt: str) -> tuple[dict | None, str]:
                 json={
                     "contents": [{"parts": [{"text": prompt}]}],
                     "generationConfig": {
-                        "maxOutputTokens": 2048,
+                        "maxOutputTokens": 8192,
                         "temperature": 0.2,
                         "responseMimeType": "application/json",
                     },

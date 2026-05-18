@@ -94,14 +94,15 @@ cd backend && .venv/bin/uvicorn app.main:app --port 8000 --reload
 | 순위 | LLM | 상태 (2026-05-18 11:30 KST) | 회복 |
 |---|---|---|---|
 | 1 | Anthropic Claude (haiku-4-5) | ❌ HTTP 400 "credit balance too low" | console.anthropic.com → Billing 충전 (영구) |
-| 2 | Google Gemini 2.5 Flash | ⏳ HTTP 429 RPM 20/min 초과 (분당 한도) | 32~60초 후 자동 회복 |
-| 2' | Google Gemini 2.0 Flash | ⏳ 동일 RPM 한도 | 동일 |
-| 3 | Groq llama-3.3-70b | ❌ `.env`에 키 미설정 | console.groq.com 가입 (무료 14400/day, 가장 빠른 해결) |
-| 4 | **휴리스틱** | ✅ 현재 사용 중 | 데이터 기반 250자 자동 생성, `**bold**` 강조 포함 |
+| 2 | **Google Gemini 2.5 Flash** | ✅ **현재 사용 중 (maxOutputTokens 8192로 확대 후 안정)** | — |
+| 2' | Google Gemini 2.0 Flash | ⏳ RPM 한도 (간헐적) | 분당 회복 |
+| 3 | Groq llama-3.3-70b | ❌ `.env`에 키 미설정 | console.groq.com 가입 (무료 14400/day) |
+| 4 | 휴리스틱 | (fallback only) | 데이터 기반 250자 자동 생성, `**bold**` 강조 포함 |
 
-**현재 인사이트** (휴리스틱, 250자):
-> headline: "**하락·하락 동조, 하락 시그널**"
-> 단기 GBR은 7주 후 $5.06 (-16.9%), 중장기 LSTM은 21주 후 $5.08 (-16.6%)를 가리킵니다. A-4 재고지수 4.75(<95)로 공급 타이트 신호. DXY 98.1로 강달러 압력↓. 최근 30일 핵심 뉴스 5건이 동반. 워치 포인트: AI 서버 수요·HBM 캡 증설·지정학 리스크를 주간 단위로 점검하세요.
+**현재 인사이트** (Gemini 2.5 Flash, 246자, tone=pos / conf 75% / horizon long / 핵심 신호 A-2·A-4):
+> headline: **AI 수요 견인, 장기 상승 전환**
+>
+> 서버 DRAM 가격은 지난주 상승에도 불구하고, GBR 및 LSTM 모델은 단기 및 중장기적으로 약 **17%**의 **하락**을 예측하며 조정 국면을 시사합니다. 이는 **재고/출하 지수(A-4)**의 부담과 거시경제 불확실성(Fed Rate)이 일부 반영된 것으로 보입니다. 그러나, **AI 수요** 폭증으로 인한 메모리 부족 현상 심화(뉴스)와 **빅테크 CapEx(A-2)** 증가, AWS Spot 가격 상승(A-5) 등 강력한 …
 
 ---
 
