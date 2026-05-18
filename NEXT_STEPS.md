@@ -66,6 +66,7 @@ cd backend && .venv/bin/uvicorn app.main:app --port 8000 --reload
 | #8 | §07 글로벌 이벤트 모니터링 | RSS 32 쿼리 + 4 카테고리(물리적충돌/기상이변/금융위기/기타) 강제 분류 + 라운드-로빈 다양성 + **10건 보장** + 유형 칩 |
 | #9 | §07 국내 반도체 + 한국어 | **국내 반도체** 5번째 카테고리 1순위 추가 (삼성/하이닉스 파업·정전·화재 — 회사명+이벤트 조합 매칭). 5 카테고리 각 1건 강제 보장 + 라운드-로빈. **`korean_summary()` 자동 한국어 요약** (LLM 비활성 시에도). 보라색 칩(--chart-secondary) |
 | #10 | news/events 풀 완전 분리 + 거시 UST10 | NEWS_QUERIES(DRAM 산업 14) vs EVENTS_QUERIES(글로벌+국내반도체 이벤트성 31)로 entry 단계부터 분리 → §05 AI 뉴스에 글로벌 이벤트 섞임 방지. LLM 단일 호출 `{news:[], events:[]}` 분리 출력. **미국 10년물 국채금리** (`macro-ust10`, FRED DGS10) 신규 추가 → macro 5→6개 |
+| #11 | 인사이트 카드 클릭 → 전체 모달 팝업 | 카드에서 잘리는 250자 분석 → 본문 `-webkit-line-clamp:8` + fade. 카드 전체 `.tappable` + "🔍 클릭" 칩. 클릭 시 hand-off `<Modal>` 로 전체 분석 팝업 (헤드라인 19px + 핵심 신호 + 250자 본문 15.5px + 생성 시각, ESC/외부 클릭 닫기) |
 
 ---
 

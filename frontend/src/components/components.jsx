@@ -291,7 +291,9 @@ function renderInsightEmphasis(text) {
 // ==== Insight Card (USER-REQUESTED EXTENSION, not in original hand-off) ====
 // 사용자 요청 (2026-05-18): "가격 스냅샷 영역 오른쪽에 예측분석 인사이트 추가, 100% Claude 관점 강조"
 // hand-off 디자인 토큰만 사용 — card / dlabel / num / ai-note 클래스 그대로 활용.
+// USER-REQUESTED EXTENSION (#11): 카드 본문 잘림 → 카드 전체 클릭 시 hand-off Modal 로 전체 내용 팝업
 function InsightCard({ insight }) {
+  const [open, setOpen] = useState(false);
   if (!insight) {
     return (
       <div className="card insight-card" style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-dim)", fontSize: 12 }}>
@@ -304,35 +306,74 @@ function InsightCard({ insight }) {
                      : insight.horizon === "long"  ? "장기 (21주+) 결정적"
                      : "중장기 (8~21주) 결정적";
   return (
-    <div className={`card insight-card insight-tone-${toneClass}`}>
-      <div className="insight-h">
-        <div className="insight-title">
-          <span className="insight-glyph">◆</span>
-          <span>예측분석 인사이트</span>
+    <>
+      <div
+        className={`card insight-card tappable insight-tone-${toneClass}`}
+        onClick={() => setOpen(true)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setOpen(true); } }}
+        title="클릭하여 전체 분석 보기"
+      >
+        <div className="insight-h">
+          <div className="insight-title">
+            <span className="insight-glyph">◆</span>
+            <span>예측분석 인사이트</span>
+          </div>
+          <div className="insight-meta">
+            <span className="num">{insight.model || "AI"}</span>
+            <span className="insight-expand">🔍 클릭</span>
+          </div>
         </div>
-        <div className="insight-meta">
-          <span className="num">{insight.model || "AI"}</span>
-        </div>
-      </div>
 
-      <div className="insight-main">
-        <div className="insight-body">
-          {renderInsightEmphasis(insight.summary || "(요약 없음)")}
-        </div>
+        <div className="insight-main">
+          <div className="insight-body insight-body-clamp">
+            {renderInsightEmphasis(insight.summary || "(요약 없음)")}
+          </div>
 
-        <div className="ai-note insight-claude">
-          <div className="label">CLAUDE 종합 판단 · 신뢰 <span className="num">{insight.confidence ?? 0}%</span> · {horizonLabel}</div>
-          <div className="insight-headline">{insight.headline || "분석 중"}</div>
-          <div className="insight-keysig">
-            <span className="insight-keysig-label">핵심 신호</span>
-            {(insight.keySignals || []).map((s) => (
-              <span key={s} className="num insight-sig-chip">{s}</span>
-            ))}
-            {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
+          <div className="ai-note insight-claude">
+            <div className="label">CLAUDE 종합 판단 · 신뢰 <span className="num">{insight.confidence ?? 0}%</span> · {horizonLabel}</div>
+            <div className="insight-headline">{insight.headline || "분석 중"}</div>
+            <div className="insight-keysig">
+              <span className="insight-keysig-label">핵심 신호</span>
+              {(insight.keySignals || []).map((s) => (
+                <span key={s} className="num insight-sig-chip">{s}</span>
+              ))}
+              {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {open && (
+        <Modal title="예측분석 인사이트 — 전체 분석" badge={insight.model || "AI"} onClose={() => setOpen(false)} size="md">
+          <div className={`insight-modal-body insight-tone-${toneClass}`}>
+            <div className="ai-note insight-claude" style={{ marginBottom: 18 }}>
+              <div className="label">CLAUDE 종합 판단 · 신뢰 <span className="num">{insight.confidence ?? 0}%</span> · {horizonLabel}</div>
+              <div className="insight-headline" style={{ fontSize: 19, margin: "10px 0 8px" }}>{insight.headline || "분석 중"}</div>
+              <div className="insight-keysig">
+                <span className="insight-keysig-label">핵심 신호</span>
+                {(insight.keySignals || []).map((s) => (
+                  <span key={s} className="num insight-sig-chip">{s}</span>
+                ))}
+                {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
+              </div>
+            </div>
+
+            <div className="dlabel" style={{ marginBottom: 8 }}>종합 분석 ({(insight.summary || "").length}자)</div>
+            <div className="insight-modal-summary">
+              {renderInsightEmphasis(insight.summary || "(요약 없음)")}
+            </div>
+
+            {insight.generatedAt && (
+              <div style={{ marginTop: 16, fontSize: 11, color: "var(--text-dim)", textAlign: "right" }}>
+                생성 시각: <span className="num">{insight.generatedAt}</span>
+              </div>
+            )}
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 
