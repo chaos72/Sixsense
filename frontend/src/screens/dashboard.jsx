@@ -5,6 +5,15 @@ import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES,
 // S-001 Main Dashboard
 const D = SIXSENSE_DATA;
 
+// USER-REQUESTED EXTENSION (2026-05-18 #8) — 글로벌 이벤트 카테고리별 칩 클래스 매핑
+function categoryClass(type) {
+  if (type === "물리적 충돌") return "conflict";
+  if (type === "기상이변") return "weather";
+  if (type === "금융 위기") return "financial";
+  return "other";
+}
+
+
 // USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 패널 (§09 풋바 바로 아래)
 // 백엔드 /api/refresh POST → polling /api/refresh/jobs/{id} → 완료 시 page reload
 const API_BASE = (typeof window !== "undefined" && window.location.hostname === "localhost")
@@ -316,16 +325,17 @@ function Dashboard({ onNav }) {
       <div className="section">
         <div className="grid-2">
           <div>
-            <SectionHead num="07" icon="⚠" title="글로벌 이벤트 모니터링" actions={<button className="btn sm" onClick={() => onNav("S-010")}>전체 목록 →</button>} />
-            <div className="card" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {D.events.slice(0, 3).map((e) => (
-                <div key={e.id} className="card tappable flat" onClick={() => onNav("S-011", { event: e })}
-                     style={{ padding: "10px 14px", display: "flex", alignItems: "center", gap: 10, background: "var(--surface-2)" }}>
+            <SectionHead num="07" icon="⚠" title="글로벌 이벤트 모니터링" sub="우선순위(위험도) + 카테고리 다양성 Top 10" actions={<button className="btn sm" onClick={() => onNav("S-010")}>전체 목록 →</button>} />
+            {/* USER-REQUESTED EXTENSION (2026-05-18 #8) — 3건 → 10건 + 유형(type) 칩 추가 표시 */}
+            <div className="card events-list">
+              {D.events.slice(0, 10).map((e) => (
+                <div key={e.id} className="card tappable flat events-row" onClick={() => onNav("S-011", { event: e })}>
                   <Sig tone={e.risk === "high" ? "neg" : e.risk === "mid" ? "neu" : "pos"}>
                     {e.risk === "high" ? "고위험" : e.risk === "mid" ? "중위험" : "저위험"}
                   </Sig>
-                  <span style={{ flex: 1, fontSize: 12.5, fontWeight: 500 }}>{e.title}</span>
-                  <span className="mono muted" style={{ fontSize: 11 }}>{e.region}</span>
+                  <span className={`events-type events-type-${categoryClass(e.type)}`}>{e.type}</span>
+                  <span className="events-title">{e.title}</span>
+                  <span className="mono muted events-region">{e.region}</span>
                 </div>
               ))}
             </div>

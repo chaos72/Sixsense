@@ -1,130 +1,266 @@
 {
   "collectedAt": "2026-05-18",
-  "method": "Gemini LLM 분류",
+  "method": "키워드 휴리스틱",
   "events": [
     {
-      "id": "ev-2",
-      "type": "파업",
-      "region": "한국",
+      "id": "ev-1",
+      "type": "물리적 충돌",
+      "region": "우크라이나",
       "risk": "high",
-      "title": "삼성 노사 협상 결렬, 파업 임박",
+      "title": "Ukraine war briefing: more than 500 drones strike at Russia, killing 3; US allow",
       "impact": "공급↓",
-      "date": "2026-05-13",
-      "summary": "삼성의 노사 협상이 결렬되어 예정된 18일간의 칩 공장 파업이 임박했다. 이 파업은 하루 7억 달러의 손실을 초래할 것으로 예상되며, 한국 총리가 긴급 회의를 소집했다.",
+      "date": "2026-05-17",
+      "summary": "Ukraine war briefing: more than 500 drones strike at Russia, killing 3; US allows Russian oil sanctions waiver to lapse &nbsp;&nbsp; The Guardian",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "파업 임박 소식은 단기적으로 시장의 공급 불안감을 극대화하여 가격 상승을 유발할 것."
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "mid": {
-          "tone": "pos",
-          "text": "파업이 현실화될 경우 중기적으로 생산량 감소가 불가피하여 가격 상승 압력이 지속될 것."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "long": {
-          "tone": "pos",
-          "text": "파업의 장기화 가능성은 장기적인 공급망 안정성에 대한 우려를 높여 가격에 긍정적인 영향을 미칠 수 있음."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
-      "links": [
-        4
-      ],
-      "affects": [
-        "A-4",
-        "B-2"
-      ]
+      "links": [],
+      "affects": []
     },
     {
-      "id": "ev-1",
-      "type": "파업",
-      "region": "한국",
-      "risk": "high",
-      "title": "삼성, 파업 앞두고 칩 생산 중단 시작",
+      "id": "ev-2",
+      "type": "기상이변",
+      "region": "일본",
+      "risk": "mid",
+      "title": "Magnitude 6.3 Earthquake Strikes Northeastern Japan Sea, No Tsunami Warning - 아시",
       "impact": "공급↓",
       "date": "2026-05-15",
-      "summary": "삼성은 예정된 18일간의 파업을 앞두고 칩 생산을 중단하기 시작했다. 회사는 '비상 경영 모드'에 돌입했으며, 일일 손실이 20억 달러에 달할 수 있다고 예상된다.",
+      "summary": "Magnitude 6.3 Earthquake Strikes Northeastern Japan Sea, No Tsunami Warning &nbsp;&nbsp; 아시아경제",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "즉각적인 생산 중단으로 단기적인 서버 DDR5 공급량이 급감하여 가격이 급등할 것."
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
         },
         "mid": {
-          "tone": "pos",
-          "text": "18일간의 파업은 중기적으로도 상당한 생산 차질을 야기하여 가격 상승 압력을 유지할 것."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
         },
         "long": {
-          "tone": "pos",
-          "text": "파업으로 인한 생산량 손실은 장기적인 시장 재고 수준에 영향을 미쳐 가격 안정화에 지연을 초래할 수 있음."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
         }
       },
-      "links": [
-        3
-      ],
-      "affects": [
-        "A-4",
-        "B-2"
-      ]
+      "links": [],
+      "affects": []
     },
     {
       "id": "ev-3",
-      "type": "파업",
-      "region": "한국",
-      "risk": "high",
-      "title": "삼성 파업 임박, 메모리 팹 가동 중단",
-      "impact": "공급↓",
+      "type": "금융 위기",
+      "region": "이란",
+      "risk": "mid",
+      "title": "Iran tensions drive WTI crude oil surge, Fed rate cut odds fall for 2026",
+      "impact": "가격?",
       "date": "2026-05-15",
-      "summary": "삼성 파업이 임박하면서 메모리 팹 가동이 중단될 조짐을 보이고 있다. 분석가들은 마이크론(MU)을 주시해야 한다고 언급하며, 이는 공급 감소에 따른 시장 변화를 시사한다.",
+      "summary": "Iran tensions drive WTI crude oil surge, Fed rate cut odds fall for 2026 &nbsp;&nbsp; Crypto Briefing",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "파업 임박 소식은 단기적으로 서버 DDR5 공급 불안을 가중시켜 가격 상승을 촉진할 것."
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
-          "tone": "pos",
-          "text": "팹 가동 중단은 중기적인 생산량 감소로 이어져 가격 상승 압력을 유지할 것."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기적으로는 경쟁사로의 수요 전환 가능성을 높여 시장 구조에 영향을 줄 수 있음."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
         }
       },
-      "links": [
-        5
-      ],
-      "affects": [
-        "A-4",
-        "B-2"
-      ]
+      "links": [],
+      "affects": []
     },
     {
       "id": "ev-4",
-      "type": "파업",
-      "region": "한국",
+      "type": "물리적 충돌",
+      "region": "이스라엘",
       "risk": "high",
-      "title": "“공급 절벽 현실화” 삼성 파업 초읽기",
+      "title": "Israel-Lebanon ceasefire restricts IDF options against Hezbollah",
       "impact": "공급↓",
-      "date": "2026-05-15",
-      "summary": "“공급 절벽 현실화”라는 표현과 함께 삼성 파업이 초읽기에 들어가면서 메모리 시장이 '초긴장' 상태에 돌입했다. 이는 서버 DDR5를 포함한 메모리 제품의 심각한 공급 부족을 예고한다.",
+      "date": "2026-05-17",
+      "summary": "Israel-Lebanon ceasefire restricts IDF options against Hezbollah &nbsp;&nbsp; The Jerusalem Post",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기적으로 '공급 절벽' 우려가 시장에 반영되어 서버 DDR5 가격이 급등할 것."
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "mid": {
-          "tone": "pos",
-          "text": "파업으로 인한 생산 차질은 중기적으로도 공급 부족을 심화시켜 가격 상승 압력을 유지할 것."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기적으로는 시장의 재고 수준에 부정적인 영향을 미쳐 가격 안정화에 어려움을 줄 수 있음."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
-      "links": [
-        6
-      ],
-      "affects": [
-        "A-4",
-        "B-2"
-      ]
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-5",
+      "type": "기상이변",
+      "region": "일본",
+      "risk": "mid",
+      "title": "Strong 6.3-magnitude earthquake jolts northern Japan, no tsunami warning issued",
+      "impact": "공급↓",
+      "date": "2026-05-15",
+      "summary": "Strong 6.3-magnitude earthquake jolts northern Japan, no tsunami warning issued &nbsp;&nbsp; WION",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-6",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "U.S. Stock Market Close | Surge in Crude Oil Prices Triggers Bond Market Selloff",
+      "impact": "가격?",
+      "date": "2026-05-15",
+      "summary": "U.S. Stock Market Close | Surge in Crude Oil Prices Triggers Bond Market Selloff, Indexes Fall Over 1%; Software Stocks Rally Against the Trend, Figma Surges 13% Post-Earnings; SpaceX May Go Public on",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-7",
+      "type": "물리적 충돌",
+      "region": "이란",
+      "risk": "high",
+      "title": "Drone strike sparks a fire on the perimeter of UAE's nuclear power plant, shakin",
+      "impact": "공급↓",
+      "date": "2026-05-17",
+      "summary": "Drone strike sparks a fire on the perimeter of UAE's nuclear power plant, shaking Iran war ceasefire &nbsp;&nbsp; 9News",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-8",
+      "type": "기상이변",
+      "region": "일본",
+      "risk": "mid",
+      "title": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued",
+      "impact": "공급↓",
+      "date": "2026-05-15",
+      "summary": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued &nbsp;&nbsp; Reuters",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-9",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "Breakingviews - Vanishing Fed rate cuts could buy time for Warsh",
+      "impact": "가격?",
+      "date": "2026-05-15",
+      "summary": "Breakingviews - Vanishing Fed rate cuts could buy time for Warsh &nbsp;&nbsp; Reuters",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-10",
+      "type": "물리적 충돌",
+      "region": "미국",
+      "risk": "high",
+      "title": "Feds say they thwarted alleged terror plot targeting L.A. Jewish institution",
+      "impact": "공급↓",
+      "date": "2026-05-17",
+      "summary": "Feds say they thwarted alleged terror plot targeting L.A. Jewish institution &nbsp;&nbsp; Los Angeles Times",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        }
+      },
+      "links": [],
+      "affects": []
     }
   ]
 }

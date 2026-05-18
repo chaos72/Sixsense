@@ -581,6 +581,45 @@ button { font-family: inherit; cursor: pointer; }
   border-left: 3px solid var(--sig-neg);
   font-size: 12px; line-height: 1.5;
 }
+
+/* USER-REQUESTED EXTENSION (2026-05-18 #8) — 글로벌 이벤트 10건 + 유형(type) 칩 */
+.events-list {
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 460px;
+  overflow-y: auto;
+}
+.events-row {
+  display: grid;
+  grid-template-columns: 64px 90px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--surface-2);
+}
+.events-title {
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.events-region {
+  font-size: 11px;
+  white-space: nowrap;
+}
+.events-type {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 2px 8px;
+  font-size: 10.5px; font-weight: 700;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+.events-type-conflict  { background: var(--sig-neg-bg);   color: var(--sig-neg);   border-color: var(--sig-neg); }
+.events-type-weather   { background: var(--sig-neu-bg);   color: var(--sig-neu);   border-color: var(--sig-neu); }
+.events-type-financial { background: var(--sig-info-bg);  color: var(--sig-info);  border-color: var(--sig-info); }
+.events-type-other     { background: var(--surface);      color: var(--text-mid);  border-color: var(--border-strong); }
 .btn .ic { width: 12px; height: 12px; }
 .btn.link {
   border: none; background: none; padding: 0;
