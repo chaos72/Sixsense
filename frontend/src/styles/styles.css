@@ -616,6 +616,7 @@ button { font-family: inherit; cursor: pointer; }
   letter-spacing: -0.005em;
   white-space: nowrap;
 }
+.events-type-domestic  { background: var(--chart-secondary-bg); color: var(--chart-secondary); border-color: var(--chart-secondary); }
 .events-type-conflict  { background: var(--sig-neg-bg);   color: var(--sig-neg);   border-color: var(--sig-neg); }
 .events-type-weather   { background: var(--sig-neu-bg);   color: var(--sig-neu);   border-color: var(--sig-neu); }
 .events-type-financial { background: var(--sig-info-bg);  color: var(--sig-info);  border-color: var(--sig-info); }

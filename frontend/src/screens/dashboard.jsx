@@ -5,8 +5,9 @@ import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES,
 // S-001 Main Dashboard
 const D = SIXSENSE_DATA;
 
-// USER-REQUESTED EXTENSION (2026-05-18 #8) — 글로벌 이벤트 카테고리별 칩 클래스 매핑
+// USER-REQUESTED EXTENSION (2026-05-18 #8/#9) — 이벤트 카테고리별 칩 클래스 매핑
 function categoryClass(type) {
+  if (type === "국내 반도체") return "domestic";
   if (type === "물리적 충돌") return "conflict";
   if (type === "기상이변") return "weather";
   if (type === "금융 위기") return "financial";

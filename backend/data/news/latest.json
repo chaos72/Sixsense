@@ -1,278 +1,304 @@
 {
   "collectedAt": "2026-05-18",
-  "method": "키워드 휴리스틱",
+  "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 1592,
+  "rawCount": 1939,
   "news": [
     {
-      "date": "2026-05-15",
-      "title": "Magnitude 6.3 Earthquake Strikes Northeastern Japan Sea, No Tsunami Wa",
-      "titleEn": "Magnitude 6.3 Earthquake Strikes Northeastern Japan Sea, No Tsunami Warning - 아시아경제",
-      "source": "RSS",
-      "score": -0.67,
+      "date": "2026-05-13",
+      "title": "삼성전자 노조 협상 결렬, 총리 파업 경고",
+      "titleEn": "Samsung Electronics union talks collapse, PM warns against strike",
+      "source": "Free Malaysia Today",
+      "score": -0.9,
       "tone": "neg",
-      "conf": 50,
+      "conf": 95,
       "hot": true,
-      "summary": "Magnitude 6.3 Earthquake Strikes Northeastern Japan Sea, No Tsunami Warning &nbsp;&nbsp; 아시아경제",
+      "summary": "삼성전자 노조 협상이 결렬되어 파업 가능성이 커졌다. 이는 한국의 주요 메모리 반도체 생산에 직접적인 위협이 될 수 있으며, 정부도 우려를 표명했다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "단기적으로 파업 현실화 시 생산 차질로 DRAM 공급 감소 및 가격 상승 압박이 예상된다."
         },
         "mid": {
           "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "중기적으로 노사 갈등이 장기화될 경우 생산량 회복 지연 및 시장 불확실성 증대로 DRAM 가격에 부정적 영향을 미칠 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "장기적으로는 한국 반도체 산업의 안정성에 대한 우려를 키워 글로벌 공급망 재편 논의를 촉발할 수 있다."
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1qVjlERUxoUjhmVnJ6WDBvNVdnM1FwcUppQVdwVjlIXzdLMnVjSGtacHEtNGJHZWZ5LWlSdmRuMEdrNU1aVEhWajdtenBwdEZqRzNMenNrZkdSNm1JRmd4UmZISnk?oc=5"
-    },
-    {
-      "date": "2026-04-20",
-      "title": "Tsunami warning issued as 7.4 magnitude earthquake strikes off Japanes",
-      "titleEn": "Tsunami warning issued as 7.4 magnitude earthquake strikes off Japanese coast, USGS says",
-      "source": "Everett Post",
-      "score": -0.67,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Tsunami warning issued as 7.4 magnitude earthquake strikes off Japanese coast, USGS says &nbsp;&nbsp; Everett Post",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPb3BwNkRoNlNOaV93S1RaOHJnZ0FadDFWcXZxazFDZ1MyVllfMmtFVlNoelE5dnVRdGtmNjZWZDNwX0VxUE9EZUthcTNxS2c0czN5XzBKTFc5NHJzRU9uaER2Y0NzY0I1NGcxbEdwRlNDRTVEWFh2VFFMdXRVUjRxb1U0NnBhMVNPTXpPUTRXQ0I5eDFnbC1ITzFlMTd6UlE0bUM4aldQeXZPLWZoM2FreXRhOS05MXgxZW9CQTBzZw?oc=5"
-    },
-    {
-      "date": "2026-04-20",
-      "title": "7.4-magnitude earthquake strikes off northeastern Japan, tsunami warni",
-      "titleEn": "7.4-magnitude earthquake strikes off northeastern Japan, tsunami warning issued: JMA",
-      "source": "Xinhua",
-      "score": -0.67,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "7.4-magnitude earthquake strikes off northeastern Japan, tsunami warning issued: JMA &nbsp;&nbsp; Xinhua",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9pRVlyZGF0b0ZLT3doekxseC1LVm1qVmVlOXMyT2hpMk9DUUJXdmZXV0ZwVmlBbVlHak5MV1Q4U2h0blRxSVpibjFCbTlfRWNRZVotTXAzRlVsVWRPQmJMRGZLZVBHb29hR19pX1RTOFh4X0d0X29NR3F6a0U?oc=5"
+      "linked": [
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWHRVeGVsN3FlWGljdk5kMXVlVFlZcm05YVJVdV8xTUxJR0gzN3hINDh3aWU0MHYwZ1cxWnNNMHJCMGxwdnZPY3BqdjVueWZNSEp3Wi0yUHU5b0QtUWliVXdxOExuak14QjhuUUtvME44LXBhaXpJZGloLWNwZE9PZ1FnOGd4aHdmeFBpc0lqdTdpWWl1VG9ad3Jva2ZsRmwwbHFkYTBPdElVMVhjMDNqMzhqLXE1cFhNQlYxcGdvMnNCaUpVd3c?oc=5"
     },
     {
       "date": "2026-05-18",
-      "title": "U.S. Treasury Yields Surge Amid Iran War Uncertainty... Warning Signs ",
-      "titleEn": "U.S. Treasury Yields Surge Amid Iran War Uncertainty... Warning Signs for AI Tech Stock Rally - 아시아경제",
+      "title": "트럼프, 이란 추가 공습 시사로 유가·국채 요동",
+      "titleEn": "트럼프 ‘이란 추가 공습’ 또 시사…글로벌 국채·국제유가 요동 [이슈+] - 에너지경제신문",
       "source": "RSS",
-      "score": 0.25,
-      "tone": "pos",
-      "conf": 50,
-      "hot": false,
-      "summary": "U.S. Treasury Yields Surge Amid Iran War Uncertainty... Warning Signs for AI Tech Stock Rally &nbsp;&nbsp; 아시아경제",
+      "score": -0.9,
+      "tone": "neg",
+      "conf": 95,
+      "hot": true,
+      "summary": "트럼프 전 대통령이 이란에 대한 추가 공습 가능성을 시사하며 국제유가와 글로벌 국채 시장이 크게 요동쳤다. 이는 중동 지역의 지정학적 긴장을 고조시키고 있다.",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "neg",
+          "text": "단기적으로 중동 긴장 고조로 유가 급등 및 물류 비용 상승이 예상되며, 이는 DRAM 생산 및 운송 비용 증가로 이어질 수 있다."
         },
         "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "neg",
+          "text": "중기적으로는 군사적 충돌이 현실화될 경우 글로벌 경제 불확실성 증대로 기업 투자 위축 및 DRAM 수요 감소를 야기할 수 있다."
         },
         "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "neg",
+          "text": "장기적으로는 중동 정세 불안이 지속될 경우 에너지 공급망 불안정으로 인한 인플레이션 압박이 DRAM 시장 전반에 부정적 영향을 미칠 수 있다."
         }
       },
-      "linked": [],
+      "linked": [
+        "B-4 관련",
+        "A-7 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBXcTBBT3ZUMnd5bkhGRGtyaVJEc2V4OVFkUHpZc3UwNFFkd3lWdTJsWVo3VWxuZkVvenlvem9FLVJjRDBZX2tiT0ZVNjJBMUJXV0MyRzFEWnpHT3c?oc=5"
+    },
+    {
+      "date": "2026-05-18",
+      "title": "유가 충격: 트럼프 이란 경고, UAE 공습으로 브렌트유 $111 돌파",
+      "titleEn": "Oil Shock: Brent Crude rockets past $111 as Trump’s Iran warning, UAE strike stoke supply concerns",
+      "source": "financialexpress.com",
+      "score": -0.9,
+      "tone": "neg",
+      "conf": 95,
+      "hot": true,
+      "summary": "트럼프의 이란 경고와 UAE 공습으로 인해 브렌트유 가격이 배럴당 111달러를 돌파하며 유가 충격이 발생했다. 이는 중동 지역의 공급 우려를 심화시키고 있다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 유가 급등은 DRAM 생산에 필요한 에너지 비용과 운송 비용을 증가시켜 가격 상승 압박을 가할 것이다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로 고유가 지속은 글로벌 인플레이션을 심화시키고 소비 심리를 위축시켜 IT 제품 및 서버 DRAM 수요 감소로 이어질 수 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 에너지 안보에 대한 우려가 커지면서 기업들의 투자 계획에 영향을 미쳐 DRAM 시장의 성장 동력을 약화시킬 수 있다."
+        }
+      },
+      "linked": [
+        "B-4 관련",
+        "A-7 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOX01qRGE2UDBBOWpYakNNdEJoR29iZWRpa0kzSGJfX3dDNVBDbVd4bE5WRHZGUlFSQTlHU1B2Ml9XcE81M25zSDhuT3FzM3FOSHVPMWtEZTlZWXJfbmh0YVpXeF9jMHdHdVJ6Z3lod1pzTlpkVFk1ZjNZZ2FGTHZ3VGdqcVFLVHgxczRBYndWWWRCWTFXOS1CR2Z5ZDZZYlhIXzhmQXFYZTB2R2RoTVZyOXBNUXItbEEwSFBwbnRfRXo1ZEtoYlFRRnZ0NGpnaTRaaTFKeWlfOExDSGfSAeIBQVVfeXFMTWtOT3BqQzNVUFlhTlZ4TDNXcVZlc0Y3YzA2R1pQLXVJSmx5WEFDLTc4SzluSUNzMWd6ZThtRmdBVUpPdDJBckpnd243d0NsTU50SUVaQ19EQ0pmMXFwbndkLUhPQTl5aFhxeHp5MS1CT2xhemZqQnR2YVQ0NnhXWmZPclMwcTdGZVFSN0RFU2xKaUhnZHIzbmhKOUpEM1I0eGRDOVpKUGV3Uk92aVY0Z1hRNmNpMFNhWFpPZUpCNDhybjlhSDJ3YXBxRG53NXUyLXdlUHlDU1dKaVpzLXllMl85UQ?oc=5"
+    },
+    {
+      "date": "2026-05-16",
+      "title": "이스라엘, 휴전 연장 후 레바논 남부 공습",
+      "titleEn": "Israel strikes southern Lebanon hours after ceasefire extension",
+      "source": "France 24",
+      "score": -0.8,
+      "tone": "neg",
+      "conf": 90,
+      "hot": true,
+      "summary": "이스라엘이 휴전 연장 몇 시간 만에 레바논 남부를 공습했다. 이는 중동 지역의 불안정한 정세를 다시 한번 부각시키며 확전 우려를 키우고 있다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 중동 지역의 군사적 긴장 고조는 유가 상승 압력을 가중시켜 DRAM 생산 및 물류 비용에 부정적 영향을 줄 수 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로는 분쟁이 확대될 경우 글로벌 경제 심리 위축으로 IT 투자 감소 및 DRAM 수요 둔화로 이어질 가능성이 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 중동 지역의 지속적인 불안정은 글로벌 공급망에 대한 불확실성을 높여 DRAM 시장에 간접적인 영향을 미칠 수 있다."
+        }
+      },
+      "linked": [
+        "B-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQcXl3dEY2cVRMVTJJcWE3c2FtSkVSSXJwM0x4cDdUeFAtYmh4OTA4STdsZV93YVQ2NUo2VVhSbTZ0c2phQ0k1ZzdaS3ZYVnRSTkEzLTNhNW43b1dTVVVPUmotY1VDUk0tZUtOUGZfQ3lDc1NDeTUxRGU3V2VqazR4c3pYa1JiVS0yS001WFRhbkpwZE9JUjNjaGZNejJSZmJkRTNKVVhyUnd0YzA?oc=5"
+    },
+    {
+      "date": "2026-05-15",
+      "title": "미 인플레이션 압력으로 연준 금리 인하 2027년 9월까지 지연",
+      "titleEn": "Grayscale report: US inflation pressures delay Fed rate cuts until Sept 2027",
+      "source": "Crypto Briefing",
+      "score": -0.8,
+      "tone": "neg",
+      "conf": 92,
+      "hot": true,
+      "summary": "그레이스케일 보고서에 따르면 미국 인플레이션 압력으로 인해 연준의 금리 인하가 2027년 9월까지 지연될 것으로 예상된다. 이는 고금리 환경의 장기화를 의미한다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 고금리 장기화는 기업의 자금 조달 비용을 높여 IT 투자 및 서버 증설 계획에 부정적인 영향을 미쳐 DRAM 수요를 둔화시킬 수 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로는 높은 금리가 지속될 경우 경기 침체 우려가 커져 전반적인 소비 심리 위축과 기업 실적 악화로 DRAM 수요가 감소할 수 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 고금리 환경이 기술 혁신 및 신규 데이터센터 구축 속도를 늦춰 DRAM 시장의 구조적 성장에 제약을 가할 수 있다."
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "B-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQQzFuSkUya1dlcXpFRU1Kb21TOEdCVTBmYnh3Wnc2Q0lHNzFrbVlVdm83VURaT0szOERkVVpmS1o4X05HZWl5ZUpwV3pndlFBbzZDS09ubzNBdHlSZXAzR3RUVkx6MXVZZDZPSm5fZ2dHYzUydWhEOWhwQXhZY0s2UVZyRXo0Q2U3QWZDNWlVVm1LeWxCNnRscTFJa1pqb2gyX0NRZmd3?oc=5"
+    },
+    {
+      "date": "2026-05-18",
+      "title": "이란 전쟁 불확실성 속 미 국채 금리 급등, AI 기술주 경고",
+      "titleEn": "U.S. Treasury Yields Surge Amid Iran War Uncertainty... Warning Signs for AI Tech Stock Rally - 아시아경제",
+      "source": "RSS",
+      "score": -0.8,
+      "tone": "neg",
+      "conf": 90,
+      "hot": true,
+      "summary": "이란 전쟁 불확실성으로 미국 국채 금리가 급등하며 AI 기술주 랠리에 경고등이 켜졌다. 이는 지정학적 리스크가 금융 시장에 미치는 영향을 보여준다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 국채 금리 급등은 자본 시장의 불안정성을 높여 AI 관련 기업들의 투자 심리를 위축시키고 DRAM 수요에 부정적 영향을 줄 수 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로는 고금리 환경과 지정학적 리스크가 복합적으로 작용하여 빅테크 기업들의 CapEx 축소로 이어져 서버 DRAM 수요 둔화를 야기할 수 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 글로벌 경제의 불확실성 증대가 기술 혁신 속도를 늦추고 DRAM 시장의 성장 잠재력을 저해할 수 있다."
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "B-4 관련"
+      ],
       "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1lTVRxbUJJQ3BJVlJFUG9hWEM3WkdZUEVhX3ZOQlU0OVhQNml3S1BEOVdIYy1RZ182UkdZVzc2azEzSVdIb0lUVmpsTEw3UmN3VFVxZGpyVVVEUU1FYzZKR0pmcXJ2MmtvREk4RGtVcWo3UjVwaUtJ?oc=5"
     },
     {
       "date": "2026-05-16",
-      "title": "Magnitude 6.3 Earthquake Hits Northern Japan, No Tsunami Warning Issue",
-      "titleEn": "Magnitude 6.3 Earthquake Hits Northern Japan, No Tsunami Warning Issued",
-      "source": "NTD News",
-      "score": -0.67,
+      "title": "이란 전쟁 긴장 고조로 유가 주간 8% 급등, $110 근접",
+      "titleEn": "Crude oil surges 8% in a week to near $110 as Iran war tensions simmer again. Where are prices headed?",
+      "source": "The Economic Times",
+      "score": -0.8,
       "tone": "neg",
-      "conf": 50,
+      "conf": 90,
       "hot": true,
-      "summary": "Magnitude 6.3 Earthquake Hits Northern Japan, No Tsunami Warning Issued &nbsp;&nbsp; NTD News",
+      "summary": "이란 전쟁 긴장이 다시 고조되면서 국제유가가 한 주 만에 8% 급등하여 배럴당 110달러에 근접했다. 이는 에너지 시장의 불안정성을 심화시키고 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "단기적으로 유가 급등은 DRAM 생산에 필요한 에너지 비용과 운송 비용을 증가시켜 가격 상승 압박을 가할 것이다."
         },
         "mid": {
           "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "중기적으로 고유가 지속은 글로벌 인플레이션을 심화시키고 소비 심리를 위축시켜 IT 제품 및 서버 DRAM 수요 감소로 이어질 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "장기적으로는 에너지 안보에 대한 우려가 커지면서 기업들의 투자 계획에 영향을 미쳐 DRAM 시장의 성장 동력을 약화시킬 수 있다."
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQOUtFdDUzRnhmMV9HT1JPVG1OMHR4NW9wLVk0eXBja0FoQ2F6MVROZGVtdm4tZmFPdVB2dFJfekRPZ2RNTUtIcXJPaTYzblZHVHdGeW42OEFVUkN1cHlrRmd0Uzl1amU5RGVmanVLcF9vd3dwWXN3RzdzbTk2Rm9FWUpHVHVZMGcwZ1RpUDVld1JUY2xEZmlzQlBCR2VSOTZ6bDVZQXh3?oc=5"
+      "linked": [
+        "A-7 관련",
+        "B-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxPTnp3RGI3akFZbE5CTlVMZ3RQeGxUemdCLVBhUGpvY3JpMXo2ci1xRW80bVdCYlVHWEl6ZDQ2Q3gwNjJtOWpIZmR6bUlxSFFFWnlfNENiZndTOFdZXzlXcTNyTFJOeXE5QWlVOFd0bENwN3g3Rm03MmJONTBoS0JQTGVxUWpBREZkQUtxQ3lGY29wcnd0ZTRyQjVoVnNFbjJVbTlGdUlTUHY0MDA0MUtmb2RzQUFFTHBpYW1zNVhRdzhnSFBodnloaXlOVm9wSlp2azR1bndmQlJ6SGlveWsyaDNDcjMyaEVBMTlMUVEzbTJ5MHVWMTRjSmhvRllKOGpLTi1pOTZQblNLZS1CcDM2ZNIBlgJBVV95cUxPVU5tZ085N3JLNmp4eU9TT3Bnb0RnT3dLN1I1OGFZMm5lUUFOZ3ZqMUR5LUljWjhvVk1rUFpuZmdDU2VBRXllVmlHSTBKZklhNU9YMzlySGhHbVJ6dWFtQ2F0UG5UMUQ4VVg4S0lKRlpsaDdMcWY4aXIzck5PbXpTN0JqYUl5VW5MVWxhMkxWMF9vOWFRWWVONEpJenV1RXhYazVEd0pPQWdsemlMMEZ4ZlNWeVlLTVVmaE43all4UjlodjByTkF5bjk5bXd5dEpQdlhuY2o4TVE5MTNyYVA5SFF3bkRPcGplTGtvMVlXRmtGNU01cnNXdEtlalRQRm5DZGVZMHJtYzhXbEZnS3FhWFh4YTV2UQ?oc=5"
+    },
+    {
+      "date": "2026-04-20",
+      "title": "일본 해안 7.4 지진, 쓰나미 경보 발령",
+      "titleEn": "Tsunami warning issued as 7.4 magnitude earthquake strikes off Japanese coast, USGS says",
+      "source": "Everett Post",
+      "score": -0.7,
+      "tone": "neg",
+      "conf": 90,
+      "hot": true,
+      "summary": "일본 해안에서 규모 7.4의 강진이 발생하여 쓰나미 경보가 발령되었다. 이는 일본 내 주요 산업 시설 및 물류에 영향을 미칠 수 있다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 일본 내 반도체 소재 및 장비 공급망에 일시적인 차질을 빚어 DRAM 생산에 간접적인 영향을 줄 수 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로는 항만 및 도로 복구 지연 시 물류 비용 상승 및 부품 조달 지연으로 DRAM 생산 비용에 영향을 미칠 수 있다."
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기적으로는 일본의 재해 복구 능력과 산업 인프라의 회복 탄력성에 따라 영향이 제한적일 수 있다."
+        }
+      },
+      "linked": [
+        "A-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPb3BwNkRoNlNOaV93S1RaOHJnZ0FadDFWcXZxazFDZ1MyVllfMmtFVlNoelE5dnVRdGtmNjZWZDNwX0VxUE9EZUthcTNxS2c0czN5XzBKTFc5NHJzRU9uaER2Y0NzY0I1NGcxbEdwRlNDRTVEWFh2VFFMdXRVUjRxb1U0NnBhMVNPTXpPUTRXQ0I5eDFnbC1ITzFlMTd6UlE0bUM4aldQeXZPLWZoM2FreXRhOS05MXgxZW9CQTBzZw?oc=5"
+    },
+    {
+      "date": "2026-05-17",
+      "title": "우크라이나 전쟁: 러시아 드론 공격, 미 러 석유 제재 유예 만료",
+      "titleEn": "Ukraine war briefing: more than 500 drones strike at Russia, killing 3; US allows Russian oil sanctions waiver to lapse",
+      "source": "The Guardian",
+      "score": -0.7,
+      "tone": "neg",
+      "conf": 88,
+      "hot": true,
+      "summary": "우크라이나 전쟁에서 러시아에 대한 대규모 드론 공격이 있었고, 미국은 러시아 석유 제재 유예를 만료시켰다. 이는 전쟁의 장기화와 에너지 시장의 불안정성을 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 러시아 석유 제재 유예 만료는 국제 유가 상승 압력을 가중시켜 DRAM 생산 및 운송 비용 증가로 이어질 수 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로는 전쟁 장기화로 인한 유럽 경제 둔화는 IT 수요를 위축시켜 DRAM 시장에 간접적인 부정적 영향을 미칠 수 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 지정학적 리스크가 지속될 경우 글로벌 공급망 재편 및 원자재 가격 변동성 확대로 DRAM 시장에 불확실성을 더할 수 있다."
+        }
+      },
+      "linked": [
+        "B-4 관련",
+        "A-7 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNMXlGZUpub1ZraGlSQWowWC1OMUdsYXFmODhMVUpmT2N0ajAyTU5DYkxZWWJPSGc4eHVub29YSnVMeFVpUkZ0RzFheG4yZFVGbWRHTV91OEt4SU9NdTFEcjdlbzBRYmRBQTFNanZsVXJhVEc1OVBQMHpiTFhLLXdYT3B3aXBIdWd5bVZleWtidFBWb0xHQmV6SXZXYlpDanMxbVFHYTRUSjRORGVHYURkRjR2cUk?oc=5"
     },
     {
       "date": "2026-05-15",
-      "title": "Strong 6.3-magnitude earthquake jolts northern Japan, no tsunami warni",
-      "titleEn": "Strong 6.3-magnitude earthquake jolts northern Japan, no tsunami warning issued",
-      "source": "WION",
-      "score": -0.67,
+      "title": "일본 5개 현에 경보 발령된 6.7 지진",
+      "titleEn": "Japan hit by powerful 6.7-magnitude earthquake as warnings issued for five prefectures",
+      "source": "The Independent",
+      "score": -0.5,
       "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Strong 6.3-magnitude earthquake jolts northern Japan, no tsunami warning issued &nbsp;&nbsp; WION",
+      "conf": 85,
+      "hot": false,
+      "summary": "일본에서 규모 6.7의 강진이 발생했으며 5개 현에 경보가 발령되었다. 직접적인 피해는 보고되지 않았으나, 지속적인 지진 활동은 잠재적 위험을 내포한다.",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "neu",
+          "text": "단기적으로는 직접적인 반도체 생산 시설 피해가 없어 DRAM 가격에 미치는 영향은 미미할 것으로 예상된다."
         },
         "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "neu",
+          "text": "중기적으로는 반복적인 지진 발생 시 산업 활동에 대한 불확실성을 높일 수 있으나, 큰 영향은 없을 것이다."
         },
         "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "neu",
+          "text": "장기적으로는 일본의 내진 설계 및 재해 대비 시스템으로 인해 DRAM 공급망에 구조적인 변화를 주지는 않을 것이다."
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNYkR0WGZsZUJPZWhqdS1Remp2V1BLSFotWGdXbHJ6LXcyR0ZfOTB6TU9qMG9jeFpncXZKLWJWYWRzRjBac2Vnd3FUZnQ4RXpZMmlzVHlobVY1SG4yOGtWYUZyYW5Gd0ozaEh5SzZOemwzNmdSSUU5MkdvVUN4ZGxRTDFTLUFxMVpWNzNnRmpQckg4QzVHMzV1ZzlXVGoxOGhsOGh3eTRLbF8wQ3JsOGwyQnJreUVOa1ozVkh3TVN0Y9IBxAFBVV95cUxNb3AyQVA3T3Y3WTNZdDJXYjA1X3Zib0JhdHc2WXhXSm5lRWdPMEk0RmFwQTVVT3pSTjhTS00tUmEzSHpoOUE1STI2QVpDcFRXbmVCRkk3Q1RDMHFvSWtWZl9BVUlBcTJLM2dLTG9tUHVhOFpEdzMxY3dkUkstUDlKQVhDQ3J2WnFPMHRrSFV2ejFsSWhvTDBVZjFxd09ja1ZLVlBOS1otRWt5OXNfcS1qeUtaUDAxaGRycWJVdDJLMGI2ei02?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issue",
-      "titleEn": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued",
-      "source": "Reuters",
-      "score": -0.67,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued &nbsp;&nbsp; Reuters",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOanhqM0loUDcxMDh6ODdRY1FHbVFUazJDcUU3LUtpaW9lV0hYVGZGN09GSkRrSDlYekg4b1ZrajVlbjg0clB3M0d1ZGNqNlRISmhGZVBhY25uRmFBU1RZYlRDQzJRNzlueUhUZVpjN2xCd3pMank3Mm0xU2UxZGx0ajBFRkZOR2Q1SmlrWVBfZkgySHh3VzNLdWNZbkdybUFPZFB4Uy1vYU9hSU9FZk80TjA4T3U1UW5EVnBHcGh6NW5aVkdn?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issue",
-      "titleEn": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued",
-      "source": "The Business Standard",
-      "score": -0.67,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued &nbsp;&nbsp; The Business Standard",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNbTJjRzR3anBhNTJHTU5nVUdqRUMwRUJ4Sl8zSmJpcHdwajlKdnEtUUIxbG0zclNLdGY5d1FrVTZWU0tBbGdxeFBlZzBWMzhjSHBLSjc0YXNVZ1ZQSWpjd2RxYU9kNEtfY29BT21leVd1bEwyLUpUVE5Yc25kQVBFS0RKdjhRbWpMUzFqTk1qanlWV0lOUm9wMDJwMTBaNWxHTUdKZVA5QXIwTWfSAbABQVVfeXFMUHZ3TjVEZEN0b0x2azByai1vZ0hqUzVtMjFuLXlXTmxXeGdZZVBIZVk5MDVoUi1PczhNMjZUR0NuSkF4V0JvY0VrS0xqX1h2b1RvSmF4TmpGR0tKZHV0OUxmRlZzb2Juc2lOdTNCTzNoVm9INFR3WGN4cHQwdnJoLTlDWVp5S0FRVE91WE5ONTYxejdnTmtBTWJhUjFadG04Wlg3YWhocEtQcU9KQlhLZkI?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issue",
-      "titleEn": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued",
-      "source": "The Straits Times",
-      "score": -0.67,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Magnitude 6.3 earthquake hits northern Japan, no tsunami warning issued &nbsp;&nbsp; The Straits Times",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNX2VrZElwaHotME43RFNNV0JLUU9HS1VjRGxOQzZQMlhYVERVQkhadTVnOTFzbFV0VHA0MkphM1RkdUNfMFF2eGF2OU5kRHA0cGNYaDMwMnQ1eWJlR0t0Mkh5bWZGSDR3ZFJsVWQyQWFNU29Pam5scE0wNkE1cFFrTVRHbnlVVnZNQjB5TkZxSmt3c1hrTVd2a2RDRTVicDVCbWpybmpnNzBxS1NVTHlwMmN5SWw?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "Iran tensions drive WTI crude oil surge, Fed rate cut odds fall for 20",
-      "titleEn": "Iran tensions drive WTI crude oil surge, Fed rate cut odds fall for 2026",
-      "source": "Crypto Briefing",
-      "score": 0.67,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "Iran tensions drive WTI crude oil surge, Fed rate cut odds fall for 2026 &nbsp;&nbsp; Crypto Briefing",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQaWM5eFNaQmRnWVZNbHlFQ3VtZnhrYWZudjV1M09lbWJVX0Z1Ukh0QnpNOUliTHlkNWJYUWNZdWZNQUxzWFJnVGE3ZGhaXzdpMzNRQmlmMnFHYTRPQm9kVW42Yy1uay1BckRKX3B5ZXBFZnI4b2lneWR3c3NCWDk4NGltSWpyajlSb1ViX1pzQ3pSNWlKNWZHMUNRLURVOWdj?oc=5"
+      "linked": [
+        "A-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNUVRsTmxzemFrMHBXQ3dmYjhDMWJUVkxlbllOMndEQ2tvZVJwZ2ozc2oyMFB0YUhTZEo3STRHQ1dEWGwyWENMbER5bmNIb2Qzd2xfdEw5QjhKUmZMRUdBWTNQWGxsZjk5MTh4TDNaNzh5RnhMMEhXSUR2S2Q0MFZ5VVJwVk94Z1ctNy1YRlBJWTRyOWgzcDllUllR?oc=5"
     }
   ]
 }
