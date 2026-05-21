@@ -1,8 +1,8 @@
 {
   "signalId": "A-3",
-  "source": "\uad00\uc138\uccad data.go.kr Itemtrade HS 854231 \uc6d4\uac04 \uc218\ucd9c (12\uac1c\uc6d4)",
+  "source": "\uad00\uc138\uccad data.go.kr Itemtrade HS 854232 (\uba54\ubaa8\ub9ac) \uc6d4\uac04 \uc218\ucd9c (12\uac1c\uc6d4, USD)",
   "mode": "real",
-  "collectedAt": "2026-05-17",
+  "collectedAt": "2026-05-21",
   "rangeStart": "2025-04-28",
   "rangeEnd": "2026-04-27",
   "note": "Auto-collected via auto_collectors.py",

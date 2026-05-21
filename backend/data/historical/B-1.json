@@ -1,15 +1,15 @@
 {
   "signalId": "B-1",
-  "source": "Google News 'Earnings Call sentiment' (168 entries, LLM 11\ud68c \ud638\ucd9c, 33\uc8fc)",
+  "source": "Google News 'Earnings Call sentiment' (165 entries, LLM 12\ud68c \ud638\ucd9c, 30\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-05-17",
+  "collectedAt": "2026-05-21",
   "rangeStart": "2025-06-23",
-  "rangeEnd": "2026-05-11",
+  "rangeEnd": "2026-04-27",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
       "week": "2025-06-23",
-      "value": 1.0
+      "value": 0.9
     },
     {
       "week": "2025-07-07",
@@ -21,11 +21,11 @@
     },
     {
       "week": "2025-09-08",
-      "value": 0.0
+      "value": 0.7
     },
     {
       "week": "2025-09-22",
-      "value": 0.9
+      "value": 0.0
     },
     {
       "week": "2025-10-06",
@@ -33,11 +33,7 @@
     },
     {
       "week": "2025-10-13",
-      "value": 0.0
-    },
-    {
-      "week": "2025-10-20",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2025-10-27",
@@ -48,16 +44,20 @@
       "value": 0.0
     },
     {
+      "week": "2025-11-24",
+      "value": 1.0
+    },
+    {
       "week": "2025-12-01",
       "value": 0.0
     },
     {
       "week": "2025-12-08",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2025-12-15",
-      "value": 0.5
+      "value": 0.6
     },
     {
       "week": "2025-12-22",
@@ -88,10 +88,6 @@
       "value": 0.0
     },
     {
-      "week": "2026-02-09",
-      "value": 0.0
-    },
-    {
       "week": "2026-02-16",
       "value": 1.0
     },
@@ -105,11 +101,11 @@
     },
     {
       "week": "2026-03-16",
-      "value": 1.0
+      "value": 0.3333
     },
     {
       "week": "2026-03-23",
-      "value": 0.0
+      "value": 0.9
     },
     {
       "week": "2026-03-30",
@@ -129,14 +125,6 @@
     },
     {
       "week": "2026-04-27",
-      "value": 0.9
-    },
-    {
-      "week": "2026-05-04",
-      "value": 0.8
-    },
-    {
-      "week": "2026-05-11",
       "value": 0.0
     }
   ]
