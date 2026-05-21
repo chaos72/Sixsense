@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-05-21T08:03:36.873220Z
+// 생성 시각: 2026-05-21T09:27:58.938982Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-05-21) · events 10건
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
@@ -1201,6 +1201,23 @@ export const SIXSENSE_DATA = {
   ],
   "macro": [
     {
+      "id": "ust10",
+      "name": "미국 10년물 국채금리",
+      "value": "4.38%",
+      "change": "↑ 부정",
+      "tone": "neg",
+      "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)",
+      "history": [
+        4.27,
+        4.38,
+        4.33,
+        4.31,
+        4.29,
+        4.3,
+        4.38
+      ]
+    },
+    {
       "id": "fed",
       "name": "미국 금리",
       "value": "3.64%",
@@ -1283,23 +1300,6 @@ export const SIXSENSE_DATA = {
         6.1,
         6.02,
         5.93
-      ]
-    },
-    {
-      "id": "ust10",
-      "name": "미국 10년물 국채금리",
-      "value": "4.38%",
-      "change": "↑ 부정",
-      "tone": "neg",
-      "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)",
-      "history": [
-        4.27,
-        4.38,
-        4.33,
-        4.31,
-        4.29,
-        4.3,
-        4.38
       ]
     }
   ],

@@ -35,13 +35,14 @@ SIGNAL_META = {
     "B-7": {"name": "BOM 신호",           "desc": "PCB·기판 가격 (공급망 트랜스크립트)",     "fmt": "sent"},
 }
 MACRO_META = {
+    # USER-REQUESTED EXTENSION (2026-05-19 #15) — 10년물 국채금리를 §06 거시경제 카드 첫번째로 배치
+    # (위험자산 선호도 핵심 지표 → DRAM 의사결정에 가장 직접적)
+    "macro-ust10": {"name": "미국 10년물 국채금리",   "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)", "unit": "%",  "scale": 1.0},
     "macro-fed":   {"name": "미국 금리",            "desc": "Effective Federal Funds Rate (FRED DFF)",                 "unit": "%",  "scale": 1.0},
     "macro-dxy":   {"name": "달러 인덱스 (DXY)",     "desc": "강달러 = DRAM 수출 부정 (DX-Y.NYB)",                        "unit": "",   "scale": 1.0},
     "macro-pmi":   {"name": "산업생산지수",          "desc": "FRED INDPRO (PMI 대체)",                                    "unit": "",   "scale": 1.0},
     "macro-krw":   {"name": "USD/KRW",              "desc": "원화 약세 = 수입 원가↑ (Yahoo KRW=X)",                       "unit": "원", "scale": 1.0},
     "macro-cu":    {"name": "구리 가격",            "desc": "LME 대체 (COMEX HG=F)",                                     "unit": "$",  "scale": 1.0},
-    # USER-REQUESTED EXTENSION (2026-05-18 #10) — 미국 10년물 국채금리 추가
-    "macro-ust10": {"name": "미국 10년물 국채금리",   "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)", "unit": "%",  "scale": 1.0},
 }
 
 

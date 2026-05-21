@@ -66,6 +66,7 @@
 | §01 인사이트 완결 문장 강제 (#12) | 모달에서도 LLM 응답이 "… 등 강력한" 같이 미완성 끊김 → 프롬프트에 "반드시 마침표 완결, 미완성 표기 금지" + enforce 잘림 마커 검출 + 400자 cap. 280~400자 완결 4문장으로 안정화 | build_insight.py 프롬프트 + enforce + heuristic 재작성 | — |
 | §01 인사이트 가독성 미세조정 (#13) | (a) `.insight-main` 좌우 분할 breakpoint 1400px→**800px** (캡쳐 시점 화면처럼 항상 좌우 3:2 유지), (b) 카드 안 본문 폰트 14px→**11.5px** + line-height 1.7→1.65 컴팩트화. 모달 본문은 14.5px 유지 | styles.css `.insight-main` 미디어 쿼리 + `.insight-body` font-size | — |
 | §05 AI 뉴스 / §07 글로벌 이벤트 한국어 100% (#14) | LLM(Gemini) RPM 한도 시 휴리스틱 fallback 이 영문 그대로 표시되던 문제 → **`korean_title()` 함수 + `KEYWORD_MAP` 60개**(회사·기술·시장·사건·금융·국가 어휘 매핑)로 영문 헤드라인 자동 한국어 치환. 4개 fallback 경로(heuristic_news_only / heuristic_fallback events / merge_news_only / merge_events_only) 모두 적용. Gemini RPM 회복 폴링으로 우선 LLM 분류 사용. 검증: news 10/10 + events 10/10 제목·요약 한국어 ✅ | collect_news_events.py | — |
+| §06 거시경제 카드 + S-008 순서 변경 (#15) | macro-ust10 (10년물 국채금리)이 6장 중 마지막에 표시 → **첫번째로 이동** (위험자산 선호도 핵심 지표 → DRAM 의사결정 직접 영향). `MACRO_META` insertion order 재정렬 + `backend/app/data.json` 의 정적 mock macro 배열에도 ust10 객체 맨 앞에 추가. UI는 `D.macro.map` 그대로 자동 반영. 함께: 다크 모드 디폴트화 (`TWEAK_DEFAULTS.theme "light" → "dark"`) | build_frontend_data.py · backend/app/data.json · app.jsx | — |
 
 **디자인 토큰** (hand-off `src/styles.css` 발췌):
 - 색상: Warm white `#fafaf8` / Pure white `#ffffff` 배경, monochrome 액센트 `#1a1a1a` (light) / `#f4f3ef` (dark)
