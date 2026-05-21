@@ -1,4 +1,23 @@
-# 🎓 Sixsense — Phase 7 누적 + 최종 사전 배포 감사 (2026-05-19)
+# 🎓 Sixsense — Phase 7 누적 + 시범 운영 배포 (2026-05-21)
+
+## 🚀 시범 운영 배포 (5명 협업 검토용)
+
+| 항목 | URL |
+|---|---|
+| **Production (5명 공유용)** ⭐ | **https://sixsense-eta.vercel.app** |
+| Full URL | https://sixsense-naty6u2cj-young-seok-s-projects.vercel.app |
+| Vercel Dashboard | https://vercel.com/young-seok-s-projects/sixsense |
+| GitHub Repo | https://github.com/chaos72/Sixsense |
+
+**배포 구성**:
+- Frontend only (정적 호스팅, Vercel free tier, HTTPS+TLS 자동)
+- 작동: 14화면 + 21신호 + Multi-Model 차트 + LLM 인사이트 + 다크 모드 + 한국어 news/events
+- 미작동: 수동 갱신 버튼 (backend 없음, 시범 단계 의도된 동작)
+- 데이터 갱신: 로컬 CLI(`pipelines/*.py`) → `git push origin main` → Vercel 자동 재빌드 (webhook)
+
+---
+
+
 
 > **🎯 최종 감사 결과** (50+ 항목, [docs/05-qa/sixsense.final-audit.md](docs/05-qa/sixsense.final-audit.md)):
 > **PASS 49 · WARN 17 · FAIL 0** — 발표/데모 GO ✅, 운영 배포 시 P0 3건 + P1 2건 처리 필요
