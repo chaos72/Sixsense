@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-05-21T05:20:38.786147Z
+// 생성 시각: 2026-05-21T08:03:36.873220Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-05-21) · events 10건
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
@@ -18,17 +18,17 @@ export const SIXSENSE_DATA = {
     "model": "GBR (단기) + LSTM (중장기) + Prophet (베이스)",
     "confidence": 81,
     "insight": {
-      "headline": "단기 하락 전환, 지정학 리스크",
-      "summary": "서버 DRAM 가격은 현재 **$6.09**로 지난주 대비 상승했으나, 단기(7주 후) **-16.9%** 하락한 $5.06, 중장기(21주 후) -15.6% 하락한 $5.14로 예측되어 하락 전환이 예상됩니다. 이는 삼성 파업 우려로 인한 공급 차질 기대감에도 불구하고, 중국의 엔비디아 제재와 같은 **지정학 리스크**가 고조되고 있기 때문입니다. 비록 **빅테크 CapEx**가 높은 수준을 유지하며 수요 기반을 지지하지만, 높은 Fed 금리와 USD/KRW 환율은 시장 불확실성을 가중시킵니다. 따라서 단기 및 중장기적으로 가격 하락 압력이 우세하며, 지정학적 상황과 실제 공급망 변화를 면밀히 주시해야 합니다.",
-      "tone": "neg",
+      "headline": "AI 수요 견인, 단기 조정 후 안정화",
+      "summary": "서버 DRAM 가격은 현재 **$6.09**로 상승했으나, GBR 및 LSTM 모델은 단기 및 중장기적으로 **15% 이상** 하락을 예측하며 상충된 신호를 보냅니다. 하지만 최근 **AI 메모리** 수요 급증과 HBM 부족 경고, 빅테크 CapEx 및 수출 호조는 가격 하방 경직성을 강화합니다. 삼성과 SK하이닉스의 AI 메모리 부족 경고와 장기 계약 영향으로 가격 하락은 제한적일 것으로 예상됩니다. 단기 조정 압력은 존재하나, AI 수요 견인으로 중장기적 가격 안정화가 기대됩니다. 향후 **재고/출하 지수**와 지정학적 리스크를 주시해야 합니다.",
+      "tone": "neu",
       "confidence": 75,
-      "horizon": "short",
+      "horizon": "long",
       "keySignals": [
         "A-2",
-        "B-4"
+        "A-3"
       ],
       "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-05-21T14:00:31"
+      "generatedAt": "2026-05-21T17:03:36"
     },
     "modelValidation": {
       "headline": "🎉 Phase 6 멀티 모델 예측 아키텍처 완료 — 단기 MAPE 7.54% → 4.54% (39.8% 개선)",
@@ -61,18 +61,18 @@ export const SIXSENSE_DATA = {
       "trainTimes": [
         {
           "name": "Prophet",
-          "sec": 3.49
+          "sec": 2.68
         },
         {
           "name": "Tree (단기)",
-          "sec": 10.55
+          "sec": 8.76
         },
         {
           "name": "LSTM (중장기)",
-          "sec": 12.0
+          "sec": 13.31
         }
       ],
-      "trainTotal": 26.0,
+      "trainTotal": 24.8,
       "architecture": "20개 신호 통합 DataFrame (108주 × 20열, sentiment 3주 MA)\n            │\n   ┌────────┼────────┐\n   ▼        ▼        ▼\n[Prophet] [Tree]  [LSTM]\nbaseline  단기      중장기\n         ─우수─    PyTorch\n         자동선정   2-layer",
       "envNote": "XGBoost/LightGBM 우선 사용 시도 → macOS libomp 미설치 → sklearn GBR/HistGBR fallback 자동 전환. brew install libomp 후 자동 XGBoost/LightGBM 활성 (코드 변경 불필요). LSTM은 PyTorch (libomp 무관, 즉시 작동)."
     }

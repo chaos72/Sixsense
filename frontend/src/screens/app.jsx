@@ -8,7 +8,7 @@ import { SIXSENSE_DATA } from '../mocks/data.js'
 
 // Main app — routing, tweaks, layout shell
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "theme": "light",
+  "theme": "dark",
   "density": "comfortable",
   "showTweaks": false
 }/*EDITMODE-END*/;
