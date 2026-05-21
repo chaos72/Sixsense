@@ -42,6 +42,21 @@ UI 코드는 `design_handoff_sixsense_dram_dashboard/src/` 의 JSX를 `frontend/
 | #14 | §05 AI 뉴스 / §07 글로벌 이벤트 한국어 100% 보장 (2026-05-19) | 사용자 보고 — Gemini RPM 한도 시 휴리스틱 fallback 이 영문 title 을 그대로 표시. 해결: (a) **`korean_title()` 함수 + `KEYWORD_MAP` 60개 매핑** (회사명 Samsung→삼성, 기술 memory→메모리, 시장 surge→급등, 사건 strike→파업, 금융 Fed rate cut→Fed 금리 인하, 국가 Ukraine→우크라이나 등) — 영문 → 한국어 키워드 자동 치환, (b) **모든 fallback 경로 적용**: `heuristic_news_only` + `heuristic_fallback` events + `merge_news_only` + `merge_events_only` 4 함수에서 LLM 누락 시 자동 한국어화, (c) Gemini RPM 회복 폴링(40s 간격)으로 재시도 → LLM 한국어 분류 우선 성공 시 그대로 사용. 검증: news 10/10 + events 10/10 제목·요약 모두 한국어 ✅ | collect_news_events.py `korean_title()` + `KEYWORD_MAP` + 4 fallback 보강 |
 | #15 | §06 거시경제 카드 + S-008 상세 순서 변경 (2026-05-19) | 사용자 요청 — 10년물 국채금리(macro-ust10)가 §06 거시경제 6장 중 마지막에 표시 → **첫번째로 이동**. 위험자산 선호도 핵심 지표라 DRAM 가격 의사결정에 가장 직접적 영향. (a) `build_frontend_data.py` `MACRO_META` dict insertion order 재정렬 (ust10 → fed → dxy → pmi → krw → cu), (b) `backend/app/data.json` 의 정적 mock macro 배열에도 ust10 객체를 맨 앞에 추가 (`/api/macro` endpoint 일관성), (c) §06 카드 + S-008 상세 페이지 둘 다 `D.macro.map` 으로 렌더하므로 data.js 순서만 바꿔도 자동 반영 — UI 코드 변경 없음. 다크 모드 디폴트화도 함께 (app.jsx TWEAK_DEFAULTS theme `"light" → "dark"`) | build_frontend_data.py MACRO_META · backend/app/data.json · app.jsx TWEAK_DEFAULTS |
 
+---
+
+## 🎯 최종 사전 배포 감사 (2026-05-19, Phase 7 완료)
+
+전체 보고서: [docs/05-qa/sixsense.final-audit.md](../../05-qa/sixsense.final-audit.md)
+
+| 등급 | 항목 | 영역 |
+|---|---|---|
+| ✅ PASS | **49건** | 인프라 12 + Multi-Model 5 + data.js 무결성 24 + UI 디자인 15 + 보안/Git 5 |
+| ⚠ WARN | **17건** | 데이터 신선도 14 + 운영 준비 3 |
+| ❌ FAIL | **0건** | — |
+
+**발표/데모 GO ✅** — KAIST CAIO 6조 과제 + 사내 데모 즉시 가능
+**운영 배포 시 P0 3건 + P1 2건 처리 필요** (수동 갱신 endpoint asyncio 대체, cron 등록, 인증/CORS, END 동적화, LLM 비용 안정화)
+
 데이터: `backend/pipelines/build_insight.py` 가 Claude(우선) → Gemini → 휴리스틱 fallback chain으로 `meta.insight` 생성. modelValidation은 `build_frontend_data.py:build_model_validation()` 가 `forecast/model_comparison.txt` 를 파싱(없으면 사용자 명세 fallback).
 
 ---
