@@ -266,6 +266,73 @@ def classify_region(text: str) -> str:
     return "글로벌"
 
 
+# USER-REQUESTED EXTENSION (#14, 2026-05-19) — 영문 헤드라인 한국어 키워드 자동 치환
+# LLM 미가용 시 휴리스틱이 news/events 의 영문 title 을 한국어 단어로 부분 번역.
+# 어색해도 영문 100% 보다 가독성 ↑. 긴 키워드부터 치환 (Samsung Electronics → Samsung 보다 먼저).
+KEYWORD_MAP = {
+    # 회사명
+    "SK Hynix": "SK하이닉스", "SK hynix": "SK하이닉스", "SK 하이닉스": "SK하이닉스",
+    "Hynix": "하이닉스", "Samsung Electronics": "삼성전자", "Samsung": "삼성",
+    "Micron Technology": "마이크론", "Micron": "마이크론",
+    "Nvidia": "엔비디아", "NVIDIA": "엔비디아",
+    "TSMC": "TSMC", "Kioxia": "키오시아", "Western Digital": "웨스턴디지털",
+    # 제품/기술
+    "memory chips": "메모리 칩", "memory chip": "메모리 칩",
+    "memory": "메모리", "semiconductor": "반도체", "semiconductors": "반도체",
+    "AI memory": "AI 메모리", "AI chip": "AI 칩",
+    "data center": "데이터센터", "server": "서버",
+    # 시장 동향
+    "shortages": "부족", "shortage": "부족",
+    "surges": "급등", "surge": "급등", "soar": "급등", "soaring": "급등",
+    "rally": "강세", "rallies": "강세",
+    "declines": "하락", "decline": "하락", "drop": "하락", "drops": "하락",
+    "fall": "하락", "falls": "하락", "rise": "상승", "rises": "상승",
+    "warns": "경고", "warn": "경고", "warning": "경고",
+    "boost": "증가", "boosts": "증가", "expand": "확장", "expands": "확장",
+    "increase": "증가", "increases": "증가",
+    "investment": "투자", "investments": "투자",
+    "demand": "수요", "supply": "공급",
+    "earnings": "실적", "profit": "이익", "revenue": "매출",
+    "forecast": "전망", "outlook": "전망",
+    "report": "보고", "reports": "보고",
+    "approve": "승인", "approves": "승인", "approved": "승인",
+    "deal": "거래", "partnership": "파트너십",
+    "production": "생산", "manufacturing": "제조",
+    "price": "가격", "prices": "가격",
+    # 사건성
+    "strike": "파업", "strikes": "파업", "union": "노조",
+    "earthquake": "지진", "magnitude": "규모", "tsunami": "쓰나미",
+    "typhoon": "태풍", "hurricane": "허리케인", "flood": "홍수",
+    "war": "전쟁", "conflict": "분쟁", "ceasefire": "휴전",
+    "missile": "미사일", "terror": "테러", "coup": "쿠데타",
+    # 금융
+    "Fed rate cut": "Fed 금리 인하", "Fed rate hike": "Fed 금리 인상",
+    "rate cut": "금리 인하", "rate hike": "금리 인상",
+    "Fed": "Fed", "FOMC": "FOMC", "inflation": "인플레이션",
+    "crude oil": "원유", "oil price": "유가", "oil": "유가",
+    "Treasury yield": "국채금리", "10-year yield": "10년물 국채금리",
+    "exchange rate": "환율", "currency": "통화",
+    # 국가
+    "South Korea": "한국", "Korea": "한국", "China": "중국", "Taiwan": "대만",
+    "Japan": "일본", "United States": "미국", "U.S.": "미국",
+    "Ukraine": "우크라이나", "Israel": "이스라엘", "Iran": "이란",
+    "Russia": "러시아", "Saudi Arabia": "사우디아라비아",
+    # 시간/단위
+    "Q1": "1분기", "Q2": "2분기", "Q3": "3분기", "Q4": "4분기",
+    "trillion": "조", "billion": "억", "million": "백만",
+}
+
+
+def korean_title(en_title: str) -> str:
+    """영문 헤드라인을 한국어 키워드 치환. 한글이 이미 들어있으면 원문 유지."""
+    if re.search(r"[가-힣]", en_title):
+        return en_title  # 이미 한국어 포함 (Google News 한국어 쿼리 결과)
+    out = en_title
+    for k in sorted(KEYWORD_MAP.keys(), key=len, reverse=True):
+        out = re.sub(re.escape(k), KEYWORD_MAP[k], out, flags=re.IGNORECASE if k.isascii() and k.islower() else 0)
+    return out
+
+
 # USER-REQUESTED EXTENSION (#9) — 휴리스틱 한국어 요약 자동 생성
 def korean_summary(category: str, region: str, title: str, raw_summary: str) -> str:
     """카테고리·지역·제목 키워드 기반 한국어 요약 1~2문장 자동 생성.
@@ -712,14 +779,14 @@ def heuristic_fallback(entries: list[dict]) -> tuple[list[dict], list[dict]]:
             impact = "가격?"
 
         tone_short = "neg" if cat in {"국내 반도체", "물리적 충돌", "기상이변"} else ("neg" if "급등" in text_low or "hike" in text_low else "neu")
-        # USER-REQUESTED EXTENSION (#9) — 요약 반드시 한국어 (휴리스틱 템플릿 자동 생성)
+        # USER-REQUESTED EXTENSION (#9/#14) — 요약 + 제목 모두 한국어 보장
         kr_summary = korean_summary(cat, region, e["title"], e["summary"])
         events_raw.append({
             "id": "ev-tmp",
             "type": cat,
             "region": region,
             "risk": risk,
-            "title": e["title"][:80],
+            "title": korean_title(e["title"])[:80],
             "impact": impact,
             "date": e["date"],
             "summary": kr_summary,
@@ -862,10 +929,15 @@ def merge_news_only(enriched_news: list[dict], pool: list[dict]) -> list[dict]:
         score = max(-1.0, min(1.0, float(item.get("score") or 0.0)))
         summary_ko = item.get("summary_ko") or src["summary"][:200]
         if not re.search(r"[가-힣]", summary_ko):
-            summary_ko = f"({src['source']}) {summary_ko[:160]}"  # 영문 잔여 시 source prefix
+            # USER-REQUESTED EXTENSION (#14) — 영문 잔여 시 한국어 키워드 치환 + source prefix
+            summary_ko = f"({src['source']}) {korean_title(summary_ko[:160])}"
+        # title 도 LLM 누락 시 한국어 키워드 치환 적용
+        title_kr = item.get("title_ko")
+        if not title_kr or not re.search(r"[가-힣]", title_kr):
+            title_kr = korean_title(src["title"])[:60]
         out.append({
             "date": src["date"],
-            "title": item.get("title_ko") or src["title"][:60],
+            "title": title_kr,
             "titleEn": src["title"],
             "source": src["source"],
             "score": round(score, 2),
@@ -904,12 +976,16 @@ def merge_events_only(enriched_events: list[dict], pool: list[dict]) -> list[dic
         summary_ko = item.get("summary_ko") or src["summary"][:200]
         if not re.search(r"[가-힣]", summary_ko):
             summary_ko = korean_summary(ev_type, ev_region, src["title"], src["summary"])
+        # USER-REQUESTED EXTENSION (#14) — LLM 이 title_ko 누락 시 한국어 키워드 치환
+        title_kr = item.get("title_ko")
+        if not title_kr or not re.search(r"[가-힣]", title_kr):
+            title_kr = korean_title(src["title"])[:80]
         raw.append({
             "id": "ev-tmp",
             "type": ev_type,
             "region": ev_region,
             "risk": (item.get("risk") or EVENT_CATEGORIES.get(ev_type, {}).get("default_risk", "mid")).lower(),
-            "title": item.get("title_ko") or src["title"][:80],
+            "title": title_kr,
             "impact": item.get("impact") or "가격?",
             "date": src["date"],
             "summary": summary_ko,
@@ -940,9 +1016,10 @@ def heuristic_news_only(entries: list[dict]) -> list[dict]:
         summary_ko = e["summary"][:180]
         if not re.search(r"[가-힣]", summary_ko):
             summary_ko = f"DRAM/반도체 산업 동향 — {e['source']} 보도. 가격 영향 점수 {score:+.2f}. (LLM 비활성 — 휴리스틱 요약)"
+        # USER-REQUESTED EXTENSION (#14) — title 도 한국어로 자동 치환
         out.append({
             "date": e["date"],
-            "title": e["title"][:70],
+            "title": korean_title(e["title"])[:70],
             "titleEn": e["title"],
             "source": e["source"],
             "score": score,

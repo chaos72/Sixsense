@@ -65,6 +65,7 @@
 | §01 인사이트 카드 클릭 → 전체 모달 팝업 (#11) | 250자 LLM 분석이 카드에서 잘림 → 본문 8줄 clamp + fade gradient, 카드 전체 클릭 가능, hand-off `<Modal>` 로 전체 분석 팝업 (헤드라인 19px + 핵심 신호 chip + 250자 본문 15.5px + 생성 시각, ESC/외부 클릭 닫기) | components.jsx `InsightCard` + hand-off `<Modal>` | `.insight-body-clamp`, `.insight-modal-summary` |
 | §01 인사이트 완결 문장 강제 (#12) | 모달에서도 LLM 응답이 "… 등 강력한" 같이 미완성 끊김 → 프롬프트에 "반드시 마침표 완결, 미완성 표기 금지" + enforce 잘림 마커 검출 + 400자 cap. 280~400자 완결 4문장으로 안정화 | build_insight.py 프롬프트 + enforce + heuristic 재작성 | — |
 | §01 인사이트 가독성 미세조정 (#13) | (a) `.insight-main` 좌우 분할 breakpoint 1400px→**800px** (캡쳐 시점 화면처럼 항상 좌우 3:2 유지), (b) 카드 안 본문 폰트 14px→**11.5px** + line-height 1.7→1.65 컴팩트화. 모달 본문은 14.5px 유지 | styles.css `.insight-main` 미디어 쿼리 + `.insight-body` font-size | — |
+| §05 AI 뉴스 / §07 글로벌 이벤트 한국어 100% (#14) | LLM(Gemini) RPM 한도 시 휴리스틱 fallback 이 영문 그대로 표시되던 문제 → **`korean_title()` 함수 + `KEYWORD_MAP` 60개**(회사·기술·시장·사건·금융·국가 어휘 매핑)로 영문 헤드라인 자동 한국어 치환. 4개 fallback 경로(heuristic_news_only / heuristic_fallback events / merge_news_only / merge_events_only) 모두 적용. Gemini RPM 회복 폴링으로 우선 LLM 분류 사용. 검증: news 10/10 + events 10/10 제목·요약 한국어 ✅ | collect_news_events.py | — |
 
 **디자인 토큰** (hand-off `src/styles.css` 발췌):
 - 색상: Warm white `#fafaf8` / Pure white `#ffffff` 배경, monochrome 액센트 `#1a1a1a` (light) / `#f4f3ef` (dark)

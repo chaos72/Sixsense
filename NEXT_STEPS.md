@@ -69,6 +69,7 @@ cd backend && .venv/bin/uvicorn app.main:app --port 8000 --reload
 | #11 | 인사이트 카드 클릭 → 전체 모달 팝업 | 카드에서 잘리는 250자 분석 → 본문 `-webkit-line-clamp:8` + fade. 카드 전체 `.tappable` + "🔍 클릭" 칩. 클릭 시 hand-off `<Modal>` 로 전체 분석 팝업 (헤드라인 19px + 핵심 신호 + 250자 본문 15.5px + 생성 시각, ESC/외부 클릭 닫기) |
 | #12 | 인사이트 완결 문장 강제 (280~400자) | 모달에서도 "… 등 강력한" 같이 미완성 끊김 → 프롬프트 "반드시 마침표 완결" + enforce 잘림 마커 검출 → 마지막 마침표까지만 + 400자 cap. 현재 Gemini가 400자 완결 4문장 생성 ("…가격 상승이 불가피할 것으로 판단됩니다.") |
 | #13 | 인사이트 가독성 미세조정 (2026-05-19) | (a) `.insight-main` 좌우 분할 breakpoint 1400px→**800px** (일반 노트북/데스크탑 환경에서 항상 좌우 3:2 유지). (b) 카드 안 본문 폰트 14px→**11.5px** + line-height 1.7→1.65 (모달은 14.5px 유지) |
+| #14 | news/events 한국어 100% 보장 (2026-05-19) | `korean_title()` + `KEYWORD_MAP` 60개 매핑 (회사/기술/시장/사건/금융/국가) → 영문 헤드라인 자동 한국어 치환. 4 fallback 함수(heuristic_news/events + merge_news/events_only) 보강. Gemini RPM 회복 폴링으로 LLM 우선. 검증: **news 10/10 + events 10/10 제목·요약 모두 한국어** |
 
 ---
 
