@@ -64,6 +64,7 @@
 | §05 AI 뉴스 + §07 글로벌 이벤트 풀 분리 + §06 UST10 추가 (#10) | (1) news/events 가 같은 enriched pool 에서 동시 생성되던 구조 → entry 단계부터 완전 분리. NEWS_QUERIES (DRAM 산업 직접 14개) vs EVENTS_QUERIES (글로벌+국내반도체 이벤트성 31개). LLM 호출 단일화하되 `{news:[], events:[]}` 분리 출력 강제. news 중복 제거 후 events 처리. (2) 거시경제 §06에 **미국 10년물 국채금리 (FRED DGS10)** 신규 — 위험자산 선호도 지표, ↑ 시 DRAM 부정 | collect_news_events.py NEWS/EVENTS 풀 분리 · backfill.py collect_macro_ust10 | MACRO_META 6개 |
 | §01 인사이트 카드 클릭 → 전체 모달 팝업 (#11) | 250자 LLM 분석이 카드에서 잘림 → 본문 8줄 clamp + fade gradient, 카드 전체 클릭 가능, hand-off `<Modal>` 로 전체 분석 팝업 (헤드라인 19px + 핵심 신호 chip + 250자 본문 15.5px + 생성 시각, ESC/외부 클릭 닫기) | components.jsx `InsightCard` + hand-off `<Modal>` | `.insight-body-clamp`, `.insight-modal-summary` |
 | §01 인사이트 완결 문장 강제 (#12) | 모달에서도 LLM 응답이 "… 등 강력한" 같이 미완성 끊김 → 프롬프트에 "반드시 마침표 완결, 미완성 표기 금지" + enforce 잘림 마커 검출 + 400자 cap. 280~400자 완결 4문장으로 안정화 | build_insight.py 프롬프트 + enforce + heuristic 재작성 | — |
+| §01 인사이트 가독성 미세조정 (#13) | (a) `.insight-main` 좌우 분할 breakpoint 1400px→**800px** (캡쳐 시점 화면처럼 항상 좌우 3:2 유지), (b) 카드 안 본문 폰트 14px→**11.5px** + line-height 1.7→1.65 컴팩트화. 모달 본문은 14.5px 유지 | styles.css `.insight-main` 미디어 쿼리 + `.insight-body` font-size | — |
 
 **디자인 토큰** (hand-off `src/styles.css` 발췌):
 - 색상: Warm white `#fafaf8` / Pure white `#ffffff` 배경, monochrome 액센트 `#1a1a1a` (light) / `#f4f3ef` (dark)
