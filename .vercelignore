@@ -1,0 +1,34 @@
+# Vercel 배포 제외 — frontend 정적 빌드만 사용 (시범 운영, 5명 협업)
+# 배포 크기 최적화: 큰 backend 의존성 + 원본 데이터 제외
+
+# Backend (Python, Vercel 배포 대상 아님)
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/tests/
+backend/app/data.json
+
+# Backend data (이미 build_frontend_data.py 가 frontend/src/mocks/data.js 로 빌드함)
+backend/data/
+
+# Hand-off 원본 (이미 frontend/src/ 로 포팅됨)
+design_handoff_sixsense_dram_dashboard/
+
+# 문서 (배포에 불필요)
+docs/
+
+# bkit / Claude Code 내부
+.bkit/
+.claude/worktrees/
+.claude/cache/
+.claude/sessions/
+
+# 원본 prd 파일 (md 사본은 docs/00-pm/ 에 있음)
+prd.docx
+prd.docx.bak
+prd.md.bak
+
+# Frontend 빌드 캐시
+frontend/node_modules/.vite/
+frontend/dist/
