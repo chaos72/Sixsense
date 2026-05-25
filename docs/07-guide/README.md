@@ -1,4 +1,16 @@
-# 🎓 Sixsense 바이브 코딩 가이드 — 완전판
+# 🎓 Sixsense 바이브 코딩 가이드 — Sixsense 사례 완전판
+
+> ⚠️ **두 가지 가이드가 있습니다 — 본인 상황에 맞게 선택!**
+>
+> | 가이드 | 대상 | 예시 앱 | 파일 |
+> |---|---|---|---|
+> | **A. 일반화 튜토리얼** ⭐ 비전문가 새 앱 만들기 | 처음 시작 | **Stocksense** (주식 예측, 일반화 예시) | [vibe-coding-tutorial.md](vibe-coding-tutorial.md) |
+> | B. Sixsense 사례 풀 가이드 (본 파일) | Sixsense 와 똑같이 만들고 싶을 때 / 참고용 | Sixsense (DRAM 가격 예측) | README.md (지금 보는 파일) |
+>
+> 🎯 **처음 만들 분은 [vibe-coding-tutorial.md](vibe-coding-tutorial.md) 부터 보세요!**
+> 본 README 는 Sixsense 의 실제 코드 (code-snippets/) 와 함께 사례 참고용으로 사용하세요.
+
+---
 
 > **목표**: 이 가이드 하나만 보고도 https://sixsense-eta.vercel.app 같은 AI 데이터 대시보드를 비전문가가 처음부터 끝까지 따라 만들 수 있어야 합니다.
 > **분량**: 약 5,000 줄. 인쇄 권장하지 않음. GitHub 또는 VS Code 에서 목차 클릭으로 이동하며 읽으세요.
