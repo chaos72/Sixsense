@@ -51,3 +51,6 @@ playwright-report/
 test-results/
 .playwright/
 .vercel
+
+# MS Office 임시 잠금 파일
+~$*
