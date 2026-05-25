@@ -13,6 +13,49 @@
 4. **에러 발생 시**: 각 단계 끝의 "자주 발생하는 에러" 섹션 먼저 확인.
 5. **검증 체크리스트**: 각 단계 끝의 ✅ 체크리스트를 모두 통과해야 다음 단계로.
 
+## 🎁 실제 작동하는 코드 (code-snippets/)
+
+본 가이드의 모든 코드는 [code-snippets/](code-snippets/) 폴더에 **실제로 작동하는 풀 버전**으로 들어 있습니다. 가이드 본문에는 핵심 패턴만 보여드리고, 실제 사용은 `code-snippets/` 의 파일을 그대로 복사합니다.
+
+```
+docs/07-guide/code-snippets/
+├── requirements.txt              # Python 의존성 (정확한 버전)
+├── .env.example                  # API 키 템플릿
+├── pipelines/
+│   ├── auto_collectors.py        # 21신호 수집 (969줄)
+│   ├── collect_news_events.py    # RSS + LLM 분류 (1108줄)
+│   ├── forecast_v2.py            # Multi-Model 학습 (430줄)
+│   ├── build_insight.py          # LLM 인사이트 (399줄)
+│   ├── build_frontend_data.py    # data.js 자동 생성 (566줄)
+│   └── preprocessing.py          # 전처리 유틸 (141줄)
+├── app/
+│   └── main.py                   # FastAPI 18 endpoints (476줄)
+├── frontend/
+│   ├── app.jsx                   # 메인 + 라우팅 (196줄)
+│   ├── dashboard.jsx             # S-001 메인 화면 (595줄)
+│   ├── components.jsx            # 공통 컴포넌트 (386줄)
+│   ├── styles.css                # 디자인 토큰 + 전체 CSS (1079줄)
+│   ├── package.json              # npm 의존성
+│   └── index.html
+└── deploy/
+    ├── vercel.json               # Vercel 배포 설정
+    ├── .vercelignore             # 배포 제외 목록
+    └── .gitignore                # Git 제외 목록
+```
+
+**사용 방법** (가이드 Step 5~9 에서 안내):
+```bash
+# 예: Step 5 의 21 collector 코드를 그대로 사용
+cp docs/07-guide/code-snippets/pipelines/auto_collectors.py \
+   backend/pipelines/
+
+# 예: Step 9 의 vercel 설정 그대로 사용
+cp docs/07-guide/code-snippets/deploy/vercel.json \
+   ~/Documents/my-project/
+```
+
+이 코드들은 실제 https://sixsense-eta.vercel.app 을 만든 코드와 동일합니다. 그대로 복사 후 본인 도메인에 맞게 수정만 하면 됩니다.
+
 ## 📖 목차
 
 | # | 단계 | 예상 시간 | 난이도 |
@@ -2916,15 +2959,449 @@ my-project/                                  # ~/Documents/my-project/
 - **실제 사례**: https://sixsense-eta.vercel.app (Sixsense — Server DRAM Price Intelligence)
 - **GitHub repo**: https://github.com/chaos72/Sixsense
 - **발표용 PPTX**: [sixsense-vibe-coding-guide.pptx](sixsense-vibe-coding-guide.pptx) (28 슬라이드, Dataiku 브랜드 양식)
+- **실제 작동 코드**: [code-snippets/](code-snippets/) (Python 3000줄 + JSX 2200줄 + CSS 1000줄)
+- **부록 E**: 14화면 와이어프레임
+- **부록 F**: data.js SIXSENSE_DATA 스키마
+- **부록 G**: Claude Code 사용법
+- **부록 H**: 터미널/git/VS Code/JSON/Markdown cheatsheet
 
 ---
 
-| | |
+---
+
+## 부록 E. 14화면 와이어프레임 (S-001 ~ S-014)
+
+비전문가가 Claude Design 에 무엇을 만들어달라고 할 때 참고용. https://sixsense-eta.vercel.app 의 실제 화면 구성.
+
+### S-001 메인 대시보드 (가장 중요)
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│ ◉ Sixsense  Server DRAM Price Intelligence              [☾ 다크 모드]│ ← topbar
+├────────────────────────────────────────────────────────────────────┤
+│ §01 가격 스냅샷  2026-04-22 기준 — 매주 화요일 06:00 자동 갱신       │
+│ ┌──────┐┌──────┐┌──────┐┌─────────────────────────┐                │
+│ │현재가 ││1~7w  ││8~21w ││  ◆ 예측분석 인사이트   │ ← 4분화 그리드  │
+│ │$6.09 ││$5.06 ││$5.08 ││  Gemini gemini-2.5-flash│   (3:4 비율)   │
+│ │+4.0% ││-16.9%││-16.7%││  ┌────────┬───────────┐ │                │
+│ └──────┘└──────┘└──────┘│  │본문 좌측│CLAUDE 종합│ │                │
+│                          │  │ 분석 8줄│  판단     │ │                │
+│                          │  │ (clamp) │ headline  │ │                │
+│                          │  │  fade   │ A-2 · B-4│ │                │
+│                          └────────────────────────┘                  │
+├────────────────────────────────────────────────────────────────────┤
+│ §02 DRAM 52주 히스토리 + AI 예측      [단기][중장기][전체]            │
+│ ┌────────────────────────────────────────────────────────────────┐ │
+│ │  ─── 실측 (52w)                                                  │ │
+│ │  ⋯⋯ Prophet baseline (1~21w, 황색 dotted)                       │ │
+│ │  --- HistGBR (1~7w, 보라 long-dash · 6.86%)                      │ │
+│ │  ▬▬ GBR★ (1~7w, 청색 · 4.54%)                                   │ │
+│ │  ▬▬ LSTM★ (8~21w, 초록 · 9.19%)                                 │ │
+│ └────────────────────────────────────────────────────────────────┘ │
+│ [Phase 6 Multi-Model 검증 표 2개: 단기 + 중장기]                     │
+├────────────────────────────────────────────────────────────────────┤
+│ §03 14 신호 통합 현황                                                │
+│  Group A (정형 7): A-1 대만공급 | A-2 CapEx | A-3 수출 | A-4 재고 ... │
+│  Group B (비정형 7): B-1 IR감성 | B-2 대만뉴스 | B-3 Reddit | B-4 GPR │
+├────────────────────────────────────────────────────────────────────┤
+│ §05 AI 뉴스 (Top 3)            §06 거시경제 (6개)                    │
+│ ┌─────────────────────┐       ┌─────────────────────┐               │
+│ │ 삼성·SK하이닉스 AI...│       │ ust10  4.38% ↑ neg │               │
+│ │ HBM 부족 경고       │       │ fed    3.64%       │               │
+│ │ Micron 메모리 칩... │       │ dxy    98.1  ↓ pos │               │
+│ └─────────────────────┘       │ pmi    102.5       │               │
+│                               │ krw    1,487 ↓ pos │               │
+│                               │ cu     $5.93 ↑ pos │               │
+│                               └─────────────────────┘               │
+├────────────────────────────────────────────────────────────────────┤
+│ §07 글로벌 이벤트 (Top 10)     §08 AI 예측 정확도 (트랙레코드)       │
+│ ┌───┬─────┬────────────┬───┐ ┌─────────────────────┐                │
+│ │위험│유형 │  제목      │지역│ │ 4주전 예측 $5.00 →실제│                │
+│ ├───┼─────┼────────────┼───┤ │ 8주전 예측 $4.80 →실제│                │
+│ │high│파업 │삼성 협상.. │한국│ │ ...                  │                │
+│ │high│충돌 │우크라이나..│우크│ └─────────────────────┘                │
+│ │mid │이변 │일본 지진.. │일본│                                       │
+│ │mid │금융 │Fed 금리.. │미국│                                       │
+│ │... │ ... │ ...       │... │                                       │
+│ └───┴─────┴────────────┴───┘                                       │
+├────────────────────────────────────────────────────────────────────┤
+│ §09 이번 주 새 수집 데이터 현황       [수집 현황 →]                  │
+│ 정형 56건 ✓ | 비정형 64건 ✓ | 수집실패 0건 | 다음 수집까지 6일 22시간 │
+│ ┌────────────────────────────────────────────────────────────────┐ │
+│ │ 🔄 수동 갱신 실행 (5단계 백그라운드)                              │ │
+│ │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 진행률 바              │ │
+│ │ 단계 N/5 · 현재 stage 명                                        │ │
+│ └────────────────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+### S-002 ~ S-014 (모달 + 풀페이지)
+
+| ID | 형태 | 이름 | 핵심 위젯 |
+|---|---|---|---|
+| S-002 | Modal | AI 예측 근거 | 14신호 contribution bars + CI band + HITL |
+| S-003 | Modal | 정형 데이터 Group A 상세 | 7 tab (A-1~A-7) |
+| S-004 | Modal | 비정형 데이터 Group B 상세 | 7 tab (B-1~B-7) |
+| S-005 | Modal | Graph RAG | 구리 ↔ DRAM 상관관계 시각화 |
+| S-006 | Full | AI 뉴스 전체 목록 | 10건 + 상세 카드 |
+| S-007 | Modal | 뉴스 원문 & AI 분석 | 단/중/장기 영향 표 |
+| S-008 | Full | 거시경제 통합 상세 | 6 tab (ust10 첫번째) + 차트 |
+| S-009 | Modal | 주별 신호 스냅샷 | then vs now 비교 |
+| S-010 | Full | 글로벌 이벤트 전체 | 10건 + 카테고리 필터 |
+| S-011 | Modal | 글로벌 이벤트 상세 | 단/중/장기 영향 + 관련 신호 |
+| S-012 | Full | AI 예측 정확도 이력 | 누적 MAPE + 주별 오차 |
+| S-013 | Modal | 당시 신호 vs 현재 비교 | 의사결정 사후 검증 |
+| S-014 | Full | 데이터 수집 현황 상세 | 21신호 last update + 상태 |
+
+**Claude Design 에 보낼 프롬프트 예시** (위 와이어프레임 첨부 + 다음 문구):
+
+```
+첨부한 와이어프레임 (sixsense-wireframe.txt) 의 14화면을 hifi 디자인으로
+만들어주세요. S-001 의 §01 가격 스냅샷은 7분화 그리드 (1fr 1fr 1fr 4fr,
+가격 3카드 + 인사이트 카드), §02 차트는 4개 모델 라인 동시 표시,
+§07 이벤트는 5 카테고리 (국내 반도체/물리적 충돌/기상이변/금융 위기/기타)
+유형 칩으로 색 구분 (보라/적/황/청/회).
+```
+
+---
+
+## 부록 F. data.js (SIXSENSE_DATA) 스키마 명세
+
+`frontend/src/mocks/data.js` 의 구조. UI 컴포넌트가 이 스키마를 직접 import 해서 사용. `backend/pipelines/build_frontend_data.py` 가 21신호 JSON 을 이 스키마로 자동 변환.
+
+```javascript
+// frontend/src/mocks/data.js (자동 생성)
+export const SIXSENSE_DATA = {
+  // ── meta: 가격 스냅샷 + LLM 인사이트 + Multi-Model 검증 ──
+  meta: {
+    current: 6.09,                  // 현재가 ($/GB)
+    pred7: 5.06,                    // 1~7주 GBR 예측
+    pred21: 5.08,                   // 8~21주 LSTM 예측
+    currentChange: "+4.0%",         // 전주 대비
+    pred7Change: "-16.9%",
+    pred21Change: "-16.7%",
+    updated: "2026-05-18 06:00 KST",
+    model: "GBR (단기) + LSTM (중장기) + Prophet (베이스)",
+    confidence: 81,
+
+    // LLM 인사이트
+    insight: {
+      headline: "AI 수요 견인, 단기 조정 후 안정화",
+      summary: "서버 DRAM 가격은 현재 **$6.09**로 상승했으나, GBR 및 LSTM 모델은...",
+      tone: "neu",                  // "pos" | "neu" | "neg"
+      confidence: 75,
+      horizon: "long",              // "short" | "mid" | "long"
+      keySignals: ["A-2", "A-3"],
+      model: "Gemini gemini-2.5-flash",
+      generatedAt: "2026-05-19T11:30:00",
+    },
+
+    // Multi-Model 검증 패널
+    modelValidation: {
+      headline: "🎉 단기 MAPE 7.54% → 4.54% (39.8% 개선)",
+      shortRows: [
+        { model: "Prophet (기존)",    mape: 7.54, eval: "baseline", winner: false },
+        { model: "sklearn HistGBR",  mape: 6.86, eval: "중간",      winner: false },
+        { model: "sklearn GBR",      mape: 4.54, eval: "39.8% 개선", winner: true  },
+      ],
+      midRows: [
+        { model: "LSTM (PyTorch 2-layer hidden=64)", mape: 9.19 },
+      ],
+      trainTimes: [
+        { name: "Prophet",     sec: 2.68 },
+        { name: "Tree (단기)",  sec: 8.76 },
+        { name: "LSTM (중장기)", sec: 13.31 },
+      ],
+      trainTotal: 24.75,
+      architecture: "20개 신호 통합 DataFrame ...",
+      envNote: "XGBoost/LightGBM 우선 → macOS libomp 미설치 → sklearn fallback ...",
+    },
+  },
+
+  // ── history: 52주 실측 시계열 (§02 차트 검정 라인) ──
+  history: [
+    { week: 1, value: 1.85, x: 1 },
+    { week: 2, value: 1.92, x: 2 },
+    // ... 52개
+  ],
+
+  // ── forecast 4종 (§02 차트 4개 라인) ──
+  forecast7: [   // GBR ★ 1~7w 청색
+    { week: 1, value: 4.382, lower: 4.16, upper: 4.60, type: "f7" },
+    // ... 7개
+  ],
+  forecast21: [  // LSTM ★ 8~21w 초록
+    { week: 8, value: 5.091, lower: 4.58, upper: 5.60, type: "f21" },
+    // ... 14개
+  ],
+  forecast_prophet: [  // Prophet baseline 1~21w 황색
+    { week: 1, value: 4.499, type: "prophet" },
+    // ... 21개
+  ],
+  forecast_histgbr: [  // HistGBR 1~7w 보라
+    { week: 1, value: 4.199, type: "histgbr" },
+    // ... 7개
+  ],
+
+  // ── signalsA: 정형 7개 (§03 그룹 A 카드) ──
+  signalsA: [
+    { id: "A-1", name: "대만 공급망", group: "정형", value: 281.16,
+      change: "+2.3%", tone: "pos", spark: [...], source: "Yahoo TSM+UMC" },
+    // ... A-2 ~ A-7
+  ],
+
+  // ── signalsB: 비정형 7개 (§03 그룹 B 카드) ──
+  signalsB: [
+    { id: "B-1", name: "Earnings Call 감성", value: 0.0,
+      change: "neu", tone: "neu", spark: [...], source: "SEC EDGAR + LLM" },
+    // ... B-2 ~ B-7
+  ],
+
+  // ── macro: 거시 6개 (§06 거시경제) — ust10 첫번째 ──
+  macro: [
+    { id: "ust10", name: "미국 10년물 국채금리", value: "4.38%",
+      change: "↑ 부정", tone: "neg", history: [4.1, 4.15, 4.2, 4.25, 4.28, 4.35, 4.38] },
+    { id: "fed",   name: "미국 금리",         value: "3.64%", change: "동결", tone: "neu", history: [...] },
+    { id: "dxy",   name: "달러 인덱스 (DXY)", value: "98.1",  change: "↓ 부정", tone: "pos", history: [...] },
+    { id: "pmi",   name: "산업생산지수",      value: "102.5", change: "동결", tone: "neu", history: [...] },
+    { id: "krw",   name: "USD/KRW",          value: "1,487", change: "↓ 부정", tone: "pos", history: [...] },
+    { id: "cu",    name: "구리 가격",         value: "$5.93", change: "↑ 긍정", tone: "pos", history: [...] },
+  ],
+
+  // ── news: AI 뉴스 10건 (§05) ──
+  news: [
+    { date: "2026-05-15", title: "삼성·SK하이닉스, AI 메모리 부족 경고",
+      titleEn: "Samsung and SK Hynix warn ...", source: "Tom's Hardware",
+      score: 0.95, tone: "pos", conf: 98, hot: true,
+      summary: "삼성과 SK하이닉스는 AI 기반 HBM 수요 폭증으로 ...",
+      effects: {
+        short: { tone: "pos", text: "단기적인 서버 DDR5 공급 부족 심화." },
+        mid:   { tone: "pos", text: "중기적으로 서버 DDR5 공급 제약 유지." },
+        long:  { tone: "pos", text: "장기적인 가격 상승 전망 강화." },
+      },
+      linked: ["B-6 관련", "A-4 관련"],
+      link: "https://...",
+    },
+    // ... 10건 (모두 한국어 title + summary)
+  ],
+
+  // ── events: 글로벌 이벤트 10건 (§07) — 5 카테고리 ──
+  events: [
+    { id: "ev-1", type: "국내 반도체", region: "한국", risk: "high",
+      title: "삼성 노사 협상 결렬, 파업 임박", impact: "공급↓",
+      date: "2026-05-13",
+      summary: "삼성의 노사 협상이 결렬되어 ...",
+      effects: { short: {...}, mid: {...}, long: {...} },
+      links: [0], affects: ["A-4", "B-2"] },
+    { id: "ev-2", type: "물리적 충돌", region: "우크라이나", risk: "high",
+      title: "Ukraine war ...", impact: "공급↓", ... },
+    { id: "ev-3", type: "기상이변", region: "일본", risk: "mid", ... },
+    { id: "ev-4", type: "금융 위기", region: "미국", risk: "high", ... },
+    { id: "ev-5", type: "기타", region: "글로벌", risk: "low", ... },
+    // ... 10건 (5 카테고리 각 2건씩)
+  ],
+
+  // ── accuracy: AI 예측 정확도 (§08) ──
+  accuracy: [
+    { predDate: "2026-04-22", pred: 5.20, actual: 5.18, errorPct: -0.4 },
+    { predDate: "2026-04-15", pred: 5.15, actual: 5.22, errorPct: 1.4 },
+    // ... 8건
+  ],
+
+  // ── collection: 수집 현황 (§09 풋바) ──
+  collection: {
+    groupA: [
+      { id: "A-1", newItems: 7, status: "success" },
+      // ... A-2 ~ A-7
+    ],
+    groupB: [
+      { id: "B-1", newItems: 7, status: "success" },
+      // ... B-2 ~ B-7
+    ],
+    summary: { fail: 0 },
+  },
+};
+```
+
+**중요**: 이 스키마를 정확히 따라야 hand-off UI 가 자동으로 작동합니다. `build_frontend_data.py` 가 backend/data/*.json → 이 스키마로 자동 변환.
+
+---
+
+## 부록 G. Claude Code 사용법 (가장 강력한 도구)
+
+이 가이드의 모든 작업은 Claude Code CLI 에 다음과 같이 한 줄로 시킬 수 있습니다.
+
+### G-1. 설치 + 인증
+
+```bash
+# 설치 (Anthropic 공식 CLI)
+curl -fsSL https://claude.ai/install.sh | sh
+
+# 인증 (브라우저 자동 열림)
+claude login
+```
+
+### G-2. 프로젝트 폴더에서 실행
+
+```bash
+cd ~/Documents/my-project
+claude
+```
+
+### G-3. 자주 쓰는 한 줄 요청
+
+| 작업 | 명령 |
 |---|---|
-| 작성 | 김영석 (Sr. Solution Engineer, Dataiku Korea) |
-| 과정 | KAIST CAIO 10기 6조 |
-| Email | youngseok.kim@dataiku.com |
-| GitHub | https://github.com/chaos72 |
-| Demo | https://sixsense-eta.vercel.app |
+| PRD 작성 | `"prd.md 를 18 섹션으로 작성해줘. 주제는 [본인 주제]"` |
+| hand-off 포팅 | `"design_handoff/src/ 를 frontend/src/ 로 옮기고 npm run dev 띄워줘"` |
+| collector 추가 | `"auto_collectors.py 에 macro-ust10 (FRED DGS10) collector 추가해줘"` |
+| 모델 학습 | `"forecast_v2.py 실행하고 결과 보여줘"` |
+| 에러 디버깅 | `"방금 에러 [에러 메시지 붙여넣기] 해결해줘"` |
+| commit + push | `"지금까지 변경 commit하고 GitHub push 해줘"` |
+| Vercel 배포 | `"vercel.json 작성하고 npx vercel --prod 로 배포해줘"` |
+
+### G-4. Claude Code 가 자동으로 하는 것
+
+- 파일 생성/수정 (Read/Write/Edit)
+- 터미널 명령 실행 (Bash)
+- 외부 정보 검색 (WebFetch/WebSearch)
+- git/gh/vercel CLI 호출
+- 에러 메시지 자동 분석 + 해결
+
+**팁**: 막힐 때는 그냥 "지금 막혔어, 도와줘" 라고만 해도 Claude 가 컨텍스트 보고 해결책 제시.
+
+---
+
+## 부록 H. 비전문가용 필수 cheatsheet
+
+### H-1. 터미널 기본 (macOS)
+
+| 명령 | 의미 |
+|---|---|
+| `pwd` | 현재 폴더 위치 출력 |
+| `ls` | 현재 폴더 파일 목록 |
+| `ls -la` | 숨김 파일 포함 + 상세 |
+| `cd 폴더명` | 폴더로 이동 |
+| `cd ..` | 상위 폴더로 이동 |
+| `cd ~` | 홈 폴더로 이동 |
+| `mkdir 이름` | 새 폴더 생성 |
+| `touch 파일명` | 빈 파일 생성 |
+| `cat 파일명` | 파일 내용 출력 |
+| `cp 원본 대상` | 파일 복사 |
+| `mv 원본 대상` | 파일 이동 / 이름 변경 |
+| `rm 파일` | 파일 삭제 (휴지통 없이) |
+| `rm -rf 폴더` | 폴더 통째로 삭제 (위험!) |
+| `Ctrl+C` | 실행 중 명령 중단 |
+| `Ctrl+L` 또는 `clear` | 화면 지우기 |
+| `↑` 화살표 | 이전 명령 불러오기 |
+| `Cmd+T` | 새 탭 |
+| `Cmd+K` | 터미널 화면 지우기 |
+
+### H-2. git 기본
+
+| 명령 | 의미 |
+|---|---|
+| `git status` | 현재 상태 (어떤 파일 변경됨?) |
+| `git diff` | 변경 내용 보기 |
+| `git add 파일` | commit 대상에 추가 |
+| `git add .` | 모든 변경 추가 (주의 - .env 같은 파일 제외 확인) |
+| `git commit -m "메시지"` | 변경사항 저장 (로컬) |
+| `git push` | GitHub 에 업로드 |
+| `git pull` | GitHub 에서 다운로드 |
+| `git log --oneline` | commit 히스토리 한 줄씩 |
+| `git checkout 파일` | 파일 변경 취소 (commit 전) |
+| `git branch` | 현재 branch 확인 |
+| `git checkout -b 이름` | 새 branch 만들고 이동 |
+| `git merge 이름` | 다른 branch 를 현재 branch 에 병합 |
+| `git remote -v` | 원격 저장소 URL 확인 |
+
+### H-3. VS Code / Cursor 단축키 (Mac)
+
+| 단축키 | 기능 |
+|---|---|
+| `Cmd+P` | 파일 빠른 열기 (파일명 입력) |
+| `Cmd+Shift+P` | 명령 팔레트 (모든 기능 검색) |
+| `Cmd+B` | 사이드바 토글 |
+| `Cmd+J` | 터미널 토글 |
+| `Cmd+/` | 주석 토글 |
+| `Cmd+D` | 같은 단어 추가 선택 |
+| `Cmd+S` | 저장 |
+| `Cmd+Z` / `Cmd+Shift+Z` | 실행 취소 / 다시 실행 |
+| `Cmd+F` | 검색 |
+| `Cmd+Shift+F` | 전체 폴더 검색 |
+| `Cmd+G` | 다음 검색 결과 |
+| `Cmd+,` | 설정 |
+| `Cmd+Shift+E` | Explorer 사이드바 |
+
+### H-4. JSON 읽는 법
+
+```json
+{
+  "key": "value",           ← 키-값 쌍 (쉼표로 구분)
+  "number": 42,              ← 숫자는 따옴표 X
+  "boolean": true,           ← true / false / null
+  "array": [1, 2, 3],        ← 배열 (대괄호)
+  "nested": {                ← 객체 안에 객체
+    "inner_key": "inner_val"
+  },
+  "list_of_objects": [
+    {"a": 1, "b": 2},
+    {"a": 3, "b": 4}
+  ]
+}
+```
+
+**점 표기법으로 접근**:
+- `data.key` → "value"
+- `data.array[0]` → 1
+- `data.nested.inner_key` → "inner_val"
+- `data.list_of_objects[1].a` → 3
+
+### H-5. Markdown 작성법 (PRD 등)
+
+```markdown
+# 제목 1 (가장 큼)
+## 제목 2
+### 제목 3
+
+**굵게** *기울임* ~~취소선~~
+
+- 불릿 1
+- 불릿 2
+  - 들여쓰기 (2 공백)
+
+1. 번호 목록
+2. 자동 번호
+
+[링크 텍스트](https://example.com)
+![이미지 alt](https://image-url.png)
+
+| 표 헤더 | 헤더 2 |
+|---------|--------|
+| 셀 1    | 셀 2   |
+
+​```bash
+코드 블록 (언어 명시 시 syntax 강조)
+echo "Hello"
+​```
+
+> 인용문
+
+`인라인 코드`
+```
+
+### H-6. 자주 발생하는 macOS 보안 경고
+
+**"앱이 손상되어 열 수 없습니다"** (Claude Code 등 미서명 앱):
+```bash
+# 시스템 설정 → 개인정보 보호 및 보안 → 하단 "그래도 열기" 클릭
+# 또는 터미널에서:
+sudo xattr -d com.apple.quarantine /Applications/Claude.app
+```
+
+**"개발자를 확인할 수 없음"**:
+- 앱을 우클릭 → "열기" → "열기" 한 번 더
+
+---
 
 
