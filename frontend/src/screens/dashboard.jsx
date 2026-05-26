@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
 import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard } from '../components/components.jsx'
+// USER-REQUESTED EXTENSION (#16) — 다음 수집/잔여 시간 동적 계산
+import { nextTuesday06KST, lastTuesday06KST, formatTimeUntil } from '../utils/dates.js'
 
 // S-001 Main Dashboard
 const D = SIXSENSE_DATA;
@@ -346,7 +348,7 @@ function Dashboard({ onNav }) {
             <div className="card" style={{ padding: 0 }}>
               {D.accuracy.filter(a => a.actual !== null).slice(0, 3).map((a, i) => (
                 <div key={i} style={{ padding: "12px 16px", borderBottom: i < 2 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto auto auto 1fr auto", alignItems: "center", gap: 14, fontSize: 12 }}>
-                  <span className="muted mono">{Math.round((Date.parse("2026-04-22") - Date.parse(a.predDate)) / (1000 * 60 * 60 * 24 * 7))}주전</span>
+                  <span className="muted mono">{Math.round((lastTuesday06KST().getTime() - Date.parse(a.predDate)) / (1000 * 60 * 60 * 24 * 7))}주전</span>
                   <span>예측 <span className="num" style={{ fontWeight: 600 }}>${a.pred.toFixed(2)}</span></span>
                   <span className="muted mono">→</span>
                   <span>실제 <span className="num" style={{ fontWeight: 600 }}>${a.actual.toFixed(2)}</span></span>
@@ -374,7 +376,7 @@ function Dashboard({ onNav }) {
           <div><span className="label">사이클</span><span className="num">매주 화요일 06:00 KST</span></div>
           <div style={{ marginLeft: "auto" }}>
             <span className="muted">다음 수집까지</span>
-            <span className="num" style={{ marginLeft: 8, fontWeight: 600 }}>6일 22시간</span>
+            <span className="num" style={{ marginLeft: 8, fontWeight: 600 }}>{formatTimeUntil(nextTuesday06KST())}</span>
           </div>
         </div>
         {/* USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 버튼 (전체 파이프라인 즉시 재실행) */}

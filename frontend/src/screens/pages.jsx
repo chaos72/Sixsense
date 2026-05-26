@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
 import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead } from '../components/components.jsx'
+// USER-REQUESTED EXTENSION (#16) — 다음 수집 일정 동적 계산
+import { nextTuesday06KST, lastTuesday06KST, formatTuesdayKST } from '../utils/dates.js'
 
 // Full-page detail screens: S-006, S-008, S-010, S-012, S-014
 const D3 = SIXSENSE_DATA;
@@ -408,7 +410,7 @@ function S014({ onClose }) {
       <div style={{ marginTop: 22, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
         <div className="card">
           <div className="dlabel">다음 수집 일정</div>
-          <div className="num" style={{ fontSize: 18, fontWeight: 600, marginTop: 4 }}>2026-04-29 (화) 06:00 KST</div>
+          <div className="num" style={{ fontSize: 18, fontWeight: 600, marginTop: 4 }}>{formatTuesdayKST(nextTuesday06KST())}</div>
           <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>매주 화요일 새벽 6시 자동 실행. 14개 신호 일제 갱신 + 모델 재학습 트리거.</div>
         </div>
         <div className="card">

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
 import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead } from '../components/components.jsx'
+// USER-REQUESTED EXTENSION (#16) — 생성일 동적
+import { lastTuesday06KST, formatTuesdayShort } from '../utils/dates.js'
 
 // Modal-based detail screens: S-002, S-003, S-004, S-005, S-007, S-009, S-011, S-013
 const D2 = SIXSENSE_DATA;
@@ -56,7 +58,7 @@ function S002({ horizon: initialHorizon, onClose, onNav }) {
           </div>
           <div>
             <div className="dlabel">생성일 · 모델</div>
-            <div style={{ fontSize: 13, fontWeight: 500, marginTop: 4 }}>2026-04-22 (화)</div>
+            <div style={{ fontSize: 13, fontWeight: 500, marginTop: 4 }}>{formatTuesdayShort(lastTuesday06KST())}</div>
             <div className="mono muted" style={{ fontSize: 11 }}>prophet_v2.1</div>
           </div>
           <div>

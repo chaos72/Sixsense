@@ -5,6 +5,8 @@ import { S002, S003, S004, S005, S007, S009, S011, S013, ConfidenceBar, SignalDe
 import { PageHead, S006, S008, S010, S012, S014 } from './pages.jsx'
 import { TweaksPanel, TweakSection, TweakRadio, useTweaks } from './tweaks-panel.jsx'
 import { SIXSENSE_DATA } from '../mocks/data.js'
+// USER-REQUESTED EXTENSION (#16) — topbar 마지막 갱신 동적 계산
+import { lastTuesday06KST, formatDateTimeKST } from '../utils/dates.js'
 
 // Main app — routing, tweaks, layout shell
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -175,7 +177,7 @@ function Topbar({ pageLabel, pageId, onHome, t, setTweak }) {
       </div>
       <div className="meta">
         <span><span className="dot"></span>매주 화요일 06:00 자동 수집</span>
-        <span className="mono">마지막 갱신 · 2026-04-22 06:00</span>
+        <span className="mono">마지막 갱신 · {formatDateTimeKST(lastTuesday06KST())}</span>
         {/* USER-REQUESTED EXTENSION (2026-05-18 #6) — hand-off의 테마 토글 가시성 강화 (.theme-toggle 클래스) */}
         <button
           className="theme-toggle"
