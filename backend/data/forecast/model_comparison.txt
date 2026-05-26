@@ -38,8 +38,8 @@ Week              Prophet       LSTM
 LSTM held-out MAPE: 11.28%
 
 ⏱  학습 소요 시간:
-  prophet         2.77s
-  tree_short      8.64s
-  lstm_mid        11.98s
+  prophet         3.18s
+  tree_short      10.23s
+  lstm_mid        12.58s
 
 ════════════════════════════════════════════════════════════════════════════════
