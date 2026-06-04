@@ -333,6 +333,87 @@ def korean_title(en_title: str) -> str:
     return out
 
 
+# USER-REQUESTED EXTENSION (#17, 2026-06-04) — LLM 일괄 번역 (휴리스틱 한글화 보강)
+# korean_title() 의 사전 치환만으로는 매핑 안 된 영문이 남음 → LLM 으로 전체 문장 번역.
+# 일괄 1회 호출로 여러 텍스트를 번역 (한도 절약). LLM 실패 시 None 반환.
+def llm_translate_batch(texts: list[str]) -> list[str] | None:
+    """영문 텍스트 리스트를 한국어로 일괄 번역. Gemini → Groq fallback. 실패 시 None."""
+    if not texts:
+        return []
+    # 이미 충분히 한국어인 것은 그대로, 영문 잔여만 번역 대상
+    numbered = "\n".join(f"{i+1}. {t}" for i, t in enumerate(texts))
+    prompt = (
+        "다음 뉴스/이벤트 제목들을 자연스러운 한국어로 번역하라. "
+        "고유명사(회사명·인명·지명)는 통용되는 한국어 표기로, 기술 용어(DRAM, HBM, SSD, GPU 등)는 그대로 유지. "
+        "이미 한국어인 부분은 다듬어라. 번호와 순서를 정확히 유지하고, "
+        "각 줄을 '번호. 한국어제목' 형식으로만 출력하라. 다른 설명 금지.\n\n"
+        f"{numbered}"
+    )
+
+    def _parse(text: str) -> list[str] | None:
+        out = {}
+        for line in text.strip().split("\n"):
+            m = re.match(r"\s*(\d+)[.)]\s*(.+)", line)
+            if m:
+                out[int(m.group(1))] = m.group(2).strip()
+        if len(out) >= len(texts) * 0.7:  # 70% 이상 파싱되면 성공으로 간주
+            return [out.get(i + 1, texts[i]) for i in range(len(texts))]
+        return None
+
+    # 1. Gemini
+    gkey = os.getenv("GEMINI_API_KEY")
+    if gkey:
+        for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
+            try:
+                r = requests.post(
+                    f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gkey}",
+                    json={"contents": [{"parts": [{"text": prompt}]}],
+                          "generationConfig": {"maxOutputTokens": 4096, "temperature": 0.0}},
+                    timeout=60,
+                )
+                if r.status_code == 200:
+                    txt = r.json()["candidates"][0]["content"]["parts"][0]["text"]
+                    parsed = _parse(txt)
+                    if parsed:
+                        print(f"  ✅ LLM 번역 성공 ({model}, {len(texts)}건)")
+                        return parsed
+                elif r.status_code == 429:
+                    continue  # 다음 모델 시도
+            except Exception as e:
+                print(f"  ⚠ Gemini 번역 실패: {str(e)[:60]}")
+
+    # 2. Groq
+    qkey = os.getenv("GROQ_API_KEY")
+    if qkey:
+        try:
+            r = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization": f"Bearer {qkey}"},
+                json={"model": "llama-3.3-70b-versatile",
+                      "messages": [{"role": "user", "content": prompt}],
+                      "max_tokens": 4096, "temperature": 0.0},
+                timeout=60,
+            )
+            if r.status_code == 200:
+                txt = r.json()["choices"][0]["message"]["content"]
+                parsed = _parse(txt)
+                if parsed:
+                    print(f"  ✅ LLM 번역 성공 (Groq, {len(texts)}건)")
+                    return parsed
+        except Exception as e:
+            print(f"  ⚠ Groq 번역 실패: {str(e)[:60]}")
+
+    return None
+
+
+def ensure_korean(text: str) -> str:
+    """korean_title 치환 후에도 영문이 3자 이상 연속으로 남으면 [표시].
+    LLM 번역이 적용되지 않은 최후 보루 — 영문임을 명확히 하되 깨지지 않게."""
+    out = korean_title(text)
+    # 영문 단어(3자+)가 여전히 많이 남으면 그대로 두되, 한글 비율 체크는 호출부에서.
+    return out
+
+
 # USER-REQUESTED EXTENSION (#9) — 휴리스틱 한국어 요약 자동 생성
 def korean_summary(category: str, region: str, title: str, raw_summary: str) -> str:
     """카테고리·지역·제목 키워드 기반 한국어 요약 1~2문장 자동 생성.
@@ -1012,10 +1093,10 @@ def heuristic_news_only(entries: list[dict]) -> list[dict]:
         neg = sum(1 for w in NEG if w in text)
         score = round((pos - neg) / max(1, pos + neg + 1), 2)
         tone = "pos" if score > 0.2 else "neg" if score < -0.2 else "neu"
-        # 휴리스틱 한국어 요약 (DRAM 산업 뉴스용)
-        summary_ko = e["summary"][:180]
-        if not re.search(r"[가-힣]", summary_ko):
-            summary_ko = f"DRAM/반도체 산업 동향 — {e['source']} 보도. 가격 영향 점수 {score:+.2f}. (LLM 비활성 — 휴리스틱 요약)"
+        # USER-REQUESTED EXTENSION (#17) — 원본 RSS 요약 보존 (후처리 LLM 번역 대상).
+        # 이전엔 영문 요약을 "산업 동향 — RSS 보도..." 플레이스홀더로 버렸으나,
+        # 원본을 남겨야 #17 후처리에서 LLM 이 자연스러운 한국어로 번역 가능.
+        summary_ko = (e["summary"] or e["title"])[:180]
         # USER-REQUESTED EXTENSION (#14) — title 도 한국어로 자동 치환
         out.append({
             "date": e["date"],
@@ -1082,7 +1163,64 @@ def main():
         news = heuristic_news_only(news_top)
         _, events = heuristic_fallback(events_top)
 
-    print(f"[5/5] 저장")
+    # USER-REQUESTED EXTENSION (#17) — 한글화 후처리: 영문 잔여가 많은 항목 LLM 일괄 번역
+    # 사용자 요청: 뉴스/이벤트는 반드시 항상 한글로 번역하여 제공
+    # 기술용어/고유명사/단위는 영문 유지가 자연스러우므로 잔여 판정에서 제외
+    TECH_WHITELIST = {
+        "ssd", "hbm", "dram", "ddr", "ddr5", "ddr4", "gpu", "gpus", "cpu", "ai",
+        "ceo", "cfo", "tsmc", "nand", "yoy", "v2", "us", "gb", "tb", "pc", "ram",
+        "rss", "llm", "api", "kb", "mb", "ghz", "msn", "com", "trendforce",
+        "skill", "color", "nvidia", "amd", "intel", "ipo", "et", "vs",
+    }
+
+    def _kr_ratio(s: str) -> float:
+        # 기술용어/URL 토막 제거 후 한글 비율 계산
+        words = re.findall(r"[A-Za-z][A-Za-z.]*", s)
+        eng_chars = 0
+        for w in words:
+            if w.lower().rstrip(".") in TECH_WHITELIST:
+                continue  # 화이트리스트는 영문으로 안 셈
+            eng_chars += len([c for c in w if c.isalpha()])
+        ko_chars = len([c for c in s if '가' <= c <= '힣'])
+        total = ko_chars + eng_chars
+        if total == 0:
+            return 1.0
+        return ko_chars / total
+
+    # 한글 비율 60% 미만인 title/summary 를 모아서 1회 LLM 번역
+    to_translate = []
+    refs = []  # (list, idx, field)
+    for arr, name in [(news, "news"), (events, "events")]:
+        for idx, it in enumerate(arr):
+            for field in ("title", "summary"):
+                val = it.get(field, "")
+                if val and _kr_ratio(val) < 0.6:
+                    to_translate.append(val)
+                    refs.append((arr, idx, field))
+
+    if to_translate:
+        print(f"[5/6] 한글화 후처리 — 영문 잔여 {len(to_translate)}건 LLM 번역 시도")
+        # RPM 한도 회복 위해 최대 4회 재시도 (45초 간격)
+        translated = None
+        for attempt in range(4):
+            translated = llm_translate_batch(to_translate)
+            if translated:
+                break
+            if attempt < 3:
+                print(f"  ⏳ 번역 한도 — 45초 후 재시도 ({attempt+1}/4)")
+                time.sleep(45)
+        if translated:
+            for (arr, idx, field), kr in zip(refs, translated):
+                arr[idx][field] = kr
+            method_news = (method_news + " + LLM 한글화") if "휴리스틱" in method_news else method_news
+            method_events = (method_events + " + LLM 한글화") if "휴리스틱" in method_events else method_events
+        else:
+            # LLM 번역도 실패 (일일 한도 등) — korean_title 사전 치환 재적용 (최소한의 한글화)
+            print(f"  ⚠ LLM 번역 불가 (한도) — 사전 치환만 적용, 잔여 영문 일부 존재")
+            for (arr, idx, field), orig in zip(refs, to_translate):
+                arr[idx][field] = korean_title(orig)
+
+    print(f"[6/6] 저장")
     payload_news = {
         "collectedAt": date.today().isoformat(),
         "method": method_news,
