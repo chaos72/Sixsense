@@ -1,15 +1,15 @@
 {
   "signalId": "B-5",
-  "source": "Google News 'LTA ratio' (22 entries, LLM 4\ud68c \ud638\ucd9c, 10\uc8fc)",
+  "source": "Google News 'LTA ratio' (74 entries, LLM 8\ud68c \ud638\ucd9c, 16\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-05-27",
+  "collectedAt": "2026-06-04",
   "rangeStart": "2025-12-08",
-  "rangeEnd": "2026-05-18",
+  "rangeEnd": "2026-06-01",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
       "week": "2025-12-08",
-      "value": 0.8
+      "value": 0.0
     },
     {
       "week": "2025-12-22",
@@ -17,11 +17,27 @@
     },
     {
       "week": "2026-01-05",
-      "value": 0.8
+      "value": 0.9
+    },
+    {
+      "week": "2026-02-02",
+      "value": 0.0
+    },
+    {
+      "week": "2026-02-16",
+      "value": 0.0
+    },
+    {
+      "week": "2026-03-09",
+      "value": 0.0
     },
     {
       "week": "2026-03-16",
-      "value": 1.0
+      "value": 0.0
+    },
+    {
+      "week": "2026-03-23",
+      "value": 0.0
     },
     {
       "week": "2026-03-30",
@@ -32,11 +48,11 @@
       "value": 1.0
     },
     {
-      "week": "2026-04-20",
+      "week": "2026-04-13",
       "value": 0.0
     },
     {
-      "week": "2026-04-27",
+      "week": "2026-04-20",
       "value": 0.0
     },
     {
@@ -45,6 +61,14 @@
     },
     {
       "week": "2026-05-18",
+      "value": -1.0
+    },
+    {
+      "week": "2026-05-25",
+      "value": 1.0
+    },
+    {
+      "week": "2026-06-01",
       "value": 0.0
     }
   ]

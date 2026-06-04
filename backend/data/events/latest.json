@@ -1,30 +1,30 @@
 {
-  "collectedAt": "2026-05-27",
+  "collectedAt": "2026-06-04",
   "method": "키워드 휴리스틱",
-  "rawCount": 1024,
+  "rawCount": 1224,
   "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성)",
   "events": [
     {
       "id": "ev-1",
       "type": "국내 반도체",
       "region": "한국",
-      "risk": "high",
-      "title": "삼성전자 노조 talks collapse, PM 경고 against 파업",
+      "risk": "mid",
+      "title": "[모니터링] 한국 메모리 산업 이슈 추적 (파업/정전/화재)",
       "impact": "공급↓",
-      "date": "2026-05-13",
-      "summary": "한국 메모리 산업 직접 이슈 — 노사 협상 결렬 등 파업 관련 보도. 메모리 공장 가동 중단 시 단기 공급 차질 가능, 가격 상승 압력. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 국내 반도체)",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 국내 반도체)"
+          "tone": "neu",
+          "text": "(placeholder)"
         },
         "mid": {
           "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 국내 반도체)"
+          "text": "(placeholder)"
         },
         "long": {
           "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 국내 반도체)"
+          "text": "(placeholder)"
         }
       },
       "links": [],
@@ -33,12 +33,12 @@
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "우크라이나",
+      "region": "이스라엘",
       "risk": "high",
-      "title": "우크라이나 전쟁 briefing: Zelenskyy sounds 경고 on Oreshnik 미사일s as 러시아 파업 Kyiv",
+      "title": "이스라엘 Enhances Long-Range 파업, 미사일 Defense For Next 이란 전쟁",
       "impact": "공급↓",
-      "date": "2026-05-24",
-      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -59,12 +59,12 @@
     {
       "id": "ev-3",
       "type": "기상이변",
-      "region": "일본",
+      "region": "글로벌",
       "risk": "high",
-      "title": "규모 5.9 지진 파업 Kagoshima islands",
+      "title": "5.7 지진 파업 off Oregon coast, no 쓰나미 경고 issued",
       "impact": "공급↓",
-      "date": "2026-05-20",
-      "summary": "일본 규모 5.9 지진 — 일본 NAND/소재 공급(키오시아 등) 단기 영향 모니터링. DRAM 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "글로벌 규모 ? 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -85,12 +85,12 @@
     {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "미국",
-      "risk": "mid",
-      "title": "전쟁sh takes the Fed's helm as 인플레이션 climbs, consumer sentiment dives",
+      "region": "이스라엘",
+      "risk": "high",
+      "title": "원유 가격 급등 over $4 after 이스라엘 파업 이란",
       "impact": "가격?",
-      "date": "2026-05-22",
-      "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "국제 유가 변동 보도 (이스라엘) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -137,12 +137,12 @@
     {
       "id": "ev-6",
       "type": "물리적 충돌",
-      "region": "우크라이나",
+      "region": "이스라엘",
       "risk": "high",
-      "title": "우크라이나 전쟁 latest: 러시아 테러izes Kyiv with massive ballistic 미사일, drone attack",
+      "title": "Middle East 전쟁 live: 이스라엘 and Lebanon agree to implement conditional 휴전",
       "impact": "공급↓",
-      "date": "2026-05-24",
-      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -165,10 +165,10 @@
       "type": "기상이변",
       "region": "글로벌",
       "risk": "high",
-      "title": "규모 6.8 지진 파업 northern Chile, no 쓰나미 threat",
+      "title": "쓰나미 advisory issued for Puerto Rico, Virgin Islands after 7.6 규모 지진 파업 Caribbean",
       "impact": "공급↓",
-      "date": "2026-05-26",
-      "summary": "글로벌 규모 6.8 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "글로벌 규모 ? 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -189,15 +189,15 @@
     {
       "id": "ev-8",
       "type": "금융 위기",
-      "region": "미국",
+      "region": "이스라엘",
       "risk": "mid",
-      "title": "Fed officials see 금리 인상 ahead if 인플레이션 stays elevated, minutes show",
-      "impact": "물류↑",
-      "date": "2026-05-20",
-      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "title": "US Fed says 이란 전쟁 driving ‘moderate-to-strong’ 인플레이션",
+      "impact": "가격?",
+      "date": "2026-06-03",
+      "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neg",
+          "tone": "neu",
           "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
@@ -214,39 +214,13 @@
     },
     {
       "id": "ev-9",
-      "type": "기타",
-      "region": "미국",
-      "risk": "low",
-      "title": "How the Fed's rate decision affects your bank accounts, loans, credit cards, and",
-      "impact": "가격?",
-      "date": "2026-04-29",
-      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "단기 영향 평가 (휴리스틱 · 기타)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기타)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기타)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-10",
       "type": "물리적 충돌",
-      "region": "이란",
+      "region": "이스라엘",
       "risk": "high",
-      "title": "국채금리s 하락 as 이란 휴전 hopes offset fresh US military 파업",
+      "title": "Middle East 전쟁 live: 이스라엘 and Lebanon agree to implement conditional 휴전",
       "impact": "공급↓",
-      "date": "2026-05-26",
-      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-03",
+      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -259,6 +233,32 @@
         "long": {
           "tone": "neu",
           "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-10",
+      "type": "기상이변",
+      "region": "글로벌",
+      "risk": "high",
+      "title": "규모 4.6 지진 파업 off the coast of Hawaii's Big Island",
+      "impact": "공급↓",
+      "date": "2026-06-03",
+      "summary": "글로벌 규모 4.6 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
         }
       },
       "links": [],
