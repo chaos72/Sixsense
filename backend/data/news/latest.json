@@ -1,20 +1,20 @@
 {
   "collectedAt": "2026-06-04",
-  "method": "키워드 휴리스틱",
+  "method": "키워드 휴리스틱 + LLM 한글화",
   "lookbackDays": 30,
-  "rawCount": 813,
+  "rawCount": 823,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
       "date": "2026-05-30",
-      "title": "Huawei chairman thanks the US for export restrictions on chips, says i",
+      "title": "화웨이 회장, 미국의 칩 수출 제한에 감사 - 중국 반도체 산업을 부양했다고 말함",
       "titleEn": "Huawei chairman thanks the US for export restrictions on chips, says it supercharged China’s semiconductor industry — Washington’s export controls encouraged Chinese firms to invest in R&D and build their own tech stack competing with American tech - Tom's Hardware",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 -0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "화웨이 회장, 미국의 칩 수출 제한에 감사 - 워싱턴의 수출 통제로 중국 기업이 투자하기를 촉진했다고 말함",
       "effects": {
         "short": {
           "tone": "neg",
@@ -34,14 +34,14 @@
     },
     {
       "date": "2026-05-18",
-      "title": "Record-high pricing pushes SSD and 메모리 makers to borrow $880 백만 just t",
+      "title": "최고치 가격으로 인해 SSD와 메모리 제조업체가 칩 구매를 위해 8.8억 달러를 대출함",
       "titleEn": "Record-high pricing pushes SSD and memory makers to borrow $880 million just to afford buying chips — Adata, TeamGroup, and others take on substantial debt to survive shortages - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "최고치 가격으로 인해 SSD와 메모리 제조업체가 칩 구매를 위해 8.8억 달러를 대출함 - 아다타, 팀그룹 등이 부족을 극복하기 위해大量 부채를 떠안음",
       "effects": {
         "short": {
           "tone": "pos",
@@ -61,14 +61,14 @@
     },
     {
       "date": "2026-06-03",
-      "title": "마이크론 and SK하이닉스 both hit $1 조 as 메모리 칩 overtake GPUs in the AI stock 강",
+      "title": "마이크론과 SK하이닉스, 모두 1조 달러에 달함 - 메모리 칩이 AI 주도하에 GPU를 추월함",
       "titleEn": "Micron and SK Hynix both hit $1 trillion as memory chips overtake GPUs in the AI stock rally of 2026",
       "source": "moneywise.com",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — moneywise.com 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "마이크론과 SK하이닉스, 모두 1조 달러에 달함 - 메모리 칩이 AI 주도하에 GPU를 추월함",
       "effects": {
         "short": {
           "tone": "pos",
@@ -88,14 +88,14 @@
     },
     {
       "date": "2026-06-03",
-      "title": "[News] 한국’s Chip Exports to 중국 급등 243% YoY in May as Beijing’s AI Push",
+      "title": "한국의 칩 수출이 중국으로 243% 급증 - 베이징의 AI 추진이 메모리 수요를 부추김",
       "titleEn": "[News] South Korea’s Chip Exports to China Surge 243% YoY in May as Beijing’s AI Push Fuels Memory Demand",
       "source": "TrendForce",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — TrendForce 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "한국의 칩 수출이 중국으로 243% 급증 - 베이징의 AI 추진이 메모리 수요를 부추김",
       "effects": {
         "short": {
           "tone": "pos",
@@ -115,14 +115,14 @@
     },
     {
       "date": "2026-06-03",
-      "title": "32GB of DDR5 now costs $375 minimum — AI 부족 continues to squeeze PC bu",
+      "title": "32GB의 DDR5 가격이 최소 375달러에 달함 - AI 부족으로 인해 PC 구축이 어려워짐",
       "titleEn": "32GB of DDR5 now costs $375 minimum — AI shortage continues to squeeze PC building - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "32GB의 DDR5 가격이 최소 375달러에 달함 - AI 부족으로 인해 PC 구축이 어려워짐",
       "effects": {
         "short": {
           "tone": "pos",
@@ -142,14 +142,14 @@
     },
     {
       "date": "2026-06-03",
-      "title": "Counterfeit G.Skill and V-Color DDR5 modules hit Chinese marketplaces,",
+      "title": "가짜 G.Skill과 V-Color DDR5 모듈이 중국 시장에 등장함",
       "titleEn": "Counterfeit G.Skill and V-Color DDR5 modules hit Chinese marketplaces, impacting company sales — cheap contraband memory using identical PCBs and heat spreaders almost impossible to spot - Tom's Hardware",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 -0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "가짜 G.Skill과 V-Color DDR5 모듈이 중국 시장에 등장함 - 회사 매출에 영향을 미침",
       "effects": {
         "short": {
           "tone": "neg",
@@ -169,14 +169,14 @@
     },
     {
       "date": "2026-06-02",
-      "title": "SK하이닉스 ascends as new 메모리 king with high-bandwidth AI 칩s",
+      "title": "SK하이닉스, 고대역폭 AI 칩으로 새로운 메모리 왕으로 부상함",
       "titleEn": "SK Hynix ascends as new memory king with high-bandwidth AI chips",
       "source": "Nikkei Asia",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — Nikkei Asia 보도. 가격 영향 점수 -0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "SK하이닉스, 고대역폭 AI 칩으로 새로운 메모리 왕으로 부상함",
       "effects": {
         "short": {
           "tone": "neg",
@@ -195,42 +195,15 @@
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxObW1RY0c3NjlJbG9tQVBxRER2WmtSMm13QzZvdm9SeTlhNUpnTUdiNWU2YXdCRGl0dnJWLUJpMXJIdXFBVmp6NEFTOTBjUVdKVUpiTHpJRHhMR2c3bENMVFpBQXRmWnB2anZ5blhUcWhIb3hDNUNINTk3UHcxWjFWekV0azBfeTFHYkVVdkk1d05NSDY0QUgyOU9qNnJlWUttaFVnbUtuOEs0RENjaEhxWTBCOWNrcExZ?oc=5"
     },
     {
-      "date": "2026-06-02",
-      "title": "SK하이닉스 to double 메모리 wafer capacity within five years, chairman says —",
-      "titleEn": "SK hynix to double memory wafer capacity within five years, chairman says — AI-driven shortage will persist until at least 2030 - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdEZUT3BfNXFYWnhIbnpmSm8yQ0Z3Z2R1d1FTQTR2VVJfU1JaWE5Xa0tTZzdrUms5czVPVFQwMWpfa0FvUGl6UGNGUVVNdGhnMnZBSWlhNHJjYUxmQmVxSWdLWUJQR3gyZHdYWkNqODZ0RUhMdEoyUGdiWFYyMUtJX2tVQ1ZMcjV0am5ldTZzVUw3TmpMQTJid05PRW9HbGhCc210dTFxVQ?oc=5"
-    },
-    {
       "date": "2026-06-03",
-      "title": "The 상승 of local agentic computing faces a brutal reality: rising DRAM ",
+      "title": "지역 에이전트 컴퓨팅의 상승이 잔혹한 현실을 직면함 -DRAM 가격 상승",
       "titleEn": "The rise of local agentic computing faces a brutal reality: rising DRAM prices — RTX Spark, Gorgon Halo chips subject to 63% DRAM contract price hike this quarter - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.00. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "지역 에이전트 컴퓨팅의 상승이 잔혹한 현실을 직면함 - DRAM 가격 상승",
       "effects": {
         "short": {
           "tone": "neu",
@@ -250,14 +223,41 @@
     },
     {
       "date": "2026-06-03",
-      "title": "AMD says new EXPO ‘Ultra Low Latency’ DDR5 메모리 should be 'effectively ",
+      "title": "마이크론 주가 하락 - 삼성 파업으로 인해 메모리 칩 부족 우려가 높아짐",
+      "titleEn": "Micron stock drops as Samsung strike spikes fears over memory-chip shortage",
+      "source": "MSN",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "마이크론 주가 하락 - 삼성 파업으로 인해 메모리 칩 부족 우려가 높아짐",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbXVIeU80UG9sQU9Nd0hvTzcwblhDbVZMNE8xZGI1X1IzbWpfXzhnSXVINEZ3ajBPeFJmRk1obTZFMVJLWjBCNDV4aV83dDJOekMzV0xyZ2xyRGF1MUVDblByeURlaFV1LWY4YzVCM0NpeDF5dGo3ZkVRMmV4ZC0xaHMxX0pxVG5WOF84ZGw3bmRUVDJIQXhnOG1DOEJYT2x6cFA0R3QtRHpOSk84Mk8zZjV5Q2s5WThQTXJBUng3YVNFNW9O?oc=5"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "AMD, 새로운 EXPO '초저지연' DDR5 메모리가 현재 키트와 거의 같은 가격이어야 함",
       "titleEn": "AMD says new EXPO ‘Ultra Low Latency’ DDR5 memory should be 'effectively the same price' as current kits — feature will work on existing chipsets, but will require new DIMMs - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.00. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "AMD, 새로운 EXPO '초저지연' DDR5 메모리가 현재 키트와 거의 같은 가격이어야 함",
       "effects": {
         "short": {
           "tone": "neu",

@@ -2,8 +2,8 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-06-04T08:58:37.108971Z
-// 뉴스/이벤트: news 10건 (키워드 휴리스틱, 2026-06-04) · events 10건
+// 생성 시각: 2026-06-04T09:39:51.452051Z
+// 뉴스/이벤트: news 10건 (키워드 휴리스틱 + LLM 한글화, 2026-06-04) · events 10건
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
 export const SIXSENSE_DATA = {
@@ -907,14 +907,14 @@ export const SIXSENSE_DATA = {
   "news": [
     {
       "date": "2026-05-30",
-      "title": "Huawei chairman thanks the US for export restrictions on chips, says i",
+      "title": "화웨이 회장, 미국의 칩 수출 제한에 감사 - 중국 반도체 산업을 부양했다고 말함",
       "titleEn": "Huawei chairman thanks the US for export restrictions on chips, says it supercharged China’s semiconductor industry — Washington’s export controls encouraged Chinese firms to invest in R&D and build their own tech stack competing with American tech - Tom's Hardware",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 -0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "화웨이 회장, 미국의 칩 수출 제한에 감사 - 워싱턴의 수출 통제로 중국 기업이 투자하기를 촉진했다고 말함",
       "effects": {
         "short": {
           "tone": "neg",
@@ -934,14 +934,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-05-18",
-      "title": "Record-high pricing pushes SSD and 메모리 makers to borrow $880 백만 just t",
+      "title": "최고치 가격으로 인해 SSD와 메모리 제조업체가 칩 구매를 위해 8.8억 달러를 대출함",
       "titleEn": "Record-high pricing pushes SSD and memory makers to borrow $880 million just to afford buying chips — Adata, TeamGroup, and others take on substantial debt to survive shortages - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "최고치 가격으로 인해 SSD와 메모리 제조업체가 칩 구매를 위해 8.8억 달러를 대출함 - 아다타, 팀그룹 등이 부족을 극복하기 위해大量 부채를 떠안음",
       "effects": {
         "short": {
           "tone": "pos",
@@ -961,14 +961,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-06-03",
-      "title": "마이크론 and SK하이닉스 both hit $1 조 as 메모리 칩 overtake GPUs in the AI stock 강",
+      "title": "마이크론과 SK하이닉스, 모두 1조 달러에 달함 - 메모리 칩이 AI 주도하에 GPU를 추월함",
       "titleEn": "Micron and SK Hynix both hit $1 trillion as memory chips overtake GPUs in the AI stock rally of 2026",
       "source": "moneywise.com",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — moneywise.com 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "마이크론과 SK하이닉스, 모두 1조 달러에 달함 - 메모리 칩이 AI 주도하에 GPU를 추월함",
       "effects": {
         "short": {
           "tone": "pos",
@@ -988,14 +988,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-06-03",
-      "title": "[News] 한국’s Chip Exports to 중국 급등 243% YoY in May as Beijing’s AI Push",
+      "title": "한국의 칩 수출이 중국으로 243% 급증 - 베이징의 AI 추진이 메모리 수요를 부추김",
       "titleEn": "[News] South Korea’s Chip Exports to China Surge 243% YoY in May as Beijing’s AI Push Fuels Memory Demand",
       "source": "TrendForce",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — TrendForce 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "한국의 칩 수출이 중국으로 243% 급증 - 베이징의 AI 추진이 메모리 수요를 부추김",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1015,14 +1015,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-06-03",
-      "title": "32GB of DDR5 now costs $375 minimum — AI 부족 continues to squeeze PC bu",
+      "title": "32GB의 DDR5 가격이 최소 375달러에 달함 - AI 부족으로 인해 PC 구축이 어려워짐",
       "titleEn": "32GB of DDR5 now costs $375 minimum — AI shortage continues to squeeze PC building - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "32GB의 DDR5 가격이 최소 375달러에 달함 - AI 부족으로 인해 PC 구축이 어려워짐",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1042,14 +1042,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-06-03",
-      "title": "Counterfeit G.Skill and V-Color DDR5 modules hit Chinese marketplaces,",
+      "title": "가짜 G.Skill과 V-Color DDR5 모듈이 중국 시장에 등장함",
       "titleEn": "Counterfeit G.Skill and V-Color DDR5 modules hit Chinese marketplaces, impacting company sales — cheap contraband memory using identical PCBs and heat spreaders almost impossible to spot - Tom's Hardware",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 -0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "가짜 G.Skill과 V-Color DDR5 모듈이 중국 시장에 등장함 - 회사 매출에 영향을 미침",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1069,14 +1069,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-06-02",
-      "title": "SK하이닉스 ascends as new 메모리 king with high-bandwidth AI 칩s",
+      "title": "SK하이닉스, 고대역폭 AI 칩으로 새로운 메모리 왕으로 부상함",
       "titleEn": "SK Hynix ascends as new memory king with high-bandwidth AI chips",
       "source": "Nikkei Asia",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — Nikkei Asia 보도. 가격 영향 점수 -0.50. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "SK하이닉스, 고대역폭 AI 칩으로 새로운 메모리 왕으로 부상함",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1095,42 +1095,15 @@ export const SIXSENSE_DATA = {
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxObW1RY0c3NjlJbG9tQVBxRER2WmtSMm13QzZvdm9SeTlhNUpnTUdiNWU2YXdCRGl0dnJWLUJpMXJIdXFBVmp6NEFTOTBjUVdKVUpiTHpJRHhMR2c3bENMVFpBQXRmWnB2anZ5blhUcWhIb3hDNUNINTk3UHcxWjFWekV0azBfeTFHYkVVdkk1d05NSDY0QUgyOU9qNnJlWUttaFVnbUtuOEs0RENjaEhxWTBCOWNrcExZ?oc=5"
     },
     {
-      "date": "2026-06-02",
-      "title": "SK하이닉스 to double 메모리 wafer capacity within five years, chairman says —",
-      "titleEn": "SK hynix to double memory wafer capacity within five years, chairman says — AI-driven shortage will persist until at least 2030 - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.50. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdEZUT3BfNXFYWnhIbnpmSm8yQ0Z3Z2R1d1FTQTR2VVJfU1JaWE5Xa0tTZzdrUms5czVPVFQwMWpfa0FvUGl6UGNGUVVNdGhnMnZBSWlhNHJjYUxmQmVxSWdLWUJQR3gyZHdYWkNqODZ0RUhMdEoyUGdiWFYyMUtJX2tVQ1ZMcjV0am5ldTZzVUw3TmpMQTJid05PRW9HbGhCc210dTFxVQ?oc=5"
-    },
-    {
       "date": "2026-06-03",
-      "title": "The 상승 of local agentic computing faces a brutal reality: rising DRAM ",
+      "title": "지역 에이전트 컴퓨팅의 상승이 잔혹한 현실을 직면함 -DRAM 가격 상승",
       "titleEn": "The rise of local agentic computing faces a brutal reality: rising DRAM prices — RTX Spark, Gorgon Halo chips subject to 63% DRAM contract price hike this quarter - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.00. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "지역 에이전트 컴퓨팅의 상승이 잔혹한 현실을 직면함 - DRAM 가격 상승",
       "effects": {
         "short": {
           "tone": "neu",
@@ -1150,14 +1123,41 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-06-03",
-      "title": "AMD says new EXPO ‘Ultra Low Latency’ DDR5 메모리 should be 'effectively ",
+      "title": "마이크론 주가 하락 - 삼성 파업으로 인해 메모리 칩 부족 우려가 높아짐",
+      "titleEn": "Micron stock drops as Samsung strike spikes fears over memory-chip shortage",
+      "source": "MSN",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "마이크론 주가 하락 - 삼성 파업으로 인해 메모리 칩 부족 우려가 높아짐",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbXVIeU80UG9sQU9Nd0hvTzcwblhDbVZMNE8xZGI1X1IzbWpfXzhnSXVINEZ3ajBPeFJmRk1obTZFMVJLWjBCNDV4aV83dDJOekMzV0xyZ2xyRGF1MUVDblByeURlaFV1LWY4YzVCM0NpeDF5dGo3ZkVRMmV4ZC0xaHMxX0pxVG5WOF84ZGw3bmRUVDJIQXhnOG1DOEJYT2x6cFA0R3QtRHpOSk84Mk8zZjV5Q2s5WThQTXJBUng3YVNFNW9O?oc=5"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "AMD, 새로운 EXPO '초저지연' DDR5 메모리가 현재 키트와 거의 같은 가격이어야 함",
       "titleEn": "AMD says new EXPO ‘Ultra Low Latency’ DDR5 memory should be 'effectively the same price' as current kits — feature will work on existing chipsets, but will require new DIMMs - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "DRAM/반도체 산업 동향 — RSS 보도. 가격 영향 점수 +0.00. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "AMD, 새로운 EXPO '초저지연' DDR5 메모리가 현재 키트와 거의 같은 가격이어야 함",
       "effects": {
         "short": {
           "tone": "neu",
@@ -1312,7 +1312,7 @@ export const SIXSENSE_DATA = {
       "type": "물리적 충돌",
       "region": "이스라엘",
       "risk": "high",
-      "title": "이스라엘 Enhances Long-Range 파업, 미사일 Defense For Next 이란 전쟁",
+      "title": "이스라엘, 장거리 파업과 미사일 방어를 강화함 - 다음 이란 전쟁을 대비함",
       "impact": "공급↓",
       "date": "2026-06-03",
       "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
@@ -1338,7 +1338,7 @@ export const SIXSENSE_DATA = {
       "type": "기상이변",
       "region": "글로벌",
       "risk": "high",
-      "title": "5.7 지진 파업 off Oregon coast, no 쓰나미 경고 issued",
+      "title": "오리건 해안에서 5.7 지진 발생 - 쓰나미 경고는 발령되지 않음",
       "impact": "공급↓",
       "date": "2026-06-03",
       "summary": "글로벌 규모 ? 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
@@ -1362,12 +1362,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "이스라엘",
-      "risk": "high",
-      "title": "원유 가격 급등 over $4 after 이스라엘 파업 이란",
+      "region": "미국",
+      "risk": "mid",
+      "title": "[채권/외환] 중동 긴장 재고조에 달러·국채금리 동반 상승…연준 금리인상 기대↑ - 뉴스핌",
       "impact": "가격?",
-      "date": "2026-06-03",
-      "summary": "국제 유가 변동 보도 (이스라엘) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-01",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -1390,7 +1390,7 @@ export const SIXSENSE_DATA = {
       "type": "기타",
       "region": "글로벌",
       "risk": "high",
-      "title": "Angry TSMC employees considering 파업, 노조ization over employee bonuses, 보고 claims ",
+      "title": "화난 TSMC 직원들, 보너스와 노조화에 대한 보고서로 인해 파업을 고려함",
       "impact": "가격?",
       "date": "2026-05-26",
       "summary": "글로벌 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
@@ -1416,7 +1416,7 @@ export const SIXSENSE_DATA = {
       "type": "물리적 충돌",
       "region": "이스라엘",
       "risk": "high",
-      "title": "Middle East 전쟁 live: 이스라엘 and Lebanon agree to implement conditional 휴전",
+      "title": "중동 전쟁 생중계 - 이스라엘과 레바논, 조건부 휴전에 합의함",
       "impact": "공급↓",
       "date": "2026-06-03",
       "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
@@ -1442,7 +1442,7 @@ export const SIXSENSE_DATA = {
       "type": "기상이변",
       "region": "글로벌",
       "risk": "high",
-      "title": "쓰나미 advisory issued for Puerto Rico, Virgin Islands after 7.6 규모 지진 파업 Caribbean",
+      "title": "푸에르토리코와 버진 아일랜드에 쓰나미 경보 발령 - 카리브해에서 7.6 규모 지진 발생",
       "impact": "공급↓",
       "date": "2026-06-03",
       "summary": "글로벌 규모 ? 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
@@ -1468,7 +1468,7 @@ export const SIXSENSE_DATA = {
       "type": "금융 위기",
       "region": "이스라엘",
       "risk": "mid",
-      "title": "US Fed says 이란 전쟁 driving ‘moderate-to-strong’ 인플레이션",
+      "title": "미 연방준비제도, 이란 전쟁이 '중등도에서 강한' 인플레이션을 유발한다고 말함",
       "impact": "가격?",
       "date": "2026-06-03",
       "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
@@ -1492,12 +1492,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-9",
       "type": "물리적 충돌",
-      "region": "이스라엘",
+      "region": "이란",
       "risk": "high",
-      "title": "Middle East 전쟁 live: 이스라엘 and Lebanon agree to implement conditional 휴전",
+      "title": "트럼프, 미국이 이란의濃縮 우라늄을 얻을 것이라고 말함 - 레바논 전쟁을 중단시키고 싶어함",
       "impact": "공급↓",
       "date": "2026-06-03",
-      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1520,7 +1520,7 @@ export const SIXSENSE_DATA = {
       "type": "기상이변",
       "region": "글로벌",
       "risk": "high",
-      "title": "규모 4.6 지진 파업 off the coast of Hawaii's Big Island",
+      "title": "하와이 빅 아일랜드 해안에서 4.6 지진 발생함",
       "impact": "공급↓",
       "date": "2026-06-03",
       "summary": "글로벌 규모 4.6 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",

@@ -1171,6 +1171,8 @@ def main():
         "ceo", "cfo", "tsmc", "nand", "yoy", "v2", "us", "gb", "tb", "pc", "ram",
         "rss", "llm", "api", "kb", "mb", "ghz", "msn", "com", "trendforce",
         "skill", "color", "nvidia", "amd", "intel", "ipo", "et", "vs",
+        "kioxia", "micron", "sandisk", "corsair", "kingston", "crucial",
+        "samsung", "asus", "msi", "gigabyte", "g.skill", "v-color",
     }
 
     def _kr_ratio(s: str) -> float:
