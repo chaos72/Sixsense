@@ -1,10 +1,10 @@
 {
   "signalId": "B-1",
-  "source": "Google News 'Earnings Call sentiment' (176 entries, LLM 5\ud68c \ud638\ucd9c, 33\uc8fc)",
+  "source": "Google News 'Earnings Call sentiment' (173 entries, LLM 31\ud68c \ud638\ucd9c, 35\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-06-04",
+  "collectedAt": "2026-06-11",
   "rangeStart": "2025-07-21",
-  "rangeEnd": "2026-06-01",
+  "rangeEnd": "2026-06-08",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -12,16 +12,12 @@
       "value": 0.0
     },
     {
-      "week": "2025-08-11",
-      "value": 0.8
-    },
-    {
-      "week": "2025-09-08",
-      "value": 0.0
+      "week": "2025-07-28",
+      "value": 0.5
     },
     {
       "week": "2025-09-22",
-      "value": 0.9
+      "value": 0.5
     },
     {
       "week": "2025-10-06",
@@ -29,19 +25,19 @@
     },
     {
       "week": "2025-10-13",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2025-10-20",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2025-10-27",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2025-11-10",
-      "value": 0.0
+      "value": -0.5
     },
     {
       "week": "2025-12-01",
@@ -49,59 +45,67 @@
     },
     {
       "week": "2025-12-08",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2025-12-15",
-      "value": 0.0
+      "value": 0.8
     },
     {
       "week": "2025-12-22",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2025-12-29",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-01-05",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2026-01-12",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2026-01-19",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2026-01-26",
-      "value": 1.0
+      "value": 0.8
+    },
+    {
+      "week": "2026-02-02",
+      "value": 0.8
+    },
+    {
+      "week": "2026-02-09",
+      "value": 0.0
     },
     {
       "week": "2026-02-16",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-02-23",
-      "value": -1.0
+      "value": 0.0
     },
     {
       "week": "2026-03-02",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-03-09",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2026-03-16",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-03-23",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2026-03-30",
@@ -113,11 +117,11 @@
     },
     {
       "week": "2026-04-13",
-      "value": 1.0
+      "value": 0.0
     },
     {
       "week": "2026-04-20",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2026-04-27",
@@ -125,19 +129,23 @@
     },
     {
       "week": "2026-05-04",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2026-05-11",
-      "value": 0.0
+      "value": -1.0
     },
     {
       "week": "2026-05-25",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-06-01",
       "value": 0.0
+    },
+    {
+      "week": "2026-06-08",
+      "value": -0.5
     }
   ]
 }

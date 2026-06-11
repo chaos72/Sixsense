@@ -1,20 +1,47 @@
 {
-  "collectedAt": "2026-06-04",
+  "collectedAt": "2026-06-11",
   "method": "키워드 휴리스틱 + LLM 한글화",
   "lookbackDays": 30,
-  "rawCount": 823,
+  "rawCount": 797,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
+      "date": "2026-06-06",
+      "title": "중국은 세계의 원자재 갈륨의 약 99퍼센트를 생산한다, 거의 모든 스마트폰의 라디오 칩 안에 숨겨져 있는 금속이다",
+      "titleEn": "China produces about 99 percent of the world's raw gallium, the metal hidden inside the radio chips of almost every smartphone, and in late 2024 it banned exports of it to the United States as the chip war escalated",
+      "source": "Space Daily",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "중국은 거의 모든 스마트폰의 라디오 칩 안에 숨겨져 있는 금속인 세계의 원자재 갈륨의 약 99퍼센트를 생산하며, 2024년 말에는 미국에 대한 수출을 금지했다",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMixgJBVV95cUxNaDRYU21iUF95VlBfNDZKbnhqcTA3X0hGZ2NmSnpSdW5pTWM0a1NuZ1ROZXpmMjVHWnotUU0zcndHcnVRUk9oODBPczFOZVcyWm80RFF4Y0NMa0w2Y1hHczdjSWFDWjBtRGctenFjZkhGZmRuaUEwSER5dE9nOWxfcEJ3UUpidV9VN2RfVC1HTkMtWERud3JpZlpHcTZma251aXRvTnlfSWJWNTAtUUQ2Vm44X2EwMHVqdDFGVExkTzFlZEhXYnFvNzFZcHNFa3dZTVVZT29SMGFCR3RYY0VYUEMtQ3JmemhMbDRpQUV6X1N6enEzNzl0UUxyWGdnTnh0cm1MVFI2ellWTzBwWm1NNWJfUHQ0cTRFZFlQeW1MMDNqOVNVMnRrNEMyaFFMVFpuazhoai15RzhGWF9rdmtJRDVKakZrZw?oc=5"
+    },
+    {
       "date": "2026-05-30",
-      "title": "화웨이 회장, 미국의 칩 수출 제한에 감사 - 중국 반도체 산업을 부양했다고 말함",
+      "title": "화웨이 회장은 미국의 칩 수출 제한에 감사한다, 그것이 중국의 반도체 산업을 강화했다고 말한다",
       "titleEn": "Huawei chairman thanks the US for export restrictions on chips, says it supercharged China’s semiconductor industry — Washington’s export controls encouraged Chinese firms to invest in R&D and build their own tech stack competing with American tech - Tom's Hardware",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "화웨이 회장, 미국의 칩 수출 제한에 감사 - 워싱턴의 수출 통제로 중국 기업이 투자하기를 촉진했다고 말함",
+      "summary": "화웨이 회장은 미국의 칩 수출 제한에 감사한다, 그것이 중국의 반도체 산업을 강화했다고 말한다 - 워싱턴의 수출 통제는 중국 기업들이 투자하도록 격려했다",
       "effects": {
         "short": {
           "tone": "neg",
@@ -33,15 +60,123 @@
       "link": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxPSlAyRlFSMzhNZU01anhhYmdHMVVJeHpBZXRlelZkcUhMcU1MVHZuM2QzZEFxRV82U3NBbDRtUzhKajM1NDBWMEIzSUhBX2psLVFGZGo0U1pGS09uS090d0RzbW9vYVh2cjFKWDFndDh2YlBTSG9zazduZWZTOGZ6WWZlenJZTnBRSTYzSGZsd2w1SFJPczRKSnlwLWEwb0VtaDh4a0xSYlRuck8wd1RzNEdSV0NZM0s4ekFqb2ppS2gyMkdmNDFXLWFmZzQtQ29CRHltNFpROGdqdEswU1BqMTU5Y3BJaW9vMkd0cnJEMzVhcEM5SVZQVU9UZkRuX2pJZldlbnF0TGNfdERFX1M4dkdJUW5Ka3FMY0ZIaGF2X0UxdnozajIxSFFGcnlmU1pETl91b0djaUNxWFdMQXBQWnpzS0VMNUZ4MHVuSTR0azk2OEJxY0xOZ3pWOGdwY3ZsRFNmdWxpaGpNMG1sUldLR29KM2xadkNDVUE?oc=5"
     },
     {
+      "date": "2026-06-10",
+      "title": "대만은 미국과 일치하여 화웨이와 같은 수출 금지 목록에 있는 회사뿐만 아니라 모든 중국 고객에게도 AI 칩 판매를 제한할 것을 고려하고 있다",
+      "titleEn": "Taiwan is considering aligning itself with the US by restricting the sale of AI chips not only to companies on export blacklists like Huawei, but also to 'all Chinese customers.'",
+      "source": "GIGAZINE",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "대만은 미국과 일치하여 화웨이와 같은 수출 금지 목록에 있는 회사뿐만 아니라 모든 중국 고객에게도 AI 칩 판매를 제한할 것을 고려하고 있다",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNNUhPYWdXV0U4blRqYzVGRXI4SFVXYjREc2ZrajJBN1lyRzFCNDgxV2ZTdmRGWGhicTZuNWhMV2tlaUtheHhEVnAxTm1Bd1FGMEVmUXpmUWE2c2M4YWdJclpISzZuWnpGYUFZcnl2UjRoUXhxM1FBWkNCMVpEOElCcA?oc=5"
+    },
+    {
+      "date": "2026-06-09",
+      "title": "대만은 모든 중국에 대한 AI 칩 수출을 범죄화하는 것을 고려하고 있다 - 더 엄격한 조치는 서버 밀수를 범죄로 만들 것이다",
+      "titleEn": "Taiwan weighs criminal ban on AI chip exports to all of China — stricter measures beyond blacklisted firms would make smuggling servers a crime - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "대만은 모든 중국에 대한 AI 칩 수출을 범죄화하는 것을 고려하고 있다 - 더 엄격한 조치는 서버 밀수를 범죄로 만들 것이다",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOWWpRaFhQZzQ0RWd2NEpaN2xmTllwTlpNV01JWGVHN0xZbUdFSk5WcF96cjhrbGFUSGFadERPZWE0eFF5UWdjZXpzZFRIeWljRkhXZ19vTmt1SlVYRUFzMFh2UlhXOUpIaHJ3Z0wzSWI2ckRaQVkxN3hwVmNCd1Z2V1BoV2VHVVNwTGVTMkhQTldmclVzcmZHZ0NRTnVtalc2Rlo1VDVOSExHb2tFcF95dlZlTXBZNXhZOW9OaDI0MmRzenl0eEZRZjlPVQ?oc=5"
+    },
+    {
+      "date": "2026-05-21",
+      "title": "엔비디아의 CEO 젠슨 황은 중국이 미국의 금지에도 불구하고 '必要한 모든 칩을 가지고 있다'고 경고했다",
+      "titleEn": "Nvidia CEO Jensen Huang warns China has ‘all the chips they need’ despite US bans",
+      "source": "Fox Business",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "엔비디아의 CEO 젠슨 황은 중국이 미국의 금지에도 불구하고 '必要한 모든 칩을 가지고 있다'고 경고했다",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPRVd5VUM3b2ZBYWdZT251YVQ4WnE4WFNmdTRTbVFJY1lWbW1rbjFza3lkMTFEVUgyV195a3Z4eHdnWUlsX3ZHdTJJZ282TlFoMHlmc3FJME5lODZITm95MlhoN2ZrVFF5LWxua2xlclNDcGVsaFRmYkRkaXpHVThvUGRiUGtDZlpjTDVRTkxFMzNLMkFBLXhpek1uR0lEWVZ6YVJXOVE3RdIBrAFBVV95cUxNUG1LWE4xUjZ3ZE90Tk9Ockh5b1JyRTRqb1o4U0swX2R1YkRCZ3pYRThfS051ZDBnODJvSGZ6MnBhQWZmZDl1TTRVZE53Q1RveDJLb0tMWEY1YjZZQ2R5bjhQaHNQdmtMTkNtZ2pJNk03RjhRWVc1V1RGdlVNakhZWWFia1hnR1NDaEVHY0xBbERTaG4xTHFNVTJqbHlWSjFOZU9WUUloV3FKa1M0?oc=5"
+    },
+    {
+      "date": "2026-05-20",
+      "title": "중국은 젠슨 황이 방문했을 때 엔비디아 5090D V2를 금지했다, 보고서가 주장한다",
+      "titleEn": "China banned Nvidia 5090D V2 while CEO Jensen Huang was in town, report claims — move comes as Beijing pushes its AI tech companies to use homegrown chips - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "중국은 젠슨 황이 방문했을 때 엔비디아 5090D V2를 금지했다, 보고서가 주장한다 - 베이징은 AI 기술 회사들이国产 칩을 사용하도록 밀어붙이는 중이다",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMinwJBVV95cUxQRUpSaEJmMmtoWmVub09NS2FsOUM4Zkx0TzI3R2hYOUVWVFB0VFlpSGc2SFhsZHJpWjRHaU1uekdEZGZQcDV2NllaOGlKNmpHcWtEUlJBUFUtSlBaTlZ5elVBNXdxSWU2Nm90dVNlMmlnQ1Jfcmh1amZBZ0JqTGNmekNGQzhiLTBTUnJEME5UWjRqakNDR2xKQ1lXenZjYmVPVTE5dnNKdXNfckRZTkcwSjJ0Q3FQYkV4bmFNTUJkTU0yaFVMTDZaaUQzaFlnRDdSNW5aVXlHenRSM0ZnNktwRVRNY3ZIa3JqYUhLMzhfOHVWY2sydWVxRll3Q1labkdEbGROQkdjX25lcllUTUkzazh2ZXhrOHYyQktGVkxsbw?oc=5"
+    },
+    {
       "date": "2026-05-18",
-      "title": "최고치 가격으로 인해 SSD와 메모리 제조업체가 칩 구매를 위해 8.8억 달러를 대출함",
+      "title": "최고치의 가격은 SSD와 메모리 제조업체들이 칩을 구입하기 위해 8억 8천만 달러를 빌리도록 강요한다",
       "titleEn": "Record-high pricing pushes SSD and memory makers to borrow $880 million just to afford buying chips — Adata, TeamGroup, and others take on substantial debt to survive shortages - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "최고치 가격으로 인해 SSD와 메모리 제조업체가 칩 구매를 위해 8.8억 달러를 대출함 - 아다타, 팀그룹 등이 부족을 극복하기 위해大量 부채를 떠안음",
+      "summary": "최고치의 가격은 SSD와 메모리 제조업체들이 칩을 구입하기 위해 8억 8천만 달러를 빌리도록 강요한다 - Adata, TeamGroup, 기타 회사들이 부족함을 극복하기 위해大量의 부채를 떠안는다",
       "effects": {
         "short": {
           "tone": "pos",
@@ -60,96 +195,15 @@
       "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQb3RZamJTdjlOSmRFdUoxekM5cjNSUmNoaUZJWFRrM0U1d1NFQ0lsX191NWs0MlNNSGc1OS1tSnNxdVAwdUZzRVVfUUdtd3dub1NIaTdTcU9VYzlvUGQySEkzSUpXaDRNRFJqT0VOMHE4RGlXNTJjM294aElUbWxsUG4tRGZlak9lUFdJTFRwZ0RiOF9Ma2tKaFplN1l2TjZsSVlWSnRoR2dZa0tGZENZ?oc=5"
     },
     {
-      "date": "2026-06-03",
-      "title": "마이크론과 SK하이닉스, 모두 1조 달러에 달함 - 메모리 칩이 AI 주도하에 GPU를 추월함",
-      "titleEn": "Micron and SK Hynix both hit $1 trillion as memory chips overtake GPUs in the AI stock rally of 2026",
-      "source": "moneywise.com",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "마이크론과 SK하이닉스, 모두 1조 달러에 달함 - 메모리 칩이 AI 주도하에 GPU를 추월함",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPTklxZ2dkaDdpMFVFbE1TcTQwZF9xOHlIbklOd3NmM1RLNTVmRWpHU1pZM3lPWDk2eEhiV2RFOEZyUU5Ec3h4VVNTVmVMTHk0Tms3X3JJbElOZU9YZTloV2dBdG9HaVBfWF9Bby1KY0RvSkEtVWNOYWVjZW1pV09jUTlDVlJ2d0RhT2d3c1ZLdw?oc=5"
-    },
-    {
-      "date": "2026-06-03",
-      "title": "한국의 칩 수출이 중국으로 243% 급증 - 베이징의 AI 추진이 메모리 수요를 부추김",
-      "titleEn": "[News] South Korea’s Chip Exports to China Surge 243% YoY in May as Beijing’s AI Push Fuels Memory Demand",
-      "source": "TrendForce",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "한국의 칩 수출이 중국으로 243% 급증 - 베이징의 AI 추진이 메모리 수요를 부추김",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQN3pzZ2RXY0FnSGJSX3JDZnZXVFphODZiU0d0TUFJVm91cWFIMlhPb3JEZzBVZHF0MXB5NFhFWFphSE1IUm1QMVlZVDQ1dG5Dck0xa2x6ejV6cE5IMjJ5cmRsN01WTDBfZUFWc0k0NHhablpobk9VbUpSb21GQ3RFMklDT2hYejBDWXJZa24waVJoZjJTZzRBUWZpbjhkMmh6QVdFcG1mT18xdzNxeElIM2k1akJiMDR2S1ZqYVRjcHFUTTBmWnpOMjlmdzhTa0E1R25QeU5NTDZYZ2dp?oc=5"
-    },
-    {
-      "date": "2026-06-03",
-      "title": "32GB의 DDR5 가격이 최소 375달러에 달함 - AI 부족으로 인해 PC 구축이 어려워짐",
-      "titleEn": "32GB of DDR5 now costs $375 minimum — AI shortage continues to squeeze PC building - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "32GB의 DDR5 가격이 최소 375달러에 달함 - AI 부족으로 인해 PC 구축이 어려워짐",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPLThNQkswYWpHdEhiWkNnQlVKanpleVVybDZ1OVYtUThuY2hiMmZDa2xZWTdsVlRiVy1YNndoQzhOQWtRMlFYRWVQaW1nbDRuLW9CQ3J6aXZiUXhRWE9ZMDFyNk5oRkdRR1VrV0xWZks1cFludUlUSEFLNTJIWFR6dTRBS3pfRnF5SGlPM2xaWnNPaGpEcWFCMG8tc01tcWJsYWtqY254X0pWZEJFcUtXMThoTGd6Z0xyUnF1THdwdUhnVkRiOWluZ0Fn?oc=5"
-    },
-    {
-      "date": "2026-06-03",
-      "title": "가짜 G.Skill과 V-Color DDR5 모듈이 중국 시장에 등장함",
-      "titleEn": "Counterfeit G.Skill and V-Color DDR5 modules hit Chinese marketplaces, impacting company sales — cheap contraband memory using identical PCBs and heat spreaders almost impossible to spot - Tom's Hardware",
-      "source": "RSS",
+      "date": "2026-06-10",
+      "title": "세계 에지 AI 고대역 메모리 칩 - 시장 분석, 전망, 크기, 트렌드",
+      "titleEn": "World Edge AI High Bandwidth Memory Chips - Market Analysis, Forecast, Size, Trends and Insights",
+      "source": "IndexBox",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "가짜 G.Skill과 V-Color DDR5 모듈이 중국 시장에 등장함 - 회사 매출에 영향을 미침",
+      "summary": "세계 에지 AI 고대역 메모리 칩 - 시장 분석, 예측, 크기, 트렌드 및 통찰",
       "effects": {
         "short": {
           "tone": "neg",
@@ -165,45 +219,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi0AJBVV95cUxQSUhpRFFLUFhtX1NPRXMwNlBMUV9WYm5SWnU3S3lSU0ZJTURPaVZ1ZE9hYWlhMHN0TGtIN0FjZmRDaExJWW5MNGRSblcxdmhGaFJDRXJ1QnR6blk2SGh2cnpaekx3ZS1pM2hOYzBGajJ1cDRYUXlkMlZpQWthLWdyX2swcHpMckVUWVBBaWlGVFc0RHRaWjE4SVRJOHhhdVdwd0FKeTdMMVJ0eHVXeF80dHUyNFh1dXhXNGZJdHc3Q1RESldfTS1DclBhWDI1N1VUSVpmdlBfbFVlY3F0UTl0RWNqejRWdFhUaVkwTnFXOG5tcVoxaHE3TXBIeDBKU1VLMEFBMlFicURINVpNX3Z6TVlGQWJQMkJYb05MeGNVNDNiM0JRN1M2bnZZVlBSa2FtQTBZUjZOY3hMVG1UX2UzWlZsNE9DZjhLa3oxbnNZb0E?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxONTFOS0NfdXlocXROQmNtQzJlZmJrYWVudlc2LU5PeXhlRk91QzM1THQxdmxBTHBtYWEtRUZKTE4yVXB0ZjVCOHl1bFQxZWxhakxLcmZJV2JLTTR6cWxuTndJV0Y4cjd1ZDk5SmdQMHdDeEpXNGxZXy02anN0VE0xZkpVVVZoWWpwOTBsc3hvU1lOdHB2UVl2d0czNG9pOFZLTkZIQmptTk9raHJDTmNnYWo1cGxXZHItRmliX0NzSnM0WXBTRVg4dlJWN294LXFGYmZVRGN2RQ?oc=5"
     },
     {
       "date": "2026-06-02",
-      "title": "SK하이닉스, 고대역폭 AI 칩으로 새로운 메모리 왕으로 부상함",
-      "titleEn": "SK Hynix ascends as new memory king with high-bandwidth AI chips",
-      "source": "Nikkei Asia",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "SK하이닉스, 고대역폭 AI 칩으로 새로운 메모리 왕으로 부상함",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxObW1RY0c3NjlJbG9tQVBxRER2WmtSMm13QzZvdm9SeTlhNUpnTUdiNWU2YXdCRGl0dnJWLUJpMXJIdXFBVmp6NEFTOTBjUVdKVUpiTHpJRHhMR2c3bENMVFpBQXRmWnB2anZ5blhUcWhIb3hDNUNINTk3UHcxWjFWekV0azBfeTFHYkVVdkk1d05NSDY0QUgyOU9qNnJlWUttaFVnbUtuOEs0RENjaEhxWTBCOWNrcExZ?oc=5"
-    },
-    {
-      "date": "2026-06-03",
-      "title": "지역 에이전트 컴퓨팅의 상승이 잔혹한 현실을 직면함 -DRAM 가격 상승",
-      "titleEn": "The rise of local agentic computing faces a brutal reality: rising DRAM prices — RTX Spark, Gorgon Halo chips subject to 63% DRAM contract price hike this quarter - Tom's Hardware",
+      "title": "중국 군대는 워싱턴의 수출 통제 이후에도 엔비디아 칩을 구입하고 있다, 연구가 주장한다",
+      "titleEn": "Chinese military has been acquiring Nvidia chips, even post-Washington export controls, research claims — multiple institutions linked to the PLA asked for Nvidia AI chips, according to publicly available documents - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "지역 에이전트 컴퓨팅의 상승이 잔혹한 현실을 직면함 - DRAM 가격 상승",
+      "summary": "중국 군대는 워싱턴의 수출 통제 이후에도 엔비디아 칩을 구입하고 있다, 연구가 주장한다 - 여러 PLA와 관련된 기관들이 엔비디아 AI 칩을 요청했다",
       "effects": {
         "short": {
           "tone": "neu",
@@ -219,45 +246,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPVk5uY3VVbTg1cmJXM2dpd003Sko3NG9pRzFXVGFqRC1HV0lMOURhdkRnczRSWVJqUDVmYjFPYWsyYU02cVc4SzBIU2NxdEdpZHZVYWFvWmxYbFQ3aDNvRFNUMG5zQkc3Vzg1Y0dNcWhHVmhhV2FvZmlkWnBxbHRzSC1oTnVTOHNyenB5TE1fV3lqXy1pYWZtVE5VaFBsalRYOTlCVG1LODVYUF9JY1gtS1B6akpwbEc5eVZjaGMyYjc4dzRFOElDTnJYS2U?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi7AJBVV95cUxOQXFuR2ZCOW9EanUyZS1TUjRMME5RRTFVYmdROWhqcDZINGhpVmREVy0ySDhDR2MwUjB4RnF6Q0Z6UU1zZV9PYnE5eG5qVzVSdmVKUm5JRHJYUVM1emIxWmlKbS02VnEwVTBQRnZ1V29KbmNSaXJ0VzlsSjNoRGJHYVRTajhRU1ZCSjZQQVc1dWNOUWRJb1B3WGxPV1ZrZzNmUXNqR0dKZkFtb1p0emRxZ2VjOHZGMXBlZzFEQzkyYzctbnJiSGQ4b3dJb2xxNWdNSU0zdm1zdEk5WW01SlNFa3QycDRpdTNrMDkzbWZwbGFwR1RnRDdYV3pZdzBaV28tZHBsUENtbHRkanRRcnIzVExtS3ZfdDhHbUJNMnFvT2JvY3lMeE5mZnpfSF9Pa01fdlY2MkxIWVc0bUZsZmdaRnBEVkhJYkdRZWd5ODVaYzVkeF8waHdEd1FFNWFjcHlfbUFZeGlZNkpoVGtD?oc=5"
     },
     {
-      "date": "2026-06-03",
-      "title": "마이크론 주가 하락 - 삼성 파업으로 인해 메모리 칩 부족 우려가 높아짐",
-      "titleEn": "Micron stock drops as Samsung strike spikes fears over memory-chip shortage",
-      "source": "MSN",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "마이크론 주가 하락 - 삼성 파업으로 인해 메모리 칩 부족 우려가 높아짐",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbXVIeU80UG9sQU9Nd0hvTzcwblhDbVZMNE8xZGI1X1IzbWpfXzhnSXVINEZ3ajBPeFJmRk1obTZFMVJLWjBCNDV4aV83dDJOekMzV0xyZ2xyRGF1MUVDblByeURlaFV1LWY4YzVCM0NpeDF5dGo3ZkVRMmV4ZC0xaHMxX0pxVG5WOF84ZGw3bmRUVDJIQXhnOG1DOEJYT2x6cFA0R3QtRHpOSk84Mk8zZjV5Q2s5WThQTXJBUng3YVNFNW9O?oc=5"
-    },
-    {
-      "date": "2026-06-03",
-      "title": "AMD, 새로운 EXPO '초저지연' DDR5 메모리가 현재 키트와 거의 같은 가격이어야 함",
-      "titleEn": "AMD says new EXPO ‘Ultra Low Latency’ DDR5 memory should be 'effectively the same price' as current kits — feature will work on existing chipsets, but will require new DIMMs - Tom's Hardware",
+      "date": "2026-05-15",
+      "title": "트럼프는 중국이 미국의 승인을 받았음에도 불구하고 엔비디아 H200 구입을 금지하고 있다고 말한다 - 중국이 구매를 금지하지 않기로 선택했다고 말한다,国产 칩을 대신 사용한다",
+      "titleEn": "Trump says China is blocking Nvidia H200 purchases despite US approval — says country 'chose not to' sanction purchases, pushing homegrown chips instead - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "AMD, 새로운 EXPO '초저지연' DDR5 메모리가 현재 키트와 거의 같은 가격이어야 함",
+      "summary": "트럼프는 중국이 미국의 승인을 받았음에도 불구하고 엔비디아 H200 구입을 금지하고 있다고 말한다 - 중국이 구매를 금지하지 않기로 선택했다고 말한다,国产 칩을 대신 사용한다",
       "effects": {
         "short": {
           "tone": "neu",
@@ -273,7 +273,7 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiuAJBVV95cUxNSlAtTVlZRnlyQUtldUt3QnM5X21QN25RMEJTN09nNzBwc0V0SERPVk1hYnQ4TzYyTjlFbUxpVHlaMGFzeWV6S3dIM0VvUVZoc1Nuc2pMZGkyZlA4Y1VzWVRyQURtVzdVcmZreXhqak1qUDhLRThqem9fLVBRRzl1dng1a3U0SUphV2VtaTVhTW41a25nQjI5TG81T09sS3hwUTZ0SnJ0V2JlMlhUNjJrTjduTnBqSDZrX25hSjNBNUt6RHFEcnNVX0M5NksyOEdxXy1RYjNmbThxWjhSOG44dmFFWndVbndBYUgxcGtwZ2hlS2U2ZW4wek1WWVdhQmtNRFRhbXA3eGhPcFM0WnpRUlo2c2dGVWNkZFBPOHhCY2ZHelRvdDdhTTB2ODNvamU2dTFXNjRZWFQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQZDdiaGVxVVRCWmVvSXNORUlUNy1nUlFTRm5XdVhRUjdMWFhZang4QmJwTm1GRU1UQmVoaEdhcTdISkxjcTU3VFg1eEdHQW5wMXNhbUZhQnJxaVIzamtpRVZSNEx0MXpTTmdPcWk4SnRodDd1MTdFM2dUR2tBQVJDY0lIaFEtSW5SOFZJTlVqaw?oc=5"
     }
   ]
 }

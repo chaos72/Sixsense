@@ -24,8 +24,12 @@ import yfinance as yf
 
 warnings.filterwarnings("ignore")
 
-START = "2025-05-01"
-END = "2026-04-30"
+# USER-REQUESTED EXTENSION (#18) — START/END 동적화 (1년 롤링 윈도우, today 기준)
+import os as _os
+_END_D = date.fromisoformat(_os.getenv("SIXSENSE_END")) if _os.getenv("SIXSENSE_END") else date.today()
+_START_D = date.fromisoformat(_os.getenv("SIXSENSE_START")) if _os.getenv("SIXSENSE_START") else (_END_D - timedelta(weeks=56))
+START = _START_D.isoformat()
+END = _END_D.isoformat()
 SEC_USER_AGENT = "Sixsense KAIST CAIO 6jo caio6@kaist.example"
 
 OUT_DIR = Path(__file__).parent.parent / "data" / "historical"

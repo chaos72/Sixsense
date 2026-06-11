@@ -2,19 +2,11 @@
   "signalId": "A-3",
   "source": "\uad00\uc138\uccad data.go.kr Itemtrade HS 854232 (\uba54\ubaa8\ub9ac) \uc6d4\uac04 \uc218\ucd9c (12\uac1c\uc6d4, USD)",
   "mode": "real",
-  "collectedAt": "2026-06-04",
-  "rangeStart": "2025-04-28",
-  "rangeEnd": "2026-04-27",
+  "collectedAt": "2026-06-11",
+  "rangeStart": "2025-05-12",
+  "rangeEnd": "2026-06-08",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2025-04-28",
-      "value": 2244898642.0
-    },
-    {
-      "week": "2025-05-05",
-      "value": 2244898642.0
-    },
     {
       "week": "2025-05-12",
       "value": 2244898642.0
@@ -217,6 +209,30 @@
     },
     {
       "week": "2026-04-27",
+      "value": 9248046034.0
+    },
+    {
+      "week": "2026-05-04",
+      "value": 9248046034.0
+    },
+    {
+      "week": "2026-05-11",
+      "value": 9248046034.0
+    },
+    {
+      "week": "2026-05-18",
+      "value": 9248046034.0
+    },
+    {
+      "week": "2026-05-25",
+      "value": 9248046034.0
+    },
+    {
+      "week": "2026-06-01",
+      "value": 9248046034.0
+    },
+    {
+      "week": "2026-06-08",
       "value": 9248046034.0
     }
   ]

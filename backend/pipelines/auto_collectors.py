@@ -57,10 +57,14 @@ _PROJECT_ROOT = ROOT.parent  # Sixsense/
 _load_dotenv(_PROJECT_ROOT / ".env")
 _load_dotenv(ROOT / ".env")  # backend/.env (있다면)
 
-START = "2025-05-01"
-END = "2026-04-30"
-START_D = date.fromisoformat(START)
-END_D = date.fromisoformat(END)
+# USER-REQUESTED EXTENSION (#18, 2026-06-11) — START/END 동적화 (1년 롤링 윈도우).
+# 이전엔 END="2026-04-30" 하드코딩이라 그 이후 Yahoo/FRED 데이터가 필터링됨.
+# 환경변수로 오버라이드 가능 (SIXSENSE_START / SIXSENSE_END), 미지정 시 today 기준 최근 1년.
+from datetime import timedelta as _td
+END_D = date.fromisoformat(os.getenv("SIXSENSE_END")) if os.getenv("SIXSENSE_END") else date.today()
+START_D = date.fromisoformat(os.getenv("SIXSENSE_START")) if os.getenv("SIXSENSE_START") else (END_D - _td(weeks=56))
+START = START_D.isoformat()
+END = END_D.isoformat()
 
 
 # ──────────────────────────────────────────────────────────────────────────────

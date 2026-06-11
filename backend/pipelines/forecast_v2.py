@@ -28,9 +28,30 @@ OUT_DIR = Path(__file__).parent.parent / "data" / "forecast"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 TARGET = "target-dram"
-TRAIN_CUTOFF = pd.Timestamp("2026-01-31")
 SHORT_H = 7
 MID_H = 21
+
+# USER-REQUESTED EXTENSION (#18, 2026-06-11) — TRAIN_CUTOFF 동적화.
+# 이전엔 "2026-01-31" 고정이라 그 이후 데이터(최근 급등 포함)를 학습 못 함 →
+# 예측 시작점이 과거 가격이라 비현실적 하락(-53%) 표시.
+# 해결: cutoff = 데이터 마지막 주 - MID_H(21주). held-out 검증용 21주 확보 +
+# 가장 최근 21주를 검증에 쓰되, 예측 시작점은 데이터 마지막 주 기준으로 미래.
+import os as _os
+def _compute_cutoff():
+    env = _os.getenv("SIXSENSE_TRAIN_CUTOFF")
+    if env:
+        return pd.Timestamp(env)
+    try:
+        import json as _json
+        d = _json.load(open(Path(__file__).parent.parent / "data/historical/target-dram.json"))["data"]
+        last = pd.Timestamp(d[-1]["week"])
+        # cutoff = 마지막 - 7주: 최근 급등 대부분을 학습에 포함하면서
+        # 마지막 SHORT_H(7주)를 held-out 단기 검증 + 예측 시작점 확보.
+        # → 예측이 최근 가격 수준($8.62)에서 시작 → 비현실적 -53% 해소.
+        return last - pd.Timedelta(weeks=SHORT_H)
+    except Exception:
+        return pd.Timestamp("2026-01-31")
+TRAIN_CUTOFF = _compute_cutoff()
 
 
 # ──────────────────────────────────────────────────────────────────────────────

@@ -2,19 +2,11 @@
   "signalId": "macro-dxy",
   "source": "Yahoo Finance DX-Y.NYB (US Dollar Index)",
   "mode": "real",
-  "collectedAt": "2026-05-17",
-  "rangeStart": "2025-05-01",
-  "rangeEnd": "2026-04-30",
+  "collectedAt": "2026-06-11",
+  "rangeStart": "2025-05-15",
+  "rangeEnd": "2026-06-11",
   "note": "",
   "data": [
-    {
-      "week": "2025-04-28",
-      "value": 100.0
-    },
-    {
-      "week": "2025-05-05",
-      "value": 100.34
-    },
     {
       "week": "2025-05-12",
       "value": 101.09
@@ -217,7 +209,31 @@
     },
     {
       "week": "2026-04-27",
-      "value": 98.08
+      "value": 98.21
+    },
+    {
+      "week": "2026-05-04",
+      "value": 97.84
+    },
+    {
+      "week": "2026-05-11",
+      "value": 99.27
+    },
+    {
+      "week": "2026-05-18",
+      "value": 99.32
+    },
+    {
+      "week": "2026-05-25",
+      "value": 98.91
+    },
+    {
+      "week": "2026-06-01",
+      "value": 100.07
+    },
+    {
+      "week": "2026-06-08",
+      "value": 99.91
     }
   ]
 }

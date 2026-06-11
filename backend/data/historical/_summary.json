@@ -1,95 +1,188 @@
 {
-  "lastUpdated": "2026-05-17",
-  "totalSignals": 10,
-  "byMode": {
-    "real": 8,
-    "manual": 1,
-    "synthetic": 0,
-    "partial": 0,
-    "skipped": 0,
-    "failed": 0,
-    "real-proxy": 1
-  },
-  "signals": [
+  "backfilledAt": "2026-06-11",
+  "rangeStart": "2025-05-15",
+  "rangeEnd": "2026-06-11",
+  "totalSignals": 21,
+  "collected": 10,
+  "skipped": 9,
+  "failed": 2,
+  "results": [
     {
       "signalId": "A-1",
+      "group": "\uc815\ud615",
       "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "Yahoo Finance: TSM (70%) + UMC (30%)"
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "Yahoo Finance: TSM (70%) + UMC (30%)",
+      "status": "real"
     },
     {
       "signalId": "A-2",
+      "group": "\uc815\ud615",
       "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "SEC EDGAR XBRL \u2014 4 quarterly observations from 4 companies"
+      "weeks": 57,
+      "rangeStart": "2025-05-15",
+      "rangeEnd": "2026-06-11",
+      "source": "SEC EDGAR XBRL \u2014 4 quarterly observations from 4 companies",
+      "status": "real"
+    },
+    {
+      "signalId": "A-3",
+      "group": "\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "\uad00\uc138\uccad Open API requires registration at unipass.customs.go.kr. After getting key, replace this with: GET https://unipass.customs.go.kr/ets/hmpg/ets/ats/imAtsReportAjax.do"
+    },
+    {
+      "signalId": "A-4",
+      "group": "\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "KOSIS Open API requires registration at kosis.kr/openapi. After getting key, fetch series '2030_4' (\uc7ac\uace0\ucd9c\ud558\uc9c0\uc218)."
+    },
+    {
+      "signalId": "A-5",
+      "group": "\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "AWS Pricing API returns current-state JSON only. Historical spot prices require DescribeSpotPriceHistory (AWS SDK with credentials) or third-party Spot Advisor."
+    },
+    {
+      "signalId": "A-6",
+      "group": "\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "Polymarket API reachable, but no standing 'Taiwan blockade' market for 2025-05~2026-04 with weekly resolution. Manual market ID curation needed."
     },
     {
       "signalId": "A-7",
+      "group": "\uc815\ud615",
       "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME \ub300\uccb4)"
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME \ub300\uccb4)",
+      "status": "real"
     },
     {
-      "signalId": "TEST-X",
-      "mode": "manual",
-      "weeks": 3,
-      "rangeStart": "2025-05-05",
-      "rangeEnd": "2025-05-19",
-      "source": "round-trip test"
+      "signalId": "B-1",
+      "group": "\ube44\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "FactSet Transcripts requires paid subscription. Free alternative: Seeking Alpha 'Earnings Call Transcripts' (partial), or scrape investor.samsung.com / investor.skhynix.com IR pages quarterly."
     },
     {
-      "signalId": "macro-cu",
-      "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME \ub300\uccb4)"
+      "signalId": "B-2",
+      "group": "\ube44\uc815\ud615",
+      "mode": "failed",
+      "status": "failed",
+      "reason": "GDELT B-2 failed: GDELT exhausted retries (last status: 429)"
     },
     {
-      "signalId": "macro-dxy",
-      "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "Yahoo Finance DX-Y.NYB (US Dollar Index)"
+      "signalId": "B-3",
+      "group": "\ube44\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "Pushshift API was shut down in 2023, X API requires paid subscription ($100~$5000/mo). Free alternative: Reddit official API (PRAW) on r/hardware r/memorymarket with rate limit. Requires Reddit OAuth app registration."
+    },
+    {
+      "signalId": "B-4",
+      "group": "\ube44\uc815\ud615",
+      "mode": "failed",
+      "status": "failed",
+      "reason": "GDELT B-4 failed: GDELT exhausted retries (last status: 429)"
+    },
+    {
+      "signalId": "B-5",
+      "group": "\ube44\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "DRAMeXchange LTA ratio is paid subscription only. Free alternative: Korean Customs trade balance (\uad00\uc138\uccad API, A-3 \ub3d9\uc77c \ud0a4) of 'DRAM IC' as inflow-outflow proxy. Or estimate from Samsung/SK quarterly IR (manual)."
+    },
+    {
+      "signalId": "B-6",
+      "group": "\ube44\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "TrendForce HBM/DRAM mix is paid. Free alternative: SK Hynix earnings call (quarterly) discloses HBM revenue % \u2014 scrape from investor.skhynix.com PDFs."
+    },
+    {
+      "signalId": "B-7",
+      "group": "\ube44\uc815\ud615",
+      "mode": "skipped",
+      "status": "skipped",
+      "reason": "Supply-chain BOM transcripts (Bloomberg Supply Chain etc.) are paid. Free alternative: track Apple/NVIDIA/AMD product launch news as demand signal (news API or Apple/NVIDIA RSS)."
     },
     {
       "signalId": "macro-fed",
+      "group": "\uac70\uc2dc",
       "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "FRED CSV DFF (Effective Federal Funds Rate)"
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "FRED CSV DFF (Effective Federal Funds Rate)",
+      "status": "real"
     },
     {
-      "signalId": "macro-krw",
+      "signalId": "macro-dxy",
+      "group": "\uac70\uc2dc",
       "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "Yahoo Finance KRW=X (USD/KRW spot)"
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "Yahoo Finance DX-Y.NYB (US Dollar Index)",
+      "status": "real"
     },
     {
       "signalId": "macro-pmi",
+      "group": "\uac70\uc2dc",
       "mode": "real",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "FRED CSV INDPRO (Industrial Production Index, monthly\u2192forward-fill weekly, PMI \ub300\uccb4)"
+      "weeks": 57,
+      "rangeStart": "2025-05-15",
+      "rangeEnd": "2026-06-11",
+      "source": "FRED CSV INDPRO (Industrial Production Index, monthly\u2192forward-fill weekly, PMI \ub300\uccb4)",
+      "status": "real"
+    },
+    {
+      "signalId": "macro-krw",
+      "group": "\uac70\uc2dc",
+      "mode": "real",
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "Yahoo Finance KRW=X (USD/KRW spot)",
+      "status": "real"
+    },
+    {
+      "signalId": "macro-cu",
+      "group": "\uac70\uc2dc",
+      "mode": "real",
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME \ub300\uccb4)",
+      "status": "real"
+    },
+    {
+      "signalId": "macro-ust10",
+      "group": "\uac70\uc2dc",
+      "mode": "real",
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "FRED CSV DGS10 (10-Year Treasury Constant Maturity Rate, %)",
+      "status": "real"
     },
     {
       "signalId": "target-dram",
+      "group": "\ud0c0\uac9f",
       "mode": "real-proxy",
-      "weeks": 53,
-      "rangeStart": "2025-05-01",
-      "rangeEnd": "2026-04-30",
-      "source": "Yahoo Finance blend: MU (50%) + SK Hynix (30%) + Samsung (20%), normalized to base 100"
+      "weeks": 57,
+      "rangeStart": "2025-05-12",
+      "rangeEnd": "2026-06-08",
+      "source": "Yahoo Finance blend: MU (50%) + SK Hynix (30%) + Samsung (20%), normalized to base 100",
+      "status": "real"
     }
   ]
 }

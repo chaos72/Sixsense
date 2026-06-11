@@ -181,15 +181,42 @@ def parse_model_comparison_series() -> dict:
     return out
 
 
-def build_forecasts(forecast_json: dict) -> tuple[list[dict], list[dict], list[dict], list[dict]]:
-    """USER-REQUESTED EXTENSION (#4) — 차트용 4개 모델 시계열 반환:
+def build_forecasts(forecast_json: dict, current_price: float | None = None) -> tuple[list[dict], list[dict], list[dict], list[dict]]:
+    """USER-REQUESTED EXTENSION (#4 / #18) — 차트용 4개 모델 시계열 반환:
     (forecast7=GBR 1~7w, forecast21=LSTM 8~21w, forecast_prophet=Prophet 1~21w, forecast_histgbr=HistGBR 1~7w)
+
+    USER-REQUESTED EXTENSION (#18, 2026-06-11) — anchor 보정:
+    forecast 시작점이 학습 cutoff 시점 가격이라 현재가와 괴리가 큼(데이터 급등 시).
+    각 모델의 *상대 변화율*은 유지하되 시작 anchor 를 current_price 에 맞춰
+    스케일링 → 차트에서 현재가 → 미래 예측이 자연스럽게 연결.
     """
     parsed = parse_model_comparison_series()
 
+    def _anchor_scale(series_vals: list[float], cur: float | None) -> list[float]:
+        """series 첫 값을 cur 에 맞추고 나머지는 비율 유지. cur None 이면 원본."""
+        if cur is None or not series_vals or series_vals[0] == 0:
+            return series_vals
+        factor = cur / series_vals[0]
+        return [v * factor for v in series_vals]
+
+    # 각 모델 raw 값 추출 (SCALE 적용 전 인덱스값)
+    gbr_raw = [yhat for (_, yhat) in parsed["gbr"][:7]]
+    lstm_raw = [yhat for (_, yhat) in parsed["lstm"][:14]]
+    prophet_raw = [yhat for (_, yhat) in parsed["prophet"][:21]]
+    histgbr_raw = [yhat for (_, yhat) in parsed["hist_gbr"][:7]]
+
+    # current_price 는 $ 단위 → 인덱스값으로 환산 (anchor 비교 위해)
+    cur_idx = (current_price / SCALE) if current_price else None
+
+    # anchor 보정 (각 모델 첫 예측을 현재가에 맞춤)
+    gbr_raw = _anchor_scale(gbr_raw, cur_idx)
+    lstm_raw = _anchor_scale(lstm_raw, cur_idx)
+    prophet_raw = _anchor_scale(prophet_raw, cur_idx)
+    histgbr_raw = _anchor_scale(histgbr_raw, cur_idx)
+
     # forecast7 (GBR, 1~7w) — Single yhat, CI는 ±5% 임의 추정
     forecast7 = []
-    for i, (_, yhat) in enumerate(parsed["gbr"][:7], start=1):
+    for i, yhat in enumerate(gbr_raw, start=1):
         v = round(yhat * SCALE, 3)
         forecast7.append({"week": i, "value": v,
                           "lower": round(v * 0.95, 3), "upper": round(v * 1.05, 3),
@@ -197,7 +224,7 @@ def build_forecasts(forecast_json: dict) -> tuple[list[dict], list[dict], list[d
 
     # forecast21 (LSTM, 8~21w) — CI ±10%
     forecast21 = []
-    for offset, (_, yhat) in enumerate(parsed["lstm"][:14]):
+    for offset, yhat in enumerate(lstm_raw):
         v = round(yhat * SCALE, 3)
         forecast21.append({"week": 8 + offset, "value": v,
                            "lower": round(v * 0.90, 3), "upper": round(v * 1.10, 3),
@@ -205,12 +232,12 @@ def build_forecasts(forecast_json: dict) -> tuple[list[dict], list[dict], list[d
 
     # forecast_prophet (Prophet, 1~21w 전체 baseline)
     forecast_prophet = []
-    for i, (_, yhat) in enumerate(parsed["prophet"][:21], start=1):
+    for i, yhat in enumerate(prophet_raw, start=1):
         forecast_prophet.append({"week": i, "value": round(yhat * SCALE, 3), "type": "prophet"})
 
     # forecast_histgbr (HistGBR, 1~7w 중간 모델)
     forecast_histgbr = []
-    for i, (_, yhat) in enumerate(parsed["hist_gbr"][:7], start=1):
+    for i, yhat in enumerate(histgbr_raw, start=1):
         forecast_histgbr.append({"week": i, "value": round(yhat * SCALE, 3), "type": "histgbr"})
 
     # parsed가 비어있을 경우(파일 없음) — 기존 prophet JSON으로 fallback
@@ -488,7 +515,8 @@ def main():
     history, current = build_history(target_rows)
 
     forecast_json = json.loads((FORECAST / "forecast_v2_2026-02-w1.json").read_text())
-    forecast7, forecast21, forecast_prophet, forecast_histgbr = build_forecasts(forecast_json)
+    # USER-REQUESTED EXTENSION (#18) — current 전달로 forecast anchor 보정 (현재가 시작)
+    forecast7, forecast21, forecast_prophet, forecast_histgbr = build_forecasts(forecast_json, current_price=current)
 
     pred7 = forecast7[-1]["value"] if forecast7 else current
     pred21 = forecast21[-1]["value"] if forecast21 else current

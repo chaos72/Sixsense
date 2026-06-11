@@ -2,19 +2,11 @@
   "signalId": "macro-pmi",
   "source": "FRED CSV INDPRO (Industrial Production Index, monthly\u2192forward-fill weekly, PMI \ub300\uccb4)",
   "mode": "real",
-  "collectedAt": "2026-05-17",
-  "rangeStart": "2025-05-01",
-  "rangeEnd": "2026-04-30",
+  "collectedAt": "2026-06-11",
+  "rangeStart": "2025-05-15",
+  "rangeEnd": "2026-06-11",
   "note": "",
   "data": [
-    {
-      "week": "2025-05-01",
-      "value": 100.9655
-    },
-    {
-      "week": "2025-05-08",
-      "value": 100.9655
-    },
     {
       "week": "2025-05-15",
       "value": 100.9655
@@ -217,6 +209,30 @@
     },
     {
       "week": "2026-04-30",
+      "value": 102.4963
+    },
+    {
+      "week": "2026-05-07",
+      "value": 102.4963
+    },
+    {
+      "week": "2026-05-14",
+      "value": 102.4963
+    },
+    {
+      "week": "2026-05-21",
+      "value": 102.4963
+    },
+    {
+      "week": "2026-05-28",
+      "value": 102.4963
+    },
+    {
+      "week": "2026-06-04",
+      "value": 102.4963
+    },
+    {
+      "week": "2026-06-11",
       "value": 102.4963
     }
   ]

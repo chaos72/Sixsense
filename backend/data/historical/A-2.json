@@ -2,19 +2,11 @@
   "signalId": "A-2",
   "source": "SEC EDGAR XBRL \u2014 4 quarterly observations from 4 companies",
   "mode": "real",
-  "collectedAt": "2026-05-17",
-  "rangeStart": "2025-05-01",
-  "rangeEnd": "2026-04-30",
+  "collectedAt": "2026-06-11",
+  "rangeStart": "2025-05-15",
+  "rangeEnd": "2026-06-11",
   "note": "",
   "data": [
-    {
-      "week": "2025-05-01",
-      "value": 133673.0
-    },
-    {
-      "week": "2025-05-08",
-      "value": 133673.0
-    },
     {
       "week": "2025-05-15",
       "value": 133673.0
@@ -217,6 +209,30 @@
     },
     {
       "week": "2026-04-30",
+      "value": 165693.0
+    },
+    {
+      "week": "2026-05-07",
+      "value": 165693.0
+    },
+    {
+      "week": "2026-05-14",
+      "value": 165693.0
+    },
+    {
+      "week": "2026-05-21",
+      "value": 165693.0
+    },
+    {
+      "week": "2026-05-28",
+      "value": 165693.0
+    },
+    {
+      "week": "2026-06-04",
+      "value": 165693.0
+    },
+    {
+      "week": "2026-06-11",
       "value": 165693.0
     }
   ]

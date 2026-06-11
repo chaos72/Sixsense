@@ -70,24 +70,33 @@ def build_prompt() -> tuple[str, dict]:
     current_usd = round(last_idx * 0.01, 2)  # build_frontend_data.py 의 SCALE와 동일
 
     # model_comparison.txt 우선 — build_frontend_data.py 와 동일 소스 사용 (인사이트/대시보드 가격 일치 보장)
+    # USER-REQUESTED EXTENSION (#18) — anchor 보정: 첫 예측값을 현재가에 맞춰 비율 유지.
+    # build_frontend_data.py 의 _anchor_scale 과 동일 로직 → 차트/인사이트 가격 일치.
     pred7_idx = pred21_idx = None
+    gbr_first = lstm_first = None
     cmp_file = FORECAST / "model_comparison.txt"
     if cmp_file.exists():
         txt = cmp_file.read_text()
         m = re.search(r"📈 단기.*?\n(.*?)\n단기 MAPE", txt, re.DOTALL)
         if m:
-            for line in reversed(m.group(1).strip().split("\n")):
-                row = re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
-                if row:
-                    pred7_idx = float(row.group(4))  # GBR 마지막 주
-                    break
+            rows = [r for r in (re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
+                                for line in m.group(1).strip().split("\n")) if r]
+            if rows:
+                gbr_first = float(rows[0].group(4))    # GBR 첫 주
+                pred7_idx = float(rows[-1].group(4))   # GBR 마지막 주
         m = re.search(r"📈 중장기.*?\n(.*?)\nLSTM held-out", txt, re.DOTALL)
         if m:
-            for line in reversed(m.group(1).strip().split("\n")):
-                row = re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)", line)
-                if row:
-                    pred21_idx = float(row.group(3))  # LSTM 마지막 주
-                    break
+            rows = [r for r in (re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)", line)
+                                for line in m.group(1).strip().split("\n")) if r]
+            if rows:
+                lstm_first = float(rows[0].group(3))   # LSTM 첫 주
+                pred21_idx = float(rows[-1].group(3))  # LSTM 마지막 주
+
+    # anchor 보정 — 첫 예측을 현재가(last_idx)에 맞추고 비율 유지
+    if gbr_first and pred7_idx and gbr_first != 0:
+        pred7_idx = pred7_idx * (last_idx / gbr_first)
+    if lstm_first and pred21_idx and lstm_first != 0:
+        pred21_idx = pred21_idx * (last_idx / lstm_first)
 
     # Fallback: forecast JSON
     if pred7_idx is None or pred21_idx is None:
@@ -243,6 +252,39 @@ def call_gemini(prompt: str) -> tuple[dict | None, str]:
     return None, "Gemini 모두 실패"
 
 
+# USER-REQUESTED EXTENSION (#18) — Groq fallback 추가 (Gemini 한도 소진 대비).
+# collect_news_events 와 동일하게 Groq llama-3.3 (무료 14400/day) 를 3순위로.
+def call_groq(prompt: str) -> tuple[dict | None, str]:
+    key = os.getenv("GROQ_API_KEY", "")
+    if not key:
+        return None, "Groq 키 없음"
+    try:
+        r = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={"Authorization": f"Bearer {key}"},
+            json={
+                "model": "llama-3.3-70b-versatile",
+                "messages": [
+                    {"role": "system", "content": "너는 시장 분석가다. 반드시 순수 JSON 객체 하나만 출력하라. 마크다운 코드펜스나 설명 텍스트 없이 { 로 시작해 } 로 끝나는 JSON 만."},
+                    {"role": "user", "content": prompt},
+                ],
+                "max_tokens": 2048,
+                "temperature": 0.2,
+            },
+            timeout=60,
+        )
+    except Exception as e:
+        return None, f"Groq 네트워크: {str(e)[:50]}"
+    if r.status_code != 200:
+        return None, f"Groq HTTP {r.status_code}"
+    try:
+        txt = r.json()["choices"][0]["message"]["content"].strip()
+        txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
+        return json.loads(txt), "Groq llama-3.3"
+    except Exception as e:
+        return None, f"Groq 파싱 실패: {str(e)[:50]}"
+
+
 def heuristic(ctx: dict) -> dict:
     """LLM 실패 시 데이터 기반 250자 요약. 신호+뉴스+모순 해석까지 포함."""
     short_pct = ctx["pred7_pct"]
@@ -337,6 +379,9 @@ def main():
     if not obj:
         print(f"  ⚠️  {source} → Gemini fallback")
         obj, source = call_gemini(prompt)
+    if not obj:
+        print(f"  ⚠️  {source} → Groq fallback")
+        obj, source = call_groq(prompt)
     if not obj:
         print(f"  ⚠️  {source} → 휴리스틱 fallback")
         obj = heuristic(ctx)
