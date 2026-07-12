@@ -1213,9 +1213,9 @@ a.inline:hover { text-decoration-color: var(--text); }
     border-radius: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border) !important;
   }
-  .events-list > .events-row:last-child { border-bottom: none; }
+  .events-list > .events-row:last-child { border-bottom: none !important; }
   .events-region { text-align: center; }
   .events-title {
     white-space: normal !important;
