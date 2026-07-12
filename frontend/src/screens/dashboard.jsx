@@ -533,32 +533,33 @@ function ChartLegend({ range }) {
   // USER-REQUESTED EXTENSION (2026-05-18 #4) — Prophet baseline + HistGBR 범례 추가
   return (
     <div className="chart-legend-wrap" style={{ display: "flex", gap: 18, marginTop: 12, paddingLeft: 44, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
-      <span className="chart-legend-item">
+      <span className="chart-legend-item leg-actual">
         <svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="var(--text)" strokeWidth="1.75"/></svg> 실측 ({range === "short" ? "26주" : range === "mid" ? "13주" : "52주"})
       </span>
-      <span className="chart-legend-item">
+      <span className="chart-legend-item leg-prophet">
         <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--chart-baseline)" strokeWidth="1.6" strokeDasharray="2 4"/></svg>
         <span style={{ color: "var(--chart-baseline)", fontWeight: 600 }}>Prophet baseline</span> (1~21w)
       </span>
       {range !== "mid" && (
-        <span className="chart-legend-item">
+        <span className="chart-legend-item leg-histgbr">
           <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--chart-secondary)" strokeWidth="1.8" strokeDasharray="7 3"/></svg>
           <span style={{ color: "var(--chart-secondary)", fontWeight: 600 }}>HistGBR</span> (1~7w · 6.86%)
         </span>
       )}
       {(range === "short" || range === "mid" || range === "all") && (
-        <span className="chart-legend-item">
+        <span className="chart-legend-item leg-gbr">
           <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="var(--sig-info)" strokeWidth="1.75" strokeDasharray="4 3"/></svg>
           <strong style={{ color: "var(--sig-info)" }}>GBR ★</strong> (1~7w · 4.54%) · 신뢰구간
         </span>
       )}
       {(range === "mid" || range === "all") && (
-        <span className="chart-legend-item">
+        <span className="chart-legend-item leg-lstm">
           <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="var(--forecast-mid)" strokeWidth={range === "mid" ? "2.4" : "1.75"} strokeDasharray={range === "mid" ? null : "4 3"}/></svg>
           <strong style={{ color: "var(--forecast-mid)" }}>LSTM ★</strong> (8~21w · 9.19%) {range === "mid" && <span style={{ color: "var(--forecast-mid)", fontWeight: 600, marginLeft: 4 }}>(중점)</span>}
         </span>
       )}
-      <span className="muted" style={{ marginLeft: "auto", whiteSpace: "nowrap" }}>예측 데이터 포인트 클릭 → S-009</span>
+      {/* USER-REQUESTED CHANGE (v2.1) — 모바일에서 CSS order로 순서 재배치(실측→힌트→Prophet→HistGBR→GBR→LSTM), 데스크톱은 marginLeft:auto 로 기존처럼 오른쪽 끝 고정 */}
+      <span className="muted leg-hint" style={{ marginLeft: "auto", whiteSpace: "nowrap" }}>예측 데이터 포인트 클릭 → S-009</span>
     </div>
   );
 }

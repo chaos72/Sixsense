@@ -1197,16 +1197,26 @@ a.inline:hover { text-decoration-color: var(--text); }
   .price-combo > .card > .muted.mono { display: none; }
 
   /* ---- USER-REQUESTED CHANGE (v2.1) — 단기 모델 비교 표: 왼쪽으로 치우치던 문제 수정,
-     카드 폭에 맞춰 칼럼이 고르게 퍼지도록 ---- */
+     "모델/MAPE/평가" 균등 3등분 + 가운데 정렬 ---- */
   .model-table { display: table; width: 100%; table-layout: fixed; white-space: normal; overflow-x: visible; }
-  .model-table th, .model-table td { padding: 6px 6px; font-size: 11px; }
+  .model-table th, .model-table td { padding: 6px 6px; font-size: 11px; text-align: center; }
 
   /* ---- 이벤트/뉴스 행: 터치하기 좋게 넉넉한 높이 ---- */
-  .events-row { padding: 12px 14px; }
+  .events-row { padding: 10px 12px; }
 
-  /* USER-REQUESTED CHANGE (v2.1) — 글로벌 이벤트: 위험/유형 칸을 좁히고
-     제목(모니터링 결과)이 최대 2줄까지 보이도록 */
-  .events-row { grid-template-columns: 62px 1fr auto !important; }
+  /* USER-REQUESTED CHANGE (v2.1) — 글로벌 이벤트: 거시경제 지표와 동일한 표 구조로 변경.
+     위험/유형/지역 칸은 가운데 정렬, "모니터링 결과"(이벤트 내용)만 왼쪽 정렬 + 2줄 표시 */
+  .events-list { gap: 0; }
+  .events-row {
+    grid-template-columns: 62px 1fr auto !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border-bottom: 1px solid var(--border);
+  }
+  .events-list > .events-row:last-child { border-bottom: none; }
+  .events-region { text-align: center; }
   .events-title {
     white-space: normal !important;
     display: -webkit-box;
@@ -1217,11 +1227,25 @@ a.inline:hover { text-decoration-color: var(--text); }
     line-height: 1.3;
   }
 
-  /* USER-REQUESTED CHANGE (v2.1) — 거시경제 지표: 지표명/값 컬럼을 오른쪽 정렬로 이동,
-     설명 컬럼 비중 확대 */
-  .macro-row { grid-template-columns: 0.8fr 0.7fr 1.5fr !important; }
-  .macro-row > span:first-child { text-align: right; }
-  .macro-row > div:nth-child(2) { align-items: flex-end !important; }
+  /* USER-REQUESTED CHANGE (v2.1) — 거시경제 지표: 모든 컬럼(지표명/값+긍부정/설명) 가운데 정렬 */
+  .macro-row { grid-template-columns: 0.95fr 0.7fr 1.45fr !important; }
+  .macro-row > span:first-child {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  .macro-row > div:nth-child(2) { align-items: center !important; }
+  .macro-row > span:last-child { text-align: center; }
+
+  /* USER-REQUESTED CHANGE (v2.1) — DRAM 차트 범례 순서: 실측 → 힌트 → Prophet → HistGBR → GBR★ → LSTM★ */
+  .chart-legend-wrap .leg-actual { order: 1; }
+  .chart-legend-wrap .leg-hint { order: 2; margin-left: 0 !important; }
+  .chart-legend-wrap .leg-prophet { order: 3; }
+  .chart-legend-wrap .leg-histgbr { order: 4; }
+  .chart-legend-wrap .leg-gbr { order: 5; }
+  .chart-legend-wrap .leg-lstm { order: 6; }
 
   /* USER-REQUESTED CHANGE (v2.1) — DRAM 차트: 세로 크기 약 30% 확대,
      범례를 2컬럼 배치로 3줄까지만 나오게 + 줄 간격 50% 축소 */
