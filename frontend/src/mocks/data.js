@@ -2,33 +2,33 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-06-11T09:49:42.318393Z
-// 뉴스/이벤트: news 10건 (키워드 휴리스틱 + LLM 한글화, 2026-06-11) · events 10건
+// 생성 시각: 2026-07-12T04:12:31.711251Z
+// 뉴스/이벤트: news 10건 (키워드 휴리스틱 + LLM 한글화, 2026-07-12) · events 10건
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
 export const SIXSENSE_DATA = {
   "meta": {
-    "current": 8.62,
-    "currentChange": "+0.2%",
-    "pred7": 11.936,
-    "pred7Change": "+38.5%",
-    "pred21": 6.909,
-    "pred21Change": "-19.8%",
-    "updated": "2026-06-11 06:00 KST",
+    "current": 7.464,
+    "currentChange": "-4.5%",
+    "pred7": 9.253,
+    "pred7Change": "+24.0%",
+    "pred21": 8.672,
+    "pred21Change": "+16.2%",
+    "updated": "2026-07-12 06:00 KST",
     "model": "GBR (단기) + LSTM (중장기) + Prophet (베이스)",
     "confidence": 81,
     "insight": {
-      "headline": "단기 급등세, 지정학 리스크 속 장기 하락 압력",
-      "summary": "서버 DRAM 가격은 **단기적으로 급등세**를 보이며 7주 후 **$11.94**로 38.5% 상승할 것으로 예측됩니다. 이는 **빅테크 CapEx** 165.7K 및 AWS Spot 가격 상승 등 견조한 수요 신호에 힘입은 결과입니다. 그러나 21주 후 중장기 예측은 $6.97로 19.1% 하락을 시사하며, 이는 지정학 리스크(GPR 184.18)와 중국의 갈륨 통제, 대만의 AI 칩 수출 제한 검토 등 **핵심 뉴스**에서 드러나는 공급망 불안정 및 미중 기술 갈등 심화가 주요 하방 압력으로 작용하고 있기 때문입니다. 단기 수요 강세와 중장기 지정학적 불확실성 간의 뚜렷한 괴리가 시장의 핵심 특징입니다. 향후 대만-중국 간 AI 칩 정책 변화와 글로벌 재고/출하 지수 변화를 면밀히 주시해야 합니다.",
-      "tone": "neg",
-      "confidence": 75,
-      "horizon": "long",
+      "headline": "상승·상승 동조, 상승 시그널",
+      "summary": "단기 **GBR** 모델은 7주 후 **$9.25** (**+24.0%**)를, 중장기 **LSTM** 모델은 21주 후 **$8.67** (**+16.2%**)를 가리킵니다. A-4 재고지수 3.86(<95)로 공급 타이트 신호.DXY 101.0로 강달러 압력↑.최근 30일 핵심 뉴스 5건이 동반. 종합적으로 향후 **AI 서버 수요** 증가세와 **HBM 캡 증설** 속도, **지정학 리스크** 변화를 주간 단위로 모니터링하며 호라이즌별로 차별화된 대응이 필요합니다.",
+      "tone": "pos",
+      "confidence": 55,
+      "horizon": "short",
       "keySignals": [
         "A-2",
         "B-4"
       ],
-      "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-06-11T18:49:42"
+      "model": "휴리스틱 (LLM 모두 실패)",
+      "generatedAt": "2026-07-12T13:11:38"
     },
     "modelValidation": {
       "headline": "🎉 Phase 6 멀티 모델 예측 아키텍처 완료 — 단기 MAPE 7.54% → 4.54% (39.8% 개선)",
@@ -61,18 +61,18 @@ export const SIXSENSE_DATA = {
       "trainTimes": [
         {
           "name": "Prophet",
-          "sec": 2.4
+          "sec": 0.6
         },
         {
           "name": "Tree (단기)",
-          "sec": 8.27
+          "sec": 3.4
         },
         {
           "name": "LSTM (중장기)",
-          "sec": 14.74
+          "sec": 7.4
         }
       ],
-      "trainTotal": 25.4,
+      "trainTotal": 11.4,
       "architecture": "20개 신호 통합 DataFrame (108주 × 20열, sentiment 3주 MA)\n            │\n   ┌────────┼────────┐\n   ▼        ▼        ▼\n[Prophet] [Tree]  [LSTM]\nbaseline  단기      중장기\n         ─우수─    PyTorch\n         자동선정   2-layer",
       "envNote": "XGBoost/LightGBM 우선 사용 시도 → macOS libomp 미설치 → sklearn GBR/HistGBR fallback 자동 전환. brew install libomp 후 자동 XGBoost/LightGBM 활성 (코드 변경 불필요). LSTM은 PyTorch (libomp 무관, 즉시 작동)."
     }
@@ -80,487 +80,557 @@ export const SIXSENSE_DATA = {
   "history": [
     {
       "week": -51,
-      "value": 1.217,
+      "value": 1.002,
       "type": "actual"
     },
     {
       "week": -50,
-      "value": 1.267,
+      "value": 0.982,
       "type": "actual"
     },
     {
       "week": -49,
-      "value": 1.244,
+      "value": 0.957,
       "type": "actual"
     },
     {
       "week": -48,
-      "value": 1.288,
+      "value": 1.022,
       "type": "actual"
     },
     {
       "week": -47,
-      "value": 1.215,
+      "value": 1.052,
       "type": "actual"
     },
     {
       "week": -46,
-      "value": 1.19,
+      "value": 1.009,
       "type": "actual"
     },
     {
       "week": -45,
-      "value": 1.156,
+      "value": 1.03,
       "type": "actual"
     },
     {
       "week": -44,
-      "value": 1.236,
+      "value": 1.084,
       "type": "actual"
     },
     {
       "week": -43,
-      "value": 1.274,
+      "value": 1.273,
       "type": "actual"
     },
     {
       "week": -42,
-      "value": 1.22,
+      "value": 1.343,
       "type": "actual"
     },
     {
       "week": -41,
-      "value": 1.247,
+      "value": 1.309,
       "type": "actual"
     },
     {
       "week": -40,
-      "value": 1.316,
+      "value": 1.523,
       "type": "actual"
     },
     {
       "week": -39,
-      "value": 1.55,
+      "value": 1.552,
       "type": "actual"
     },
     {
       "week": -38,
-      "value": 1.635,
+      "value": 1.691,
       "type": "actual"
     },
     {
       "week": -37,
-      "value": 1.589,
+      "value": 1.813,
       "type": "actual"
     },
     {
       "week": -36,
-      "value": 1.855,
+      "value": 1.919,
       "type": "actual"
     },
     {
       "week": -35,
-      "value": 1.887,
+      "value": 1.969,
       "type": "actual"
     },
     {
       "week": -34,
-      "value": 2.06,
+      "value": 1.979,
       "type": "actual"
     },
     {
       "week": -33,
-      "value": 2.214,
+      "value": 1.766,
       "type": "actual"
     },
     {
       "week": -32,
-      "value": 2.34,
+      "value": 1.913,
       "type": "actual"
     },
     {
       "week": -31,
-      "value": 2.409,
+      "value": 1.959,
       "type": "actual"
     },
     {
       "week": -30,
-      "value": 2.423,
+      "value": 2.008,
       "type": "actual"
     },
     {
       "week": -29,
-      "value": 2.156,
+      "value": 2.072,
       "type": "actual"
     },
     {
       "week": -28,
-      "value": 2.338,
+      "value": 2.245,
       "type": "actual"
     },
     {
       "week": -27,
-      "value": 2.39,
+      "value": 2.498,
       "type": "actual"
     },
     {
       "week": -26,
-      "value": 2.451,
+      "value": 2.732,
       "type": "actual"
     },
     {
       "week": -25,
-      "value": 2.533,
+      "value": 2.85,
       "type": "actual"
     },
     {
       "week": -24,
-      "value": 2.744,
+      "value": 3.023,
       "type": "actual"
     },
     {
       "week": -23,
-      "value": 3.055,
+      "value": 3.279,
       "type": "actual"
     },
     {
       "week": -22,
-      "value": 3.342,
+      "value": 3.109,
       "type": "actual"
     },
     {
       "week": -21,
-      "value": 3.484,
+      "value": 3.302,
       "type": "actual"
     },
     {
       "week": -20,
-      "value": 3.7,
+      "value": 3.479,
       "type": "actual"
     },
     {
       "week": -19,
-      "value": 4.015,
+      "value": 3.634,
       "type": "actual"
     },
     {
       "week": -18,
-      "value": 3.803,
+      "value": 3.209,
       "type": "actual"
     },
     {
       "week": -17,
-      "value": 4.029,
+      "value": 3.403,
       "type": "actual"
     },
     {
       "week": -16,
-      "value": 4.246,
+      "value": 3.556,
       "type": "actual"
     },
     {
       "week": -15,
-      "value": 4.423,
+      "value": 3.14,
       "type": "actual"
     },
     {
       "week": -14,
-      "value": 3.907,
+      "value": 3.13,
       "type": "actual"
     },
     {
       "week": -13,
-      "value": 4.155,
+      "value": 3.593,
       "type": "actual"
     },
     {
       "week": -12,
-      "value": 4.337,
+      "value": 3.884,
       "type": "actual"
     },
     {
       "week": -11,
-      "value": 3.825,
+      "value": 4.174,
       "type": "actual"
     },
     {
       "week": -10,
-      "value": 3.809,
+      "value": 4.436,
       "type": "actual"
     },
     {
       "week": -9,
-      "value": 4.378,
+      "value": 5.892,
       "type": "actual"
     },
     {
       "week": -8,
-      "value": 4.737,
+      "value": 5.964,
       "type": "actual"
     },
     {
       "week": -7,
-      "value": 5.1,
+      "value": 6.287,
       "type": "actual"
     },
     {
       "week": -6,
-      "value": 5.429,
+      "value": 7.717,
       "type": "actual"
     },
     {
       "week": -5,
-      "value": 7.229,
+      "value": 7.017,
       "type": "actual"
     },
     {
       "week": -4,
-      "value": 7.318,
+      "value": 7.565,
       "type": "actual"
     },
     {
       "week": -3,
-      "value": 7.709,
+      "value": 9.004,
       "type": "actual"
     },
     {
       "week": -2,
-      "value": 9.493,
+      "value": 8.842,
       "type": "actual"
     },
     {
       "week": -1,
-      "value": 8.603,
+      "value": 7.818,
       "type": "actual"
     },
     {
       "week": 0,
-      "value": 8.62,
+      "value": 7.464,
       "type": "actual"
     }
   ],
   "forecast7": [
     {
       "week": 1,
-      "value": 8.62,
-      "lower": 8.189,
-      "upper": 9.051,
+      "value": 7.464,
+      "lower": 7.091,
+      "upper": 7.837,
       "type": "f7"
     },
     {
       "week": 2,
-      "value": 8.868,
-      "lower": 8.425,
-      "upper": 9.311,
+      "value": 7.873,
+      "lower": 7.479,
+      "upper": 8.267,
       "type": "f7"
     },
     {
       "week": 3,
-      "value": 9.129,
-      "lower": 8.673,
-      "upper": 9.585,
+      "value": 8.281,
+      "lower": 7.867,
+      "upper": 8.695,
       "type": "f7"
     },
     {
       "week": 4,
-      "value": 9.879,
-      "lower": 9.385,
-      "upper": 10.373,
+      "value": 8.5,
+      "lower": 8.075,
+      "upper": 8.925,
       "type": "f7"
     },
     {
       "week": 5,
-      "value": 10.737,
-      "lower": 10.2,
-      "upper": 11.274,
+      "value": 8.768,
+      "lower": 8.33,
+      "upper": 9.206,
       "type": "f7"
     },
     {
       "week": 6,
-      "value": 11.36,
-      "lower": 10.792,
-      "upper": 11.928,
+      "value": 9.046,
+      "lower": 8.594,
+      "upper": 9.498,
       "type": "f7"
     },
     {
       "week": 7,
-      "value": 11.936,
-      "lower": 11.339,
-      "upper": 12.533,
+      "value": 9.253,
+      "lower": 8.79,
+      "upper": 9.716,
       "type": "f7"
     }
   ],
   "forecast21": [
     {
       "week": 8,
-      "value": 5.561,
-      "lower": 5.257,
-      "upper": 5.851,
+      "value": 9.253,
+      "lower": 8.328,
+      "upper": 10.178,
       "type": "f21"
     },
     {
       "week": 9,
-      "value": 5.665,
-      "lower": 5.358,
-      "upper": 5.977,
+      "value": 9.193,
+      "lower": 8.274,
+      "upper": 10.112,
       "type": "f21"
     },
     {
       "week": 10,
-      "value": 5.769,
-      "lower": 5.436,
-      "upper": 6.064,
+      "value": 7.988,
+      "lower": 7.189,
+      "upper": 8.787,
       "type": "f21"
     },
     {
       "week": 11,
-      "value": 5.872,
-      "lower": 5.559,
-      "upper": 6.194,
+      "value": 8.024,
+      "lower": 7.222,
+      "upper": 8.826,
       "type": "f21"
     },
     {
       "week": 12,
-      "value": 5.976,
-      "lower": 5.63,
-      "upper": 6.293,
+      "value": 8.217,
+      "lower": 7.395,
+      "upper": 9.039,
       "type": "f21"
     },
     {
       "week": 13,
-      "value": 6.08,
-      "lower": 5.723,
-      "upper": 6.404,
+      "value": 8.15,
+      "lower": 7.335,
+      "upper": 8.965,
       "type": "f21"
     },
     {
       "week": 14,
-      "value": 6.183,
-      "lower": 5.824,
-      "upper": 6.495,
+      "value": 10.526,
+      "lower": 9.473,
+      "upper": 11.579,
       "type": "f21"
     },
     {
       "week": 15,
-      "value": 6.287,
-      "lower": 5.932,
-      "upper": 6.636,
+      "value": 10.81,
+      "lower": 9.729,
+      "upper": 11.891,
       "type": "f21"
     },
     {
       "week": 16,
-      "value": 6.391,
-      "lower": 6.014,
-      "upper": 6.743,
+      "value": 10.718,
+      "lower": 9.646,
+      "upper": 11.79,
       "type": "f21"
     },
     {
       "week": 17,
-      "value": 6.494,
-      "lower": 6.101,
-      "upper": 6.832,
+      "value": 10.644,
+      "lower": 9.58,
+      "upper": 11.708,
       "type": "f21"
     },
     {
       "week": 18,
-      "value": 6.598,
-      "lower": 6.174,
-      "upper": 6.988,
+      "value": 9.175,
+      "lower": 8.258,
+      "upper": 10.093,
       "type": "f21"
     },
     {
       "week": 19,
-      "value": 6.702,
-      "lower": 6.275,
-      "upper": 7.107,
+      "value": 8.039,
+      "lower": 7.235,
+      "upper": 8.843,
       "type": "f21"
     },
     {
       "week": 20,
-      "value": 6.805,
-      "lower": 6.367,
-      "upper": 7.244,
+      "value": 8.137,
+      "lower": 7.323,
+      "upper": 8.951,
       "type": "f21"
     },
     {
       "week": 21,
-      "value": 6.909,
-      "lower": 6.423,
-      "upper": 7.339,
+      "value": 8.672,
+      "lower": 7.805,
+      "upper": 9.539,
       "type": "f21"
     }
   ],
   "forecast_prophet": [
     {
       "week": 1,
-      "value": 8.62,
+      "value": 7.464,
       "type": "prophet"
     },
     {
       "week": 2,
-      "value": 8.805,
+      "value": 7.695,
       "type": "prophet"
     },
     {
       "week": 3,
-      "value": 8.99,
+      "value": 7.925,
       "type": "prophet"
     },
     {
       "week": 4,
-      "value": 9.175,
+      "value": 8.156,
       "type": "prophet"
     },
     {
       "week": 5,
-      "value": 9.359,
+      "value": 8.387,
       "type": "prophet"
     },
     {
       "week": 6,
-      "value": 9.544,
+      "value": 8.617,
       "type": "prophet"
     },
     {
       "week": 7,
-      "value": 9.729,
+      "value": 8.848,
+      "type": "prophet"
+    },
+    {
+      "week": 8,
+      "value": 9.079,
+      "type": "prophet"
+    },
+    {
+      "week": 9,
+      "value": 9.309,
+      "type": "prophet"
+    },
+    {
+      "week": 10,
+      "value": 9.54,
+      "type": "prophet"
+    },
+    {
+      "week": 11,
+      "value": 9.77,
+      "type": "prophet"
+    },
+    {
+      "week": 12,
+      "value": 10.001,
+      "type": "prophet"
+    },
+    {
+      "week": 13,
+      "value": 10.232,
+      "type": "prophet"
+    },
+    {
+      "week": 14,
+      "value": 10.462,
+      "type": "prophet"
+    },
+    {
+      "week": 15,
+      "value": 10.693,
+      "type": "prophet"
+    },
+    {
+      "week": 16,
+      "value": 10.924,
+      "type": "prophet"
+    },
+    {
+      "week": 17,
+      "value": 11.154,
+      "type": "prophet"
+    },
+    {
+      "week": 18,
+      "value": 11.385,
+      "type": "prophet"
+    },
+    {
+      "week": 19,
+      "value": 11.616,
+      "type": "prophet"
+    },
+    {
+      "week": 20,
+      "value": 11.846,
+      "type": "prophet"
+    },
+    {
+      "week": 21,
+      "value": 12.077,
       "type": "prophet"
     }
   ],
   "forecast_histgbr": [
     {
       "week": 1,
-      "value": 8.62,
+      "value": 7.464,
       "type": "histgbr"
     },
     {
       "week": 2,
-      "value": 9.155,
+      "value": 9.128,
       "type": "histgbr"
     },
     {
       "week": 3,
-      "value": 9.175,
+      "value": 9.16,
       "type": "histgbr"
     },
     {
       "week": 4,
-      "value": 12.172,
+      "value": 8.334,
       "type": "histgbr"
     },
     {
       "week": 5,
-      "value": 12.215,
+      "value": 8.334,
       "type": "histgbr"
     },
     {
       "week": 6,
-      "value": 12.353,
+      "value": 8.985,
       "type": "histgbr"
     },
     {
       "week": 7,
-      "value": 12.37,
+      "value": 8.985,
       "type": "histgbr"
     }
   ],
@@ -569,19 +639,19 @@ export const SIXSENSE_DATA = {
       "id": "A-1",
       "name": "대만 공급망",
       "source": "Yahoo Finance: TSM",
-      "value": "+1.2%",
-      "num": 0.0125,
+      "value": "+2.6%",
+      "num": 0.0262,
       "tone": "neu",
       "desc": "TSMC·UMC 주가 (Yahoo Finance 블렌드)",
       "spark": [
-        0.181,
         0.0,
-        0.609,
-        0.343,
-        0.367,
+        0.26,
+        0.188,
+        0.347,
         1.0,
-        0.824,
-        0.55
+        0.515,
+        0.538,
+        0.536
       ]
     },
     {
@@ -626,8 +696,8 @@ export const SIXSENSE_DATA = {
       "id": "A-4",
       "name": "재고/출하 지수",
       "source": "KOSIS 광공업동향 C26 재고지수",
-      "value": "3.84M",
-      "num": 3842748.0,
+      "value": "3.86M",
+      "num": 3858177.0,
       "tone": "alert",
       "desc": "100 초과 = 공급과잉 (KOSIS Open API)",
       "spark": [
@@ -645,19 +715,19 @@ export const SIXSENSE_DATA = {
       "id": "A-5",
       "name": "AWS Spot 가격",
       "source": "AWS EC2 m6i.xlarge spot",
-      "value": "$0.12",
-      "num": 0.1161,
-      "tone": "neg",
+      "value": "$0.13",
+      "num": 0.1332,
+      "tone": "pos",
       "desc": "p4d.24xlarge 시간당 (AWS Pricing API)",
       "spark": [
+        0.469,
+        0.569,
+        0.577,
+        0.221,
+        0.236,
         0.0,
-        0.542,
-        0.611,
-        1.0,
-        0.751,
-        0.865,
-        0.873,
-        0.6
+        0.253,
+        1.0
       ]
     },
     {
@@ -665,37 +735,37 @@ export const SIXSENSE_DATA = {
       "name": "Manifold 봉쇄확률",
       "source": "Manifold Markets 'Will China launch a fu",
       "value": "33%",
-      "num": 0.3254,
+      "num": 0.3337,
       "tone": "neu",
       "desc": "대만 침공 확률 (Manifold Markets)",
       "spark": [
-        0.439,
-        1.0,
-        0.794,
-        0.158,
         0.0,
-        0.226,
-        0.394,
-        0.265
+        0.424,
+        0.739,
+        0.497,
+        0.418,
+        0.418,
+        0.818,
+        1.0
       ]
     },
     {
       "id": "A-7",
       "name": "구리 선물가",
       "source": "Yahoo Finance HG=F",
-      "value": "$6.25",
-      "num": 6.249,
+      "value": "$6.28",
+      "num": 6.282,
       "tone": "neu",
       "desc": "10주 선행 → DRAM (COMEX HG=F)",
       "spark": [
-        0.214,
-        0.0,
-        0.742,
-        0.747,
-        0.959,
+        0.694,
+        0.754,
+        0.422,
         1.0,
-        0.775,
-        0.742
+        0.735,
+        0.0,
+        0.104,
+        0.486
       ]
     }
   ],
@@ -704,19 +774,19 @@ export const SIXSENSE_DATA = {
       "id": "B-1",
       "name": "Earnings Call",
       "source": "Google News 'Earnings Call sentiment'",
-      "value": "-0.50",
-      "num": -0.5,
-      "tone": "neg",
+      "value": "+0.20",
+      "num": 0.2,
+      "tone": "neu",
       "desc": "메모리 4사 콜 감성 (Google News+LLM)",
       "spark": [
-        0.5,
-        0.9,
         1.0,
-        0.9,
+        0.769,
+        0.385,
         0.0,
-        0.75,
-        0.5,
-        0.25
+        0.385,
+        1.0,
+        0.769,
+        0.538
       ]
     },
     {
@@ -724,18 +794,18 @@ export const SIXSENSE_DATA = {
       "name": "대만 뉴스 감성",
       "source": "TechNews.tw + Digitimes + Google News RS",
       "value": "+0.11",
-      "num": 0.1135,
+      "num": 0.1056,
       "tone": "neu",
       "desc": "TechNews/Digitimes RSS (LLM)",
       "spark": [
-        0.0,
+        0.722,
         1.0,
-        0.662,
-        0.119,
-        0.887,
-        0.968,
-        0.386,
-        0.405
+        0.42,
+        0.0,
+        0.718,
+        0.754,
+        0.511,
+        0.362
       ]
     },
     {
@@ -750,10 +820,10 @@ export const SIXSENSE_DATA = {
         0.0,
         0.0,
         0.0,
-        0.0,
-        0.0,
-        0.0,
+        0.5,
         1.0,
+        0.0,
+        0.0,
         0.0
       ]
     },
@@ -761,8 +831,8 @@ export const SIXSENSE_DATA = {
       "id": "B-4",
       "name": "지정학 리스크",
       "source": "Caldara & Iacoviello GPR Index",
-      "value": "184.2",
-      "num": 184.177,
+      "value": "173.6",
+      "num": 173.6396,
       "tone": "neg",
       "desc": "Caldara & Iacoviello GPR Index",
       "spark": [
@@ -780,17 +850,17 @@ export const SIXSENSE_DATA = {
       "id": "B-5",
       "name": "LTA 비율",
       "source": "Google News 'LTA ratio'",
-      "value": "+0.00",
-      "num": 0.0,
-      "tone": "neu",
+      "value": "+0.50",
+      "num": 0.5,
+      "tone": "pos",
       "desc": "장기 계약가/현물가 (DRAMeXchange)",
       "spark": [
         0.0,
-        1.0,
         0.0,
         1.0,
         0.0,
-        1.0,
+        0.0,
+        0.0,
         0.0,
         0.0
       ]
@@ -799,52 +869,79 @@ export const SIXSENSE_DATA = {
       "id": "B-6",
       "name": "HBM/D램 믹스",
       "source": "Google News 'HBM mix'",
-      "value": "+0.00",
-      "num": 0.0,
-      "tone": "neu",
+      "value": "+1.00",
+      "num": 1.0,
+      "tone": "pos",
       "desc": "HBM 비중 변화 (TrendForce)",
       "spark": [
-        1.0,
-        0.8,
+        0.5,
         0.0,
         1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.5,
+        0.9,
+        0.5,
+        0.5,
+        1.0
       ]
     },
     {
       "id": "B-7",
       "name": "BOM 신호",
       "source": "Hacker News Algolia API",
-      "value": "+0.00",
-      "num": 0.0,
-      "tone": "neu",
+      "value": "+5.00",
+      "num": 5.0,
+      "tone": "pos",
       "desc": "PCB·기판 가격 (공급망 트랜스크립트)",
       "spark": [
-        0.0,
-        0.194,
-        0.0,
-        0.019,
         1.0,
-        0.038,
-        0.077,
-        0.0
+        0.035,
+        0.074,
+        0.006,
+        0.0,
+        0.076,
+        0.031,
+        0.004
       ]
     }
   ],
   "news": [
     {
-      "date": "2026-06-06",
-      "title": "중국은 세계의 원자재 갈륨의 약 99퍼센트를 생산한다, 거의 모든 스마트폰의 라디오 칩 안에 숨겨져 있는 금속이다",
-      "titleEn": "China produces about 99 percent of the world's raw gallium, the metal hidden inside the radio chips of almost every smartphone, and in late 2024 it banned exports of it to the United States as the chip war escalated",
-      "source": "Space Daily",
+      "date": "2026-07-10",
+      "title": "마이크론, 2035년까지 총 2,500억 달러 투자하며 미국 반도체에 최대 30억 달러 추가 투자",
+      "titleEn": "Micron Surges on Up to $3 Billion Additional US Semiconductor Investment, Pushing Total Through 2035 Past $250 Billion",
+      "source": "finance.biggo.com",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론, 2035년까지 총 2,500억 달러 투자하며 미국 반도체에 최대 30억 달러 추가 투자",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE43Nk96ZmgzQTZNcDV3YUJNTFVkWUQwNnNIcHpFNC1UVjI2U0t0ZE1mUGJCc0FXVG9vLWc4UlJRclB0TUtDUUI5YTg1aC02N0U0Zk42LVdRdFVQQ1M5SHB6aFFCaW5sNzZROEVjUl9Ra0FVY1ZnSGc?oc=5"
+    },
+    {
+      "date": "2026-07-10",
+      "title": "인텔 CEO 립부 탄, 헬륨 부족으로 인해 6월에 AI 칩이 마비될 수 있다고 경고",
+      "titleEn": "Intel CEO Lip-Bu Tan Warned Helium Could Choke AI Chips in June, and China’s Export Ban Might Prove Him Right",
+      "source": "Wccftech",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "중국은 거의 모든 스마트폰의 라디오 칩 안에 숨겨져 있는 금속인 세계의 원자재 갈륨의 약 99퍼센트를 생산하며, 2024년 말에는 미국에 대한 수출을 금지했다",
+      "summary": "인텔 CEO 립부 탄, 헬륨 부족으로 인해 6월에 AI 칩이 마비될 수 있다고 경고",
       "effects": {
         "short": {
           "tone": "neg",
@@ -860,18 +957,18 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMixgJBVV95cUxNaDRYU21iUF95VlBfNDZKbnhqcTA3X0hGZ2NmSnpSdW5pTWM0a1NuZ1ROZXpmMjVHWnotUU0zcndHcnVRUk9oODBPczFOZVcyWm80RFF4Y0NMa0w2Y1hHczdjSWFDWjBtRGctenFjZkhGZmRuaUEwSER5dE9nOWxfcEJ3UUpidV9VN2RfVC1HTkMtWERud3JpZlpHcTZma251aXRvTnlfSWJWNTAtUUQ2Vm44X2EwMHVqdDFGVExkTzFlZEhXYnFvNzFZcHNFa3dZTVVZT29SMGFCR3RYY0VYUEMtQ3JmemhMbDRpQUV6X1N6enEzNzl0UUxyWGdnTnh0cm1MVFI2ellWTzBwWm1NNWJfUHQ0cTRFZFlQeW1MMDNqOVNVMnRrNEMyaFFMVFpuazhoai15RzhGWF9rdmtJRDVKakZrZw?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPNzFGRzhMTlNDYktmYTI3WGhqVnNucUpSdV9NdmJxNEtXaGlzSHRrWUlvc0l3VkxBQTFSN2dkSjRJNk1kQWc0UURoRWJ3YkJ0MHpVR2prLVd3djNpMWZUQU9NSnpnME45cV8tTUJnX3RETFpITU95QmluUmtwdVVwRVJJRkp3dm5scjBNU2NzMm8yRXA5Mmh3LW94bEFWbmxRaFlwWHpETzNnZklGR2tnNDlHdVlSdXlER1ZsRDJWUWVSSEFTZ2F0UtIBzgFBVV95cUxOMEd2bEpCZTNxSUFtQURkV2lmQVJEeVBtTjRYcEQ3NWtEazBqNWw5YVJKaWRfbXNyb2ZFNkppZ3F2VmZGbFFzYjJmMkhBT1MtR2pyQ3NWaWRrR0xrYmpXNlNrMEIzVkt1VU15QnhHaUZrS0ZiWG5HLU5YMFM1ZlVuQWNXLUN5QnJQV3E5U2lxazhHOGEzaVNreVNzdUZkb3BPRllLaEN2NE96X1QzMjk4Q3hDYlpiTmJLQWU0SHY0c3VYZ1RyVEo0MGhfYmFtdw?oc=5"
     },
     {
-      "date": "2026-05-30",
-      "title": "화웨이 회장은 미국의 칩 수출 제한에 감사한다, 그것이 중국의 반도체 산업을 강화했다고 말한다",
-      "titleEn": "Huawei chairman thanks the US for export restrictions on chips, says it supercharged China’s semiconductor industry — Washington’s export controls encouraged Chinese firms to invest in R&D and build their own tech stack competing with American tech - Tom's Hardware",
-      "source": "RSS",
+      "date": "2026-07-10",
+      "title": "중국, 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적으로 헬륨 수출을 금지",
+      "titleEn": "China issues temporary helium export ban as Iran war strains global supplies",
+      "source": "South China Morning Post",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "화웨이 회장은 미국의 칩 수출 제한에 감사한다, 그것이 중국의 반도체 산업을 강화했다고 말한다 - 워싱턴의 수출 통제는 중국 기업들이 투자하도록 격려했다",
+      "summary": "중국, 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적으로 헬륨 수출을 금지",
       "effects": {
         "short": {
           "tone": "neg",
@@ -887,18 +984,18 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxPSlAyRlFSMzhNZU01anhhYmdHMVVJeHpBZXRlelZkcUhMcU1MVHZuM2QzZEFxRV82U3NBbDRtUzhKajM1NDBWMEIzSUhBX2psLVFGZGo0U1pGS09uS090d0RzbW9vYVh2cjFKWDFndDh2YlBTSG9zazduZWZTOGZ6WWZlenJZTnBRSTYzSGZsd2w1SFJPczRKSnlwLWEwb0VtaDh4a0xSYlRuck8wd1RzNEdSV0NZM0s4ekFqb2ppS2gyMkdmNDFXLWFmZzQtQ29CRHltNFpROGdqdEswU1BqMTU5Y3BJaW9vMkd0cnJEMzVhcEM5SVZQVU9UZkRuX2pJZldlbnF0TGNfdERFX1M4dkdJUW5Ka3FMY0ZIaGF2X0UxdnozajIxSFFGcnlmU1pETl91b0djaUNxWFdMQXBQWnpzS0VMNUZ4MHVuSTR0azk2OEJxY0xOZ3pWOGdwY3ZsRFNmdWxpaGpNMG1sUldLR29KM2xadkNDVUE?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPNm42Tzk1R25tR2prX1ZydFZ5OWFvM0JyMkI3Yk5aRWFYdHJNbVExRGRfa2ZjR0NPTE5qSGEzRjNrWDhoU0Rtd1NCeGwyN1ZJbWNwalVVZG85TGpBNGNwM3ZabkRkVmM2eV84aHJWckFodG9NVVNSeHBOcHU3SjRFRExuNzBPYURKM1hEYzhPbEFZWEdRM2ZzcVd3VktWTzE1UDBpY01n0gGmAUFVX3lxTFBEczhpNER1TjdhdTllSnNvNDY3X0pwY0hPTXM0Q2YzYjZ2MTcyN1czdlVlcks0Umx2dmctaU4xOVVndEk5Q3EwVTFlQklsc1hTOE5odGFCNU5ldlZuRURoUDJpM3c3TVJBSmpZTDFPby1HcjgxMXBPOWZXUU9jNUtDeURxVzd2STFHTXFtNUlIcjNDakNKeTdWTzVBTTZXeTI4WXE1Z3c?oc=5"
     },
     {
-      "date": "2026-06-10",
-      "title": "대만은 미국과 일치하여 화웨이와 같은 수출 금지 목록에 있는 회사뿐만 아니라 모든 중국 고객에게도 AI 칩 판매를 제한할 것을 고려하고 있다",
-      "titleEn": "Taiwan is considering aligning itself with the US by restricting the sale of AI chips not only to companies on export blacklists like Huawei, but also to 'all Chinese customers.'",
-      "source": "GIGAZINE",
+      "date": "2026-07-11",
+      "title": "중국, 헬륨 수출을 금지하여 칩 공급망에 다시 충격을 가함",
+      "titleEn": "China Bans Helium Exports, Rattling Chip Supply Chain Again",
+      "source": "Seoul Economic Daily",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "대만은 미국과 일치하여 화웨이와 같은 수출 금지 목록에 있는 회사뿐만 아니라 모든 중국 고객에게도 AI 칩 판매를 제한할 것을 고려하고 있다",
+      "summary": "중국, 헬륨 수출을 금지하여 칩 공급망에 다시 충격을 가함",
       "effects": {
         "short": {
           "tone": "neg",
@@ -914,99 +1011,18 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNNUhPYWdXV0U4blRqYzVGRXI4SFVXYjREc2ZrajJBN1lyRzFCNDgxV2ZTdmRGWGhicTZuNWhMV2tlaUtheHhEVnAxTm1Bd1FGMEVmUXpmUWE2c2M4YWdJclpISzZuWnpGYUFZcnl2UjRoUXhxM1FBWkNCMVpEOElCcA?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQTE9yWU40MEtNa212ei1FbmVxTi0tNTl3ZF9jMC15OTQtSmw3MFZKWTFxWWVYaFNtNkwyLW5ZdTFtdEIzWF9odjkwWEVvTGdzbERwc3NXaHBHTG50VUwwbUliMUIzNkhZWkxraDdMazZXTVI2bnRDSFlWNHpMS0UteU9rRENPckxnMjRBbjZhb001Qkx2R3ktQ29sWnZueEJpS0E?oc=5"
     },
     {
-      "date": "2026-06-09",
-      "title": "대만은 모든 중국에 대한 AI 칩 수출을 범죄화하는 것을 고려하고 있다 - 더 엄격한 조치는 서버 밀수를 범죄로 만들 것이다",
-      "titleEn": "Taiwan weighs criminal ban on AI chip exports to all of China — stricter measures beyond blacklisted firms would make smuggling servers a crime - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "대만은 모든 중국에 대한 AI 칩 수출을 범죄화하는 것을 고려하고 있다 - 더 엄격한 조치는 서버 밀수를 범죄로 만들 것이다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOWWpRaFhQZzQ0RWd2NEpaN2xmTllwTlpNV01JWGVHN0xZbUdFSk5WcF96cjhrbGFUSGFadERPZWE0eFF5UWdjZXpzZFRIeWljRkhXZ19vTmt1SlVYRUFzMFh2UlhXOUpIaHJ3Z0wzSWI2ckRaQVkxN3hwVmNCd1Z2V1BoV2VHVVNwTGVTMkhQTldmclVzcmZHZ0NRTnVtalc2Rlo1VDVOSExHb2tFcF95dlZlTXBZNXhZOW9OaDI0MmRzenl0eEZRZjlPVQ?oc=5"
-    },
-    {
-      "date": "2026-05-21",
-      "title": "엔비디아의 CEO 젠슨 황은 중국이 미국의 금지에도 불구하고 '必要한 모든 칩을 가지고 있다'고 경고했다",
-      "titleEn": "Nvidia CEO Jensen Huang warns China has ‘all the chips they need’ despite US bans",
-      "source": "Fox Business",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "엔비디아의 CEO 젠슨 황은 중국이 미국의 금지에도 불구하고 '必要한 모든 칩을 가지고 있다'고 경고했다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPRVd5VUM3b2ZBYWdZT251YVQ4WnE4WFNmdTRTbVFJY1lWbW1rbjFza3lkMTFEVUgyV195a3Z4eHdnWUlsX3ZHdTJJZ282TlFoMHlmc3FJME5lODZITm95MlhoN2ZrVFF5LWxua2xlclNDcGVsaFRmYkRkaXpHVThvUGRiUGtDZlpjTDVRTkxFMzNLMkFBLXhpek1uR0lEWVZ6YVJXOVE3RdIBrAFBVV95cUxNUG1LWE4xUjZ3ZE90Tk9Ockh5b1JyRTRqb1o4U0swX2R1YkRCZ3pYRThfS051ZDBnODJvSGZ6MnBhQWZmZDl1TTRVZE53Q1RveDJLb0tMWEY1YjZZQ2R5bjhQaHNQdmtMTkNtZ2pJNk03RjhRWVc1V1RGdlVNakhZWWFia1hnR1NDaEVHY0xBbERTaG4xTHFNVTJqbHlWSjFOZU9WUUloV3FKa1M0?oc=5"
-    },
-    {
-      "date": "2026-05-20",
-      "title": "중국은 젠슨 황이 방문했을 때 엔비디아 5090D V2를 금지했다, 보고서가 주장한다",
-      "titleEn": "China banned Nvidia 5090D V2 while CEO Jensen Huang was in town, report claims — move comes as Beijing pushes its AI tech companies to use homegrown chips - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "중국은 젠슨 황이 방문했을 때 엔비디아 5090D V2를 금지했다, 보고서가 주장한다 - 베이징은 AI 기술 회사들이国产 칩을 사용하도록 밀어붙이는 중이다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMinwJBVV95cUxQRUpSaEJmMmtoWmVub09NS2FsOUM4Zkx0TzI3R2hYOUVWVFB0VFlpSGc2SFhsZHJpWjRHaU1uekdEZGZQcDV2NllaOGlKNmpHcWtEUlJBUFUtSlBaTlZ5elVBNXdxSWU2Nm90dVNlMmlnQ1Jfcmh1amZBZ0JqTGNmekNGQzhiLTBTUnJEME5UWjRqakNDR2xKQ1lXenZjYmVPVTE5dnNKdXNfckRZTkcwSjJ0Q3FQYkV4bmFNTUJkTU0yaFVMTDZaaUQzaFlnRDdSNW5aVXlHenRSM0ZnNktwRVRNY3ZIa3JqYUhLMzhfOHVWY2sydWVxRll3Q1labkdEbGROQkdjX25lcllUTUkzazh2ZXhrOHYyQktGVkxsbw?oc=5"
-    },
-    {
-      "date": "2026-05-18",
-      "title": "최고치의 가격은 SSD와 메모리 제조업체들이 칩을 구입하기 위해 8억 8천만 달러를 빌리도록 강요한다",
-      "titleEn": "Record-high pricing pushes SSD and memory makers to borrow $880 million just to afford buying chips — Adata, TeamGroup, and others take on substantial debt to survive shortages - Tom's Hardware",
+      "date": "2026-07-11",
+      "title": "SK하이닉스, 2027년이 메모리 부족의 '최악의 해'가 될 것이라고 전망",
+      "titleEn": "SK Hynix says 2027 will be the 'worst year' for memory shortage, forecasts crunch to last until 2030 — CEO shares grim outlook on the day SK Hynix gets listed on Nasdaq - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "최고치의 가격은 SSD와 메모리 제조업체들이 칩을 구입하기 위해 8억 8천만 달러를 빌리도록 강요한다 - Adata, TeamGroup, 기타 회사들이 부족함을 극복하기 위해大量의 부채를 떠안는다",
+      "summary": "SK하이닉스, 2027년이 메모리 부족의 '최악의 해'가 될 것이라고 전망",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1022,45 +1038,126 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQb3RZamJTdjlOSmRFdUoxekM5cjNSUmNoaUZJWFRrM0U1d1NFQ0lsX191NWs0MlNNSGc1OS1tSnNxdVAwdUZzRVVfUUdtd3dub1NIaTdTcU9VYzlvUGQySEkzSUpXaDRNRFJqT0VOMHE4RGlXNTJjM294aElUbWxsUG4tRGZlak9lUFdJTFRwZ0RiOF9Ma2tKaFplN1l2TjZsSVlWSnRoR2dZa0tGZENZ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMitgJBVV95cUxQRndoZ2lHUFZQeldKQU1SZnZDeUEzVHVRNXNwY1pIV3J1R2FPUVJqSGNtYmRuM3hpd2Y1U0dwRlcwVnlTbnk4dHJzZFo2elBxVDZ1cXNzS2tNRlVhWHlvUC0wbXJCampjUTBsVmZfZU9Yb2NmZFZiNGVlZmVqenlBT1hYbmpHcnM4bXpWNFJyN2Z5d09IZFc5REV4Z2lMcC1tbnRmZHlwM1BFV3JJWjVrNVZ6eXl2akdMZjhLZjhzTy1US0RsaUdCQk1ZMVdtVUpfMVJhTnQxb2RGM1cteG9POHo5Q0JlOEs2TGNDN0U3ZldKZTE1LVRDaFdmeGJTbC14VmZiXzJTT0FGTXBzT3ZHYkpCWndaTzNSU2F4dktGOHVxQnlSbk90T3dvR3VERFBrcUlucFR3?oc=5"
     },
     {
-      "date": "2026-06-10",
-      "title": "세계 에지 AI 고대역 메모리 칩 - 시장 분석, 전망, 크기, 트렌드",
-      "titleEn": "World Edge AI High Bandwidth Memory Chips - Market Analysis, Forecast, Size, Trends and Insights",
-      "source": "IndexBox",
-      "score": -0.5,
-      "tone": "neg",
+      "date": "2026-07-11",
+      "title": "반도체 공장, 빨리 세워야 이긴다…'메모리 빅3' 증설 전쟁 - 머니투데이 - 머니투데이",
+      "titleEn": "반도체 공장, 빨리 세워야 이긴다…'메모리 빅3' 증설 전쟁 - 머니투데이 - 머니투데이",
+      "source": "RSS",
+      "score": 0.5,
+      "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "세계 에지 AI 고대역 메모리 칩 - 시장 분석, 예측, 크기, 트렌드 및 통찰",
+      "summary": "반도체 공장, 빨리 세워야 이긴다…'메모리 빅3' 증설 전쟁 - 머니투데이 &nbsp;&nbsp; 머니투데이",
       "effects": {
         "short": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxONTFOS0NfdXlocXROQmNtQzJlZmJrYWVudlc2LU5PeXhlRk91QzM1THQxdmxBTHBtYWEtRUZKTE4yVXB0ZjVCOHl1bFQxZWxhakxLcmZJV2JLTTR6cWxuTndJV0Y4cjd1ZDk5SmdQMHdDeEpXNGxZXy02anN0VE0xZkpVVVZoWWpwOTBsc3hvU1lOdHB2UVl2d0czNG9pOFZLTkZIQmptTk9raHJDTmNnYWo1cGxXZHItRmliX0NzSnM0WXBTRVg4dlJWN294LXFGYmZVRGN2RQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1QTnctM0N0dmJNaW5iUUtxcm8xdkJPZEpXX2NVOUF0Sk9fVUNQWEs5VmRsdTFwYm1fMVZ5VTBYTmhWVG1mbVBFclFYZ3Y2ekYyZkZqY1gxNXpYVHhDSXNPMkpINy1BS3ZWaTRaS9IBckFVX3lxTE1oYkFPMUlXWVN5VENkMHNOeWJ5QVVDQ1VsQ2MybUU1cGZBb1R6QTAzVFkzNHlTSG1UNzU2UWJQaXpqUHBOUU5JYjNlM2Q0TXBIX2lVdnRPVHFpNEJxdy1QVWIzUkstMVRrX1BuRDJOTXBJUQ?oc=5"
     },
     {
-      "date": "2026-06-02",
-      "title": "중국 군대는 워싱턴의 수출 통제 이후에도 엔비디아 칩을 구입하고 있다, 연구가 주장한다",
-      "titleEn": "Chinese military has been acquiring Nvidia chips, even post-Washington export controls, research claims — multiple institutions linked to the PLA asked for Nvidia AI chips, according to publicly available documents - Tom's Hardware",
+      "date": "2026-07-10",
+      "title": "나냐, 2027년에 62억 달러로 자본 지출을 4배 늘릴 계획, DRAM 가격 상승",
+      "titleEn": "Nanya to quadruple capital spending to $6.2 billion in 2027 as DRAM prices push gross margin to 79.5% — Q2 revenue skyrockets as ASPs for memory continue to surge - Tom's Hardware",
       "source": "RSS",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "나냐, 2027년에 62억 달러로 자본 지출을 4배 늘릴 계획, DRAM 가격 상승",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxONzhoSW5rOGc3R0d1bWFrTXp0ZWVucmN2QjQ5NGFWVVdwRFZRc1RxM0RFQWZoaUpwbWVXVzRnZ0Y3R1ZSYnlBTDIzQUVXR3hTUEx1UXY4S004S3BVa3ZjY2lKZ255NUhndjFXeXloRTVtdV9MbXlIcTZpWm8zb1pqMkREeWpNTDBXU0ptNWhBSXZOdmZkMzFTbVJzeDA3dWZUX2Y4?oc=5"
+    },
+    {
+      "date": "2026-07-10",
+      "title": "칩 제조업체 SK하이닉스, 시장 데뷔 첫날 약 13% 상승",
+      "titleEn": "Chip giant SK Hynix closed out its market debut roughly 13% higher on Friday.",
+      "source": "Yahoo Finance",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "칩 제조업체 SK하이닉스, 시장 데뷔 첫날 약 13% 상승",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOa0l5ZVcyaUwzY2ZZVW1HdjNWd2pxZU5qVW1KS3F6RFUwVmwwQnJyY3dheVhHYWZuQTE3cGtLYWpjYnpOLVhIVmdYbWs4QS1jMDRGTjBJVFFzQzNHNGx4aXY3MlBsYWFLQ0RTZnc4QUV1a0pTZ2VGWUxGdFM3UGY3RmZaWWlXU2Q0NkZEdkNERWJXZWhWMkNtUm1kTWktQi1Sb0dMZjhPY1Yyd0k?oc=5"
+    },
+    {
+      "date": "2026-07-10",
+      "title": "SK하이닉스 CEO, 2027년 메모리 역사상 최악의 공급 부족이 발생할 것이라고 경고",
+      "titleEn": "SK Hynix CEO Warns 2027 Will Bring 'Worst Supply Shortage in Memory History,' Tightness to Persist Beyond 2030s",
+      "source": "finance.biggo.com",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "SK하이닉스 CEO, 2027년 메모리 역사상 최악의 공급 부족이 발생할 것이라고 경고",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFAtTEM3Z2tsekxJRHR3NzQ0dF9raGVWcjREMm5pTEpZbVZYVThTeGZObEozeTA4NUNvV0ZrUk5meDJIZjZGWkhJdTQzNzFFc3RXS01rUkFySnpPWFdUUjJjOTZpSnVfYksyY1FnUloyVjRZTzF0b1E?oc=5"
+    },
+    {
+      "date": "2026-07-11",
+      "title": "중국, 이란 전쟁으로 공급이 긴장함에 따라 칩 제조에 중요한 헬륨 수출을 금지",
+      "titleEn": "China blocks exports of helium, key for chipmaking, as Iran war squeezes supply",
+      "source": "ET Manufacturing",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "중국 군대는 워싱턴의 수출 통제 이후에도 엔비디아 칩을 구입하고 있다, 연구가 주장한다 - 여러 PLA와 관련된 기관들이 엔비디아 AI 칩을 요청했다",
+      "summary": "중국, 이란 전쟁으로 공급이 긴장함에 따라 칩 제조에 중요한 헬륨 수출을 금지",
       "effects": {
         "short": {
           "tone": "neu",
@@ -1076,137 +1173,110 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi7AJBVV95cUxOQXFuR2ZCOW9EanUyZS1TUjRMME5RRTFVYmdROWhqcDZINGhpVmREVy0ySDhDR2MwUjB4RnF6Q0Z6UU1zZV9PYnE5eG5qVzVSdmVKUm5JRHJYUVM1emIxWmlKbS02VnEwVTBQRnZ1V29KbmNSaXJ0VzlsSjNoRGJHYVRTajhRU1ZCSjZQQVc1dWNOUWRJb1B3WGxPV1ZrZzNmUXNqR0dKZkFtb1p0emRxZ2VjOHZGMXBlZzFEQzkyYzctbnJiSGQ4b3dJb2xxNWdNSU0zdm1zdEk5WW01SlNFa3QycDRpdTNrMDkzbWZwbGFwR1RnRDdYV3pZdzBaV28tZHBsUENtbHRkanRRcnIzVExtS3ZfdDhHbUJNMnFvT2JvY3lMeE5mZnpfSF9Pa01fdlY2MkxIWVc0bUZsZmdaRnBEVkhJYkdRZWd5ODVaYzVkeF8waHdEd1FFNWFjcHlfbUFZeGlZNkpoVGtD?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "트럼프는 중국이 미국의 승인을 받았음에도 불구하고 엔비디아 H200 구입을 금지하고 있다고 말한다 - 중국이 구매를 금지하지 않기로 선택했다고 말한다,国产 칩을 대신 사용한다",
-      "titleEn": "Trump says China is blocking Nvidia H200 purchases despite US approval — says country 'chose not to' sanction purchases, pushing homegrown chips instead - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "트럼프는 중국이 미국의 승인을 받았음에도 불구하고 엔비디아 H200 구입을 금지하고 있다고 말한다 - 중국이 구매를 금지하지 않기로 선택했다고 말한다,国产 칩을 대신 사용한다",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQZDdiaGVxVVRCWmVvSXNORUlUNy1nUlFTRm5XdVhRUjdMWFhZang4QmJwTm1GRU1UQmVoaEdhcTdISkxjcTU3VFg1eEdHQW5wMXNhbUZhQnJxaVIzamtpRVZSNEx0MXpTTmdPcWk4SnRodDd1MTdFM2dUR2tBQVJDY0lIaFEtSW5SOFZJTlVqaw?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPRVltNGRsME4xS0JaMFM3YTNUNG1SU3lhZnZtMWE5bjVIcUh2bEhpZWZHM3NUbGZOX3MwTkQ5OWxFWHd6S3NfX3lMZkx3TGtGd0RYYzB3alJKNUdFS05oU2RaMG5iVEVGVFJUSDl0Y2hVellWcUdwQ09Sb0JlaHc2MzdHa1lGN1hGU1JUNFRmTzNwLUJ3c1AzWEZmNXNSYk01eVZQZy1LYWNhOFAtZ0lDLXB2c1pKZ21MblpZdldRUGNNdlMtdE5oSXB1ZWtFcEh4WkxlYkZnS2Nub1A1bzRjQ1JkSGdwbVd4THVN0gHrAUFVX3lxTE9FWW00ZGwwTjFLQlowUzdhM1Q0bVJTeWFmdm0xYTluNUhxSHZsSGllZkczc1RsZk5fczBORDk5bEVYd3pLc19feUxmTHdMa0Z3RFhjMHdqUko1R0VLTmhTZFowbmJURUZUUlRIOXRjaFV6WVZxR3BDT1JvQmVodzYzN0drWUY3WEZTUlQ0VGZPM3AtQndzUDNYRmY1c1JiTTV5VlBnLUthY2E4UC1nSUMtcHZzWkpnbUxuWll2V1FQY012Uy10TmhJcHVla0VwSHhaTGViRmdLY25vUDVvNGNDUmRIZ3BtV3hMdU0?oc=5"
     }
   ],
   "macro": [
     {
       "id": "ust10",
       "name": "미국 10년물 국채금리",
-      "value": "4.54%",
+      "value": "4.53%",
       "change": "↑ 부정",
       "tone": "neg",
       "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)",
       "history": [
-        4.38,
-        4.41,
-        4.48,
-        4.6,
         4.47,
         4.49,
-        4.54
+        4.51,
+        4.46,
+        4.44,
+        4.45,
+        4.53
       ]
     },
     {
       "id": "fed",
       "name": "미국 금리",
       "value": "3.62%",
-      "change": "↓ 긍정",
+      "change": "↑ 긍정",
       "tone": "neu",
       "desc": "Effective Federal Funds Rate (FRED DFF)",
       "history": [
-        3.64,
+        3.62,
+        3.62,
+        3.62,
         3.63,
         3.63,
-        3.62,
-        3.62,
-        3.62,
+        3.63,
         3.62
       ]
     },
     {
       "id": "dxy",
       "name": "달러 인덱스 (DXY)",
-      "value": "99.9",
+      "value": "101.0",
       "change": "↑ 부정",
       "tone": "neg",
       "desc": "강달러 = DRAM 수출 부정 (DX-Y.NYB)",
       "history": [
-        98.21,
-        97.84,
-        99.27,
-        99.32,
         98.91,
         100.07,
-        99.91
+        99.75,
+        100.85,
+        101.36,
+        100.86,
+        100.97
       ]
     },
     {
       "id": "pmi",
       "name": "산업생산지수",
-      "value": "102.5",
+      "value": "102.6",
       "change": "동결",
       "tone": "neu",
       "desc": "FRED INDPRO (PMI 대체)",
       "history": [
-        102.5,
-        102.5,
-        102.5,
-        102.5,
-        102.5,
-        102.5,
-        102.5
+        102.65,
+        102.65,
+        102.65,
+        102.65,
+        102.65,
+        102.65,
+        102.65
       ]
     },
     {
       "id": "krw",
       "name": "USD/KRW",
-      "value": "1,526",
-      "change": "↑ 부정",
-      "tone": "neg",
+      "value": "1,499",
+      "change": "↓ 부정",
+      "tone": "pos",
       "desc": "원화 약세 = 수입 원가↑ (Yahoo KRW=X)",
       "history": [
-        1471.73,
-        1460.42,
-        1496.15,
-        1518.65,
         1505.96,
         1557.47,
-        1525.81
+        1516.23,
+        1526.01,
+        1533.12,
+        1527.3,
+        1498.87
       ]
     },
     {
       "id": "cu",
       "name": "구리 가격",
-      "value": "$6.25",
+      "value": "$6.28",
       "change": "↓ 긍정",
       "tone": "neg",
       "desc": "LME 대체 (COMEX HG=F)",
       "history": [
-        5.93,
-        6.25,
-        6.25,
-        6.34,
         6.36,
         6.26,
-        6.25
+        6.43,
+        6.35,
+        6.14,
+        6.17,
+        6.28
       ]
     }
   ],
@@ -1218,7 +1288,7 @@ export const SIXSENSE_DATA = {
       "risk": "mid",
       "title": "[모니터링] 한국 메모리 산업 이슈 추적 (파업/정전/화재)",
       "impact": "공급↓",
-      "date": "2026-06-09",
+      "date": "2026-07-01",
       "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 국내 반도체)",
       "effects": {
         "short": {
@@ -1240,12 +1310,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "이란",
+      "region": "우크라이나",
       "risk": "high",
-      "title": "유가가 급등한다, 이란이 미국의 공격 이후 호르무즈 해협을 폐쇄한다",
+      "title": "우크라이나 전쟁 브리핑: 러시아, 디젤 수출을 금지하며 정유 공장 공격으로 가스 부족 발생",
       "impact": "공급↓",
-      "date": "2026-06-11",
-      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-07-09",
+      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1268,10 +1338,10 @@ export const SIXSENSE_DATA = {
       "type": "기상이변",
       "region": "글로벌",
       "risk": "high",
-      "title": "쓰나미 경보가 여러 나라에서 발령된다, 대규모 지진과 여진이 필리핀을 공격한다",
+      "title": "인도네시아 팔루 근처에서 규모 6.7의 지진 발생, 쓰나미 경고 없음",
       "impact": "공급↓",
-      "date": "2026-06-08",
-      "summary": "글로벌 규모 ? 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-16",
+      "summary": "글로벌 규모 6.7 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1294,10 +1364,10 @@ export const SIXSENSE_DATA = {
       "type": "금융 위기",
       "region": "이란",
       "risk": "high",
-      "title": "새로운 파업과 급등하는 인플레이션이 이란 전쟁의 새로운 단계를 알린다",
+      "title": "이란에 대한 미국의 공격으로 원유 가격이 급등",
       "impact": "가격?",
-      "date": "2026-06-10",
-      "summary": "인플레이션 지표 (이란) — 금리 결정 변수, 거시 환경 변화 모니터링. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-07-07",
+      "summary": "국제 유가 변동 보도 (이란) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -1318,15 +1388,15 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-5",
       "type": "기타",
-      "region": "글로벌",
-      "risk": "high",
-      "title": "화웨이의 노동자들이 보너스와 관련된 보고서를 근거로 파업과 노조화를 고려하고 있다",
+      "region": "미국",
+      "risk": "low",
+      "title": "걸프 지역의 긴장으로 유가가 상승하며 달러화가 상승, 금리 인상 예상 증가",
       "impact": "가격?",
-      "date": "2026-05-26",
-      "summary": "글로벌 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-07-09",
+      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 영향 평가 (휴리스틱 · 기타)"
         },
         "mid": {
@@ -1344,12 +1414,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-6",
       "type": "물리적 충돌",
-      "region": "이란",
+      "region": "우크라이나",
       "risk": "high",
-      "title": "인도 루피가 급등하는 유가로 인해 미국-이란 휴전이 무너지는 것을 두려워한다",
+      "title": "우크라이나 전쟁 1,598일: 러시아의 유가 정제 공장에 대한 파업으로 더 많은 장기 범위의 제재",
       "impact": "공급↓",
-      "date": "2026-06-11",
-      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-07-10",
+      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1370,12 +1440,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-7",
       "type": "기상이변",
-      "region": "미국",
+      "region": "일본",
       "risk": "high",
-      "title": "자연재해 경보: 규모 7.8의 지진과 쓰나미 경보가 민다나오를 공격한다 - 미국 대사관",
+      "title": "일본 북부 해역에서 규모 7.2의 지진 발생, 쓰나미 경고 없음",
       "impact": "공급↓",
-      "date": "2026-06-08",
-      "summary": "미국 규모 7.8 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-25",
+      "summary": "일본 규모 7.2 지진 — 일본 NAND/소재 공급(키오시아 등) 단기 영향 모니터링. DRAM 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1396,12 +1466,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-8",
       "type": "금융 위기",
-      "region": "이란",
+      "region": "미국",
       "risk": "mid",
-      "title": "유럽중앙은행이 이란 전쟁으로 인한 인플레이션 급등을 억제하기 위해 금리 인상을 할 예정이다",
-      "impact": "가격?",
-      "date": "2026-06-11",
-      "summary": "인플레이션 지표 (이란) — 금리 결정 변수, 거시 환경 변화 모니터링. (LLM 비활성 — 휴리스틱 요약)",
+      "title": "10년 만기 국채 금리가 4.56%로 상승, 최근 최고치에 근접하며 추가 금리 인상 예상",
+      "impact": "물류↑",
+      "date": "2026-07-11",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -1422,12 +1492,12 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-9",
       "type": "기타",
-      "region": "이스라엘",
-      "risk": "high",
-      "title": "이스라엘의 공습이 레바논의 티르 시를 공격한다, 이란의 경고에도 불구하고",
+      "region": "미국",
+      "risk": "low",
+      "title": "연방準備제도(Fed)의 금리 결정이 은행 계좌, 대출, 신용 카드, 및 투자에 미치는 영향",
       "impact": "가격?",
-      "date": "2026-06-09",
-      "summary": "이스라엘 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-06-17",
+      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -1450,9 +1520,9 @@ export const SIXSENSE_DATA = {
       "type": "물리적 충돌",
       "region": "이란",
       "risk": "high",
-      "title": "네타냐후가 미국, 레바논 전쟁, 이란 휴전 사이에서 고민한다",
+      "title": "미국-이란 분쟁이 격화됨에 따라 미사일 공격이 중동 휴전을 위협함",
       "impact": "공급↓",
-      "date": "2026-06-10",
+      "date": "2026-07-10",
       "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -1474,186 +1544,186 @@ export const SIXSENSE_DATA = {
   ],
   "accuracy": [
     {
-      "predDate": "2026-04-20",
-      "horizon": "7주",
-      "pred": 4.835,
-      "actual": 5.429,
-      "error": 10.9,
-      "tone": "neg"
-    },
-    {
-      "predDate": "2026-04-20",
-      "horizon": "7주",
-      "pred": 4.939,
-      "actual": 7.229,
-      "error": 31.7,
-      "tone": "neg"
-    },
-    {
-      "predDate": "2026-04-20",
-      "horizon": "7주",
-      "pred": 5.043,
-      "actual": 7.318,
-      "error": 31.1,
-      "tone": "neg"
-    },
-    {
-      "predDate": "2026-04-20",
-      "horizon": "7주",
-      "pred": 5.146,
-      "actual": 7.709,
-      "error": 33.2,
-      "tone": "neg"
-    },
-    {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "7주",
       "pred": 5.25,
-      "actual": 9.493,
-      "error": 44.7,
+      "actual": 7.717,
+      "error": 32.0,
       "tone": "neg"
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "7주",
-      "pred": 5.354,
-      "actual": 8.603,
-      "error": 37.8,
+      "pred": 5.412,
+      "actual": 7.017,
+      "error": 22.9,
       "tone": "neg"
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "7주",
-      "pred": 5.457,
-      "actual": 8.62,
-      "error": 36.7,
+      "pred": 5.574,
+      "actual": 7.565,
+      "error": 26.3,
       "tone": "neg"
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
+      "horizon": "7주",
+      "pred": 5.737,
+      "actual": 9.004,
+      "error": 36.3,
+      "tone": "neg"
+    },
+    {
+      "predDate": "2026-05-18",
+      "horizon": "7주",
+      "pred": 5.899,
+      "actual": 8.842,
+      "error": 33.3,
+      "tone": "neg"
+    },
+    {
+      "predDate": "2026-05-18",
+      "horizon": "7주",
+      "pred": 6.061,
+      "actual": 7.818,
+      "error": 22.5,
+      "tone": "neg"
+    },
+    {
+      "predDate": "2026-05-18",
+      "horizon": "7주",
+      "pred": 6.223,
+      "actual": 7.464,
+      "error": 16.6,
+      "tone": "neg"
+    },
+    {
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 5.561,
+      "pred": 6.385,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 5.665,
+      "pred": 6.548,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 5.769,
+      "pred": 6.71,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 5.872,
+      "pred": 6.872,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 5.976,
+      "pred": 7.034,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.08,
+      "pred": 7.197,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.183,
+      "pred": 7.359,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.287,
+      "pred": 7.521,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.391,
+      "pred": 7.683,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.494,
+      "pred": 7.846,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.598,
+      "pred": 8.008,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.702,
+      "pred": 8.17,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.805,
+      "pred": 8.332,
       "actual": null,
       "error": null,
       "tone": null
     },
     {
-      "predDate": "2026-04-20",
+      "predDate": "2026-05-18",
       "horizon": "21주",
-      "pred": 6.909,
+      "pred": 8.495,
       "actual": null,
       "error": null,
       "tone": null
     }
   ],
   "snapshotPast": {
-    "date": "2026-04-20",
-    "actual": 8.62,
-    "predicted": 5.1,
-    "error": 40.8,
+    "date": "2026-05-18",
+    "actual": 7.464,
+    "predicted": 6.287,
+    "error": 15.8,
     "signals": [
       {
         "id": "A-1",
         "name": "대만 공급망",
-        "then": "262.8",
+        "then": "288.2",
         "thenTone": "neu",
-        "now": "291.8",
+        "now": "311.2",
         "nowTone": "pos",
         "direction": "up",
         "change": "개선"
@@ -1681,9 +1751,9 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-4",
         "name": "재고/출하 지수",
-        "then": "3842748.0",
+        "then": "3858177.0",
         "thenTone": "neu",
-        "now": "3842748.0",
+        "now": "3858177.0",
         "nowTone": "neu",
         "direction": "flat",
         "change": "유사"
@@ -1691,9 +1761,9 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-5",
         "name": "AWS Spot 가격",
-        "then": "+0.09",
+        "then": "+0.13",
         "thenTone": "neu",
-        "now": "+0.12",
+        "now": "+0.13",
         "nowTone": "pos",
         "direction": "up",
         "change": "개선"
@@ -1701,19 +1771,19 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-6",
         "name": "Manifold 봉쇄확률",
-        "then": "+0.34",
+        "then": "+0.32",
         "thenTone": "neu",
         "now": "+0.33",
-        "nowTone": "neg",
-        "direction": "down",
-        "change": "약화"
+        "nowTone": "pos",
+        "direction": "up",
+        "change": "개선"
       },
       {
         "id": "A-7",
         "name": "구리 선물가",
-        "then": "+6.10",
+        "then": "+6.25",
         "thenTone": "neu",
-        "now": "+6.25",
+        "now": "+6.28",
         "nowTone": "pos",
         "direction": "up",
         "change": "개선"
@@ -1721,9 +1791,9 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-1",
         "name": "Earnings Call",
-        "then": "+1.00",
+        "then": "+0.80",
         "thenTone": "neu",
-        "now": "-0.50",
+        "now": "+0.20",
         "nowTone": "neg",
         "direction": "down",
         "change": "약화"
@@ -1731,12 +1801,12 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
-        "then": "+0.15",
+        "then": "+0.10",
         "thenTone": "neu",
         "now": "+0.11",
-        "nowTone": "neg",
-        "direction": "down",
-        "change": "약화"
+        "nowTone": "pos",
+        "direction": "up",
+        "change": "개선"
       },
       {
         "id": "B-3",
@@ -1751,9 +1821,9 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-4",
         "name": "지정학 리스크",
-        "then": "250.8",
+        "then": "203.6",
         "thenTone": "neu",
-        "now": "184.2",
+        "now": "173.6",
         "nowTone": "neg",
         "direction": "down",
         "change": "약화"
@@ -1763,27 +1833,27 @@ export const SIXSENSE_DATA = {
         "name": "LTA 비율",
         "then": "+0.00",
         "thenTone": "neu",
-        "now": "+0.00",
-        "nowTone": "neu",
-        "direction": "flat",
-        "change": "유사"
+        "now": "+0.50",
+        "nowTone": "pos",
+        "direction": "up",
+        "change": "개선"
       },
       {
         "id": "B-6",
         "name": "HBM/D램 믹스",
         "then": "+0.00",
         "thenTone": "neu",
-        "now": "+0.00",
-        "nowTone": "neu",
-        "direction": "flat",
-        "change": "유사"
+        "now": "+1.00",
+        "nowTone": "pos",
+        "direction": "up",
+        "change": "개선"
       },
       {
         "id": "B-7",
         "name": "BOM 신호",
-        "then": "+2.00",
+        "then": "13.0",
         "thenTone": "neu",
-        "now": "+0.00",
+        "now": "+5.00",
         "nowTone": "neg",
         "direction": "down",
         "change": "약화"
@@ -1795,24 +1865,24 @@ export const SIXSENSE_DATA = {
       "total": 20,
       "success": 20,
       "fail": 0,
-      "newCount": 647
+      "newCount": 638
     },
-    "week": "2026-06-11",
+    "week": "2026-07-12",
     "groupA": [
       {
         "id": "A-1",
         "name": "대만 공급망",
         "source": "Yahoo Finance: TSM (70%) + UMC (30%)",
-        "time": "2026-06-11 06:00",
-        "newItems": 57,
-        "prev": 56,
+        "time": "2026-07-12 06:00",
+        "newItems": 56,
+        "prev": 55,
         "status": "ok"
       },
       {
         "id": "A-2",
         "name": "빅테크 CapEx",
         "source": "SEC EDGAR XBRL — 4 quarterly observations from 4 c",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1821,7 +1891,7 @@ export const SIXSENSE_DATA = {
         "id": "A-3",
         "name": "관세청 수출",
         "source": "관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 (12",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1830,7 +1900,7 @@ export const SIXSENSE_DATA = {
         "id": "A-4",
         "name": "재고/출하 지수",
         "source": "KOSIS 광공업동향 C26 재고지수 (월간→주간 forward-fill)",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1839,16 +1909,16 @@ export const SIXSENSE_DATA = {
         "id": "A-5",
         "name": "AWS Spot 가격",
         "source": "AWS EC2 m6i.xlarge spot (us-east-1a, 최대 90일)",
-        "time": "2026-06-11 06:00",
-        "newItems": 14,
-        "prev": 13,
+        "time": "2026-07-12 06:00",
+        "newItems": 13,
+        "prev": 12,
         "status": "ok"
       },
       {
         "id": "A-6",
         "name": "Manifold 봉쇄확률",
         "source": "Manifold Markets 'Will China launch a full-scale i",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 55,
         "prev": 54,
         "status": "ok"
@@ -1857,9 +1927,9 @@ export const SIXSENSE_DATA = {
         "id": "A-7",
         "name": "구리 선물가",
         "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME 대체)",
-        "time": "2026-06-11 06:00",
-        "newItems": 57,
-        "prev": 56,
+        "time": "2026-07-12 06:00",
+        "newItems": 56,
+        "prev": 55,
         "status": "ok"
       }
     ],
@@ -1867,26 +1937,26 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-1",
         "name": "Earnings Call",
-        "source": "Google News 'Earnings Call sentiment' (173 entries",
-        "time": "2026-06-11 06:00",
-        "newItems": 35,
-        "prev": 34,
+        "source": "Google News 'Earnings Call sentiment' (180 entries",
+        "time": "2026-07-12 06:00",
+        "newItems": 26,
+        "prev": 25,
         "status": "ok"
       },
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
-        "source": "TechNews.tw + Digitimes + Google News RSS (1019 en",
-        "time": "2026-06-11 06:00",
-        "newItems": 31,
-        "prev": 30,
+        "source": "TechNews.tw + Digitimes + Google News RSS (1034 en",
+        "time": "2026-07-12 06:00",
+        "newItems": 33,
+        "prev": 32,
         "status": "ok"
       },
       {
         "id": "B-3",
         "name": "Reddit/HN",
         "source": "Hacker News Algolia ('memory chip price') — Reddit",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1895,7 +1965,7 @@ export const SIXSENSE_DATA = {
         "id": "B-4",
         "name": "지정학 리스크",
         "source": "Caldara & Iacoviello GPR Index (https://www.matteo",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1903,26 +1973,26 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-5",
         "name": "LTA 비율",
-        "source": "Google News 'LTA ratio' (33 entries, LLM 10회 호출, 1",
-        "time": "2026-06-11 06:00",
-        "newItems": 12,
-        "prev": 11,
+        "source": "Google News 'LTA ratio' (61 entries, LLM 16회 호출, 1",
+        "time": "2026-07-12 06:00",
+        "newItems": 16,
+        "prev": 15,
         "status": "ok"
       },
       {
         "id": "B-6",
         "name": "HBM/D램 믹스",
-        "source": "Google News 'HBM mix' (146 entries, LLM 24회 호출, 44",
-        "time": "2026-06-11 06:00",
-        "newItems": 44,
-        "prev": 43,
+        "source": "Google News 'HBM mix' (162 entries, LLM 28회 호출, 41",
+        "time": "2026-07-12 06:00",
+        "newItems": 41,
+        "prev": 40,
         "status": "ok"
       },
       {
         "id": "B-7",
         "name": "BOM 신호",
         "source": "Hacker News Algolia API (queries: 4건)",
-        "time": "2026-06-11 06:00",
+        "time": "2026-07-12 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"

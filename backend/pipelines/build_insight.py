@@ -77,26 +77,31 @@ def build_prompt() -> tuple[str, dict]:
     cmp_file = FORECAST / "model_comparison.txt"
     if cmp_file.exists():
         txt = cmp_file.read_text()
-        m = re.search(r"📈 단기.*?\n(.*?)\n단기 MAPE", txt, re.DOTALL)
-        if m:
-            rows = [r for r in (re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
-                                for line in m.group(1).strip().split("\n")) if r]
-            if rows:
-                gbr_first = float(rows[0].group(4))    # GBR 첫 주
-                pred7_idx = float(rows[-1].group(4))   # GBR 마지막 주
-        m = re.search(r"📈 중장기.*?\n(.*?)\nLSTM held-out", txt, re.DOTALL)
-        if m:
-            rows = [r for r in (re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)", line)
-                                for line in m.group(1).strip().split("\n")) if r]
-            if rows:
-                lstm_first = float(rows[0].group(3))   # LSTM 첫 주
-                pred21_idx = float(rows[-1].group(3))  # LSTM 마지막 주
+        # USER-REQUESTED EXTENSION (#19 fix) — 종료 마커 의존 제거, 날짜+숫자 행 직접 매칭
+        def _sec(header):
+            m = re.search(rf"{header}.*?\n(.*?)(?=\n📈|\n⏱|\n단기 MAPE|\nLSTM held|\n🏆|\n═|\Z)", txt, re.DOTALL)
+            return m.group(1) if m else ""
+        rows = [r for r in (re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
+                            for line in _sec(r"📈 단기").split("\n")) if r]
+        if rows:
+            gbr_first = float(rows[0].group(4))    # GBR 첫 주
+            pred7_idx = float(rows[-1].group(4))   # GBR 마지막 주
+        rows = [r for r in (re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)", line)
+                            for line in _sec(r"📈 중장기").split("\n")) if r]
+        if rows:
+            lstm_first = float(rows[0].group(3))   # LSTM 첫 주
+            pred21_idx = float(rows[-1].group(3))  # LSTM 마지막 주
 
-    # anchor 보정 — 첫 예측을 현재가(last_idx)에 맞추고 비율 유지
+    # anchor 보정 — build_frontend_data.py 와 동일 로직 (차트/인사이트 가격 일치)
+    # 단기(GBR): 첫 예측을 현재가(last_idx)에 맞춤
+    gbr_last_anchored = pred7_idx
     if gbr_first and pred7_idx and gbr_first != 0:
         pred7_idx = pred7_idx * (last_idx / gbr_first)
+        gbr_last_anchored = pred7_idx  # GBR 끝점(= 단기 7주 예측, anchor 후)
+    # USER-REQUESTED EXTENSION (#19) — 중장기(LSTM): 단기 GBR 끝점에 이어붙임.
+    # LSTM 첫 예측을 GBR 마지막 값에 anchor → 차트 절벽 제거 + 인사이트 일관.
     if lstm_first and pred21_idx and lstm_first != 0:
-        pred21_idx = pred21_idx * (last_idx / lstm_first)
+        pred21_idx = pred21_idx * (gbr_last_anchored / lstm_first)
 
     # Fallback: forecast JSON
     if pred7_idx is None or pred21_idx is None:

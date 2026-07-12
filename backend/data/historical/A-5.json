@@ -2,31 +2,11 @@
   "signalId": "A-5",
   "source": "AWS EC2 m6i.xlarge spot (us-east-1a, \ucd5c\ub300 90\uc77c)",
   "mode": "real",
-  "collectedAt": "2026-06-11",
-  "rangeStart": "2026-03-09",
-  "rangeEnd": "2026-06-08",
+  "collectedAt": "2026-07-12",
+  "rangeStart": "2026-04-13",
+  "rangeEnd": "2026-07-06",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2026-03-09",
-      "value": 0.089522
-    },
-    {
-      "week": "2026-03-16",
-      "value": 0.080815
-    },
-    {
-      "week": "2026-03-23",
-      "value": 0.074637
-    },
-    {
-      "week": "2026-03-30",
-      "value": 0.070743
-    },
-    {
-      "week": "2026-04-06",
-      "value": 0.07615
-    },
     {
       "week": "2026-04-13",
       "value": 0.089756
@@ -61,7 +41,23 @@
     },
     {
       "week": "2026-06-08",
-      "value": 0.116109
+      "value": 0.11323
+    },
+    {
+      "week": "2026-06-15",
+      "value": 0.113623
+    },
+    {
+      "week": "2026-06-22",
+      "value": 0.10759
+    },
+    {
+      "week": "2026-06-29",
+      "value": 0.114055
+    },
+    {
+      "week": "2026-07-06",
+      "value": 0.133161
     }
   ]
 }

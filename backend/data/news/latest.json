@@ -1,20 +1,47 @@
 {
-  "collectedAt": "2026-06-11",
+  "collectedAt": "2026-07-12",
   "method": "키워드 휴리스틱 + LLM 한글화",
   "lookbackDays": 30,
-  "rawCount": 797,
+  "rawCount": 929,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
-      "date": "2026-06-06",
-      "title": "중국은 세계의 원자재 갈륨의 약 99퍼센트를 생산한다, 거의 모든 스마트폰의 라디오 칩 안에 숨겨져 있는 금속이다",
-      "titleEn": "China produces about 99 percent of the world's raw gallium, the metal hidden inside the radio chips of almost every smartphone, and in late 2024 it banned exports of it to the United States as the chip war escalated",
-      "source": "Space Daily",
+      "date": "2026-07-10",
+      "title": "마이크론, 2035년까지 총 2,500억 달러 투자하며 미국 반도체에 최대 30억 달러 추가 투자",
+      "titleEn": "Micron Surges on Up to $3 Billion Additional US Semiconductor Investment, Pushing Total Through 2035 Past $250 Billion",
+      "source": "finance.biggo.com",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론, 2035년까지 총 2,500억 달러 투자하며 미국 반도체에 최대 30억 달러 추가 투자",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE43Nk96ZmgzQTZNcDV3YUJNTFVkWUQwNnNIcHpFNC1UVjI2U0t0ZE1mUGJCc0FXVG9vLWc4UlJRclB0TUtDUUI5YTg1aC02N0U0Zk42LVdRdFVQQ1M5SHB6aFFCaW5sNzZROEVjUl9Ra0FVY1ZnSGc?oc=5"
+    },
+    {
+      "date": "2026-07-10",
+      "title": "인텔 CEO 립부 탄, 헬륨 부족으로 인해 6월에 AI 칩이 마비될 수 있다고 경고",
+      "titleEn": "Intel CEO Lip-Bu Tan Warned Helium Could Choke AI Chips in June, and China’s Export Ban Might Prove Him Right",
+      "source": "Wccftech",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "중국은 거의 모든 스마트폰의 라디오 칩 안에 숨겨져 있는 금속인 세계의 원자재 갈륨의 약 99퍼센트를 생산하며, 2024년 말에는 미국에 대한 수출을 금지했다",
+      "summary": "인텔 CEO 립부 탄, 헬륨 부족으로 인해 6월에 AI 칩이 마비될 수 있다고 경고",
       "effects": {
         "short": {
           "tone": "neg",
@@ -30,18 +57,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMixgJBVV95cUxNaDRYU21iUF95VlBfNDZKbnhqcTA3X0hGZ2NmSnpSdW5pTWM0a1NuZ1ROZXpmMjVHWnotUU0zcndHcnVRUk9oODBPczFOZVcyWm80RFF4Y0NMa0w2Y1hHczdjSWFDWjBtRGctenFjZkhGZmRuaUEwSER5dE9nOWxfcEJ3UUpidV9VN2RfVC1HTkMtWERud3JpZlpHcTZma251aXRvTnlfSWJWNTAtUUQ2Vm44X2EwMHVqdDFGVExkTzFlZEhXYnFvNzFZcHNFa3dZTVVZT29SMGFCR3RYY0VYUEMtQ3JmemhMbDRpQUV6X1N6enEzNzl0UUxyWGdnTnh0cm1MVFI2ellWTzBwWm1NNWJfUHQ0cTRFZFlQeW1MMDNqOVNVMnRrNEMyaFFMVFpuazhoai15RzhGWF9rdmtJRDVKakZrZw?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPNzFGRzhMTlNDYktmYTI3WGhqVnNucUpSdV9NdmJxNEtXaGlzSHRrWUlvc0l3VkxBQTFSN2dkSjRJNk1kQWc0UURoRWJ3YkJ0MHpVR2prLVd3djNpMWZUQU9NSnpnME45cV8tTUJnX3RETFpITU95QmluUmtwdVVwRVJJRkp3dm5scjBNU2NzMm8yRXA5Mmh3LW94bEFWbmxRaFlwWHpETzNnZklGR2tnNDlHdVlSdXlER1ZsRDJWUWVSSEFTZ2F0UtIBzgFBVV95cUxOMEd2bEpCZTNxSUFtQURkV2lmQVJEeVBtTjRYcEQ3NWtEazBqNWw5YVJKaWRfbXNyb2ZFNkppZ3F2VmZGbFFzYjJmMkhBT1MtR2pyQ3NWaWRrR0xrYmpXNlNrMEIzVkt1VU15QnhHaUZrS0ZiWG5HLU5YMFM1ZlVuQWNXLUN5QnJQV3E5U2lxazhHOGEzaVNreVNzdUZkb3BPRllLaEN2NE96X1QzMjk4Q3hDYlpiTmJLQWU0SHY0c3VYZ1RyVEo0MGhfYmFtdw?oc=5"
     },
     {
-      "date": "2026-05-30",
-      "title": "화웨이 회장은 미국의 칩 수출 제한에 감사한다, 그것이 중국의 반도체 산업을 강화했다고 말한다",
-      "titleEn": "Huawei chairman thanks the US for export restrictions on chips, says it supercharged China’s semiconductor industry — Washington’s export controls encouraged Chinese firms to invest in R&D and build their own tech stack competing with American tech - Tom's Hardware",
-      "source": "RSS",
+      "date": "2026-07-10",
+      "title": "중국, 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적으로 헬륨 수출을 금지",
+      "titleEn": "China issues temporary helium export ban as Iran war strains global supplies",
+      "source": "South China Morning Post",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "화웨이 회장은 미국의 칩 수출 제한에 감사한다, 그것이 중국의 반도체 산업을 강화했다고 말한다 - 워싱턴의 수출 통제는 중국 기업들이 투자하도록 격려했다",
+      "summary": "중국, 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적으로 헬륨 수출을 금지",
       "effects": {
         "short": {
           "tone": "neg",
@@ -57,18 +84,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxPSlAyRlFSMzhNZU01anhhYmdHMVVJeHpBZXRlelZkcUhMcU1MVHZuM2QzZEFxRV82U3NBbDRtUzhKajM1NDBWMEIzSUhBX2psLVFGZGo0U1pGS09uS090d0RzbW9vYVh2cjFKWDFndDh2YlBTSG9zazduZWZTOGZ6WWZlenJZTnBRSTYzSGZsd2w1SFJPczRKSnlwLWEwb0VtaDh4a0xSYlRuck8wd1RzNEdSV0NZM0s4ekFqb2ppS2gyMkdmNDFXLWFmZzQtQ29CRHltNFpROGdqdEswU1BqMTU5Y3BJaW9vMkd0cnJEMzVhcEM5SVZQVU9UZkRuX2pJZldlbnF0TGNfdERFX1M4dkdJUW5Ka3FMY0ZIaGF2X0UxdnozajIxSFFGcnlmU1pETl91b0djaUNxWFdMQXBQWnpzS0VMNUZ4MHVuSTR0azk2OEJxY0xOZ3pWOGdwY3ZsRFNmdWxpaGpNMG1sUldLR29KM2xadkNDVUE?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPNm42Tzk1R25tR2prX1ZydFZ5OWFvM0JyMkI3Yk5aRWFYdHJNbVExRGRfa2ZjR0NPTE5qSGEzRjNrWDhoU0Rtd1NCeGwyN1ZJbWNwalVVZG85TGpBNGNwM3ZabkRkVmM2eV84aHJWckFodG9NVVNSeHBOcHU3SjRFRExuNzBPYURKM1hEYzhPbEFZWEdRM2ZzcVd3VktWTzE1UDBpY01n0gGmAUFVX3lxTFBEczhpNER1TjdhdTllSnNvNDY3X0pwY0hPTXM0Q2YzYjZ2MTcyN1czdlVlcks0Umx2dmctaU4xOVVndEk5Q3EwVTFlQklsc1hTOE5odGFCNU5ldlZuRURoUDJpM3c3TVJBSmpZTDFPby1HcjgxMXBPOWZXUU9jNUtDeURxVzd2STFHTXFtNUlIcjNDakNKeTdWTzVBTTZXeTI4WXE1Z3c?oc=5"
     },
     {
-      "date": "2026-06-10",
-      "title": "대만은 미국과 일치하여 화웨이와 같은 수출 금지 목록에 있는 회사뿐만 아니라 모든 중국 고객에게도 AI 칩 판매를 제한할 것을 고려하고 있다",
-      "titleEn": "Taiwan is considering aligning itself with the US by restricting the sale of AI chips not only to companies on export blacklists like Huawei, but also to 'all Chinese customers.'",
-      "source": "GIGAZINE",
+      "date": "2026-07-11",
+      "title": "중국, 헬륨 수출을 금지하여 칩 공급망에 다시 충격을 가함",
+      "titleEn": "China Bans Helium Exports, Rattling Chip Supply Chain Again",
+      "source": "Seoul Economic Daily",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "대만은 미국과 일치하여 화웨이와 같은 수출 금지 목록에 있는 회사뿐만 아니라 모든 중국 고객에게도 AI 칩 판매를 제한할 것을 고려하고 있다",
+      "summary": "중국, 헬륨 수출을 금지하여 칩 공급망에 다시 충격을 가함",
       "effects": {
         "short": {
           "tone": "neg",
@@ -84,99 +111,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNNUhPYWdXV0U4blRqYzVGRXI4SFVXYjREc2ZrajJBN1lyRzFCNDgxV2ZTdmRGWGhicTZuNWhMV2tlaUtheHhEVnAxTm1Bd1FGMEVmUXpmUWE2c2M4YWdJclpISzZuWnpGYUFZcnl2UjRoUXhxM1FBWkNCMVpEOElCcA?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQTE9yWU40MEtNa212ei1FbmVxTi0tNTl3ZF9jMC15OTQtSmw3MFZKWTFxWWVYaFNtNkwyLW5ZdTFtdEIzWF9odjkwWEVvTGdzbERwc3NXaHBHTG50VUwwbUliMUIzNkhZWkxraDdMazZXTVI2bnRDSFlWNHpMS0UteU9rRENPckxnMjRBbjZhb001Qkx2R3ktQ29sWnZueEJpS0E?oc=5"
     },
     {
-      "date": "2026-06-09",
-      "title": "대만은 모든 중국에 대한 AI 칩 수출을 범죄화하는 것을 고려하고 있다 - 더 엄격한 조치는 서버 밀수를 범죄로 만들 것이다",
-      "titleEn": "Taiwan weighs criminal ban on AI chip exports to all of China — stricter measures beyond blacklisted firms would make smuggling servers a crime - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "대만은 모든 중국에 대한 AI 칩 수출을 범죄화하는 것을 고려하고 있다 - 더 엄격한 조치는 서버 밀수를 범죄로 만들 것이다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOWWpRaFhQZzQ0RWd2NEpaN2xmTllwTlpNV01JWGVHN0xZbUdFSk5WcF96cjhrbGFUSGFadERPZWE0eFF5UWdjZXpzZFRIeWljRkhXZ19vTmt1SlVYRUFzMFh2UlhXOUpIaHJ3Z0wzSWI2ckRaQVkxN3hwVmNCd1Z2V1BoV2VHVVNwTGVTMkhQTldmclVzcmZHZ0NRTnVtalc2Rlo1VDVOSExHb2tFcF95dlZlTXBZNXhZOW9OaDI0MmRzenl0eEZRZjlPVQ?oc=5"
-    },
-    {
-      "date": "2026-05-21",
-      "title": "엔비디아의 CEO 젠슨 황은 중국이 미국의 금지에도 불구하고 '必要한 모든 칩을 가지고 있다'고 경고했다",
-      "titleEn": "Nvidia CEO Jensen Huang warns China has ‘all the chips they need’ despite US bans",
-      "source": "Fox Business",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "엔비디아의 CEO 젠슨 황은 중국이 미국의 금지에도 불구하고 '必要한 모든 칩을 가지고 있다'고 경고했다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPRVd5VUM3b2ZBYWdZT251YVQ4WnE4WFNmdTRTbVFJY1lWbW1rbjFza3lkMTFEVUgyV195a3Z4eHdnWUlsX3ZHdTJJZ282TlFoMHlmc3FJME5lODZITm95MlhoN2ZrVFF5LWxua2xlclNDcGVsaFRmYkRkaXpHVThvUGRiUGtDZlpjTDVRTkxFMzNLMkFBLXhpek1uR0lEWVZ6YVJXOVE3RdIBrAFBVV95cUxNUG1LWE4xUjZ3ZE90Tk9Ockh5b1JyRTRqb1o4U0swX2R1YkRCZ3pYRThfS051ZDBnODJvSGZ6MnBhQWZmZDl1TTRVZE53Q1RveDJLb0tMWEY1YjZZQ2R5bjhQaHNQdmtMTkNtZ2pJNk03RjhRWVc1V1RGdlVNakhZWWFia1hnR1NDaEVHY0xBbERTaG4xTHFNVTJqbHlWSjFOZU9WUUloV3FKa1M0?oc=5"
-    },
-    {
-      "date": "2026-05-20",
-      "title": "중국은 젠슨 황이 방문했을 때 엔비디아 5090D V2를 금지했다, 보고서가 주장한다",
-      "titleEn": "China banned Nvidia 5090D V2 while CEO Jensen Huang was in town, report claims — move comes as Beijing pushes its AI tech companies to use homegrown chips - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "중국은 젠슨 황이 방문했을 때 엔비디아 5090D V2를 금지했다, 보고서가 주장한다 - 베이징은 AI 기술 회사들이国产 칩을 사용하도록 밀어붙이는 중이다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMinwJBVV95cUxQRUpSaEJmMmtoWmVub09NS2FsOUM4Zkx0TzI3R2hYOUVWVFB0VFlpSGc2SFhsZHJpWjRHaU1uekdEZGZQcDV2NllaOGlKNmpHcWtEUlJBUFUtSlBaTlZ5elVBNXdxSWU2Nm90dVNlMmlnQ1Jfcmh1amZBZ0JqTGNmekNGQzhiLTBTUnJEME5UWjRqakNDR2xKQ1lXenZjYmVPVTE5dnNKdXNfckRZTkcwSjJ0Q3FQYkV4bmFNTUJkTU0yaFVMTDZaaUQzaFlnRDdSNW5aVXlHenRSM0ZnNktwRVRNY3ZIa3JqYUhLMzhfOHVWY2sydWVxRll3Q1labkdEbGROQkdjX25lcllUTUkzazh2ZXhrOHYyQktGVkxsbw?oc=5"
-    },
-    {
-      "date": "2026-05-18",
-      "title": "최고치의 가격은 SSD와 메모리 제조업체들이 칩을 구입하기 위해 8억 8천만 달러를 빌리도록 강요한다",
-      "titleEn": "Record-high pricing pushes SSD and memory makers to borrow $880 million just to afford buying chips — Adata, TeamGroup, and others take on substantial debt to survive shortages - Tom's Hardware",
+      "date": "2026-07-11",
+      "title": "SK하이닉스, 2027년이 메모리 부족의 '최악의 해'가 될 것이라고 전망",
+      "titleEn": "SK Hynix says 2027 will be the 'worst year' for memory shortage, forecasts crunch to last until 2030 — CEO shares grim outlook on the day SK Hynix gets listed on Nasdaq - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "최고치의 가격은 SSD와 메모리 제조업체들이 칩을 구입하기 위해 8억 8천만 달러를 빌리도록 강요한다 - Adata, TeamGroup, 기타 회사들이 부족함을 극복하기 위해大量의 부채를 떠안는다",
+      "summary": "SK하이닉스, 2027년이 메모리 부족의 '최악의 해'가 될 것이라고 전망",
       "effects": {
         "short": {
           "tone": "pos",
@@ -192,45 +138,126 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQb3RZamJTdjlOSmRFdUoxekM5cjNSUmNoaUZJWFRrM0U1d1NFQ0lsX191NWs0MlNNSGc1OS1tSnNxdVAwdUZzRVVfUUdtd3dub1NIaTdTcU9VYzlvUGQySEkzSUpXaDRNRFJqT0VOMHE4RGlXNTJjM294aElUbWxsUG4tRGZlak9lUFdJTFRwZ0RiOF9Ma2tKaFplN1l2TjZsSVlWSnRoR2dZa0tGZENZ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMitgJBVV95cUxQRndoZ2lHUFZQeldKQU1SZnZDeUEzVHVRNXNwY1pIV3J1R2FPUVJqSGNtYmRuM3hpd2Y1U0dwRlcwVnlTbnk4dHJzZFo2elBxVDZ1cXNzS2tNRlVhWHlvUC0wbXJCampjUTBsVmZfZU9Yb2NmZFZiNGVlZmVqenlBT1hYbmpHcnM4bXpWNFJyN2Z5d09IZFc5REV4Z2lMcC1tbnRmZHlwM1BFV3JJWjVrNVZ6eXl2akdMZjhLZjhzTy1US0RsaUdCQk1ZMVdtVUpfMVJhTnQxb2RGM1cteG9POHo5Q0JlOEs2TGNDN0U3ZldKZTE1LVRDaFdmeGJTbC14VmZiXzJTT0FGTXBzT3ZHYkpCWndaTzNSU2F4dktGOHVxQnlSbk90T3dvR3VERFBrcUlucFR3?oc=5"
     },
     {
-      "date": "2026-06-10",
-      "title": "세계 에지 AI 고대역 메모리 칩 - 시장 분석, 전망, 크기, 트렌드",
-      "titleEn": "World Edge AI High Bandwidth Memory Chips - Market Analysis, Forecast, Size, Trends and Insights",
-      "source": "IndexBox",
-      "score": -0.5,
-      "tone": "neg",
+      "date": "2026-07-11",
+      "title": "반도체 공장, 빨리 세워야 이긴다…'메모리 빅3' 증설 전쟁 - 머니투데이 - 머니투데이",
+      "titleEn": "반도체 공장, 빨리 세워야 이긴다…'메모리 빅3' 증설 전쟁 - 머니투데이 - 머니투데이",
+      "source": "RSS",
+      "score": 0.5,
+      "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "세계 에지 AI 고대역 메모리 칩 - 시장 분석, 예측, 크기, 트렌드 및 통찰",
+      "summary": "반도체 공장, 빨리 세워야 이긴다…'메모리 빅3' 증설 전쟁 - 머니투데이 &nbsp;&nbsp; 머니투데이",
       "effects": {
         "short": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxONTFOS0NfdXlocXROQmNtQzJlZmJrYWVudlc2LU5PeXhlRk91QzM1THQxdmxBTHBtYWEtRUZKTE4yVXB0ZjVCOHl1bFQxZWxhakxLcmZJV2JLTTR6cWxuTndJV0Y4cjd1ZDk5SmdQMHdDeEpXNGxZXy02anN0VE0xZkpVVVZoWWpwOTBsc3hvU1lOdHB2UVl2d0czNG9pOFZLTkZIQmptTk9raHJDTmNnYWo1cGxXZHItRmliX0NzSnM0WXBTRVg4dlJWN294LXFGYmZVRGN2RQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1QTnctM0N0dmJNaW5iUUtxcm8xdkJPZEpXX2NVOUF0Sk9fVUNQWEs5VmRsdTFwYm1fMVZ5VTBYTmhWVG1mbVBFclFYZ3Y2ekYyZkZqY1gxNXpYVHhDSXNPMkpINy1BS3ZWaTRaS9IBckFVX3lxTE1oYkFPMUlXWVN5VENkMHNOeWJ5QVVDQ1VsQ2MybUU1cGZBb1R6QTAzVFkzNHlTSG1UNzU2UWJQaXpqUHBOUU5JYjNlM2Q0TXBIX2lVdnRPVHFpNEJxdy1QVWIzUkstMVRrX1BuRDJOTXBJUQ?oc=5"
     },
     {
-      "date": "2026-06-02",
-      "title": "중국 군대는 워싱턴의 수출 통제 이후에도 엔비디아 칩을 구입하고 있다, 연구가 주장한다",
-      "titleEn": "Chinese military has been acquiring Nvidia chips, even post-Washington export controls, research claims — multiple institutions linked to the PLA asked for Nvidia AI chips, according to publicly available documents - Tom's Hardware",
+      "date": "2026-07-10",
+      "title": "나냐, 2027년에 62억 달러로 자본 지출을 4배 늘릴 계획, DRAM 가격 상승",
+      "titleEn": "Nanya to quadruple capital spending to $6.2 billion in 2027 as DRAM prices push gross margin to 79.5% — Q2 revenue skyrockets as ASPs for memory continue to surge - Tom's Hardware",
       "source": "RSS",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "나냐, 2027년에 62억 달러로 자본 지출을 4배 늘릴 계획, DRAM 가격 상승",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxONzhoSW5rOGc3R0d1bWFrTXp0ZWVucmN2QjQ5NGFWVVdwRFZRc1RxM0RFQWZoaUpwbWVXVzRnZ0Y3R1ZSYnlBTDIzQUVXR3hTUEx1UXY4S004S3BVa3ZjY2lKZ255NUhndjFXeXloRTVtdV9MbXlIcTZpWm8zb1pqMkREeWpNTDBXU0ptNWhBSXZOdmZkMzFTbVJzeDA3dWZUX2Y4?oc=5"
+    },
+    {
+      "date": "2026-07-10",
+      "title": "칩 제조업체 SK하이닉스, 시장 데뷔 첫날 약 13% 상승",
+      "titleEn": "Chip giant SK Hynix closed out its market debut roughly 13% higher on Friday.",
+      "source": "Yahoo Finance",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "칩 제조업체 SK하이닉스, 시장 데뷔 첫날 약 13% 상승",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOa0l5ZVcyaUwzY2ZZVW1HdjNWd2pxZU5qVW1KS3F6RFUwVmwwQnJyY3dheVhHYWZuQTE3cGtLYWpjYnpOLVhIVmdYbWs4QS1jMDRGTjBJVFFzQzNHNGx4aXY3MlBsYWFLQ0RTZnc4QUV1a0pTZ2VGWUxGdFM3UGY3RmZaWWlXU2Q0NkZEdkNERWJXZWhWMkNtUm1kTWktQi1Sb0dMZjhPY1Yyd0k?oc=5"
+    },
+    {
+      "date": "2026-07-10",
+      "title": "SK하이닉스 CEO, 2027년 메모리 역사상 최악의 공급 부족이 발생할 것이라고 경고",
+      "titleEn": "SK Hynix CEO Warns 2027 Will Bring 'Worst Supply Shortage in Memory History,' Tightness to Persist Beyond 2030s",
+      "source": "finance.biggo.com",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "SK하이닉스 CEO, 2027년 메모리 역사상 최악의 공급 부족이 발생할 것이라고 경고",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFAtTEM3Z2tsekxJRHR3NzQ0dF9raGVWcjREMm5pTEpZbVZYVThTeGZObEozeTA4NUNvV0ZrUk5meDJIZjZGWkhJdTQzNzFFc3RXS01rUkFySnpPWFdUUjJjOTZpSnVfYksyY1FnUloyVjRZTzF0b1E?oc=5"
+    },
+    {
+      "date": "2026-07-11",
+      "title": "중국, 이란 전쟁으로 공급이 긴장함에 따라 칩 제조에 중요한 헬륨 수출을 금지",
+      "titleEn": "China blocks exports of helium, key for chipmaking, as Iran war squeezes supply",
+      "source": "ET Manufacturing",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "중국 군대는 워싱턴의 수출 통제 이후에도 엔비디아 칩을 구입하고 있다, 연구가 주장한다 - 여러 PLA와 관련된 기관들이 엔비디아 AI 칩을 요청했다",
+      "summary": "중국, 이란 전쟁으로 공급이 긴장함에 따라 칩 제조에 중요한 헬륨 수출을 금지",
       "effects": {
         "short": {
           "tone": "neu",
@@ -246,34 +273,7 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi7AJBVV95cUxOQXFuR2ZCOW9EanUyZS1TUjRMME5RRTFVYmdROWhqcDZINGhpVmREVy0ySDhDR2MwUjB4RnF6Q0Z6UU1zZV9PYnE5eG5qVzVSdmVKUm5JRHJYUVM1emIxWmlKbS02VnEwVTBQRnZ1V29KbmNSaXJ0VzlsSjNoRGJHYVRTajhRU1ZCSjZQQVc1dWNOUWRJb1B3WGxPV1ZrZzNmUXNqR0dKZkFtb1p0emRxZ2VjOHZGMXBlZzFEQzkyYzctbnJiSGQ4b3dJb2xxNWdNSU0zdm1zdEk5WW01SlNFa3QycDRpdTNrMDkzbWZwbGFwR1RnRDdYV3pZdzBaV28tZHBsUENtbHRkanRRcnIzVExtS3ZfdDhHbUJNMnFvT2JvY3lMeE5mZnpfSF9Pa01fdlY2MkxIWVc0bUZsZmdaRnBEVkhJYkdRZWd5ODVaYzVkeF8waHdEd1FFNWFjcHlfbUFZeGlZNkpoVGtD?oc=5"
-    },
-    {
-      "date": "2026-05-15",
-      "title": "트럼프는 중국이 미국의 승인을 받았음에도 불구하고 엔비디아 H200 구입을 금지하고 있다고 말한다 - 중국이 구매를 금지하지 않기로 선택했다고 말한다,国产 칩을 대신 사용한다",
-      "titleEn": "Trump says China is blocking Nvidia H200 purchases despite US approval — says country 'chose not to' sanction purchases, pushing homegrown chips instead - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "트럼프는 중국이 미국의 승인을 받았음에도 불구하고 엔비디아 H200 구입을 금지하고 있다고 말한다 - 중국이 구매를 금지하지 않기로 선택했다고 말한다,国产 칩을 대신 사용한다",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQZDdiaGVxVVRCWmVvSXNORUlUNy1nUlFTRm5XdVhRUjdMWFhZang4QmJwTm1GRU1UQmVoaEdhcTdISkxjcTU3VFg1eEdHQW5wMXNhbUZhQnJxaVIzamtpRVZSNEx0MXpTTmdPcWk4SnRodDd1MTdFM2dUR2tBQVJDY0lIaFEtSW5SOFZJTlVqaw?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPRVltNGRsME4xS0JaMFM3YTNUNG1SU3lhZnZtMWE5bjVIcUh2bEhpZWZHM3NUbGZOX3MwTkQ5OWxFWHd6S3NfX3lMZkx3TGtGd0RYYzB3alJKNUdFS05oU2RaMG5iVEVGVFJUSDl0Y2hVellWcUdwQ09Sb0JlaHc2MzdHa1lGN1hGU1JUNFRmTzNwLUJ3c1AzWEZmNXNSYk01eVZQZy1LYWNhOFAtZ0lDLXB2c1pKZ21MblpZdldRUGNNdlMtdE5oSXB1ZWtFcEh4WkxlYkZnS2Nub1A1bzRjQ1JkSGdwbVd4THVN0gHrAUFVX3lxTE9FWW00ZGwwTjFLQlowUzdhM1Q0bVJTeWFmdm0xYTluNUhxSHZsSGllZkczc1RsZk5fczBORDk5bEVYd3pLc19feUxmTHdMa0Z3RFhjMHdqUko1R0VLTmhTZFowbmJURUZUUlRIOXRjaFV6WVZxR3BDT1JvQmVodzYzN0drWUY3WEZTUlQ0VGZPM3AtQndzUDNYRmY1c1JiTTV5VlBnLUthY2E4UC1nSUMtcHZzWkpnbUxuWll2V1FQY012Uy10TmhJcHVla0VwSHhaTGViRmdLY25vUDVvNGNDUmRIZ3BtV3hMdU0?oc=5"
     }
   ]
 }

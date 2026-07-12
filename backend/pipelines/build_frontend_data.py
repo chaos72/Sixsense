@@ -160,24 +160,27 @@ def parse_model_comparison_series() -> dict:
         return out
     txt = cmp_file.read_text()
 
-    # 단기 표 — Prophet / hist_gbr / gbr / 실측
-    m = re.search(r"📈 단기.*?\n(.*?)\n단기 MAPE", txt, re.DOTALL)
-    if m:
-        for line in m.group(1).strip().split("\n"):
-            row = re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
-            if row:
-                out["prophet"].append((row.group(1), float(row.group(2))))
-                out["hist_gbr"].append((row.group(1), float(row.group(3))))
-                out["gbr"].append((row.group(1), float(row.group(4))))
+    # USER-REQUESTED EXTENSION (#19 fix) — 종료 마커("단기 MAPE"/"LSTM held-out")가
+    # 형식 변화로 사라질 수 있어, 섹션 헤더부터 다음 헤더/공백까지 본문을 잡고
+    # 날짜+숫자 행만 직접 매칭하는 견고한 방식으로 교체.
+    def _section(header: str) -> str:
+        m = re.search(rf"{header}.*?\n(.*?)(?=\n📈|\n⏱|\n단기 MAPE|\nLSTM held|\n🏆|\n═|\Z)", txt, re.DOTALL)
+        return m.group(1) if m else ""
 
-    # 중장기 표 — Prophet / LSTM
-    m = re.search(r"📈 중장기.*?\n(.*?)\nLSTM held-out", txt, re.DOTALL)
-    if m:
-        for line in m.group(1).strip().split("\n"):
-            row = re.match(r"\s*(\S+)\s+([\d.]+)\s+([\d.]+)", line)
-            if row:
-                out["prophet"].append((row.group(1), float(row.group(2))))
-                out["lstm"].append((row.group(1), float(row.group(3))))
+    # 단기 표 — Week / Prophet / hist_gbr / gbr / 실측 (5열)
+    for line in _section(r"📈 단기").split("\n"):
+        row = re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
+        if row:
+            out["prophet"].append((row.group(1), float(row.group(2))))
+            out["hist_gbr"].append((row.group(1), float(row.group(3))))
+            out["gbr"].append((row.group(1), float(row.group(4))))
+
+    # 중장기 표 — Week / Prophet / LSTM (3열)
+    for line in _section(r"📈 중장기").split("\n"):
+        row = re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)", line)
+        if row:
+            out["prophet"].append((row.group(1), float(row.group(2))))
+            out["lstm"].append((row.group(1), float(row.group(3))))
     return out
 
 
@@ -208,11 +211,17 @@ def build_forecasts(forecast_json: dict, current_price: float | None = None) -> 
     # current_price 는 $ 단위 → 인덱스값으로 환산 (anchor 비교 위해)
     cur_idx = (current_price / SCALE) if current_price else None
 
-    # anchor 보정 (각 모델 첫 예측을 현재가에 맞춤)
+    # anchor 보정
+    # 단기(GBR/HistGBR/Prophet): 첫 예측을 현재가에 맞춤 → 현재→미래 자연 연결
     gbr_raw = _anchor_scale(gbr_raw, cur_idx)
-    lstm_raw = _anchor_scale(lstm_raw, cur_idx)
     prophet_raw = _anchor_scale(prophet_raw, cur_idx)
     histgbr_raw = _anchor_scale(histgbr_raw, cur_idx)
+
+    # USER-REQUESTED EXTENSION (#19, 2026-06-11) — 중장기(LSTM)는 단기 끝점($11.94)에
+    # 이어붙임: LSTM 첫 예측을 GBR 마지막 값에 anchor → 차트에서 단기→중장기 절벽 제거.
+    # LSTM 의 상대적 추세(완만한 상승/하락)는 그대로 유지.
+    gbr_last_idx = gbr_raw[-1] if gbr_raw else cur_idx
+    lstm_raw = _anchor_scale(lstm_raw, gbr_last_idx)
 
     # forecast7 (GBR, 1~7w) — Single yhat, CI는 ±5% 임의 추정
     forecast7 = []
