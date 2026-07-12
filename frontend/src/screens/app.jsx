@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { Sig } from '../components/components.jsx'
-import { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend, GraphRagMini } from './dashboard.jsx'
-import { S002, S003, S004, S005, S007, S009, S011, S013, ConfidenceBar, SignalDetail } from './modals.jsx'
+import { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend } from './dashboard.jsx'
+import { S002, S003, S004, S007, S009, S011, S013, ConfidenceBar, SignalDetail } from './modals.jsx'
 import { PageHead, S006, S008, S010, S012, S014 } from './pages.jsx'
 import { TweaksPanel, TweakSection, TweakRadio, useTweaks } from './tweaks-panel.jsx'
 import { SIXSENSE_DATA } from '../mocks/data.js'
@@ -32,7 +32,7 @@ function App() {
   })();
   
   const FULL_PAGES = ["S-001", "S-006", "S-008", "S-010", "S-012", "S-014"];
-  const MODAL_IDS = ["S-002", "S-003", "S-004", "S-005", "S-007", "S-009", "S-011", "S-013"];
+  const MODAL_IDS = ["S-002", "S-003", "S-004", "S-007", "S-009", "S-011", "S-013"];
   
   const expand = (id, p) => {
     const D = SIXSENSE_DATA;
@@ -61,7 +61,7 @@ function App() {
 
   const onNav = (id, params = {}) => {
     // Modal screens
-    const MODAL_IDS = ["S-002", "S-003", "S-004", "S-005", "S-007", "S-009", "S-011", "S-013"];
+    const MODAL_IDS = ["S-002", "S-003", "S-004", "S-007", "S-009", "S-011", "S-013"];
     if (MODAL_IDS.includes(id)) {
       setModalStack(s => [...s, { id, params }]);
     } else {
@@ -109,7 +109,6 @@ function App() {
             {m.id === "S-002" && <S002 horizon={params.horizon} onClose={onCloseModal} onNav={onNav} />}
             {m.id === "S-003" && <S003 tab={params.tab} onClose={onCloseModal} onNav={onNav} />}
             {m.id === "S-004" && <S004 tab={params.tab} onClose={onCloseModal} onNav={onNav} />}
-            {m.id === "S-005" && <S005 onClose={onCloseModal} />}
             {m.id === "S-007" && <S007 news={params.news} onClose={onCloseModal} onNav={onNav} />}
             {m.id === "S-009" && <S009 week={params.week} onClose={onCloseModal} />}
             {m.id === "S-011" && <S011 event={params.event} onClose={onCloseModal} onNav={onNav} />}
@@ -128,8 +127,7 @@ function App() {
             <button className="btn sm" onClick={goMain}>S-001 대시보드</button>
             <button className="btn sm" onClick={() => onNav("S-002", { horizon: 7 })}>S-002 예측 근거</button>
             <button className="btn sm" onClick={() => onNav("S-003", { tab: "A-4" })}>S-003 정형 (A-4)</button>
-            <button className="btn sm" onClick={() => onNav("S-004", { tab: "B-4" })}>S-004 비정형 (B-4)</button>
-            <button className="btn sm" onClick={() => onNav("S-005")}>S-005 Graph RAG</button>
+            <button className="btn sm" onClick={() => onNav("S-004", { tab: "B-1" })}>S-004 비정형 (B-1)</button>
             <button className="btn sm" onClick={() => onNav("S-006")}>S-006 뉴스 목록</button>
             <button className="btn sm" onClick={() => onNav("S-007", { news: SIXSENSE_DATA.news[0] })}>S-007 뉴스 상세</button>
             <button className="btn sm" onClick={() => onNav("S-008", { tab: "fed" })}>S-008 거시경제</button>
@@ -148,7 +146,37 @@ function App() {
           </a>
         </TweakSection>
       </TweaksPanel>
+
+      {/* iOS 스타일 하단 탭바 — 좁은 화면(모바일)에서만 표시 (CSS 제어) */}
+      <MobileTabBar current={route.page} onNav={onNav} onHome={goMain} />
     </div>
+  );
+}
+
+// USER-REQUESTED CHANGE (v1.2) — iOS 전용앱 하단 탭바 (모바일 전용, .mobile-tabbar CSS)
+function MobileTabBar({ current, onNav, onHome }) {
+  const tabs = [
+    { id: "S-001", label: "대시보드", icon: "M3 11l9-8 9 8M5 9v11h14V9" },
+    { id: "S-006", label: "뉴스", icon: "M4 5h16v14H4zM8 9h8M8 13h8M8 17h5" },
+    { id: "S-008", label: "거시", icon: "M4 19V5M4 19h16M8 15l3-4 3 3 4-6" },
+    { id: "S-010", label: "이벤트", icon: "M12 3l9 16H3zM12 10v4M12 17h.01" },
+    { id: "S-012", label: "정확도", icon: "M20 6L9 17l-5-5" },
+  ];
+  return (
+    <nav className="mobile-tabbar" role="navigation" aria-label="주요 화면">
+      {tabs.map((tb) => {
+        const active = current === tb.id;
+        const go = () => (tb.id === "S-001" ? onHome() : onNav(tb.id));
+        return (
+          <button key={tb.id} className={`mtab ${active ? "active" : ""}`} onClick={go} aria-current={active ? "page" : undefined}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+              <path d={tb.icon} />
+            </svg>
+            <span>{tb.label}</span>
+          </button>
+        );
+      })}
+    </nav>
   );
 }
 

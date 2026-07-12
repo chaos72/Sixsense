@@ -9,3 +9,10 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+// PWA — 서비스 워커 등록 (홈 화면 설치 + 오프라인 지원). 배포(프로덕션) 환경에서만 활성.
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  })
+}

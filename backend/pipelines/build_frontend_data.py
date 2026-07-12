@@ -470,7 +470,9 @@ def load_news_events() -> tuple[list[dict], list[dict], str]:
     if EVENTS_FILE.exists():
         ej = json.loads(EVENTS_FILE.read_text())
         events = ej.get("events", [])
-        label_parts.append(f"events {len(events)}건")
+        # USER-REQUESTED CHANGE (v1.2) — 글로벌 이벤트에서 '기상이변' 카테고리 제외
+        events = [e for e in events if e.get("type") != "기상이변"]
+        label_parts.append(f"events {len(events)}건 (기상이변 제외)")
     else:
         label_parts.append("events 미수집")
     return news, events, " · ".join(label_parts)
@@ -533,8 +535,14 @@ def main():
     pred21_change = (pred21 - current) / current * 100 if current else 0
     current_change = ((history[-1]["value"] - history[-2]["value"]) / history[-2]["value"] * 100) if len(history) > 1 else 0
 
-    signalsA = [fmt_signal(f"A-{i}", load_signal(f"A-{i}")["data"]) for i in range(1, 8)]
-    signalsB = [fmt_signal(f"B-{i}", load_signal(f"B-{i}")["data"]) for i in range(1, 8)]
+    # USER-REQUESTED CHANGE (v1.2) — 예측 영향도 0%로 실측된 4개 신호 제외
+    #   A-2(빅테크 CapEx)·B-2(대만 뉴스 감성)·B-3(Reddit/HN)·B-4(지정학 리스크).
+    #   백테스트 결과 제거 전/후 단기 MAPE 동일(16.53%) → 정확도 영향 없음 확인.
+    EXCLUDED_SIGNALS = {"A-2", "B-2", "B-3", "B-4"}
+    signalsA = [fmt_signal(f"A-{i}", load_signal(f"A-{i}")["data"])
+                for i in range(1, 8) if f"A-{i}" not in EXCLUDED_SIGNALS]
+    signalsB = [fmt_signal(f"B-{i}", load_signal(f"B-{i}")["data"])
+                for i in range(1, 8) if f"B-{i}" not in EXCLUDED_SIGNALS]
     macro = build_macro()
 
     snapshot_past = build_snapshot_past(target_rows)

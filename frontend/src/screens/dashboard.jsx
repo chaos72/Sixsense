@@ -241,11 +241,11 @@ function Dashboard({ onNav }) {
 
       {/* 14 signals */}
       <div className="section">
-        <SectionHead num="03" icon="◧" title="14개 프록시 신호 통합 현황" sub="각 카드 클릭 → 상세" />
+        <SectionHead num="03" icon="◧" title="10개 프록시 신호 통합 현황" sub="각 카드 클릭 → 상세" />
         
         <div style={{ marginBottom: 18 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-            <div className="dlabel">Group A · 정형 (7종)</div>
+            <div className="dlabel">Group A · 정형 (6종)</div>
             <button className="btn sm" onClick={() => onNav("S-003", { tab: "A-1" })}>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
               전체 상세
@@ -258,7 +258,7 @@ function Dashboard({ onNav }) {
 
         <div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-            <div className="dlabel">Group B · 비정형 (7종)</div>
+            <div className="dlabel">Group B · 비정형 (4종)</div>
             <button className="btn sm" onClick={() => onNav("S-004", { tab: "B-1" })}>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
               전체 상세
@@ -270,29 +270,11 @@ function Dashboard({ onNav }) {
         </div>
       </div>
 
-      {/* Graph RAG */}
-      <div className="section">
-        <SectionHead num="04" icon="⌖" title="Graph RAG — 구리 vs DRAM 선행 영향도" actions={<button className="btn sm" onClick={() => onNav("S-005")}>상세 분석 →</button>} />
-        <div className="card" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 28, alignItems: "center" }}>
-          <GraphRagMini />
-          <div>
-            <div className="dlabel">상관계수 · 선행 시차</div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 6 }}>
-              <span className="num" style={{ fontSize: 28, fontWeight: 600, color: "var(--sig-pos)" }}>+0.72</span>
-              <span className="muted" style={{ fontSize: 13 }}>/ 선행 <strong className="num" style={{ color: "var(--text)" }}>10주</strong></span>
-            </div>
-            <AiNote label="현재 시사점" source="Claude · Graph RAG">
-              "구리 <strong>+8.3%</strong> · 6주 연속 상승 → 약 <strong>10주 후 DRAM 6~8% 상승 가능</strong>. 신뢰도 74%"
-            </AiNote>
-          </div>
-        </div>
-      </div>
-
       {/* News + Macro */}
       <div className="section">
         <div className="grid-2">
           <div>
-            <SectionHead num="05" icon="◳" title="AI 뉴스 & 감성 분석" actions={<button className="btn sm" onClick={() => onNav("S-006")}>전체 목록 →</button>} />
+            <SectionHead num="04" icon="◳" title="AI 뉴스 & 감성 분석" actions={<button className="btn sm" onClick={() => onNav("S-006")}>전체 목록 →</button>} />
             <div className="card" style={{ padding: 0 }}>
               {D.news.filter(n => n.hot).map((n, i) => (
                 <div key={i} className="card tappable flat" onClick={() => onNav("S-007", { news: n })}
@@ -308,7 +290,7 @@ function Dashboard({ onNav }) {
             </div>
           </div>
           <div>
-            <SectionHead num="06" icon="◔" title="거시경제 지표" actions={<button className="btn sm" onClick={() => onNav("S-008", { tab: "fed" })}>전체 →</button>} />
+            <SectionHead num="05" icon="◔" title="거시경제 지표" actions={<button className="btn sm" onClick={() => onNav("S-008", { tab: "fed" })}>전체 →</button>} />
             <div className="card" style={{ padding: 0 }}>
               {D.macro.map((mi, i) => (
                 <div key={i} className="card tappable flat" onClick={() => onNav("S-008", { tab: mi.id })}
@@ -328,7 +310,7 @@ function Dashboard({ onNav }) {
       <div className="section">
         <div className="grid-2">
           <div>
-            <SectionHead num="07" icon="⚠" title="글로벌 이벤트 모니터링" sub="우선순위(위험도) + 카테고리 다양성 Top 10" actions={<button className="btn sm" onClick={() => onNav("S-010")}>전체 목록 →</button>} />
+            <SectionHead num="06" icon="⚠" title="글로벌 이벤트 모니터링" sub="우선순위(위험도) + 카테고리 다양성 Top 10" actions={<button className="btn sm" onClick={() => onNav("S-010")}>전체 목록 →</button>} />
             {/* USER-REQUESTED EXTENSION (2026-05-18 #8) — 3건 → 10건 + 유형(type) 칩 추가 표시 */}
             <div className="card events-list">
               {D.events.slice(0, 10).map((e) => (
@@ -344,7 +326,7 @@ function Dashboard({ onNav }) {
             </div>
           </div>
           <div>
-            <SectionHead num="08" icon="▤" title="AI 예측 정확도 트래킹" actions={<button className="btn sm" onClick={() => onNav("S-012")}>전체 이력 →</button>} />
+            <SectionHead num="07" icon="▤" title="AI 예측 정확도 트래킹" actions={<button className="btn sm" onClick={() => onNav("S-012")}>전체 이력 →</button>} />
             <div className="card" style={{ padding: 0 }}>
               {D.accuracy.filter(a => a.actual !== null).slice(0, 3).map((a, i) => (
                 <div key={i} style={{ padding: "12px 16px", borderBottom: i < 2 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto auto auto 1fr auto", alignItems: "center", gap: 14, fontSize: 12 }}>
@@ -365,7 +347,7 @@ function Dashboard({ onNav }) {
 
       {/* Collection foot */}
       <div className="section">
-        <SectionHead num="09" icon="▤" title="이번 주 새 수집 데이터 현황" actions={<button className="btn sm" onClick={() => onNav("S-014")}>수집 현황 →</button>} />
+        <SectionHead num="08" icon="▤" title="이번 주 새 수집 데이터 현황" actions={<button className="btn sm" onClick={() => onNav("S-014")}>수집 현황 →</button>} />
         <div className="foot-bar">
           <div><span className="label">정형</span><span className="num">{D.collection.groupA.reduce((s, x) => s + x.newItems, 0)}건</span><span className="muted"> 수집완료 ✓</span></div>
           <div className="sep"></div>
@@ -567,31 +549,7 @@ function ChartLegend({ range }) {
   );
 }
 
-function GraphRagMini() {
-  // mini overlay chart copper vs DRAM
-  const cuData = [0, 0.1, 0.05, 0.15, 0.3, 0.4, 0.55, 0.65, 0.72, 0.8, 0.83, 0.78, 0.7];
-  const dramData = [0.05, 0.1, 0.12, 0.1, 0.08, 0.12, 0.15, 0.2, 0.28, 0.4, 0.55, 0.68, 0.72];
-  
-  return (
-    <div>
-      <LineChart
-        width={600} height={180}
-        padding={{ l: 36, r: 70, t: 12, b: 24 }}
-        series={[
-          { data: cuData.map((v, i) => ({ x: i, value: v })), color: "var(--sig-info)", endLabel: "구리 (선행)" },
-          { data: dramData.map((v, i) => ({ x: i, value: v })), color: "var(--text)", endLabel: "DRAM" },
-        ]}
-        xLabels={[
-          { x: 0, label: "52주전" },
-          { x: 6, label: "26주전" },
-          { x: 12, label: "현재" },
-        ]}
-      />
-    </div>
-  );
-}
-
 Object.assign(window, { Dashboard, SignalCard });
 
 
-export { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend, GraphRagMini }
+export { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend }

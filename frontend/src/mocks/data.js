@@ -2,8 +2,8 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-07-12T04:12:31.711251Z
-// 뉴스/이벤트: news 10건 (키워드 휴리스틱 + LLM 한글화, 2026-07-12) · events 10건
+// 생성 시각: 2026-07-12T04:59:39.651916Z
+// 뉴스/이벤트: news 10건 (키워드 휴리스틱 + LLM 한글화, 2026-07-12) · events 8건 (기상이변 제외)
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
 export const SIXSENSE_DATA = {
@@ -655,25 +655,6 @@ export const SIXSENSE_DATA = {
       ]
     },
     {
-      "id": "A-2",
-      "name": "빅테크 CapEx",
-      "source": "SEC EDGAR XBRL — 4 quarterly observation",
-      "value": "$0.0B",
-      "num": 165693.0,
-      "tone": "pos",
-      "desc": "Big4 분기 CapEx (SEC EDGAR XBRL)",
-      "spark": [
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    {
       "id": "A-3",
       "name": "관세청 수출",
       "source": "관세청 data.go.kr Itemtrade HS 854232",
@@ -787,63 +768,6 @@ export const SIXSENSE_DATA = {
         1.0,
         0.769,
         0.538
-      ]
-    },
-    {
-      "id": "B-2",
-      "name": "대만 뉴스 감성",
-      "source": "TechNews.tw + Digitimes + Google News RS",
-      "value": "+0.11",
-      "num": 0.1056,
-      "tone": "neu",
-      "desc": "TechNews/Digitimes RSS (LLM)",
-      "spark": [
-        0.722,
-        1.0,
-        0.42,
-        0.0,
-        0.718,
-        0.754,
-        0.511,
-        0.362
-      ]
-    },
-    {
-      "id": "B-3",
-      "name": "Reddit/HN",
-      "source": "Hacker News Algolia",
-      "value": "+0.00",
-      "num": 0.0,
-      "tone": "neu",
-      "desc": "r/hardware DRAM 멘션 (HN Algolia)",
-      "spark": [
-        0.0,
-        0.0,
-        0.0,
-        0.5,
-        1.0,
-        0.0,
-        0.0,
-        0.0
-      ]
-    },
-    {
-      "id": "B-4",
-      "name": "지정학 리스크",
-      "source": "Caldara & Iacoviello GPR Index",
-      "value": "173.6",
-      "num": 173.6396,
-      "tone": "neg",
-      "desc": "Caldara & Iacoviello GPR Index",
-      "spark": [
-        1.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
       ]
     },
     {
@@ -1334,32 +1258,6 @@ export const SIXSENSE_DATA = {
       "affects": []
     },
     {
-      "id": "ev-3",
-      "type": "기상이변",
-      "region": "글로벌",
-      "risk": "high",
-      "title": "인도네시아 팔루 근처에서 규모 6.7의 지진 발생, 쓰나미 경고 없음",
-      "impact": "공급↓",
-      "date": "2026-06-16",
-      "summary": "글로벌 규모 6.7 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
       "id": "ev-4",
       "type": "금융 위기",
       "region": "이란",
@@ -1432,32 +1330,6 @@ export const SIXSENSE_DATA = {
         "long": {
           "tone": "neu",
           "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-7",
-      "type": "기상이변",
-      "region": "일본",
-      "risk": "high",
-      "title": "일본 북부 해역에서 규모 7.2의 지진 발생, 쓰나미 경고 없음",
-      "impact": "공급↓",
-      "date": "2026-06-25",
-      "summary": "일본 규모 7.2 지진 — 일본 NAND/소재 공급(키오시아 등) 단기 영향 모니터링. DRAM 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
         }
       },
       "links": [],

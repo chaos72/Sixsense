@@ -1,0 +1,17 @@
+{
+  "name": "Sixsense — DRAM Price Intelligence",
+  "short_name": "Sixsense",
+  "description": "서버 DRAM 가격을 실데이터 신호와 Multi-Model 예측으로 매주 자동 갱신하는 의사결정 앱",
+  "lang": "ko",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f10",
+  "theme_color": "#0f0f10",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

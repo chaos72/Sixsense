@@ -1231,11 +1231,13 @@ def main():
         "pool": "NEWS (DRAM/반도체 직접)",
         "news": news,
     }
+    # USER-REQUESTED CHANGE (v1.2) — 글로벌 이벤트에서 '기상이변' 카테고리 제외
+    events = [e for e in events if e.get("type") != "기상이변"]
     payload_events = {
         "collectedAt": date.today().isoformat(),
         "method": method_events,
         "rawCount": len(events_entries),
-        "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성)",
+        "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
         "events": events,
     }
     OUT_NEWS.write_text(json.dumps(payload_news, ensure_ascii=False, indent=2), encoding="utf-8")

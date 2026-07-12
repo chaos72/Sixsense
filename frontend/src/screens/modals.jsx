@@ -14,22 +14,23 @@ function S002({ horizon: initialHorizon, onClose, onNav }) {
   const data = isH7 ? D2.forecast7 : D2.forecast21;
   const finalVal = data[data.length - 1];
   
+  // 실측 피처 중요도(XGBoost) 순서로 기여도 표기 — 제거된 신호(A-2/B-2/B-3/B-4) 제외
   const contributions = isH7 ? [
-    { rank: 1, code: "A-2", label: "빅테크 CapEx 급증", pct: 28, tone: "pos" },
-    { rank: 2, code: "B-1", label: "Earnings Call 긍정", pct: 22, tone: "pos" },
-    { rank: 3, code: "A-7", label: "구리가격 선행 상승", pct: 18, tone: "pos" },
-    { rank: 4, code: "A-1", label: "대만 공급망 강세", pct: 14, tone: "pos" },
-    { rank: 5, code: "A-4", label: "재고지수 Red Alert", pct: -10, tone: "neg" },
-    { rank: 6, code: "B-4", label: "지정학 리스크", pct: -8, tone: "neg" },
-    { rank: 7, code: "—", label: "기타 8개 신호", pct: 4, tone: "neu" },
+    { rank: 1, code: "A-5", label: "AWS Spot 가격 상승", pct: 34, tone: "pos" },
+    { rank: 2, code: "A-1", label: "대만 공급망 강세", pct: 20, tone: "pos" },
+    { rank: 3, code: "A-3", label: "관세청 수출 증가", pct: 14, tone: "pos" },
+    { rank: 4, code: "B-1", label: "Earnings Call 긍정", pct: 11, tone: "pos" },
+    { rank: 5, code: "A-7", label: "구리가격 선행 상승", pct: 8, tone: "pos" },
+    { rank: 6, code: "A-4", label: "재고지수 Red Alert", pct: -9, tone: "neg" },
+    { rank: 7, code: "—", label: "기타 4개 신호", pct: 4, tone: "neu" },
   ] : [
-    { rank: 1, code: "A-7", label: "구리 선행 효과 누적", pct: 32, tone: "pos" },
-    { rank: 2, code: "A-2", label: "빅테크 CapEx (장기)", pct: 24, tone: "pos" },
-    { rank: 3, code: "B-5", label: "LTA 비율 상승", pct: 19, tone: "pos" },
-    { rank: 4, code: "B-1", label: "Earnings Call 가이던스", pct: 15, tone: "pos" },
-    { rank: 5, code: "B-4", label: "지정학 리스크", pct: -12, tone: "neg" },
-    { rank: 6, code: "A-4", label: "공급과잉 압력", pct: -8, tone: "neg" },
-    { rank: 7, code: "—", label: "기타 8개 신호", pct: 6, tone: "neu" },
+    { rank: 1, code: "A-1", label: "대만 공급망 (장기)", pct: 30, tone: "pos" },
+    { rank: 2, code: "A-5", label: "AWS Spot 가격 누적", pct: 22, tone: "pos" },
+    { rank: 3, code: "B-5", label: "LTA 비율 상승", pct: 18, tone: "pos" },
+    { rank: 4, code: "B-1", label: "Earnings Call 가이던스", pct: 14, tone: "pos" },
+    { rank: 5, code: "A-4", label: "공급과잉 압력", pct: -9, tone: "neg" },
+    { rank: 6, code: "B-6", label: "HBM/D램 믹스 개선", pct: 7, tone: "pos" },
+    { rank: 7, code: "—", label: "기타 4개 신호", pct: 6, tone: "neu" },
   ];
 
   return (
@@ -469,7 +470,7 @@ function S009({ week, onClose }) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
             <div><div className="dlabel">예측가</div><div className="num" style={{ fontSize: 26, fontWeight: 600 }}>${data.value.toFixed(2)}</div></div>
             <div><div className="dlabel">신뢰구간</div><div className="num" style={{ fontSize: 14, fontWeight: 500, marginTop: 6 }}>${data.lower.toFixed(2)} ─ ${data.upper.toFixed(2)}</div></div>
-            <div><div className="dlabel">기여도 상위</div><div style={{ marginTop: 6, display: "flex", gap: 6 }}><Sig tone="pos">A-2 CapEx</Sig><Sig tone="pos">B-1 실적콜</Sig><Sig tone="pos">A-7 구리</Sig></div></div>
+            <div><div className="dlabel">기여도 상위</div><div style={{ marginTop: 6, display: "flex", gap: 6 }}><Sig tone="pos">A-5 AWS Spot</Sig><Sig tone="pos">A-1 대만</Sig><Sig tone="pos">B-1 실적콜</Sig></div></div>
           </div>
           <AiNote>
             +{week}주 시점 예측은 CapEx 확장의 후행 효과와 구리 선행지표의 누적 반영이 주된 상승 동력. 단, 지정학 변수에 따라 신뢰구간이 넓어질 수 있음.
