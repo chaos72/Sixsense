@@ -197,34 +197,37 @@ function Dashboard({ onNav }) {
       <div className="section">
         <SectionHead num="01" icon="◉" title="가격 스냅샷" sub={`${m.updated || "최신"} 기준 — 매주 화요일 06:00 자동 갱신`} />
         <div className="grid-snapshot">
-          <MetricCard
-            label="현재 계약가"
-            code="SPOT · DDR5 8Gb"
-            value={`$${m.current.toFixed(2)}`}
-            unit="/ GB"
-            change={`${m.currentChange} 전주 대비`}
-            changeTone="pos"
-          />
-          <MetricCard
-            label="1~7주 AI 예측가"
-            code={`GBR · 신뢰 ${m.confidence ?? 81}%`}
-            value={`$${m.pred7.toFixed(2)}`}
-            unit="/ GB"
-            change={`${m.pred7Change} 예상`}
-            changeTone="pos"
-            sub="🔍 클릭하여 근거 보기"
-            onClick={() => onNav("S-002", { horizon: 7 })}
-          />
-          <MetricCard
-            label="8~21주 AI 예측가"
-            code={`LSTM · 신뢰 ${(m.confidence ?? 81) - 7}%`}
-            value={`$${m.pred21.toFixed(2)}`}
-            unit="/ GB"
-            change={`${m.pred21Change} 예상`}
-            changeTone="pos"
-            sub="🔍 클릭하여 근거 보기"
-            onClick={() => onNav("S-002", { horizon: 21 })}
-          />
+          {/* USER-REQUESTED CHANGE (v2.1) — 모바일에서 세 가격 카드를 한 카드로 합침 (price-combo, 데스크톱은 영향 없음) */}
+          <div className="price-combo">
+            <MetricCard
+              label="현재 계약가"
+              code="SPOT · DDR5 8Gb"
+              value={`$${m.current.toFixed(2)}`}
+              unit="/ GB"
+              change={`${m.currentChange} 전주 대비`}
+              changeTone="pos"
+            />
+            <MetricCard
+              label="1~7주 AI 예측가"
+              code={`GBR · 신뢰 ${m.confidence ?? 81}%`}
+              value={`$${m.pred7.toFixed(2)}`}
+              unit="/ GB"
+              change={`${m.pred7Change} 예상`}
+              changeTone="pos"
+              sub="🔍 클릭하여 근거 보기"
+              onClick={() => onNav("S-002", { horizon: 7 })}
+            />
+            <MetricCard
+              label="8~21주 AI 예측가"
+              code={`LSTM · 신뢰 ${(m.confidence ?? 81) - 7}%`}
+              value={`$${m.pred21.toFixed(2)}`}
+              unit="/ GB"
+              change={`${m.pred21Change} 예상`}
+              changeTone="pos"
+              sub="🔍 클릭하여 근거 보기"
+              onClick={() => onNav("S-002", { horizon: 21 })}
+            />
+          </div>
           <InsightCard insight={m.insight} />
         </div>
       </div>
@@ -297,11 +300,15 @@ function Dashboard({ onNav }) {
             <div className="card" style={{ padding: 0 }}>
               {D.macro.map((mi, i) => (
                 <div key={i} className="card tappable flat" onClick={() => onNav("S-008", { tab: mi.id })}
-                     style={{ border: "none", borderBottom: i < D.macro.length - 1 ? "1px solid var(--border)" : "none", borderRadius: 0, padding: "10px 18px", display: "grid", gridTemplateColumns: "1.2fr 0.7fr 1fr auto", alignItems: "center", gap: 12 }}>
+                     style={{ border: "none", borderBottom: i < D.macro.length - 1 ? "1px solid var(--border)" : "none", borderRadius: 0, padding: "10px 18px", display: "grid", gridTemplateColumns: "1fr 0.85fr 1.3fr", alignItems: "center", gap: 12 }}>
                   <span style={{ fontSize: 12.5, fontWeight: 500 }}>{mi.name}</span>
-                  <span className="num" style={{ fontSize: 13, fontWeight: 600 }}>{mi.value}</span>
-                  <Sig tone={mi.tone}>{mi.change}</Sig>
-                  <span className="muted" style={{ fontSize: 11 }}>{mi.desc}</span>
+                  {/* USER-REQUESTED CHANGE (v2.1) — 값/긍부정을 한 컬럼에 위·아래로 배치 */}
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                    <span className="num" style={{ fontSize: 13, fontWeight: 600 }}>{mi.value}</span>
+                    <Sig tone={mi.tone}>{mi.change}</Sig>
+                  </div>
+                  {/* USER-REQUESTED CHANGE (v2.1) — 설명 글자색을 지표명과 동일하게 */}
+                  <span style={{ fontSize: 11, fontWeight: 500 }}>{mi.desc}</span>
                 </div>
               ))}
             </div>
@@ -318,10 +325,13 @@ function Dashboard({ onNav }) {
             <div className="card events-list">
               {D.events.slice(0, 10).map((e) => (
                 <div key={e.id} className="card tappable flat events-row" onClick={() => onNav("S-011", { event: e })}>
-                  <Sig tone={e.risk === "high" ? "neg" : e.risk === "mid" ? "neu" : "pos"}>
-                    {e.risk === "high" ? "고위험" : e.risk === "mid" ? "중위험" : "저위험"}
-                  </Sig>
-                  <span className={`events-type events-type-${categoryClass(e.type)}`}>{e.type}</span>
+                  {/* USER-REQUESTED CHANGE (v2.1) — 위험/뉴스유형을 한 컬럼에 위·아래로 배치, 제목 영역 확대 */}
+                  <div className="events-risktype">
+                    <Sig tone={e.risk === "high" ? "neg" : e.risk === "mid" ? "neu" : "pos"}>
+                      {e.risk === "high" ? "고위험" : e.risk === "mid" ? "중위험" : "저위험"}
+                    </Sig>
+                    <span className={`events-type events-type-${categoryClass(e.type)}`}>{e.type}</span>
+                  </div>
                   <span className="events-title">{e.title}</span>
                   <span className="mono muted events-region">{e.region}</span>
                 </div>
