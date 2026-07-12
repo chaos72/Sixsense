@@ -278,11 +278,14 @@ function Dashboard({ onNav }) {
             <div className="card" style={{ padding: 0 }}>
               {D.news.filter(n => n.hot).map((n, i) => (
                 <div key={i} className="card tappable flat" onClick={() => onNav("S-007", { news: n })}
-                     style={{ border: "none", borderBottom: i < 2 ? "1px solid var(--border)" : "none", borderRadius: 0, padding: "12px 18px", display: "flex", alignItems: "center", gap: 12 }}>
+                     style={{ border: "none", borderBottom: i < 2 ? "1px solid var(--border)" : "none", borderRadius: 0, padding: "12px 18px", display: "flex", alignItems: "flex-start", gap: 12 }}>
                   <Sig tone={n.tone}>{n.tone === "pos" ? "긍정" : n.tone === "neg" ? "부정" : "중립"}</Sig>
-                  <div style={{ flex: 1, fontSize: 13, fontWeight: 500 }}>{n.title}</div>
-                  <span className="muted mono" style={{ fontSize: 11 }}>{n.source}</span>
-                  <span className="num" style={{ fontSize: 11, color: n.tone === "pos" ? "var(--sig-pos)" : n.tone === "neg" ? "var(--sig-neg)" : "var(--sig-neu)", fontWeight: 500 }}>
+                  {/* USER-REQUESTED CHANGE (v2.0) — 제목/출처를 한 컬럼에 위·아래로 배치 */}
+                  <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                    <div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.4 }}>{n.title}</div>
+                    <span className="muted mono" style={{ fontSize: 11 }}>{n.source}</span>
+                  </div>
+                  <span className="num" style={{ fontSize: 11, color: n.tone === "pos" ? "var(--sig-pos)" : n.tone === "neg" ? "var(--sig-neg)" : "var(--sig-neu)", fontWeight: 500, whiteSpace: "nowrap" }}>
                     {n.score > 0 ? "+" : ""}{n.score.toFixed(2)}
                   </span>
                 </div>
