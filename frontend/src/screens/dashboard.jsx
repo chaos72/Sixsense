@@ -235,7 +235,7 @@ function Dashboard({ onNav }) {
       {/* DRAM Chart */}
       <div className="section">
         <SectionHead num="02" icon="◢" title="DRAM 52주 히스토리 + AI 예측" sub="차트의 특정 주 클릭 → 주별 스냅샷" actions={<ChartRangeSeg value={chartRange} onChange={setChartRange} />} />
-        <div className="card">
+        <div className="card dram-chart-card">
           <DramChart range={chartRange} onPointClick={(d) => onNav("S-009", { week: d.x })} />
           <ChartLegend range={chartRange} />
         </div>
@@ -299,7 +299,7 @@ function Dashboard({ onNav }) {
             <SectionHead num="05" icon="◔" title="거시경제 지표" actions={<button className="btn sm" onClick={() => onNav("S-008", { tab: "fed" })}>전체 →</button>} />
             <div className="card" style={{ padding: 0 }}>
               {D.macro.map((mi, i) => (
-                <div key={i} className="card tappable flat" onClick={() => onNav("S-008", { tab: mi.id })}
+                <div key={i} className="card tappable flat macro-row" onClick={() => onNav("S-008", { tab: mi.id })}
                      style={{ border: "none", borderBottom: i < D.macro.length - 1 ? "1px solid var(--border)" : "none", borderRadius: 0, padding: "10px 18px", display: "grid", gridTemplateColumns: "1fr 0.85fr 1.3fr", alignItems: "center", gap: 12 }}>
                   <span style={{ fontSize: 12.5, fontWeight: 500 }}>{mi.name}</span>
                   {/* USER-REQUESTED CHANGE (v2.1) — 값/긍부정을 한 컬럼에 위·아래로 배치 */}
@@ -523,6 +523,7 @@ function DramChart({ range = "all", onPointClick }) {
         ]}
         series={series}
         xLabels={xLabels}
+        preserveAspectRatio="none"
       />
     </div>
   );
@@ -531,7 +532,7 @@ function DramChart({ range = "all", onPointClick }) {
 function ChartLegend({ range }) {
   // USER-REQUESTED EXTENSION (2026-05-18 #4) — Prophet baseline + HistGBR 범례 추가
   return (
-    <div style={{ display: "flex", gap: 18, marginTop: 12, paddingLeft: 44, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
+    <div className="chart-legend-wrap" style={{ display: "flex", gap: 18, marginTop: 12, paddingLeft: 44, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
       <span className="chart-legend-item">
         <svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="var(--text)" strokeWidth="1.75"/></svg> 실측 ({range === "short" ? "26주" : range === "mid" ? "13주" : "52주"})
       </span>

@@ -177,7 +177,7 @@ function BarRow({ rank, code, label, value, pct, tone }) {
 }
 
 // ==== Generic line chart ====
-function LineChart({ width = 800, height = 280, series, xLabels, yDomain, refLines, bands, padding = { l: 44, r: 24, t: 16, b: 28 } }) {
+function LineChart({ width = 800, height = 280, series, xLabels, yDomain, refLines, bands, padding = { l: 44, r: 24, t: 16, b: 28 }, preserveAspectRatio = "xMidYMid meet" }) {
   const w = width, h = height;
   const cw = w - padding.l - padding.r;
   const ch = h - padding.t - padding.b;
@@ -200,7 +200,7 @@ function LineChart({ width = 800, height = 280, series, xLabels, yDomain, refLin
   const yvals = Array.from({ length: yticks + 1 }, (_, i) => ymin + ((ymax - ymin) * i / yticks));
   
   return (
-    <svg className="chart" viewBox={`0 0 ${w} ${h}`} style={{ width: "100%", height: "auto" }}>
+    <svg className="chart" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio={preserveAspectRatio} style={{ width: "100%", height: "auto" }}>
       {/* Grid */}
       <g className="grid">
         {yvals.map((v, i) => (
