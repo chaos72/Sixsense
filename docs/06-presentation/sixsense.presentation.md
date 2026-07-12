@@ -4,7 +4,7 @@ theme: default
 size: 16:9
 paginate: true
 header: 'Sixsense · Server DRAM Price Intelligence Dashboard'
-footer: 'KAIST CAIO 10기 6조 · v1.1 · 2026-07-12'
+footer: 'KAIST CAIO 10기 6조 · v2.1 · 2026-07-12'
 style: |
   section {
     font-family: 'Pretendard Variable', 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif;
@@ -53,7 +53,7 @@ style: |
 
 <br><br>
 
-<span class="small">KAIST CAIO 10기 6조 · v1.1 (2026-07-12 데이터 최신화)</span>
+<span class="small">KAIST CAIO 10기 6조 · v2.1 (2026-07-12 iOS 전용앱 전환 + 모바일 디자인 개선)</span>
 
 ---
 
@@ -131,7 +131,9 @@ style: |
 
 <br>
 
-**Git history**: 49 commits, Phase 1~7 + v1.1 데이터 최신화 누적 · 마지막 commit `2e54037` (v1.1 — LSTM anchor 보정)
+**Git history**: 58 commits, Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 iOS 전환·모바일 개선 누적
+
+**v2.0/v2.1 하이라이트**: iOS 전용앱(PWA) 전환(홈 화면 설치·오프라인 지원) · 하단 탭바 모바일 UX · 예측 영향도 0%인 신호 4개 정리(14→10개) · 기상이변/Graph RAG 섹션 제거 · 모바일 카드·표 레이아웃 전면 재정비(가운데 정렬·가로 통합·구분선 표 형태)
 
 ---
 
@@ -451,13 +453,13 @@ Prophet 황색 dotted · HistGBR 보라 long-dash · **GBR★** 청색 · **LSTM
 
 | | |
 |---|---|
-| GitHub commits | **49개** (Phase 1~7 + v1.1 데이터 최신화 누적) |
-| 자동 수집 신호 | **21/21 (100%)** |
+| GitHub commits | **58개** (Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 모바일 전환 누적) |
+| 자동 수집 신호 | **21개 수집 · 화면 표시 10개** (예측 영향도 0% 신호 4개 정리) |
 | 단기 MAPE | **11.05%** (XGBoost ⭐) |
 | 중장기 MAPE | **9.19%** (LSTM ⭐) |
 | AI 인사이트 | Claude→Gemini→Groq→휴리스틱 4-tier · 400자 완결 |
-| 사용자 명시 확장 | **12회** (hand-off 토큰만 사용) |
-| 현재 버전 | **v1.1** (2026-07-12) |
+| iOS 전용앱 | PWA 홈 화면 설치 + 오프라인 지원 + 하단 탭바 |
+| 현재 버전 | **v2.1** (2026-07-12) |
 
 <br>
 

@@ -1247,6 +1247,18 @@ a.inline:hover { text-decoration-color: var(--text); }
   .chart-legend-wrap .leg-gbr { order: 5; }
   .chart-legend-wrap .leg-lstm { order: 6; }
 
+  /* USER-REQUESTED CHANGE (v2.1) — 범례가 카드 폭을 넘어 삐져나가던 문제: 폰트 축소로 폭에 맞춤 */
+  .chart-legend-wrap {
+    font-size: 8px !important;
+    column-gap: 8px;
+  }
+  .chart-legend-wrap .chart-legend-item svg { transform: scale(0.85); transform-origin: left center; }
+
+  /* USER-REQUESTED CHANGE (v2.1) — 글로벌 이벤트: 바깥 카드 여백과 각 행 여백이 이중으로
+     겹쳐 좌우 공간이 남던 문제 수정 (거시경제 지표처럼 바깥 여백 제거, 오른쪽까지 꽉 채움) */
+  .card.events-list { padding: 0; }
+  .events-row { padding: 10px 4px; }
+
   /* USER-REQUESTED CHANGE (v2.1) — DRAM 차트: 세로 크기 약 30% 확대,
      범례를 2컬럼 배치로 3줄까지만 나오게 + 줄 간격 50% 축소 */
   .dram-chart-card .chart { aspect-ratio: 1200 / 390; height: auto !important; }
