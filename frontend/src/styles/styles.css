@@ -1133,28 +1133,45 @@ a.inline:hover { text-decoration-color: var(--text); }
   .card { border-radius: 14px; }
   .grid-snapshot > .card { padding: 16px; }
 
-  /* ---- USER-REQUESTED CHANGE (v2.1) — 가격 3카드를 한 카드로 통합 + 폰트 축소 ---- */
+  /* ---- USER-REQUESTED CHANGE (v2.2) — 가격 3카드를 한 카드에 "가로"로 통합 + 폰트 축소 ---- */
   .price-combo {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
     overflow: hidden;
   }
   .price-combo > .card {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     border: none;
     border-radius: 0;
     box-shadow: none !important;
     background: transparent;
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--border);
+    padding: 12px 6px;
+    border-right: 1px solid var(--border);
     transform: none !important;
   }
-  .price-combo > .card:last-child { border-bottom: none; }
-  .price-combo .card-big { font-size: 19px; }
-  .price-combo .card-h { font-size: 11px; }
-  .price-combo .card-sub { margin-top: 4px; }
+  .price-combo > .card:last-child { border-right: none; }
+  .price-combo .card-h {
+    justify-content: center;
+    font-size: 9.5px;
+    white-space: normal;
+    text-align: center;
+    margin-bottom: 6px !important;
+  }
+  .price-combo .card-h .code { display: none; }
+  .price-combo > .card > div:nth-child(2) { justify-content: center; }
+  .price-combo .card-big { font-size: 15px; white-space: normal; }
+  .price-combo .card-big + .muted.num { font-size: 9px; }
+  .price-combo .card-sub { justify-content: center; margin-top: 4px !important; font-size: 10px; }
+  .price-combo .card-sub .num { font-size: 10px; white-space: normal; }
+  .price-combo > .card > .muted.mono { display: none; }
 
   /* ---- 넓은 표/차트: 가로 스크롤로 감싸 넘침 방지 ---- */
   .model-table { display: block; overflow-x: auto; white-space: nowrap; }
