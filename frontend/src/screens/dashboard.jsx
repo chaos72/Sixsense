@@ -342,7 +342,7 @@ function Dashboard({ onNav }) {
             <SectionHead num="07" icon="▤" title="AI 예측 정확도 트래킹" actions={<button className="btn sm" onClick={() => onNav("S-012")}>전체 이력 →</button>} />
             <div className="card" style={{ padding: 0 }}>
               {D.accuracy.filter(a => a.actual !== null).slice(0, 3).map((a, i) => (
-                <div key={i} style={{ padding: "12px 16px", borderBottom: i < 2 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto auto auto 1fr auto", alignItems: "center", gap: 14, fontSize: 12 }}>
+                <div key={i} className="acc-row" style={{ padding: "12px 16px", borderBottom: i < 2 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto auto auto 1fr auto", alignItems: "center", gap: 14, fontSize: 12 }}>
                   <span className="muted mono">{Math.round((lastTuesday06KST().getTime() - Date.parse(a.predDate)) / (1000 * 60 * 60 * 24 * 7))}주전</span>
                   <span>예측 <span className="num" style={{ fontWeight: 600 }}>${a.pred.toFixed(2)}</span></span>
                   <span className="muted mono">→</span>

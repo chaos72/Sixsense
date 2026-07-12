@@ -1120,14 +1120,37 @@ a.inline:hover { text-decoration-color: var(--text); }
     padding: 16px 16px calc(76px + env(safe-area-inset-bottom));
   }
   .section { margin-bottom: 20px; }
-  .section-head { align-items: center; }
-  .section-head .title { font-size: 15px; }
+
+  /* USER-REQUESTED CHANGE (v2.1) — 섹션 제목 줄(제목+날짜/설명+버튼)이 한 줄에 안 들어가
+     화면 폭을 넘어가던 문제 수정: 필요 시 줄바꿈되도록 변경 */
+  .section-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .section-head .title {
+    font-size: 14px;
+    white-space: normal;
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .section-head .title .meta {
+    flex-basis: 100%;
+    white-space: normal;
+  }
+  .section-head .actions { flex-wrap: wrap; }
 
   /* ---- 모든 그리드를 세로 1열(또는 신호는 2열)로 ---- */
   .grid-2 { grid-template-columns: 1fr; }
   .grid-snapshot { grid-template-columns: 1fr !important; }
   .grid-7 { grid-template-columns: repeat(2, 1fr); }
   .model-validation .grid-2 { grid-template-columns: 1fr; }
+
+  /* USER-REQUESTED CHANGE (v2.1) — 카드 가로 크기를 "예측분석 인사이트" 카드 기준으로 통일.
+     원인: 긴 텍스트(이벤트 제목/예측기록 문구)가 grid 칸의 최소너비를 화면보다 넓게 밀어냄 → min-width:0 로 제한. */
+  .grid-2 > * { min-width: 0; }
+  .events-title { min-width: 0; }
+  .acc-row { min-width: 0; }
 
   /* ---- 카드: iOS 느낌(둥근 모서리 크게, 여백 넉넉) ---- */
   .card { border-radius: 14px; }
@@ -1178,6 +1201,15 @@ a.inline:hover { text-decoration-color: var(--text); }
 
   /* ---- 이벤트/뉴스 행: 터치하기 좋게 넉넉한 높이 ---- */
   .events-row { padding: 12px 14px; }
+
+  /* USER-REQUESTED CHANGE (v2.1) — "이번 주 새 수집 데이터 현황" 줄이 한 줄에 안 들어가
+     넘치던 문제 수정: 필요 시 줄바꿈 + "다음 수집까지"를 다음 줄로 */
+  .foot-bar {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    gap: 14px 24px;
+  }
+  .foot-bar > div:last-child { margin-left: 0 !important; flex-basis: 100%; }
 
   /* ---- 하단 탭바 표시 ---- */
   .mobile-tabbar {
