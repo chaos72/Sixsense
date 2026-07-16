@@ -1,0 +1,81 @@
+name: Sixsense 데이터 갱신
+
+# 1) 수동 실행(workflow_dispatch): GitHub UI 버튼 또는 아이폰 앱(2단계에서 연결)
+# 2) 자동 실행(schedule): 매주 월 21:00 UTC = 화 06:00 KST
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 21 * * 1"
+
+# data.js / data 폴더를 커밋·푸시하려면 쓰기 권한 필요
+permissions:
+  contents: write
+
+# 동시에 두 번 돌지 않도록 (중복 실행 방지)
+concurrency:
+  group: sixsense-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 3.9 준비
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 파이썬 의존성 설치 (torch 는 CPU 전용)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: 파이프라인 5단계 실행
+        working-directory: backend
+        env:
+          # LLM (뉴스 분류 + 인사이트)
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          # A-3 관세청 수출
+          KCS_API_URL: ${{ secrets.KCS_API_URL }}
+          KCS_API_KEY: ${{ secrets.KCS_API_KEY }}
+          # A-4 재고/출하 (통계청 KOSIS)
+          KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
+          KOSIS_FULL_URL: ${{ secrets.KOSIS_FULL_URL }}
+          # A-5 AWS Spot (예측 영향도 최상위 신호)
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          set -e
+          echo "── 1/5 데이터 수집 (신호별 실패는 자체 격리) ──"
+          python pipelines/auto_collectors.py --all || echo "auto_collectors 경고 — 계속 진행"
+          echo "── 2/5 뉴스/이벤트 수집 ──"
+          python pipelines/collect_news_events.py || echo "collect_news_events 경고 — 계속 진행"
+          echo "── 3/5 예측 모델 재학습 (실패 시 중단) ──"
+          python pipelines/forecast_v2.py
+          echo "── 4/5 인사이트 생성 ──"
+          python pipelines/build_insight.py
+          echo "── 5/5 프론트엔드 데이터 빌드 ──"
+          python pipelines/build_frontend_data.py
+
+      - name: 변경된 데이터 커밋 & 푸시 (Vercel 자동 재배포 트리거)
+        run: |
+          git config user.name "sixsense-bot"
+          git config user.email "actions@users.noreply.github.com"
+          # 데이터 산출물만 스테이징 (.env 등은 .gitignore 로 자동 제외)
+          git add backend/data frontend/src/mocks/data.js
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 생략"
+          else
+            git commit -m "data: 자동 갱신 (GitHub Actions, $(date -u +%Y-%m-%dT%H:%MZ))"
+            git push
+          fi
