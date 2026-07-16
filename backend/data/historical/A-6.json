@@ -1,23 +1,19 @@
 {
   "signalId": "A-6",
-  "source": "Manifold Markets 'Will China launch a full-scale invasion of Taiwan before 2030?' (4448 bets \u2192 55\uc8fc)",
+  "source": "Manifold Markets 'Will China launch a full-scale invasion of Taiwan before 2030?' (4450 bets \u2192 53\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-07-12",
-  "rangeStart": "2025-06-09",
-  "rangeEnd": "2026-07-06",
+  "collectedAt": "2026-07-16",
+  "rangeStart": "2025-06-16",
+  "rangeEnd": "2026-07-13",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
-      "week": "2025-06-09",
-      "value": 0.3484
-    },
-    {
       "week": "2025-06-16",
-      "value": 0.3442
+      "value": 0.3481
     },
     {
       "week": "2025-06-23",
-      "value": 0.356
+      "value": 0.3566
     },
     {
       "week": "2025-06-30",
@@ -37,31 +33,31 @@
     },
     {
       "week": "2025-07-28",
-      "value": 0.3097
+      "value": 0.3115
     },
     {
       "week": "2025-08-04",
-      "value": 0.3589
+      "value": 0.3607
     },
     {
       "week": "2025-08-11",
-      "value": 0.3474
+      "value": 0.3449
     },
     {
       "week": "2025-08-18",
-      "value": 0.3504
+      "value": 0.3492
     },
     {
       "week": "2025-08-25",
-      "value": 0.3548
+      "value": 0.3556
     },
     {
       "week": "2025-09-01",
-      "value": 0.3578
+      "value": 0.3617
     },
     {
       "week": "2025-09-08",
-      "value": 0.3825
+      "value": 0.3848
     },
     {
       "week": "2025-09-15",
@@ -73,31 +69,27 @@
     },
     {
       "week": "2025-09-29",
-      "value": 0.3656
+      "value": 0.3655
     },
     {
       "week": "2025-10-06",
-      "value": 0.3572
+      "value": 0.3567
     },
     {
       "week": "2025-10-13",
-      "value": 0.3807
+      "value": 0.3849
     },
     {
       "week": "2025-10-20",
-      "value": 0.3919
+      "value": 0.3873
     },
     {
       "week": "2025-10-27",
-      "value": 0.3553
+      "value": 0.3547
     },
     {
       "week": "2025-11-03",
       "value": 0.3369
-    },
-    {
-      "week": "2025-11-10",
-      "value": 0.3367
     },
     {
       "week": "2025-11-17",
@@ -125,31 +117,31 @@
     },
     {
       "week": "2025-12-29",
-      "value": 0.3656
+      "value": 0.3653
     },
     {
       "week": "2026-01-05",
-      "value": 0.3571
+      "value": 0.3526
     },
     {
       "week": "2026-01-12",
-      "value": 0.3327
+      "value": 0.3319
     },
     {
       "week": "2026-01-19",
-      "value": 0.3185
+      "value": 0.3178
     },
     {
       "week": "2026-01-26",
-      "value": 0.3404
+      "value": 0.3378
     },
     {
       "week": "2026-02-02",
-      "value": 0.3251
+      "value": 0.327
     },
     {
       "week": "2026-02-09",
-      "value": 0.3205
+      "value": 0.3197
     },
     {
       "week": "2026-02-16",
@@ -161,23 +153,23 @@
     },
     {
       "week": "2026-03-02",
-      "value": 0.3155
+      "value": 0.3158
     },
     {
       "week": "2026-03-09",
-      "value": 0.314
+      "value": 0.3157
     },
     {
       "week": "2026-03-16",
-      "value": 0.3298
+      "value": 0.3303
     },
     {
       "week": "2026-03-23",
-      "value": 0.3302
+      "value": 0.3293
     },
     {
       "week": "2026-03-30",
-      "value": 0.3366
+      "value": 0.3368
     },
     {
       "week": "2026-04-06",
@@ -216,16 +208,16 @@
       "value": 0.3241
     },
     {
-      "week": "2026-06-22",
-      "value": 0.3241
-    },
-    {
       "week": "2026-06-29",
-      "value": 0.3307
+      "value": 0.3309
     },
     {
       "week": "2026-07-06",
-      "value": 0.3337
+      "value": 0.3334
+    },
+    {
+      "week": "2026-07-13",
+      "value": 0.3293
     }
   ]
 }

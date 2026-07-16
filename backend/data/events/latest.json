@@ -1,8 +1,8 @@
 {
-  "collectedAt": "2026-07-12",
-  "method": "키워드 휴리스틱 + LLM 한글화",
-  "rawCount": 1190,
-  "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성)",
+  "collectedAt": "2026-07-16",
+  "method": "키워드 휴리스틱",
+  "rawCount": 1239,
+  "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
   "events": [
     {
       "id": "ev-1",
@@ -11,7 +11,7 @@
       "risk": "mid",
       "title": "[모니터링] 한국 메모리 산업 이슈 추적 (파업/정전/화재)",
       "impact": "공급↓",
-      "date": "2026-07-01",
+      "date": "2026-07-16",
       "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 국내 반도체)",
       "effects": {
         "short": {
@@ -35,7 +35,7 @@
       "type": "물리적 충돌",
       "region": "우크라이나",
       "risk": "high",
-      "title": "우크라이나 전쟁 브리핑: 러시아, 디젤 수출을 금지하며 정유 공장 공격으로 가스 부족 발생",
+      "title": "우크라이나 전쟁 briefing: 러시아 bans diesel exports as refinery attacks ⁠trigger gas 부족 a",
       "impact": "공급↓",
       "date": "2026-07-09",
       "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
@@ -57,40 +57,14 @@
       "affects": []
     },
     {
-      "id": "ev-3",
-      "type": "기상이변",
-      "region": "글로벌",
-      "risk": "high",
-      "title": "인도네시아 팔루 근처에서 규모 6.7의 지진 발생, 쓰나미 경고 없음",
-      "impact": "공급↓",
-      "date": "2026-06-16",
-      "summary": "글로벌 규모 6.7 지진 — 지역 공급망 영향 모니터링. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "이란",
-      "risk": "high",
-      "title": "이란에 대한 미국의 공격으로 원유 가격이 급등",
+      "region": "미국",
+      "risk": "mid",
+      "title": "Fed Chair Kevin 전쟁sh: ‘가격 are too high.’ Will there be a 금리 인하 at the next Fed m",
       "impact": "가격?",
-      "date": "2026-07-07",
-      "summary": "국제 유가 변동 보도 (이란) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-07-15",
+      "summary": "Fed 금리 인하 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -113,117 +87,13 @@
       "type": "기타",
       "region": "미국",
       "risk": "low",
-      "title": "걸프 지역의 긴장으로 유가가 상승하며 달러화가 상승, 금리 인상 예상 증가",
-      "impact": "가격?",
-      "date": "2026-07-09",
-      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 기타)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기타)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기타)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-6",
-      "type": "물리적 충돌",
-      "region": "우크라이나",
-      "risk": "high",
-      "title": "우크라이나 전쟁 1,598일: 러시아의 유가 정제 공장에 대한 파업으로 더 많은 장기 범위의 제재",
-      "impact": "공급↓",
-      "date": "2026-07-10",
-      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-7",
-      "type": "기상이변",
-      "region": "일본",
-      "risk": "high",
-      "title": "일본 북부 해역에서 규모 7.2의 지진 발생, 쓰나미 경고 없음",
-      "impact": "공급↓",
-      "date": "2026-06-25",
-      "summary": "일본 규모 7.2 지진 — 일본 NAND/소재 공급(키오시아 등) 단기 영향 모니터링. DRAM 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기상이변)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기상이변)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-8",
-      "type": "금융 위기",
-      "region": "미국",
-      "risk": "mid",
-      "title": "10년 만기 국채 금리가 4.56%로 상승, 최근 최고치에 근접하며 추가 금리 인상 예상",
-      "impact": "물류↑",
-      "date": "2026-07-11",
-      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-9",
-      "type": "기타",
-      "region": "미국",
-      "risk": "low",
-      "title": "연방準備제도(Fed)의 금리 결정이 은행 계좌, 대출, 신용 카드, 및 투자에 미치는 영향",
+      "title": "US Fed chair 전쟁sh vows reforms as central bank signals 금리 인상s on horizon",
       "impact": "가격?",
       "date": "2026-06-17",
       "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 영향 평가 (휴리스틱 · 기타)"
         },
         "mid": {
@@ -233,32 +103,6 @@
         "long": {
           "tone": "neu",
           "text": "장기 영향 평가 (휴리스틱 · 기타)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-10",
-      "type": "물리적 충돌",
-      "region": "이란",
-      "risk": "high",
-      "title": "미국-이란 분쟁이 격화됨에 따라 미사일 공격이 중동 휴전을 위협함",
-      "impact": "공급↓",
-      "date": "2026-07-10",
-      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
       "links": [],

@@ -1,19 +1,15 @@
 {
   "signalId": "B-6",
-  "source": "Google News 'HBM mix' (162 entries, LLM 28\ud68c \ud638\ucd9c, 41\uc8fc)",
-  "mode": "real",
-  "collectedAt": "2026-07-12",
-  "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-07-06",
+  "source": "Google News 'HBM mix' (163 entries, \ud0a4\uc6cc\ub4dc fallback, 40\uc8fc)",
+  "mode": "real-keyword",
+  "collectedAt": "2026-07-16",
+  "rangeStart": "2025-06-23",
+  "rangeEnd": "2026-07-13",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
-      "week": "2025-06-16",
-      "value": 0.8
-    },
-    {
       "week": "2025-06-23",
-      "value": 0.5
+      "value": 1.0
     },
     {
       "week": "2025-07-14",
@@ -21,15 +17,11 @@
     },
     {
       "week": "2025-07-21",
-      "value": 0.8
+      "value": 1.0
     },
     {
       "week": "2025-08-04",
-      "value": 0.0
-    },
-    {
-      "week": "2025-08-18",
-      "value": 0.5
+      "value": 1.0
     },
     {
       "week": "2025-09-08",
@@ -37,7 +29,7 @@
     },
     {
       "week": "2025-09-22",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2025-10-06",
@@ -49,11 +41,11 @@
     },
     {
       "week": "2025-10-27",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2025-11-03",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2025-12-15",
@@ -61,11 +53,11 @@
     },
     {
       "week": "2025-12-22",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2025-12-29",
-      "value": 1.0
+      "value": 0.0
     },
     {
       "week": "2026-01-05",
@@ -73,31 +65,31 @@
     },
     {
       "week": "2026-01-12",
-      "value": 0.9
+      "value": 0.0
     },
     {
       "week": "2026-01-19",
-      "value": 0.8
+      "value": 1.0
     },
     {
       "week": "2026-01-26",
-      "value": 0.9
+      "value": 1.0
     },
     {
       "week": "2026-02-02",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2026-02-09",
-      "value": 0.2
+      "value": 0.0
     },
     {
       "week": "2026-02-16",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2026-03-02",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-03-09",
@@ -109,7 +101,7 @@
     },
     {
       "week": "2026-03-23",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-03-30",
@@ -125,7 +117,7 @@
     },
     {
       "week": "2026-04-20",
-      "value": 0.8
+      "value": 1.0
     },
     {
       "week": "2026-04-27",
@@ -133,11 +125,11 @@
     },
     {
       "week": "2026-05-04",
-      "value": 0.7
+      "value": 1.0
     },
     {
       "week": "2026-05-11",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-05-18",
@@ -157,11 +149,11 @@
     },
     {
       "week": "2026-06-15",
-      "value": 0.8
+      "value": 1.0
     },
     {
       "week": "2026-06-22",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-06-29",
@@ -170,6 +162,10 @@
     {
       "week": "2026-07-06",
       "value": 1.0
+    },
+    {
+      "week": "2026-07-13",
+      "value": -0.3333
     }
   ]
 }
