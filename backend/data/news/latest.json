@@ -1,10 +1,64 @@
 {
-  "collectedAt": "2026-07-16",
+  "collectedAt": "2026-07-17",
   "method": "키워드 휴리스틱",
   "lookbackDays": 30,
-  "rawCount": 954,
+  "rawCount": 925,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
+    {
+      "date": "2026-07-17",
+      "title": "대만 반도체 (NYSE: TSM) Pledges Additional $100B 미국 투자 Despite 77% 실적 급등 As",
+      "titleEn": "Taiwan Semiconductor (NYSE: TSM) Pledges Additional $100B U.S. Investment Despite 77% Earnings Surge As Stock Slips",
+      "source": "foreignpolicyjournal.com",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "대만 반도체 (NYSE: TSM) Pledges Additional $100B 미국 투자 Despite 77% 실적 급등 As Stock Slips &nbsp;&nbsp; foreignpolicyjournal.com",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPVWRnRjNKaG9TX3l2VHlCZ0cwc3FybVhDWmF6LS1zYWVQVDdPTWFHQlM1LVBMUjJfRnVpa3lNZV9IaVJNMEc5aTBqSXo3NkhrODFsR1FTb01yYTI1dGV0b3JTMWlsWTFfbVlPSDkwTTJjU2o0WGVTRmdmRnRVOVpqQUIwdUhXSUZxdTJMR0dQaFRSd29kNTA5bFZTbGRva19CUEZGU1J4eU1JeXQybTd4YzFGc3prcE1JNUxMQzRKSWxjOG9ScjlwSkpBZHZyYk5LNi1Ld2lxSEJCU2NJeHFNcENvd25DVllkdTA3TDBNYw?oc=5"
+    },
+    {
+      "date": "2026-07-15",
+      "title": "SK하이닉스 Stock 급등 27% as AI 메모리 Stocks 강세 – Is It Time to Buy 마이크론 and S",
+      "titleEn": "SK Hynix Stock Surges 27% as AI Memory Stocks Rally – Is It Time to Buy Micron and Sandisk?",
+      "source": "Mitrade",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "SK하이닉스 Stock 급등 27% as AI 메모리 Stocks 강세 – Is It Time to Buy 마이크론 and Sandisk? &nbsp;&nbsp; Mitrade",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9vM3huOXl5dmFRYXlSSDU0QkVBZnlybzJsTlBKTUMzclRQelFkTnRmNG5HcERRMERxYXp6UE91dXJCeXV3THhodllvaXBzSFktVmtXenpDNm1KQ25DWUdIOE5LQ0l0V3lEMTgwTmd1WnJEbVZYZl9OdzBBZ00?oc=5"
+    },
     {
       "date": "2026-07-10",
       "title": "Intel CEO Lip-Bu Tan 경고ed Helium Could Choke AI Chips in June, and 중국’",
@@ -60,6 +114,33 @@
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPNm42Tzk1R25tR2prX1ZydFZ5OWFvM0JyMkI3Yk5aRWFYdHJNbVExRGRfa2ZjR0NPTE5qSGEzRjNrWDhoU0Rtd1NCeGwyN1ZJbWNwalVVZG85TGpBNGNwM3ZabkRkVmM2eV84aHJWckFodG9NVVNSeHBOcHU3SjRFRExuNzBPYURKM1hEYzhPbEFZWEdRM2ZzcVd3VktWTzE1UDBpY01n0gGmAUFVX3lxTFBEczhpNER1TjdhdTllSnNvNDY3X0pwY0hPTXM0Q2YzYjZ2MTcyN1czdlVlcks0Umx2dmctaU4xOVVndEk5Q3EwVTFlQklsc1hTOE5odGFCNU5ldlZuRURoUDJpM3c3TVJBSmpZTDFPby1HcjgxMXBPOWZXUU9jNUtDeURxVzd2STFHTXFtNUlIcjNDakNKeTdWTzVBTTZXeTI4WXE1Z3c?oc=5"
     },
     {
+      "date": "2026-07-17",
+      "title": "SK하이닉스 경고 of the Industry’s Worst 메모리 부족 in 2027 - igor´sLAB",
+      "titleEn": "SK Hynix Warns of the Industry’s Worst Memory Shortage in 2027 - igor´sLAB",
+      "source": "RSS",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "SK하이닉스 경고 of the Industry’s Worst 메모리 부족 in 2027 &nbsp;&nbsp; igor´sLAB",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNc1E0Umh1aEZoX3A0MTgxOC1pYWdZdHU3RXZuSW9YZ3hfdllhUmQxcmdvcGd0aTFSNEJLQ1lsNk45TC1mQTI5VVVIWGk3STJiLVJhUEdMMEhzWk5ORFUxUlVMdFFPcHlVMzh3cmhDNE5pYlFWTVdrSUVGNkVFMkFpS1JzM19pNWJKeXRfX2VPcnNxSFU?oc=5"
+    },
+    {
       "date": "2026-07-16",
       "title": "Capex Concerns Drag 대만 반도체 Stock to 6th-Straight Loss - Schaeffer's 투자",
       "titleEn": "Capex Concerns Drag Taiwan Semiconductor Stock to 6th-Straight Loss - Schaeffer's Investment Research",
@@ -112,87 +193,6 @@
       },
       "linked": [],
       "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQdVdvTzI4aXR6bkN1WTlseTZadVlINHR5S2dZRjJPVkprV01jejd1SDR6dmtIUmkwMmUwbWFLMDBrczV2bUZic096YXlzRUlHVmt1b2F3elZRM0tsR2MtOUpMcjByZlBwY2pXQmF1aVhBQXNyazNQQXl4cTM5QjZpaG1fMU9LeHF3MXMwcmhiQll3Zw?oc=5"
-    },
-    {
-      "date": "2026-07-12",
-      "title": "중국 Bans Exports of Helium Used in Chip 제조 - صحيفة مال",
-      "titleEn": "China Bans Exports of Helium Used in Chip Manufacturing - صحيفة مال",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "중국 Bans Exports of Helium Used in Chip 제조 &nbsp;&nbsp; صحيفة مال",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9tLWlaZ0ZWbHE1RHlYa0VRY3c4aUgwUUN2YkxvRkpDdG9wMXBSZ2huWlNzYmdiQnIxdXNaQngtdGxsNDIxTk5GVXlORUhLQlVpLTM1S3piT1owUVItaEs0T3M3VGlBeEVQdU9NQg?oc=5"
-    },
-    {
-      "date": "2026-07-12",
-      "title": "SK하이닉스 CEO 경고 2027 Will Be 메모리’s “Worst Year” Ever, With 부족 Set To Out",
-      "titleEn": "SK Hynix CEO Warns 2027 Will Be Memory’s “Worst Year” Ever, With Shortages Set To Outlast The Decade",
-      "source": "Wccftech",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "SK하이닉스 CEO 경고 2027 Will Be 메모리’s “Worst Year” Ever, With 부족 Set To Outlast The Decade &nbsp;&nbsp; Wccftech",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNdE9VZjRGc3RBN0R6eHB6TnU1dW1Nc1FDdHJNNDFEMkxhbVQtVmstZXRTYloxdTZPWDJLaGtaT0FnZzNxNGVPRWJuN3NPNXg2ZC1aSzQyZElWOGJESmxiOWZ0MlVfeUVkNHA0cWthcEZMM3FodmJpZGpCeWtqVlhIUEtPMThFaE8zYnFJUFFkeXZaSDVrTkdaa292QjFvbC11S2VHRHhJTdIBrAFBVV95cUxQd1AtdmhmcHkyRUcxOUtnTkIxOUxCak9RcndSbmI5VThMMWxSOXU0eDFrRE9pdTVtSlZyb2FpWWd1NlZqOWtQM2dDRG5QdmsxbFNhNWJIM2JrTm1ScnRGQ2lqby1oc01JV1ktM0FMdDZDckNHb29yenYzTk9XLTRKSVpKWjdVdFJicjNtTDVCQmo5MWpyd0IyS01BY2ZiTWxPSU5Fb1RvM21Zc0RF?oc=5"
-    },
-    {
-      "date": "2026-07-16",
-      "title": "華許不認 AI 令物價更頑強：一次性漲價未必是通膨",
-      "titleEn": "華許不認 AI 令物價更頑強：一次性漲價未必是通膨",
-      "source": "TechNews",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "新任聯準會（Fed）主席華許（Kevin 전쟁sh）前往國會作證時表示，AI 投資熱潮未必會帶來持續性通膨， [&#8230;]",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://finance.technews.tw/2026/07/16/kevin-warsh-ai-isnt-making-inflation-more-persistent/"
     },
     {
       "date": "2026-07-15",

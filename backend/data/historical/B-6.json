@@ -1,8 +1,8 @@
 {
   "signalId": "B-6",
-  "source": "Google News 'HBM mix' (163 entries, \ud0a4\uc6cc\ub4dc fallback, 40\uc8fc)",
+  "source": "Google News 'HBM mix' (166 entries, \ud0a4\uc6cc\ub4dc fallback, 42\uc8fc)",
   "mode": "real-keyword",
-  "collectedAt": "2026-07-16",
+  "collectedAt": "2026-07-17",
   "rangeStart": "2025-06-23",
   "rangeEnd": "2026-07-13",
   "note": "Auto-collected via auto_collectors.py",
@@ -25,6 +25,10 @@
     },
     {
       "week": "2025-09-08",
+      "value": 0.0
+    },
+    {
+      "week": "2025-09-15",
       "value": 0.0
     },
     {
@@ -85,6 +89,10 @@
     },
     {
       "week": "2026-02-16",
+      "value": 0.0
+    },
+    {
+      "week": "2026-02-23",
       "value": 0.0
     },
     {
@@ -153,7 +161,7 @@
     },
     {
       "week": "2026-06-22",
-      "value": 1.0
+      "value": 0.0
     },
     {
       "week": "2026-06-29",
@@ -165,7 +173,7 @@
     },
     {
       "week": "2026-07-13",
-      "value": -0.3333
+      "value": 0.5
     }
   ]
 }

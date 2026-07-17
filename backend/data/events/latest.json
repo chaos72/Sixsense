@@ -1,7 +1,7 @@
 {
-  "collectedAt": "2026-07-16",
+  "collectedAt": "2026-07-17",
   "method": "키워드 휴리스틱",
-  "rawCount": 1239,
+  "rawCount": 1233,
   "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
   "events": [
     {
@@ -37,7 +37,7 @@
       "risk": "high",
       "title": "우크라이나 전쟁 briefing: 러시아 bans diesel exports as refinery attacks ⁠trigger gas 부족 a",
       "impact": "공급↓",
-      "date": "2026-07-09",
+      "date": "2026-07-08",
       "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -59,12 +59,12 @@
     {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "미국",
+      "region": "이란",
       "risk": "mid",
-      "title": "Fed Chair Kevin 전쟁sh: ‘가격 are too high.’ Will there be a 금리 인하 at the next Fed m",
+      "title": "유가s Set for Biggest Weekly 급등 Since April as 이란 전쟁 Escalates - 원유 가격 Today | 유가가",
       "impact": "가격?",
-      "date": "2026-07-15",
-      "summary": "Fed 금리 인하 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-07-17",
+      "summary": "국제 유가 변동 보도 (이란) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -103,6 +103,32 @@
         "long": {
           "tone": "neu",
           "text": "장기 영향 평가 (휴리스틱 · 기타)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-7",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "Fed Chair Kevin 전쟁sh: ‘가격 are too high.’ Will there be a 금리 인하 at the next Fed m",
+      "impact": "가격?",
+      "date": "2026-07-15",
+      "summary": "Fed 금리 인하 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
         }
       },
       "links": [],

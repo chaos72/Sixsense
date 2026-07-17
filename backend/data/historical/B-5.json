@@ -1,8 +1,8 @@
 {
   "signalId": "B-5",
-  "source": "Google News 'LTA ratio' (57 entries, \ud0a4\uc6cc\ub4dc fallback, 16\uc8fc)",
+  "source": "Google News 'LTA ratio' (57 entries, \ud0a4\uc6cc\ub4dc fallback, 14\uc8fc)",
   "mode": "real-keyword",
-  "collectedAt": "2026-07-16",
+  "collectedAt": "2026-07-17",
   "rangeStart": "2025-12-08",
   "rangeEnd": "2026-07-13",
   "note": "Auto-collected via auto_collectors.py",
@@ -20,16 +20,8 @@
       "value": -1.0
     },
     {
-      "week": "2026-03-09",
-      "value": 0.0
-    },
-    {
       "week": "2026-03-16",
       "value": 1.0
-    },
-    {
-      "week": "2026-03-23",
-      "value": -1.0
     },
     {
       "week": "2026-03-30",
@@ -37,7 +29,7 @@
     },
     {
       "week": "2026-04-06",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-05-04",
