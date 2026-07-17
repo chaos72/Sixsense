@@ -37,24 +37,6 @@ jobs:
           pip install -r backend/requirements.txt \
             --extra-index-url https://download.pytorch.org/whl/cpu
 
-      - name: 진단 — secrets 길이만 확인 (값 노출 안 함, 임시)
-        env:
-          KOSIS_FULL_URL: ${{ secrets.KOSIS_FULL_URL }}
-          KCS_API_URL: ${{ secrets.KCS_API_URL }}
-          KCS_API_KEY: ${{ secrets.KCS_API_KEY }}
-          KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: |
-          echo "KOSIS_FULL_URL len=${#KOSIS_FULL_URL}  (로컬=282)"
-          echo "KOSIS_API_KEY  len=${#KOSIS_API_KEY}   (로컬=44)"
-          echo "KCS_API_URL    len=${#KCS_API_URL}     (로컬=41)"
-          echo "KCS_API_KEY    len=${#KCS_API_KEY}     (로컬=64)"
-          echo "AWS_ACCESS_KEY_ID     len=${#AWS_ACCESS_KEY_ID}     (로컬=20)"
-          echo "AWS_SECRET_ACCESS_KEY len=${#AWS_SECRET_ACCESS_KEY} (로컬=40)"
-          echo "AWS_REGION            len=${#AWS_REGION}            (로컬=9)"
-
       - name: 파이프라인 5단계 실행
         working-directory: backend
         env:
