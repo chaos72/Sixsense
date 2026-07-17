@@ -4,7 +4,7 @@ theme: default
 size: 16:9
 paginate: true
 header: 'Sixsense · Server DRAM Price Intelligence Dashboard'
-footer: 'KAIST CAIO 10기 6조 · v2.1 · 2026-07-12'
+footer: 'KAIST CAIO 10기 6조 · v2.2 · 2026-07-17'
 style: |
   section {
     font-family: 'Pretendard Variable', 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif;
@@ -53,7 +53,7 @@ style: |
 
 <br><br>
 
-<span class="small">KAIST CAIO 10기 6조 · v2.1 (2026-07-12 iOS 전용앱 전환 + 모바일 디자인 개선)</span>
+<span class="small">KAIST CAIO 10기 6조 · v2.2 (2026-07-17 수동 갱신 버튼 아이폰 실작동 — GitHub Actions 무료 파이프라인)</span>
 
 ---
 
@@ -131,9 +131,11 @@ style: |
 
 <br>
 
-**Git history**: 58 commits, Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 iOS 전환·모바일 개선 누적
+**Git history**: 73+ commits, Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 iOS 전환·모바일 개선 + v2.2 원격 갱신 파이프라인 누적
 
 **v2.0/v2.1 하이라이트**: iOS 전용앱(PWA) 전환(홈 화면 설치·오프라인 지원) · 하단 탭바 모바일 UX · 예측 영향도 0%인 신호 4개 정리(14→10개) · 기상이변/Graph RAG 섹션 제거 · 모바일 카드·표 레이아웃 전면 재정비(가운데 정렬·가로 통합·구분선 표 형태)
+
+**v2.2 하이라이트**: 수동 갱신 버튼 아이폰 실작동 — 버튼 → Vercel 함수 → GitHub Actions(무료) 5단계 파이프라인 → 봇 커밋 → 자동 재배포·새로고침 (약 5분, 서버·비용 0원) · 매주 화 06:00 KST 자동 갱신 겸용
 
 ---
 
@@ -453,14 +455,15 @@ Prophet 황색 dotted · HistGBR 보라 long-dash · **GBR★** 청색 · **LSTM
 
 | | |
 |---|---|
-| GitHub commits | **58개** (Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 모바일 전환 누적) |
+| GitHub commits | **73+개** (Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 모바일 전환 + v2.2 원격 갱신 누적) |
 | 자동 수집 신호 | **21개 수집 · 화면 표시 10개** (예측 영향도 0% 신호 4개 정리) |
 | 단기 MAPE | **11.05%** (XGBoost ⭐) |
 | 중장기 MAPE | **9.19%** (LSTM ⭐) |
 | AI 인사이트 | Claude→Gemini→Groq→휴리스틱 4-tier · 400자 완결 |
 | iOS 전용앱 | PWA 홈 화면 설치 + 오프라인 지원 + 하단 탭바 |
-| 현재 버전 | **v2.1** (2026-07-12) |
+| 원격 데이터 갱신 | 앱 버튼 → GitHub Actions(무료) → 자동 재배포 (약 5분) + 매주 화 06:00 자동 |
+| 현재 버전 | **v2.2** (2026-07-17) |
 
 <br>
 
-<span class="small">데모: http://localhost:5173 · 백엔드: http://localhost:8000/docs (OpenAPI)</span>
+<span class="small">배포: https://sixsense-eta.vercel.app · 데모(로컬): http://localhost:5173</span>
