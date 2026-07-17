@@ -1,20 +1,20 @@
 {
   "collectedAt": "2026-07-17",
-  "method": "키워드 휴리스틱",
+  "method": "키워드 휴리스틱 + LLM 한글화",
   "lookbackDays": 30,
   "rawCount": 925,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
       "date": "2026-07-17",
-      "title": "대만 반도체 (NYSE: TSM) Pledges Additional $100B 미국 투자 Despite 77% 실적 급등 As",
+      "title": "대만 반도체 (NYSE: TSM) 1000억 달러 추가 미국 투자 약속에도 불구하고 77% 실적 급등",
       "titleEn": "Taiwan Semiconductor (NYSE: TSM) Pledges Additional $100B U.S. Investment Despite 77% Earnings Surge As Stock Slips",
       "source": "foreignpolicyjournal.com",
       "score": 0.67,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "대만 반도체 (NYSE: TSM) Pledges Additional $100B 미국 투자 Despite 77% 실적 급등 As Stock Slips &nbsp;&nbsp; foreignpolicyjournal.com",
+      "summary": "대만 반도체 (NYSE: TSM) 1000억 달러 추가 미국 투자 약속에도 불구하고 77% 실적 급등",
       "effects": {
         "short": {
           "tone": "pos",
@@ -34,14 +34,14 @@
     },
     {
       "date": "2026-07-15",
-      "title": "SK하이닉스 Stock 급등 27% as AI 메모리 Stocks 강세 – Is It Time to Buy 마이크론 and S",
+      "title": "SK하이닉스 주가 27% 급등, AI 메모리 주가 강세 - 마이크론과 샌디스크 구매할 때인가",
       "titleEn": "SK Hynix Stock Surges 27% as AI Memory Stocks Rally – Is It Time to Buy Micron and Sandisk?",
       "source": "Mitrade",
       "score": 0.67,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "SK하이닉스 Stock 급등 27% as AI 메모리 Stocks 강세 – Is It Time to Buy 마이크론 and Sandisk? &nbsp;&nbsp; Mitrade",
+      "summary": "SK하이닉스 주가 27% 급등, AI 메모리 주가 강세 - 마이크론과 샌디스크 구매할 때인가",
       "effects": {
         "short": {
           "tone": "pos",
@@ -61,14 +61,14 @@
     },
     {
       "date": "2026-07-10",
-      "title": "Intel CEO Lip-Bu Tan 경고ed Helium Could Choke AI Chips in June, and 중국’",
+      "title": "인텔 CEO 립부 탄, 헬륨이 6월에 AI 칩을 막을 수 있다고 경고 - 중국 수출 금지로 현실화",
       "titleEn": "Intel CEO Lip-Bu Tan Warned Helium Could Choke AI Chips in June, and China’s Export Ban Might Prove Him Right",
       "source": "Wccftech",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "Intel CEO Lip-Bu Tan 경고ed Helium Could Choke AI Chips in June, and 중국’s Export Ban Might Prove Him Right &nbsp;&nbsp; Wccftech",
+      "summary": "인텔 CEO 립부 탄, 헬륨이 6월에 AI 칩을 막을 수 있다고 경고 - 중국 수출 금지로 현실화",
       "effects": {
         "short": {
           "tone": "neg",
@@ -88,14 +88,14 @@
     },
     {
       "date": "2026-07-10",
-      "title": "중국 issues temporary helium export ban as 이란 전쟁 strains global supplies",
+      "title": "중국, 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적인 헬륨 수출 금지",
       "titleEn": "China issues temporary helium export ban as Iran war strains global supplies",
       "source": "South China Morning Post",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "중국 issues temporary helium export ban as 이란 전쟁 strains global supplies &nbsp;&nbsp; South 중국 Morning Post",
+      "summary": "중국, 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적인 헬륨 수출 금지",
       "effects": {
         "short": {
           "tone": "neg",
@@ -115,14 +115,14 @@
     },
     {
       "date": "2026-07-17",
-      "title": "SK하이닉스 경고 of the Industry’s Worst 메모리 부족 in 2027 - igor´sLAB",
+      "title": "SK하이닉스, 2027년 산업 최악의 메모리 부족 경고",
       "titleEn": "SK Hynix Warns of the Industry’s Worst Memory Shortage in 2027 - igor´sLAB",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "SK하이닉스 경고 of the Industry’s Worst 메모리 부족 in 2027 &nbsp;&nbsp; igor´sLAB",
+      "summary": "SK하이닉스, 2027년 산업 최악의 메모리 부족 경고",
       "effects": {
         "short": {
           "tone": "pos",
@@ -142,14 +142,14 @@
     },
     {
       "date": "2026-07-16",
-      "title": "Capex Concerns Drag 대만 반도체 Stock to 6th-Straight Loss - Schaeffer's 투자",
+      "title": "대만 반도체 주가, 투자 비용 우려로 6일 연속 하락",
       "titleEn": "Capex Concerns Drag Taiwan Semiconductor Stock to 6th-Straight Loss - Schaeffer's Investment Research",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "Capex Concerns Drag 대만 반도체 Stock to 6th-Straight Loss &nbsp;&nbsp; Schaeffer's 투자 Research",
+      "summary": "대만 반도체 주가, 투자 비용 우려로 6일 연속 하락",
       "effects": {
         "short": {
           "tone": "pos",
@@ -169,14 +169,14 @@
     },
     {
       "date": "2026-07-14",
-      "title": "Arm Holdings plc (ARM) CEO says US would have Difficulty Banning AI CP",
+      "title": "암 홀딩스 CEO, 미국은 중국에 AI CPU 칩 수출을 금지하기 어렵다",
       "titleEn": "Arm Holdings plc (ARM) CEO says US would have Difficulty Banning AI CPU chip Exports to China",
       "source": "Yahoo Finance",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "Arm Holdings plc (ARM) CEO says US would have Difficulty Banning AI CPU chip Exports to 중국 &nbsp;&nbsp; Yahoo Finance",
+      "summary": "암 홀딩스 CEO, 미국은 중국에 AI CPU 칩 수출을 금지하기 어렵다",
       "effects": {
         "short": {
           "tone": "neg",
@@ -196,14 +196,14 @@
     },
     {
       "date": "2026-07-15",
-      "title": "RDIMM chipset 증가 서버 메모리 bandwidth",
+      "title": "RDIMM 칩셋, 서버 메모리 대역폭 증가",
       "titleEn": "RDIMM chipset boosts server memory bandwidth",
       "source": "EDN - Voice of the Engineer",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "RDIMM chipset 증가 서버 메모리 bandwidth &nbsp;&nbsp; EDN - Voice of the Engineer",
+      "summary": "RDIMM 칩셋, 서버 메모리 대역폭 증가",
       "effects": {
         "short": {
           "tone": "neu",
@@ -223,14 +223,14 @@
     },
     {
       "date": "2026-07-14",
-      "title": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck",
+      "title": "엔비디아도 마찬가지: 패키징이 AI 칩의 새로운 병목 현상으로 부상",
       "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
       "source": "economy.ac",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race &nbsp;&nbsp; economy.ac",
+      "summary": "엔비디아도 마찬가지: 패키징이 AI 칩의 새로운 병목 현상으로 부상, 글로벌 투자 경쟁 심화",
       "effects": {
         "short": {
           "tone": "neu",
@@ -250,14 +250,14 @@
     },
     {
       "date": "2026-07-13",
-      "title": "Rambus Launches High-Speed DDR5 9600 Chipset to Meet Heavy AI and 데이터센",
+      "title": "램버스, 고성능 DDR5 9600 칩셋 출시 - 무거운 AI와 데이터 센터 수요 대응",
       "titleEn": "Rambus Launches High-Speed DDR5 9600 Chipset to Meet Heavy AI and Data Center Demands",
       "source": "Bisinfotech",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "Rambus Launches High-Speed DDR5 9600 Chipset to Meet Heavy AI and 데이터센터 수요s &nbsp;&nbsp; Bisinfotech",
+      "summary": "램버스, 고성능 DDR5 9600 칩셋 출시 - 무거운 AI와 데이터 센터 수요 대응",
       "effects": {
         "short": {
           "tone": "neu",

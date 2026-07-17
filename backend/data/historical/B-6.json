@@ -1,7 +1,7 @@
 {
   "signalId": "B-6",
-  "source": "Google News 'HBM mix' (166 entries, \ud0a4\uc6cc\ub4dc fallback, 42\uc8fc)",
-  "mode": "real-keyword",
+  "source": "Google News 'HBM mix' (166 entries, LLM 21\ud68c \ud638\ucd9c, 42\uc8fc)",
+  "mode": "real",
   "collectedAt": "2026-07-17",
   "rangeStart": "2025-06-23",
   "rangeEnd": "2026-07-13",
@@ -9,7 +9,7 @@
   "data": [
     {
       "week": "2025-06-23",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2025-07-14",
@@ -21,7 +21,7 @@
     },
     {
       "week": "2025-08-04",
-      "value": 1.0
+      "value": 0.0
     },
     {
       "week": "2025-09-08",
@@ -41,7 +41,7 @@
     },
     {
       "week": "2025-10-13",
-      "value": 0.0
+      "value": 0.9
     },
     {
       "week": "2025-10-27",
@@ -53,31 +53,31 @@
     },
     {
       "week": "2025-12-15",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2025-12-22",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2025-12-29",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-01-05",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-01-12",
-      "value": 0.0
+      "value": 0.9
     },
     {
       "week": "2026-01-19",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-01-26",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2026-02-02",
@@ -101,7 +101,7 @@
     },
     {
       "week": "2026-03-09",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2026-03-16",
@@ -157,11 +157,11 @@
     },
     {
       "week": "2026-06-15",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2026-06-22",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2026-06-29",
