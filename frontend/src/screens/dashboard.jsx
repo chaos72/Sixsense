@@ -17,69 +17,82 @@ function categoryClass(type) {
 }
 
 
-// USER-REQUESTED EXTENSION (2026-05-18 #7) — 수동 갱신 패널 (§09 풋바 바로 아래)
-// 백엔드 /api/refresh POST → polling /api/refresh/jobs/{id} → 완료 시 page reload
-const API_BASE = (typeof window !== "undefined" && window.location.hostname === "localhost")
-  ? "http://localhost:8000" : "";
-
+// USER-REQUESTED EXTENSION (v2.2) — 수동 갱신 패널 (§08 풋바 바로 아래)
+// 아이폰/웹: 버튼 → Vercel 함수(/api/refresh) → GitHub Actions 트리거 →
+// /api/refresh-status 폴링 → 완료 시 자동 새로고침. (백엔드 서버 불필요, 무료)
 function RefreshPanel() {
-  const [job, setJob] = useState(null);     // {queueId, status, stage, currentStep, totalSteps, logs, error, totalDurSec}
-  const [error, setError] = useState(null);
+  const [phase, setPhase] = useState("idle"); // idle | running | done | failed
+  const [msg, setMsg] = useState("");
+  const [elapsed, setElapsed] = useState(0);
   const pollRef = useRef(null);
+  const tickRef = useRef(null);
+  const triggeredAtRef = useRef(0);
 
-  // 컴포넌트 마운트 시 단계 메타 가져오기 (사전 표시용) — 실패해도 무시
-  const [stages, setStages] = useState([]);
-  useEffect(() => {
-    fetch(`${API_BASE}/api/refresh/stages`).then(r => r.ok ? r.json() : null).then(j => {
-      if (j && j.stages) setStages(j.stages);
-    }).catch(() => {});
-  }, []);
-
-  const stopPolling = () => {
+  const stopAll = () => {
     if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+    if (tickRef.current) { clearInterval(tickRef.current); tickRef.current = null; }
   };
+  useEffect(() => () => stopAll(), []);
 
-  const startPolling = (queueId) => {
-    stopPolling();
+  const startPolling = () => {
+    if (pollRef.current) return;
     pollRef.current = setInterval(async () => {
       try {
-        const r = await fetch(`${API_BASE}/api/refresh/jobs/${queueId}`);
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const r = await fetch("/api/refresh-status", { cache: "no-store" });
         const j = await r.json();
-        setJob(j);
-        if (j.status === "done") {
-          stopPolling();
-          // 완료 — data.js 가 갱신되었으므로 페이지 새로고침으로 신규 데이터 반영
-          setTimeout(() => window.location.reload(), 1200);
-        } else if (j.status === "failed") {
-          stopPolling();
+        const created = j.createdAt ? new Date(j.createdAt).getTime() : 0;
+        // 방금 트리거한 실행인지 판별 (이전 완료 실행을 오인하지 않도록 2분 버퍼)
+        const isOurs = created >= triggeredAtRef.current - 120000;
+        if (j.status === "completed" && isOurs) {
+          stopAll();
+          if (j.conclusion === "success") {
+            setPhase("done");
+            setMsg("갱신 완료 — 새 데이터 반영까지 약 1분, 곧 자동 새로고침됩니다");
+            setTimeout(() => window.location.reload(), 75000);
+          } else {
+            setPhase("failed");
+            setMsg(`공용 주방 실행 실패 (${j.conclusion || "unknown"})`);
+          }
+        } else if (j.status === "in_progress" && isOurs) {
+          setMsg("공용 주방에서 데이터 수집·모델 재학습 중… (약 5분 소요)");
+        } else if (j.status === "queued" || !isOurs) {
+          setMsg("대기열 등록됨 — 곧 시작합니다…");
         }
-      } catch (e) {
-        setError(e.message);
-        stopPolling();
-      }
-    }, 2000);
+      } catch (e) { /* 네트워크 일시 오류는 무시하고 계속 폴링 */ }
+    }, 12000);
   };
 
-  useEffect(() => () => stopPolling(), []);
-
   const trigger = async () => {
-    setError(null);
+    setPhase("running");
+    setMsg("공용 주방 가동 요청 중…");
+    setElapsed(0);
+    triggeredAtRef.current = Date.now();
+    if (!tickRef.current) {
+      const t0 = Date.now();
+      tickRef.current = setInterval(() => setElapsed(Math.floor((Date.now() - t0) / 1000)), 1000);
+    }
     try {
-      const r = await fetch(`${API_BASE}/api/refresh`, { method: "POST" });
-      if (!r.ok) throw new Error(`HTTP ${r.status}: ${await r.text()}`);
-      const j = await r.json();
-      setJob({ ...j, logs: [], currentStep: j.currentStep || 0 });
-      startPolling(j.queueId);
+      const r = await fetch("/api/refresh", { method: "POST" });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && (j.status === "triggered" || j.status === "already_running")) {
+        setMsg(j.status === "already_running"
+          ? "이미 갱신이 진행 중입니다 — 완료를 기다립니다"
+          : "공용 주방 시작됨 — 약 5분 소요");
+        startPolling();
+      } else {
+        stopAll();
+        setPhase("failed");
+        setMsg(j.error || `요청 실패 (HTTP ${r.status})`);
+      }
     } catch (e) {
-      setError(`백엔드 호출 실패 — uvicorn(:8000) 이 실행 중인지 확인하세요. (${e.message})`);
+      stopAll();
+      setPhase("failed");
+      setMsg(`요청 실패: ${String(e).slice(0, 80)}`);
     }
   };
 
-  const isRunning = job && (job.status === "queued" || job.status === "running");
-  const isDone = job && job.status === "done";
-  const isFailed = job && job.status === "failed";
-  const progressPct = job ? Math.round((job.currentStep / Math.max(1, job.totalSteps || stages.length || 5)) * 100) : 0;
+  const isRunning = phase === "running";
+  const mm = Math.floor(elapsed / 60), ss = elapsed % 60;
 
   return (
     <div className="refresh-panel">
@@ -88,44 +101,34 @@ function RefreshPanel() {
           className={`btn refresh-btn ${isRunning ? "running" : ""}`}
           onClick={trigger}
           disabled={isRunning}
-          title="현재까지 수집된 모든 데이터와 예측 모델을 즉시 재학습합니다 (~1~2분)"
+          title="GitHub Actions(무료)에서 전체 데이터 수집 + 모델 재학습 후 자동 배포 (약 5분)"
         >
           <span className={`refresh-ic ${isRunning ? "spin" : ""}`}>🔄</span>
-          <span>{isRunning ? "갱신 중…" : isDone ? "✅ 갱신 완료 — 새로고침 중" : isFailed ? "⚠ 다시 시도" : "수동 갱신 실행"}</span>
+          <span>{isRunning ? "갱신 중…" : phase === "done" ? "✅ 갱신 완료" : phase === "failed" ? "⚠ 다시 시도" : "수동 갱신 실행"}</span>
         </button>
         <div className="refresh-hint">
-          모든 신호 수집 + 뉴스 분류 + 모델 재학습 + 인사이트 + 빌드 (5단계, 약 1~2분)
+          클릭하면 전체 신호 수집 + 모델 재학습 + 인사이트 + 자동 배포 (약 5분, 무료·서버 불필요)
         </div>
       </div>
 
-      {job && (
+      {phase !== "idle" && (
         <div className="refresh-progress">
           <div className="refresh-progress-bar">
-            <div className={`refresh-progress-fill ${isFailed ? "failed" : isDone ? "done" : ""}`} style={{ width: `${progressPct}%` }} />
+            <div
+              className={`refresh-progress-fill ${phase === "failed" ? "failed" : phase === "done" ? "done" : ""}`}
+              style={{ width: isRunning ? "66%" : "100%" }}
+            />
           </div>
           <div className="refresh-progress-meta">
-            <span>
-              <strong>단계 {job.currentStep}/{job.totalSteps || stages.length || 5}</strong> · {job.stage || "초기화"}
-            </span>
-            {job.totalDurSec && <span className="muted">총 {job.totalDurSec}초</span>}
+            <span>{msg}</span>
+            {isRunning && <span className="muted">{mm}분 {ss}초</span>}
           </div>
         </div>
       )}
 
-      {job && job.logs && job.logs.length > 0 && (
-        <ul className="refresh-log">
-          {job.logs.map((l) => (
-            <li key={l.step} className={l.ok ? "ok" : "fail"}>
-              <span className="refresh-log-tag">{l.ok ? "✅" : "❌"}</span>
-              <span><strong>{l.stage}</strong> <span className="muted">({l.durSec}s)</span> — {l.lastLine}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {(error || (isFailed && job.error)) && (
+      {phase === "failed" && (
         <div className="refresh-error">
-          <strong>오류:</strong> {error || job.error}
+          <strong>오류:</strong> {msg}
         </div>
       )}
     </div>
