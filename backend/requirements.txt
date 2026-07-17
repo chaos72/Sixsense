@@ -16,3 +16,5 @@ xgboost==2.1.4
 lightgbm==4.6.0
 feedparser==6.0.12
 boto3==1.42.97
+xlrd==2.0.1
+
