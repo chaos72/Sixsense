@@ -2,6 +2,26 @@
 
 이 저장소는 `v1.0`부터 버전 태그를 시작합니다 (Git 커밋에 `git tag`로 표시).
 
+## [v2.2] — 2026-07-17 — 수동 갱신 버튼, 아이폰에서 실작동 (무료)
+
+배포된 앱(아이폰 포함)에서 '수동 갱신 실행' 버튼이 로컬 서버 없이 실제로 작동하도록 전면 재구성.
+
+### 구조 (비용 0원)
+버튼 클릭 → Vercel 서버리스 함수(`/api/refresh`) → GitHub Actions 워크플로 트리거(공용 주방)
+→ 5단계 파이프라인(신호 수집→뉴스→모델 재학습→인사이트→data.js 빌드) → 봇 커밋 → Vercel 자동 재배포
+→ 앱이 상태 폴링(`/api/refresh-status`) 후 자동 새로고침 (총 약 5~7분)
+
+### 변경 사항
+- **GitHub Actions 워크플로**(`.github/workflows/refresh.yml`): 수동(workflow_dispatch) + 매주 화 06:00 KST 자동. 공개 저장소라 실행 무료.
+- **`backend/requirements.txt`**: 파이프라인 의존성 고정(torch CPU 전용) + B-4용 `xlrd` 추가.
+- **Vercel 함수 2개**(`api/refresh.mjs`, `api/refresh-status.mjs`): 워크플로 트리거(중복 실행 방지 포함)·상태 조회. 토큰은 Vercel 환경변수 `GH_DISPATCH_TOKEN`에만 저장.
+- **RefreshPanel 재작성**: 로컬 uvicorn 의존 제거 → 트리거+폴링+완료 시 자동 새로고침.
+- **`vercel.json`**: `/api/*`를 SPA rewrite에서 제외.
+- **Secrets 등록 스크립트**(`scripts/set-github-secrets.sh`) + 안내서 2편(`docs/07-guide/`).
+- 검증: 실제 버튼 클릭 → 공용 주방 가동 → 봇 커밋 → "✅ 갱신 완료" 표시까지 전 구간 실작동 확인. 신호 수집 10/11 성공(A-4 KOSIS만 해외 IP 차단으로 기존값 유지).
+
+---
+
 ## [v2.1] — 2026-07-12 — 모바일 디자인 세부 개선
 
 v2.0(iOS 전용앱 전환) 이후 발견된 모바일 화면의 디테일을 다듬은 패치.
