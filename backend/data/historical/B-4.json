@@ -2,15 +2,11 @@
   "signalId": "B-4",
   "source": "Caldara & Iacoviello GPR Index (https://www.matteoiacoviello.com/gpr_files/data_gpr_export.xls)",
   "mode": "real",
-  "collectedAt": "2026-07-17",
-  "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-07-13",
+  "collectedAt": "2026-07-20",
+  "rangeStart": "2025-06-23",
+  "rangeEnd": "2026-07-20",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2025-06-16",
-      "value": 134.222
-    },
     {
       "week": "2025-06-23",
       "value": 134.222
@@ -33,7 +29,7 @@
     },
     {
       "week": "2025-07-28",
-      "value": 138.9885
+      "value": 134.222
     },
     {
       "week": "2025-08-04",
@@ -69,7 +65,7 @@
     },
     {
       "week": "2025-09-29",
-      "value": 154.5129
+      "value": 126.7406
     },
     {
       "week": "2025-10-06",
@@ -121,7 +117,7 @@
     },
     {
       "week": "2025-12-29",
-      "value": 168.6299
+      "value": 132.4862
     },
     {
       "week": "2026-01-05",
@@ -173,7 +169,7 @@
     },
     {
       "week": "2026-03-30",
-      "value": 254.4295
+      "value": 330.9446
     },
     {
       "week": "2026-04-06",
@@ -189,7 +185,7 @@
     },
     {
       "week": "2026-04-27",
-      "value": 203.5567
+      "value": 254.4295
     },
     {
       "week": "2026-05-04",
@@ -233,6 +229,10 @@
     },
     {
       "week": "2026-07-13",
+      "value": 173.6396
+    },
+    {
+      "week": "2026-07-20",
       "value": 173.6396
     }
   ]
