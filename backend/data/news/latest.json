@@ -2,19 +2,46 @@
   "collectedAt": "2026-07-20",
   "method": "키워드 휴리스틱 + LLM 한글화",
   "lookbackDays": 30,
-  "rawCount": 886,
+  "rawCount": 882,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
+      "date": "2026-07-10",
+      "title": "인텔 CEO 립부 탄, 헬륨 부족으로 AI 칩이 제한될 수 있다고 경고",
+      "titleEn": "Intel CEO Lip-Bu Tan Warned Helium Could Choke AI Chips in June, and China’s Export Ban Might Prove Him Right",
+      "source": "Wccftech",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "인텔 CEO 립부 탄, 헬륨 부족으로 AI 칩이 제한될 수 있다고 경고, 중국 수출 금지로 예측이 현실화",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPNzFGRzhMTlNDYktmYTI3WGhqVnNucUpSdV9NdmJxNEtXaGlzSHRrWUlvc0l3VkxBQTFSN2dkSjRJNk1kQWc0UURoRWJ3YkJ0MHpVR2prLVd3djNpMWZUQU9NSnpnME45cV8tTUJnX3RETFpITU95QmluUmtwdVVwRVJJRkp3dm5scjBNU2NzMm8yRXA5Mmh3LW94bEFWbmxRaFlwWHpETzNnZklGR2tnNDlHdVlSdXlER1ZsRDJWUWVSSEFTZ2F0UtIBzgFBVV95cUxOMEd2bEpCZTNxSUFtQURkV2lmQVJEeVBtTjRYcEQ3NWtEazBqNWw5YVJKaWRfbXNyb2ZFNkppZ3F2VmZGbFFzYjJmMkhBT1MtR2pyQ3NWaWRrR0xrYmpXNlNrMEIzVkt1VU15QnhHaUZrS0ZiWG5HLU5YMFM1ZlVuQWNXLUN5QnJQV3E5U2lxazhHOGEzaVNreVNzdUZkb3BPRllLaEN2NE96X1QzMjk4Q3hDYlpiTmJLQWU0SHY0c3VYZ1RyVEo0MGhfYmFtdw?oc=5"
+    },
+    {
       "date": "2026-07-17",
-      "title": "의원들은 미국 정부에 중국산 메모리 칩을 동맹국 공급망에서도 금지할 것을 요구한다",
+      "title": "의원들, 미국 정부에 중국산 메모리 칩 수입 금지 요구",
       "titleEn": "Lawmakers want US government to ban memory chips from China, even in allied supply chains — citing 'unacceptable risk' to national, economic, and supply chain security - Tom's Hardware",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "의원들은 미국 정부에 중국산 메모리 칩을 동맹국 공급망에서도 금지할 것을 요구한다 - '국가, 경제, 공급망 안보에 대한 받아들일 수 없는 위험'을 이유로",
+      "summary": "의원들, 미국 정부에 중국산 메모리 칩 수입 금지 요구, 국가 및 경제 안보 위협으로 인한 수입 금지 필요",
       "effects": {
         "short": {
           "tone": "neg",
@@ -34,14 +61,14 @@
     },
     {
       "date": "2026-07-10",
-      "title": "중국은 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적으로 헬륨 수출을 금지했다",
+      "title": "중국, 이란 전쟁으로 글로벌 공급이 긴장하는 가운데 일시적인 헬륨 수출 금지령 발동",
       "titleEn": "China issues temporary helium export ban as Iran war strains global supplies",
       "source": "South China Morning Post",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "중국은 이란 전쟁으로 글로벌 공급이 긴장함에 따라 일시적으로 헬륨 수출을 금지했다 - 사우스 차이나 모닝 포스트",
+      "summary": "중국, 이란 전쟁으로 글로벌 공급이 긴장하는 가운데 일시적인 헬륨 수출 금지령 발동",
       "effects": {
         "short": {
           "tone": "neg",
@@ -61,14 +88,14 @@
     },
     {
       "date": "2026-06-23",
-      "title": "엔비디아의 금지된 칩은 중국과 워싱턴에서 가격의 두 배로 판매되고 있다",
+      "title": "엔비디아의 금지된 칩이 중국과 워싱턴에서 가격의 두 배로 판매되고 있다",
       "titleEn": "Nvidia's banned chips are selling for twice their price in China and Washington still thinks the export controls are working",
       "source": "Startup Fortune",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "엔비디아의 금지된 칩은 중국과 워싱턴에서 가격의 두 배로 판매되고 있지만 여전히 수출 통제가 작동하는 것으로 생각한다 - 스타트업 포춘",
+      "summary": "엔비디아의 금지된 칩이 중국과 워싱턴에서 가격의 두 배로 판매되고 있어 수출 통제가 실효를 거두고 있는지에 대한 의문",
       "effects": {
         "short": {
           "tone": "neg",
@@ -87,15 +114,42 @@
       "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNMlhIR2tDc0g1cWRLWDFXR1Y3WTVVVi1fbWhVTlY3RFRHS1p4YkZ3UE1DblBzOWZYUWY1XzlRV0Y1dS0tM0pKYjhzZW9WRG1JUnFGVGF2T3dWc2ZQd3BOX1RoVFBsWTlUNHIxNUZQS3R4THlBTGZGYWx1dzFnOGhuU0tlUjhJYmFBRVczTmQwNER0VzlCeW9uUTUxZjJ4Z05jbEtVQmRGUTBhYkZZd1JUQWdaWDVBNnIwa1dnX2xrMnBEbVVSLW50YUJ2UTFBR3JBbGkxQnpvQ1RLWVJ0bFd0WkI5N2hOUQ?oc=5"
     },
     {
+      "date": "2026-07-20",
+      "title": "중국의 헬륨 수출 금지로 유럽의 공급망이 위협을 받고 암호화폐 채굴 비용에 영향을 미칠 수 있다",
+      "titleEn": "China's helium export ban threatens European supply chains and could ripple into crypto mining costs",
+      "source": "Crypto Briefing",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "중국의 헬륨 수출 금지로 유럽의 공급망이 위협을 받고 암호화폐 채굴 비용에 영향을 미칠 수 있다",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1iQjMxMGVOTGJPeFpId3hFWmNsclhlaWR4NmV4NEVCakd6eV9ZM19aUTQwSHJ1cFNhRVRQazRrTkV6Y3dwcVRuaFVXakJJWklMVzRIRnIzRkdyY1dBS1oxU202eTdUNzNEYy1vSFFLTHFoWGtVT0c4?oc=5"
+    },
+    {
       "date": "2026-07-19",
-      "title": "SK 회장은 AI 메모리 부족이 지경 정치로 변할 수 있다고 경고했다",
-      "titleEn": "SK chief warns AI memory shortage could turn geopolitical",
-      "source": "theinvestor.co.kr",
+      "title": "TSMC, AI 칩 수요가 강하고 다년간 지속될 것으로 예상, 애리조나 투자 확대",
+      "titleEn": "TSMC expects 'strong, multi-year' demand for AI chips as it ramps up Arizona investment",
+      "source": "Reuters",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "SK 회장은 AI 메모리 부족이 지경 정치로 변할 수 있다고 경고했다 - 더 인베스터",
+      "summary": "TSMC, AI 칩 수요가 강하고 다년간 지속될 것으로 예상, 애리조나 투자 확대",
       "effects": {
         "short": {
           "tone": "pos",
@@ -111,7 +165,34 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5wZUlqaHA5YlY5X0xtZFJqb2hnaHZUNlJxNjJ5ekRta3JqbWwyZWt1Mm5PTktQSU1iM04yQ3ZjN19ja0NieDF5SVNxQktzRWxIQ0xwTDdaNkZMUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNeWtrc3R6QmdYREpuRHNxR3dFNkJkVjdSMTRYcFhmRHJYQ18yaGFfSHcwbmVKSjZvWVo2M0FqdF9VZkJmbG9CVTVObEZTQ2t1amx5MTlJZ201YWR3cE9IMFNxVTNXdlp6SVV5MnZDLXotWS1EQVFNbUFFV2hZUWJJeUVScVNRaUhjci1zUXJoUTBnMFBkSnFzeWgwWkNpd2FqZ2hZQW14cTNCRDcydkp4X2p2QlYyRWlTRWFISmFoSllBY01OWmNlVWNpamk?oc=5"
+    },
+    {
+      "date": "2026-07-19",
+      "title": "SK 대표, AI 메모리 부족이 지경정치로 번질 수 있다고 경고",
+      "titleEn": "SK chief warns AI memory shortage could turn geopolitical",
+      "source": "The Korea Herald",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "SK 대표, AI 메모리 부족이 지경정치로 번질 수 있다고 경고",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5BNW43TnhteG1RYlhoMkhHaklTZkR2eVkzdEIwWThYemFZS2YxMXM3Qmp4dU13a1ktT1NHUjRVX1ZRNVVFWlhueXJnWjB1U3JXLXNLUURTUQ?oc=5"
     },
     {
       "date": "2026-07-19",
@@ -142,14 +223,14 @@
     },
     {
       "date": "2026-07-17",
-      "title": "SK하이닉스는 2027년 산업에서 가장 심각한 메모리 부족을 경고했다 - 이고르스 랩",
+      "title": "SK하이닉스, 2027년 산업계 최악의 메모리 부족 경고",
       "titleEn": "SK Hynix Warns of the Industry’s Worst Memory Shortage in 2027 - igor´sLAB",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "SK하이닉스는 2027년 산업에서 가장 심각한 메모리 부족을 경고했다 - 이고르스 랩",
+      "summary": "SK하이닉스, 2027년 산업계 최악의 메모리 부족 경고",
       "effects": {
         "short": {
           "tone": "pos",
@@ -168,69 +249,15 @@
       "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNc1E0Umh1aEZoX3A0MTgxOC1pYWdZdHU3RXZuSW9YZ3hfdllhUmQxcmdvcGd0aTFSNEJLQ1lsNk45TC1mQTI5VVVIWGk3STJiLVJhUEdMMEhzWk5ORFUxUlVMdFFPcHlVMzh3cmhDNE5pYlFWTVdrSUVGNkVFMkFpS1JzM19pNWJKeXRfX2VPcnNxSFU?oc=5"
     },
     {
-      "date": "2026-07-14",
-      "title": "Arm Holdings plc(ARM) 최고경영자는 미국이 중국에 AI CPU 칩 수출을 금지하는 데 어려움을 겪을 것이라고 말했다",
-      "titleEn": "Arm Holdings plc (ARM) CEO says US would have Difficulty Banning AI CPU chip Exports to China",
-      "source": "Yahoo Finance",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Arm Holdings plc(ARM) 최고경영자는 미국이 중국에 AI CPU 칩 수출을 금지하는 데 어려움을 겪을 것이라고 말했다 - 야후 파이낸스",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQdVdvTzI4aXR6bkN1WTlseTZadVlINHR5S2dZRjJPVkprV01jejd1SDR6dmtIUmkwMmUwbWFLMDBrczV2bUZic096YXlzRUlHVmt1b2F3elZRM0tsR2MtOUpMcjByZlBwY2pXQmF1aVhBQXNyazNQQXl4cTM5QjZpaG1fMU9LeHF3MXMwcmhiQll3Zw?oc=5"
-    },
-    {
-      "date": "2026-07-15",
-      "title": "RDIMM 칩셋은 서버 메모리 대역폭을 증가시킨다",
-      "titleEn": "RDIMM chipset boosts server memory bandwidth",
-      "source": "EDN - Voice of the Engineer",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "RDIMM 칩셋은 서버 메모리 대역폭을 증가시킨다 - EDN - 엔지니어의 목소리",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE0tYnZQZkl4LXlxYVJnZ2JIQm5aY3VYbV9HSEhPNTFyRmlZQ2oxMmI3SzJXcmkzSVZwYjhVNlZ2eXdJWTlVM1pUcDZ6NlJwQTJQaUktUFUxckUxX2FlZTRrOVJKbWRReGpYNHNGMjRva1ZacjQ?oc=5"
-    },
-    {
-      "date": "2026-07-14",
-      "title": "\"엔비디아도 마찬가지\": 패키징은 AI 칩의 새로운 병목 현상으로 등장한다",
+      "date": "2026-07-16",
+      "title": "엔비디아도 마찬가지: 패키징이 AI 칩의 새로운 병목 현상으로 부상",
       "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
       "source": "economy.ac",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "\"엔비디아도 마찬가지\": 패키징은 AI 칩의 새로운 병목 현상으로 등장하여 글로벌 Capex 경쟁을 격화시킨다 - 이코노미",
+      "summary": "엔비디아도 마찬가지: 패키징이 AI 칩의 새로운 병목 현상으로 부상, 글로벌 자본 지출 경쟁 심화",
       "effects": {
         "short": {
           "tone": "neu",
@@ -247,33 +274,6 @@
       },
       "linked": [],
       "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBGY3NZZm1keDlNaXB2dzlHTWdSR3UxSDBucktFOEhfcGpsNk9vRTdicDFkNlFMUGdsdklCeFNuUzNyczFadUZoR3lNaDVyZHAzQzNMVHlaQQ?oc=5"
-    },
-    {
-      "date": "2026-07-13",
-      "title": "램버스(Rambus)는 높은 속도의 DDR5 9600 칩셋을 출시하여 무거운 AI와 데이터 센터 요구에 대응한다",
-      "titleEn": "Rambus Launches High-Speed DDR5 9600 Chipset to Meet Heavy AI and Data Center Demands",
-      "source": "Bisinfotech",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "램버스(Rambus)는 높은 속도의 DDR5 9600 칩셋을 출시하여 무거운 AI와 데이터 센터 요구에 대응한다 - 비신프테크",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMFhrV1Y5d1YzUllDVm5iMUdNVFhLUWtlaEZ5TmlMNHljRlFrN0tzMEdwc2pQYl9EaE1DRTVjNzc0NzFZRFFCTWRLbUtzVGs3b2ZDTkNRTzduNm84eUtnbG8tRW1VVk9ZMld6cU94NmFUcjB3Tkw0RzB2c0JDUncxN3Z3V0pVeHBzLUNBNkx4V0F2UnVSN2xsd1dCUEdqNW82M1ZhS0VISFRnSnRmWnJkZkhfckg?oc=5"
     }
   ]
 }
