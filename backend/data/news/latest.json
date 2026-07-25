@@ -1,20 +1,47 @@
 {
-  "collectedAt": "2026-07-20",
+  "collectedAt": "2026-07-25",
   "method": "키워드 휴리스틱 + LLM 한글화",
   "lookbackDays": 30,
-  "rawCount": 882,
+  "rawCount": 900,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
+      "date": "2026-07-21",
+      "title": "중국은 AI 기술에 대한 수출 통제를 고려하고 있다, 포함 DRAM, HBM, SSD, GPU 등",
+      "titleEn": "China is considering export controls on AI technologies, including banning local companies from using TSMC, report claims — restrictions would also cover advanced AI models, training data, and overseas acquisitions - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.67,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "중국은 AI 기술에 대한 수출 통제를 고려하고 있다, 포함 TSMC 사용 금지, 보고서 주장 — 제한은 또한 고급 AI 모델, 훈련에 적용",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMigwNBVV95cUxOdUw4cW56a1pyMmo2SjZmZkdUZmxIeGJiT3lDVTFYUzVWczV0dTZGdTlNcTlTVFlhcjdpVW85dVpXQ0ZpT0FBQTNvcDRpRkJrNFNfMjdHa05wLWVkaHFKcXN1d1VVYU82SXBONXZCclR6VHEyQXQzb1BGVmx4Ylp0VGVjOE5kdGVBSTBXOUdlRXNBcGk3YVNicHNBNEVZakRtSDlmdHB6dnJNWHh6aXA5VWNMZ0RFak55c3lyYjFxTzBFRlc1ellkaXBBSHltUVU0OFdsNWtLQ2VCbldpekhPZlQ3SDdKSW5zN3U3YURwa0pkazVNQXdqazlDNS0zdWhFM0htaVRQM05nMlU0WEkzNXhzOEJ6RklKMmFwMTJpeWUwYXJrWEVkTjFDQ0dNeDFYZXJhbExlU3hGZnZYUmZHWGNOQ2N4S1MzV0NWTWRYOWR5ajVReFZpWldaX3ZxajlVd2xoN2ZGNG1GRGVLWlRvTjExVFMzRjZLQWNrREoyb29wOVk?oc=5"
+    },
+    {
       "date": "2026-07-10",
-      "title": "인텔 CEO 립부 탄, 헬륨 부족으로 AI 칩이 제한될 수 있다고 경고",
+      "title": "인텔 CEO 립-부 탄 경고 헬륨이 AI 칩을 막을 수 있다고 경고, 중국의",
       "titleEn": "Intel CEO Lip-Bu Tan Warned Helium Could Choke AI Chips in June, and China’s Export Ban Might Prove Him Right",
       "source": "Wccftech",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "인텔 CEO 립부 탄, 헬륨 부족으로 AI 칩이 제한될 수 있다고 경고, 중국 수출 금지로 예측이 현실화",
+      "summary": "인텔 CEO 립-부 탄은 헬륨이 AI 칩을 막을 수 있다고 경고, 중국의 수출 금지로 증명",
       "effects": {
         "short": {
           "tone": "neg",
@@ -33,15 +60,15 @@
       "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPNzFGRzhMTlNDYktmYTI3WGhqVnNucUpSdV9NdmJxNEtXaGlzSHRrWUlvc0l3VkxBQTFSN2dkSjRJNk1kQWc0UURoRWJ3YkJ0MHpVR2prLVd3djNpMWZUQU9NSnpnME45cV8tTUJnX3RETFpITU95QmluUmtwdVVwRVJJRkp3dm5scjBNU2NzMm8yRXA5Mmh3LW94bEFWbmxRaFlwWHpETzNnZklGR2tnNDlHdVlSdXlER1ZsRDJWUWVSSEFTZ2F0UtIBzgFBVV95cUxOMEd2bEpCZTNxSUFtQURkV2lmQVJEeVBtTjRYcEQ3NWtEazBqNWw5YVJKaWRfbXNyb2ZFNkppZ3F2VmZGbFFzYjJmMkhBT1MtR2pyQ3NWaWRrR0xrYmpXNlNrMEIzVkt1VU15QnhHaUZrS0ZiWG5HLU5YMFM1ZlVuQWNXLUN5QnJQV3E5U2lxazhHOGEzaVNreVNzdUZkb3BPRllLaEN2NE96X1QzMjk4Q3hDYlpiTmJLQWU0SHY0c3VYZ1RyVEo0MGhfYmFtdw?oc=5"
     },
     {
-      "date": "2026-07-17",
-      "title": "의원들, 미국 정부에 중국산 메모리 칩 수입 금지 요구",
-      "titleEn": "Lawmakers want US government to ban memory chips from China, even in allied supply chains — citing 'unacceptable risk' to national, economic, and supply chain security - Tom's Hardware",
-      "source": "RSS",
+      "date": "2026-07-23",
+      "title": "문샷 AI는 미국의 수출 금지에도 불구하고 엔비디아 칩에 접근, 백악관",
+      "titleEn": "Moonshot AI accessed Nvidia chips despite US export ban, White House official says",
+      "source": "Crypto Briefing",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "의원들, 미국 정부에 중국산 메모리 칩 수입 금지 요구, 국가 및 경제 안보 위협으로 인한 수입 금지 필요",
+      "summary": "문샷 AI는 미국의 수출 금지에도 불구하고 엔비디아 칩에 접근, 백악관 공식",
       "effects": {
         "short": {
           "tone": "neg",
@@ -57,18 +84,45 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMisgJBVV95cUxPSk1GZDNkczBXS2JQal9aM0tCQVhqNXlGSlB5d3JNSm9XeFl4dG5YTC1KRW1IOV9iUEtNb1dRcEpZSHZEcWEteVkxbDdqQ3RDM09TY3o5cVhtU1VUUXFNeUN2Wm5haHlNbDl0bUI1TV9ENkNRa2dUdjJYckkyT1Z6ZU1UekhuTHFWQ3Z6QmZHTXg2UHhib0ROV3JGeDBzMFZidXMwVDBiLWRlaUtkbnMxOVl3OHhCZGo4ZndlX3ZSVVJVWXlxX3Mxb3pSX1haeEwtU0VWOW9abDYyaGFCcGw1UEptQkJXOGJpWUNadXFoM0pEM1N5anZtS2U4TjRFQ2xLOUlhLUktRTMyN2F6VlVlQVM3Qmd1TUtxQXMxb1FlSW1wd0o1YW9YZVM3Qk16REVUcEE?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9fVlJfREVHRm1lUkVzX0luM1hxZlk3UW5tV09HbGJQRDdVNGpHWks2Y2VfcEFWaGQ5VjFQcl9hdWVQUWlGY3h2bGhqOGFfQTZJeWdMQjdwYlp3eEt5TEkyMWFQWExaeF9VLUpnUkJZSzI?oc=5"
+    },
+    {
+      "date": "2026-07-21",
+      "title": "중국은 고급 AI 모델, 칩의 수출 금지에 대해 검토, 보고서",
+      "titleEn": "China Mulls Ban On Export Of Advanced AI Models, Chips, Says Report",
+      "source": "NDTV Profit",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "중국은 고급 AI 모델, 칩의 수출 금지에 대해 검토, 보고서",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOQ19ta1ZFSFNkYUg2WmNXZ2tlenFTRE9iTDZobF9nbGNtelVTRUhIcXVqOWc0MnVGR1lfV2RyalEwS1RsazNQcU1INW9Za2d2RVhGQ1BVcWtSV2VjaVVzZVRIM1dyUEMzWE9rNVAwcTZwdjcxTVNkRFpVS1Q5WDJYd2FETGxFTjhKNGc0bnU4dHRwcDY2RS01MUI4T0RJWlRSNHBPTzF0TG93MHUtMXlFQmln0gG6AUFVX3lxTE1jSnl1U3ZXYkJ4ZElMRGpndy0wRlFHZjN1ZXk0YkZka2ZfU2U1c1hrTWZYYUF0YkN4bm9jcWVISTVOT09BMzkwMGNkMk9DSFNCWm5UTDIyVllUX3UxbkhaQjNTQ0RLVjQyZDIySzNjNnlPRkJaYlhfc1N6SlVTNGlpbnlaMkRNY3NmOW1jTUdJNzBYQThTRXJzUXlBNUlaMWFvQlZ5Q01uSlZkQnlVNGpVR1MtZkhsZHRfUQ?oc=5"
     },
     {
       "date": "2026-07-10",
-      "title": "중국, 이란 전쟁으로 글로벌 공급이 긴장하는 가운데 일시적인 헬륨 수출 금지령 발동",
+      "title": "중국은 임시 헬륨 수출 금지를 발동, 이란 전쟁으로 글로벌 공급이 긴장",
       "titleEn": "China issues temporary helium export ban as Iran war strains global supplies",
       "source": "South China Morning Post",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "중국, 이란 전쟁으로 글로벌 공급이 긴장하는 가운데 일시적인 헬륨 수출 금지령 발동",
+      "summary": "중국은 임시 헬륨 수출 금지를 발동, 이란 전쟁으로 글로벌 공급이 긴장",
       "effects": {
         "short": {
           "tone": "neg",
@@ -87,69 +141,15 @@
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPNm42Tzk1R25tR2prX1ZydFZ5OWFvM0JyMkI3Yk5aRWFYdHJNbVExRGRfa2ZjR0NPTE5qSGEzRjNrWDhoU0Rtd1NCeGwyN1ZJbWNwalVVZG85TGpBNGNwM3ZabkRkVmM2eV84aHJWckFodG9NVVNSeHBOcHU3SjRFRExuNzBPYURKM1hEYzhPbEFZWEdRM2ZzcVd3VktWTzE1UDBpY01n0gGmAUFVX3lxTFBEczhpNER1TjdhdTllSnNvNDY3X0pwY0hPTXM0Q2YzYjZ2MTcyN1czdlVlcks0Umx2dmctaU4xOVVndEk5Q3EwVTFlQklsc1hTOE5odGFCNU5ldlZuRURoUDJpM3c3TVJBSmpZTDFPby1HcjgxMXBPOWZXUU9jNUtDeURxVzd2STFHTXFtNUlIcjNDakNKeTdWTzVBTTZXeTI4WXE1Z3c?oc=5"
     },
     {
-      "date": "2026-06-23",
-      "title": "엔비디아의 금지된 칩이 중국과 워싱턴에서 가격의 두 배로 판매되고 있다",
-      "titleEn": "Nvidia's banned chips are selling for twice their price in China and Washington still thinks the export controls are working",
-      "source": "Startup Fortune",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "엔비디아의 금지된 칩이 중국과 워싱턴에서 가격의 두 배로 판매되고 있어 수출 통제가 실효를 거두고 있는지에 대한 의문",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNMlhIR2tDc0g1cWRLWDFXR1Y3WTVVVi1fbWhVTlY3RFRHS1p4YkZ3UE1DblBzOWZYUWY1XzlRV0Y1dS0tM0pKYjhzZW9WRG1JUnFGVGF2T3dWc2ZQd3BOX1RoVFBsWTlUNHIxNUZQS3R4THlBTGZGYWx1dzFnOGhuU0tlUjhJYmFBRVczTmQwNER0VzlCeW9uUTUxZjJ4Z05jbEtVQmRGUTBhYkZZd1JUQWdaWDVBNnIwa1dnX2xrMnBEbVVSLW50YUJ2UTFBR3JBbGkxQnpvQ1RLWVJ0bFd0WkI5N2hOUQ?oc=5"
-    },
-    {
-      "date": "2026-07-20",
-      "title": "중국의 헬륨 수출 금지로 유럽의 공급망이 위협을 받고 암호화폐 채굴 비용에 영향을 미칠 수 있다",
-      "titleEn": "China's helium export ban threatens European supply chains and could ripple into crypto mining costs",
-      "source": "Crypto Briefing",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "중국의 헬륨 수출 금지로 유럽의 공급망이 위협을 받고 암호화폐 채굴 비용에 영향을 미칠 수 있다",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1iQjMxMGVOTGJPeFpId3hFWmNsclhlaWR4NmV4NEVCakd6eV9ZM19aUTQwSHJ1cFNhRVRQazRrTkV6Y3dwcVRuaFVXakJJWklMVzRIRnIzRkdyY1dBS1oxU202eTdUNzNEYy1vSFFLTHFoWGtVT0c4?oc=5"
-    },
-    {
-      "date": "2026-07-19",
-      "title": "TSMC, AI 칩 수요가 강하고 다년간 지속될 것으로 예상, 애리조나 투자 확대",
-      "titleEn": "TSMC expects 'strong, multi-year' demand for AI chips as it ramps up Arizona investment",
-      "source": "Reuters",
+      "date": "2026-07-24",
+      "title": "GM과 BYD는 가격을 인상, AI 붐으로 자동차 메모리 부족이 발생",
+      "titleEn": "GM and BYD Hike Prices as AI Boom Triggers Automotive Memory Shortage",
+      "source": "MotorBiscuit",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "TSMC, AI 칩 수요가 강하고 다년간 지속될 것으로 예상, 애리조나 투자 확대",
+      "summary": "GM과 BYD는 가격을 인상, AI 붐으로 자동차 메모리 부족이 발생",
       "effects": {
         "short": {
           "tone": "pos",
@@ -165,18 +165,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNeWtrc3R6QmdYREpuRHNxR3dFNkJkVjdSMTRYcFhmRHJYQ18yaGFfSHcwbmVKSjZvWVo2M0FqdF9VZkJmbG9CVTVObEZTQ2t1amx5MTlJZ201YWR3cE9IMFNxVTNXdlp6SVV5MnZDLXotWS1EQVFNbUFFV2hZUWJJeUVScVNRaUhjci1zUXJoUTBnMFBkSnFzeWgwWkNpd2FqZ2hZQW14cTNCRDcydkp4X2p2QlYyRWlTRWFISmFoSllBY01OWmNlVWNpamk?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQX3RDcFJPQXNXR3FQQ1E3MlZxN0djdzQxemhiSk45cUUwbEFJQWdwNDZueURzSjM1eUZoeWF5VEZuWjhaNHFkMnBvR3laX0VoREgxTzZMNTNkSFNBVkg0ZWRQUkszcEQ3ZkZhT24xdXRzUFRPUldtT2I1TDhUZDZaY3loU3ZHeE0wSElmMjRWd3R5aXN0ai1FNzhsZmdSYlJB?oc=5"
     },
     {
-      "date": "2026-07-19",
-      "title": "SK 대표, AI 메모리 부족이 지경정치로 번질 수 있다고 경고",
-      "titleEn": "SK chief warns AI memory shortage could turn geopolitical",
-      "source": "The Korea Herald",
+      "date": "2026-07-24",
+      "title": "마이크론은 3가지 요인으로 1,000달러에 도달, 구글의 자본 지출, 베라 루빈, NAND 부족",
+      "titleEn": "Micron (MU) Hits $1,000 on Three Catalysts - Google Capex, Vera Rubin, NAND Shortage",
+      "source": "TradingKey",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "SK 대표, AI 메모리 부족이 지경정치로 번질 수 있다고 경고",
+      "summary": "마이크론은 3가지 요인으로 1,000달러에 도달, 구글의 자본 지출, 베라 루빈, NAND 부족",
       "effects": {
         "short": {
           "tone": "pos",
@@ -192,18 +192,18 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5BNW43TnhteG1RYlhoMkhHaklTZkR2eVkzdEIwWThYemFZS2YxMXM3Qmp4dU13a1ktT1NHUjRVX1ZRNVVFWlhueXJnWjB1U3JXLXNLUURTUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOVUNSWnhaR0RuaE1yNDB6amI2b1hxVGs4c0JjVEt0elR5MjVDaDNPaDJaYjN1d1RPOTVCOGZVUjZOOE13Y0d3LV85dWQxU0ZPNXlpclFDdTJMV0JxWVRTNlNZV0phM1VEU3ZWZ05VMzlaRUVvYXVhNVhjOUUxYXEzVUt1LWlQcE0wbTN1Vy1UcTdHWTlSd3h1eU05R2FOLXctN0JZTnBlWmdBT0VxRzFuOTdaNTNtV0ZqTjJ1YjNESmRvc2FzamtDZDE4YlF6QmphMTI2WXdDMmI?oc=5"
     },
     {
-      "date": "2026-07-19",
-      "title": "\"지을 수 있는 모든 곳에 반도체팹\"…증설전쟁 불붙었다 - 머니투데이 - 머니투데이",
-      "titleEn": "\"지을 수 있는 모든 곳에 반도체팹\"…증설전쟁 불붙었다 - 머니투데이 - 머니투데이",
+      "date": "2026-07-22",
+      "title": "아다타 회장은 DRAM 부족이 10년 더 지속될 것, AI 버블 논란을 2040년 또는 2050년까지 부인",
+      "titleEn": "Adata chairman says DRAM shortage will last another 10 years — dismisses AI bubble talk until '2040 or 2050' - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "\"지을 수 있는 모든 곳에 반도체팹\"…증설전쟁 불붙었다 - 머니투데이 &nbsp;&nbsp; 머니투데이",
+      "summary": "아다타 회장은 DRAM 부족이 10년 더 지속될 것, AI 버블 논란을 2040년 또는 2050년까지 부인",
       "effects": {
         "short": {
           "tone": "pos",
@@ -219,18 +219,45 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5aVkFKY0xDSndKQ3RtbFZ5MVNXTVlVZjRRM2E4TjdKZ0E3bGlveHZFNjlVYmR2Q2dwb1VvR0lhTHd5X1ZjOEhGTkI2Q1ZLY3RTSUd2NEMxZU5OLTI3TU1rVlFyN2ZicFoySGJzb9IBckFVX3lxTE1IOVRXdTRtSzEzdHUtLXF0eGt0MDNHTTc4ZzFiN0J0YklmXzNCZ3F3cHVib3BfUUZXbmV5Wldlc2xxRkp5M3V0R1lOZW5lZUdwcTFlTzRkU2NlUDZwTkxkNHMzcG9mMGNkUVg5dmtuYmRPZw?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPN2tiMWZTRENTRmhhT3VITW94ZU9xUEFWdjJkNzR6Z1dIWktTMzBMbVlTNEhGTElYSzFEejAtV3ktRkV4d2EyVkRIcFU5UUM0cXdDTGNTbFZ2anlDUm9nOVhsb2xubTZpaWdTVU9PbWpUVHFaZFhQU3Rkamd6bGhqNDBZRFppWlhEU2hJV0RhQndJUEstUWI4dDhlRkRkckR6eGxpSnlR?oc=5"
     },
     {
-      "date": "2026-07-17",
-      "title": "SK하이닉스, 2027년 산업계 최악의 메모리 부족 경고",
-      "titleEn": "SK Hynix Warns of the Industry’s Worst Memory Shortage in 2027 - igor´sLAB",
+      "date": "2026-07-22",
+      "title": "중국은 3가지 기술 수출 금지에 대한 검토, TSMC에 대한 국내 칩 주문 금지",
+      "titleEn": "China Eyes Three-Pronged Tech Export Crackdown, May Ban Domestic Chip Orders to TSMC",
+      "source": "finance.biggo.com",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "중국은 3가지 기술 수출 금지에 대한 검토, TSMC에 대한 국내 칩 주문 금지",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9lU3FSck50UmhacUNYWDdPTVoxa2pMOHZ3LWdRRGdSUTVHbE82VEdrVW1ZaUQ5SXFEdTJKYUZhSHg3OW12QW1NMnpwR1hhNFJkUXNNd09LQnpnMHR4MjFnM1VOVTI1MXVyQVUybjJoaS1ZSzRZZ3c?oc=5"
+    },
+    {
+      "date": "2026-07-21",
+      "title": "TSMC의 속도 전쟁: 일본, 台湾 반도체 상승",
+      "titleEn": "TSMC's Speed War: Japan, Taiwan Semiconductor Surge - 조선일보",
       "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "SK하이닉스, 2027년 산업계 최악의 메모리 부족 경고",
+      "summary": "TSMC의 속도 전쟁: 일본, 台湾 반도체 상승",
       "effects": {
         "short": {
           "tone": "pos",
@@ -246,34 +273,7 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNc1E0Umh1aEZoX3A0MTgxOC1pYWdZdHU3RXZuSW9YZ3hfdllhUmQxcmdvcGd0aTFSNEJLQ1lsNk45TC1mQTI5VVVIWGk3STJiLVJhUEdMMEhzWk5ORFUxUlVMdFFPcHlVMzh3cmhDNE5pYlFWTVdrSUVGNkVFMkFpS1JzM19pNWJKeXRfX2VPcnNxSFU?oc=5"
-    },
-    {
-      "date": "2026-07-16",
-      "title": "엔비디아도 마찬가지: 패키징이 AI 칩의 새로운 병목 현상으로 부상",
-      "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
-      "source": "economy.ac",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "엔비디아도 마찬가지: 패키징이 AI 칩의 새로운 병목 현상으로 부상, 글로벌 자본 지출 경쟁 심화",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBGY3NZZm1keDlNaXB2dzlHTWdSR3UxSDBucktFOEhfcGpsNk9vRTdicDFkNlFMUGdsdklCeFNuUzNyczFadUZoR3lNaDVyZHAzQzNMVHlaQQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQOFI2UGZtNDJEdnJpZl9sUWlQU3JlVjg5aU51OVduUGx3T2R0ZVg3VzNhVEZQREYzN3hPaWZxbFRhbHlPUElGUTZZR3hpT1JiNThmUUlCUXdkVUtyVW5GQ2NYOV81a0dCYVNrUExaNDBuVTJYTTE5RVA0ZEFhNFV0ZGZrQW0?oc=5"
     }
   ]
 }

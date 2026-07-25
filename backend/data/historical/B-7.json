@@ -2,14 +2,14 @@
   "signalId": "B-7",
   "source": "Hacker News Algolia API (queries: 4\uac74)",
   "mode": "real",
-  "collectedAt": "2026-07-20",
+  "collectedAt": "2026-07-25",
   "rangeStart": "2025-06-23",
   "rangeEnd": "2026-07-20",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
       "week": "2025-06-23",
-      "value": 18.0
+      "value": 0.0
     },
     {
       "week": "2025-06-30",
@@ -229,11 +229,11 @@
     },
     {
       "week": "2026-07-13",
-      "value": 7.0
+      "value": 0.0
     },
     {
       "week": "2026-07-20",
-      "value": 0.0
+      "value": 93.0
     }
   ]
 }
