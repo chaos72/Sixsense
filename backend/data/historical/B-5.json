@@ -1,10 +1,10 @@
 {
   "signalId": "B-5",
-  "source": "Google News 'LTA ratio' (81 entries, LLM 11\ud68c \ud638\ucd9c, 20\uc8fc)",
+  "source": "Google News 'LTA ratio' (108 entries, LLM 8\ud68c \ud638\ucd9c, 18\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-08-03",
+  "collectedAt": "2026-08-10",
   "rangeStart": "2025-12-08",
-  "rangeEnd": "2026-08-03",
+  "rangeEnd": "2026-08-10",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -36,14 +36,6 @@
       "value": 0.0
     },
     {
-      "week": "2026-04-20",
-      "value": 0.5
-    },
-    {
-      "week": "2026-04-27",
-      "value": 1.0
-    },
-    {
       "week": "2026-05-04",
       "value": 0.0
     },
@@ -72,19 +64,19 @@
       "value": 1.0
     },
     {
-      "week": "2026-07-06",
-      "value": 0.0
-    },
-    {
       "week": "2026-07-20",
       "value": 0.5
     },
     {
       "week": "2026-07-27",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2026-08-03",
+      "value": 0.0
+    },
+    {
+      "week": "2026-08-10",
       "value": 1.0
     }
   ]

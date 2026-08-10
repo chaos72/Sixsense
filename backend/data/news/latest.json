@@ -1,80 +1,20 @@
 {
-  "collectedAt": "2026-08-03",
+  "collectedAt": "2026-08-10",
   "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 836,
+  "rawCount": 866,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
-      "date": "2026-08-03",
-      "title": "DRAM 가격 폭등, 애플 경고, 노무라 2조 달러 전망",
-      "titleEn": "DRAM Price Surge Hits Costs Like a \"Once-in-a-Century Flood\": Apple Warns, Nomura Sees DRAM Revenue Topping $2 Trillion",
-      "source": "finance.biggo.com",
-      "score": 0.95,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "DRAM 가격이 '100년에 한 번 올 홍수'처럼 비용을 강타하고 있다고 애플이 경고했다. 노무라는 DRAM 매출이 2조 달러를 넘어설 것으로 전망하며 시장의 높은 성장세를 예측했다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5pWUs5QUhpOXlJbUJvMlZFZkNySWc4RGZpakVqM2xSUzdZRGtoTWtkc1RiSmtsV3ZpdlJfbThldS11SkIxdVFHa1RGZkpVZ2VJeXYxM0VvNG91UGg5ZjBFZFFCWXJkNUNPVVNIVGpud0g4dlRYTUE?oc=5"
-    },
-    {
-      "date": "2026-07-30",
-      "title": "삼성 칩 부문, AI 메모리 부족으로 250배 이익 급증",
-      "titleEn": "Samsung's chip division posted a 250-fold profit surge as AI memory shortages rewrite the rules of the semiconductor market",
-      "source": "Startup Fortune",
-      "score": 0.92,
-      "tone": "pos",
-      "conf": 96,
-      "hot": true,
-      "summary": "삼성전자 칩 부문이 AI 메모리 부족 현상으로 인해 250배의 이익 급증을 기록했다. 이는 AI 수요가 반도체 시장의 규칙을 재정의하며 메모리 가격 상승을 견인하고 있음을 나타낸다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNMTI4ZkhYa3RRNHg4WW1vTGpXSFVIWjByeDNLR0RzUTVnNEc5WVBnamRYcFBaTXNSdFVRcUgzNVVmc3VCN19pQXA4T1ZIYnFxNUlUVDUtSUJidWNfOFROcXVkeXZJaFlfMzFrSjlUQ0JrVVY4LTIzMV9nTVpjb2JNSlFRRFhSaUs5emU4MUlUWWNXZFc1VUVvMTE3eU11OUk5dUQ3YjFUMk5FRHFNd1Ayc3czZ0xDb3otMlRPa2lRVjFhUV9ZMXM5NnpKb29pQjQzOUNaa2s5TVYwcjY3OHZfOGh0bXo?oc=5"
-    },
-    {
-      "date": "2026-07-30",
-      "title": "마이크론 주가 급등, 삼성 2028년까지 부족 경고",
-      "titleEn": "Micron Stock Surges 14.9% as Samsung Warns Shortage Through 2028",
-      "source": "GuruFocus",
+      "date": "2026-08-09",
+      "title": "삼성, RAM 부족 2028년 이후까지 심화 경고",
+      "titleEn": "Samsung Warns That the RAM Shortage Could Become 'More Severe', Continue Beyond 2028",
+      "source": "IGN India",
       "score": 0.9,
       "tone": "pos",
       "conf": 95,
       "hot": true,
-      "summary": "삼성전자가 2028년까지 메모리 부족을 경고하면서 마이크론 주가가 14.9% 급등했다. 이는 AI 수요 증가로 인한 DRAM 공급 부족 심화를 시사한다.",
+      "summary": "삼성은 RAM 부족 현상이 더욱 심각해져 2028년 이후까지 지속될 수 있다고 경고했습니다. 이는 DRAM 공급 부족이 장기화될 것이라는 주요 제조업체의 강력한 신호입니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -90,21 +30,20 @@
         }
       },
       "linked": [
-        "B-6 관련",
         "A-4 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMisAJBVV95cUxQYmFsaG5HeFNuZk5kU1FMZnZyaFY5QUZ0eHRoeFFNTkpXdXludy1QSUJQTk93ZmxVTGJVRjJqc214RmJjWThBRl9DbzFScFMzTU9QVG4yR0FTSVVuanZQX0RFSnhIaWNXQ0p1aUFKRHBCanozd0gzSEp6R1JNd2podDVLdUpCcURpNVFlSkhiazdYS0xiYVhRN1FDMmpfMUVqYzB6cVBtT2FYTmwzTGE4Ulo0djZNVllEOGNPT0RnNVJRb0hLVmZYdjltWHN3bUdVTk5UVm9IRUNuTmxvbkdaaUxocmpoRGJNWWxHMWo4TUxMbGZyVFVoMXU2ZWZmNkIxcFFRU3JLeHQ2d0pkX0FfNDl6Vl9kaGdnczhaLUVudDBKaTc4RVN1OU1hYUF2RzRf?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQNnRrQ2dkaG9oMjlEbDA3OS11b2RqU2h6MnNrc3BIRUZ2ZE8tOFlnczRuWldUcV9oc09ESHNwQjNkRUJtdVBLLW9FbXpKOUZINV9iX1Rjc2psbW9ENFdjNXZTbVBzdGJWeEZmN3FELUpLZGRjcDh1WllJTFNkcXVvZ0dDdm5SMjNJN2pIU3AzdjZqLXU5U3lkc0loQWhYbEJDQkhpQlpCNFNvT19IZGNSUjZ3?oc=5"
     },
     {
-      "date": "2026-07-31",
-      "title": "SK하이닉스·ADATA, 메모리 부족 경고",
-      "titleEn": "SK hynix and ADATA warn of memory shortages: 2027 could become particularly tight for DRAM and HBM - igor´sLAB",
+      "date": "2026-08-08",
+      "title": "RAM 가격, AI 부족으로 2007년 수준 회복",
+      "titleEn": "Scientist says RAM pricing has risen to normalized 2007 levels, AI shortage undid 20 years of progress in a matter of months — memory prices had been falling exponentially for decades - Tom's Hardware",
       "source": "RSS",
       "score": 0.9,
       "tone": "pos",
       "conf": 95,
       "hot": true,
-      "summary": "SK하이닉스와 ADATA가 메모리 부족을 경고하며, 2027년에는 DRAM과 HBM 공급이 특히 어려울 수 있다고 밝혔다. 이는 AI 및 데이터센터 수요 증가에 따른 공급 제약을 강조한다.",
+      "summary": "한 과학자는 RAM 가격이 2007년 수준으로 상승했으며, AI 부족이 수십 년간의 가격 하락 추세를 몇 달 만에 뒤집었다고 밝혔습니다. 이는 AI 수요가 DRAM 가격에 미치는 강력한 영향을 보여줍니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -120,21 +59,20 @@
         }
       },
       "linked": [
-        "B-6 관련",
-        "A-4 관련"
+        "A-2 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9CdTFvQXYwNVFxeXMwNEN0aWI1Mms2SWlLYXhjZHkxMkd0aG9PUmd5YW5UTFRYZHh4TjdIMXA2TFlHWV9mQzdQbFZBT3NwRWJWeGNOakNFYmg4RDhjUTFFRVlkV3NUVk9ZU0VNWE43RmpFODhySjIySk0zMm0?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxORVVIY1cyVlgzclFsOS1WaTJpQWUtaHZMQkF4Sl91NDJwNTZlaV9vS19CRnhuN2tzckVscVZQbFI4SnpPMllCaHJlUjJvZXEtcl9GVFhFckVkbmtrNjFYSXdIWjV3ZHgxSEFxRm9PQ0FBOVZWeFlGcVlxdm5nMVZRTlFlZktKQU5pNmFpQ0hhU2xTbW1Fb1hacEFQWUdYMEV6a3hZT3NRSnBQR2VrRGMwY1Y1bFdSVng0TE5NczI1VlhIU0lKWFFaVk52N3ZVMVJvV3ZUYmJZRkdWa3lZRnhoTTdyTTA2bmJOdUhUYW1fM01jejhuVkV6Z2xFMWhDLVhxSmNuM2cxckhKeERqM2RpeWJDaWIyY0dPMklqSG9yVWpMTUZTMERxekp6d2VMQkI4X0M4Wnk3X24wZUhpVTllc3NiRzdjWGZaSUNzbmFRZnRQbnZpNjNLSXNLQQ?oc=5"
     },
     {
       "date": "2026-07-22",
-      "title": "ADATA 회장, DRAM 부족 10년 지속 전망",
+      "title": "Adata 회장, DRAM 부족 10년 지속 전망",
       "titleEn": "Adata chairman says DRAM shortage will last another 10 years — dismisses AI bubble talk until '2040 or 2050' - Tom's Hardware",
       "source": "RSS",
       "score": 0.9,
       "tone": "pos",
-      "conf": 93,
+      "conf": 95,
       "hot": true,
-      "summary": "ADATA 회장이 DRAM 부족 현상이 향후 10년간 지속될 것이라고 밝혔다. 그는 AI 버블 논의는 2040년이나 2050년까지 기다려야 한다며 장기적인 수요 강세를 강조했다.",
+      "summary": "Adata 회장은 DRAM 부족 현상이 향후 10년간 지속될 것이며, AI 버블 논의는 2040년이나 2050년까지는 시기상조라고 밝혔습니다. 이는 DRAM 시장의 장기적인 공급 부족과 가격 상승 가능성을 시사합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -150,51 +88,20 @@
         }
       },
       "linked": [
-        "A-4 관련",
-        "B-6 관련"
+        "A-2 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPN2tiMWZTRENTRmhhT3VITW94ZU9xUEFWdjJkNzR6Z1dIWktTMzBMbVlTNEhGTElYSzFEejAtV3ktRkV4d2EyVkRIcFU5UUM0cXdDTGNTbFZ2anlDUm9nOVhsb2xubTZpaWdTVU9PbWpUVHFaZFhQU3Rkamd6bGhqNDBZRFppWlhEU2hJV0RhQndJUEstUWI4dDhlRkRkckR6eGxpSnlR?oc=5"
     },
     {
-      "date": "2026-08-02",
-      "title": "삼성, 2027-2028년 메모리 부족 심화 경고",
-      "titleEn": "Memory shortages will get only worse in 2027 and 2028, warns Samsung",
-      "source": "TweakTown",
-      "score": 0.88,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "삼성전자가 2027년과 2028년에 메모리 부족 현상이 더욱 심화될 것이라고 경고했다. 이는 AI 수요 증가와 생산 능력 한계로 인한 장기적인 공급 제약을 시사한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련",
-        "A-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQMnV0U0c0Wmc4UVlqZXI3eWhaX29tbDkySFUtOGM5UDJxcXVFVDZUU2JaMzVEcXIzcHFEX2xJNU5iaFJMeXpNMXRISmpwTlpnVFF5M0FJaXZ5aGxrXzJUSEpOX3piVEZQWnFiWjNsdzRtWUtSWnF2UWJfQy1MLVR6NUNDa0trTHN3c2RiZGVycjZaSEJFQ3NfS29oRjNnUGVQanJaZ3p0QlR1MHNNOVpmbm9ZMzZLZm8?oc=5"
-    },
-    {
-      "date": "2026-07-31",
-      "title": "AI 열풍 재점화: SK하이닉스 등 칩 선물 랠리",
-      "titleEn": "AI Frenzy Returns: SK Hynix, AMD, Micron, Other Chip Futures Rally Up To 7% In Second Day Of Surge",
-      "source": "NDTV Profit",
-      "score": 0.85,
+      "date": "2026-08-06",
+      "title": "아이폰 18 프로 칩, DRAM 부족으로 출하 지연",
+      "titleEn": "$1 billion of iPhone 18 Pro chips 'on the shelves awaiting packaging' due to DRAM shortages — memory shortages reportedly put a wrinkle in Apple's launch plans - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.8,
       "tone": "pos",
       "conf": 90,
       "hot": true,
-      "summary": "AI 열풍이 다시 불면서 SK하이닉스, AMD, 마이크론 등 주요 칩 기업들의 선물 가격이 이틀 연속 최대 7%까지 급등했다. 이는 AI 관련 반도체 수요가 여전히 강력함을 보여준다.",
+      "summary": "DRAM 부족으로 10억 달러 상당의 아이폰 18 프로 칩이 포장 대기 중이며, 이는 애플의 출시 계획에 차질을 빚고 있습니다. 메모리 부족이 주요 스마트폰 제조업체에 직접적인 영향을 미치고 있음을 보여줍니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -210,21 +117,78 @@
         }
       },
       "linked": [
-        "A-2 관련",
-        "B-6 관련"
+        "A-4 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNalBxWFRIaXlGUnJtNlhMM0FPWXd5YVhmYUx2UkxXUFh4NE1uWVNBdnFZd2VMUTAwa1dUMkROSlZmQUxVNDhwS2Z6TDQ3YnQzdVUxeDg5Z241ekZwRFAxUGVzSXgwakhLMEJXTi15elVlTlBvZkxuZWdTZ1V3VENfLWxmZHAxYk5wYmdHaGs2TDQ0OTRvczgwRVdpdDdvYk1sSmRDVm5xeGpJMFJnazBLal92STRoSHptdnhBd3RSanlGdWxsTGJ1dmM0WGNGYTM3clpTTkhTT2otUlRmbFHSAeYBQVVfeXFMUGIwVTg3SHJsSnJ6d3p0ai03UnhGdEZNOTdtWG10TkhZRk96SWZWdkF2MXIwN3k2YWRPQjZSUXFlRnBCRThXdFQ2YlFYWmxkM1hONFVTMWpnSGtabkQ1S0hGM29qMEk1T3UyemstUl96Zl8tR3E3NTc2bTdFS09XNDdqLXVtOTljbWFRSEJrVUQ1WVozTWZjMUVBQzM2UkZJN3FlX0dBUUJKUDkyU1JVUUgxRjZmVmdDR2UxVmkyU3FRdVd2bi1kUW1NeDJKRWVid2lqc25ZVmNtdm9kSTQ3TlhxbEFNRHc?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMirAJBVV95cUxPbGJaSURNUXVrYUFaYkVCTmVZVDlQRDgxZjcwN2ZlQ3ZNYzdBQU1mMDdTWjNaM0tlVTJCT3g2bXE1dVJacm16bHpLSWFyYjRiSkpsOXVtM0RpYk1hdzZkbjFXVHNwVllzVExlaVVpVV80TW13V3ppUzI2cGxyUVZMYUEzNFFDVVc0ZEp2b2x2cmRjd001bDlmVlRfMkNpTlpjTmRLb1dvLVp4MU9rSnZfZ3JOczVfNDBwdmRYcFZyTUllaXJEMWM3UGJQWWFtamFKd0lLU2JOYUNMcDM3emZqbkg1eUJSN3gtSzJFcjdybk9UVWkyWUxnanl4LTFMYklEV2JwYm95Y290N0xjc3NQeTFDN0wwZDItR3RqSDlnSWVPa09wV0lVeE1RTTI?oc=5"
     },
     {
-      "date": "2026-07-13",
-      "title": "램버스, AI·데이터센터 위한 고속 DDR5 9600 출시",
-      "titleEn": "Rambus Launches High-Speed DDR5 9600 Chipset to Meet Heavy AI and Data Center Demands",
-      "source": "Bisinfotech",
+      "date": "2026-08-06",
+      "title": "AI 주도 메모리 부족: DRAM 가격, 인플레이션 및 시장 위험",
+      "titleEn": "The AI-Driven Memory Shortage: DRAM Prices, Inflation and Market Risks",
+      "source": "J.P. Morgan",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "AI 수요가 주도하는 메모리 부족 현상이 DRAM 가격 상승, 인플레이션 및 시장 위험을 초래하고 있습니다. 이는 AI 기술 발전이 DRAM 시장에 미치는 광범위한 영향을 분석합니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPd2JSc2c3QTJJY1c1NncwWjdRRVVCclBSOTloN01tRG5YSlFRUEx4R0c3cUhROHZoVG1QcG1kTkIwM0J2QWZMa0dvMC1jT3hoVzI2UWI4QUNRTWdHc2tHZzlTbm9nZkN5eU5JdzFJMmNScl9RWjRXN3B3YVVMcWNvM0tydVk2UFVmUzVobkRETG45TmNneWZvRDh3N0d1aGhOSEx1ZA?oc=5"
+    },
+    {
+      "date": "2026-07-31",
+      "title": "삼성, RAM 부족 2027년 넘어 2028년까지 지속 경고",
+      "titleEn": "Samsung warns the RAM shortage will last through 2027, maybe 2028",
+      "source": "PCWorld",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "삼성은 RAM 부족 현상이 2027년을 넘어 2028년까지 지속될 수 있다고 경고했습니다. 이는 DRAM 공급 부족이 단기적인 현상이 아님을 강조하며, 시장에 지속적인 가격 상승 압력을 가할 수 있습니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxObHdJSFpKcVZLTjZUOVBwZERSVTB6MExfdlpJVWM4RnIzRS1wdG9GbEk0ckNHYzFFdHk4anNPbFNUMlhrVjRRQXBCa29VMjRnMHFDdExmZDhSTURtTmtVbmJVc2RNaGVLSTQ1NXZWWXkxbDRsb3A5NzBBTzA5M0R1b2VUTFVNQ3lsT2hrNV9JV3F1czNGUm05MzdUQXBZZ0RyVHhERm9aZUdXVDBHU3c?oc=5"
+    },
+    {
+      "date": "2026-08-10",
+      "title": "마이크론 주가, 메모리 부족으로 급등",
+      "titleEn": "Micron Technology Stock Surged On A Shortage The Company Had Already Described",
+      "source": "Trefis",
       "score": 0.7,
       "tone": "pos",
       "conf": 85,
       "hot": true,
-      "summary": "램버스가 AI 및 데이터센터의 높은 수요를 충족하기 위해 고속 DDR5 9600 칩셋을 출시했다. 이는 고성능 메모리 기술 발전이 AI 시장 성장에 필수적임을 보여준다.",
+      "summary": "마이크론 테크놀로지 주가가 회사가 이미 언급했던 메모리 부족으로 급등했습니다. 이는 DRAM 공급 부족이 시장에서 긍정적인 가격 압력으로 작용하고 있음을 시사합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -240,51 +204,49 @@
         }
       },
       "linked": [
-        "A-2 관련",
-        "B-6 관련"
+        "A-4 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMFhrV1Y5d1YzUllDVm5iMUdNVFhLUWtlaEZ5TmlMNHljRlFrN0tzMEdwc2pQYl9EaE1DRTVjNzc0NzFZRFFCTWRLbUtzVGs3b2ZDTkNRTzduNm84eUtnbG8tRW1VVk9ZMld6cU94NmFUcjB3Tkw0RzB2c0JDUncxN3Z3V0pVeHBzLUNBNkx4V0F2UnVSN2xsd1dCUEdqNW82M1ZhS0VISFRnSnRmWnJkZkhfckg?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOWEhqTi1lUlVMMkZldloxRkFyZWNZZ3pxVWpmNVBzajd3TjlQbVVLUW9sbVBRc1J6YTI2OVdnOTkzaF9wWkVfMXplRFduYWpZQXZBbllyV2FiOGZ2VEFyRXpHQzJvRldqbUhKM09TT3czUDNEUnRYWEEyLS04NWN0TnVoY240S2tkQi1ET2pyNUVGT21ybW5VXzc1QURnUE5RRW41cWMzVHdsSktkMlVCSG4yZFdoT0tXWEZQTnNiTWZBZVhKa2tOaHNEWGdlVGhPVlUw?oc=5"
     },
     {
-      "date": "2026-07-04",
-      "title": "소비자 한계 도달, 메모리 가격 상승세 둔화 조짐",
-      "titleEn": "Memory price surge begins to cool as consumers hit affordability limit — AI demand still keeps DRAM and NAND prices climbing through Q3 2026 - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.4,
-      "tone": "neu",
-      "conf": 88,
-      "hot": false,
-      "summary": "소비자들의 구매력 한계로 메모리 가격 상승세가 둔화되기 시작했다. 그러나 AI 수요는 여전히 2026년 3분기까지 DRAM 및 NAND 가격을 상승시킬 것으로 예상된다.",
+      "date": "2026-08-10",
+      "title": "TSMC 매출, AI 수요에 힘입어 45% 급증",
+      "titleEn": "World's biggest chipmaker TSMC's sales surge 45% amid buoyant AI demand",
+      "source": "CNBC",
+      "score": 0.7,
+      "tone": "pos",
+      "conf": 85,
+      "hot": true,
+      "summary": "세계 최대 칩 제조업체인 TSMC의 매출이 AI 수요에 힘입어 45% 급증했습니다. 이는 AI 시장의 강력한 성장을 보여주며, DRAM을 포함한 고성능 메모리 수요 증가로 이어질 것입니다.",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "pos",
           "text": "단기 분석"
         },
         "mid": {
-          "tone": "neu",
+          "tone": "pos",
           "text": "중기 분석"
         },
         "long": {
-          "tone": "neu",
+          "tone": "pos",
           "text": "장기 분석"
         }
       },
       "linked": [
-        "A-4 관련",
         "A-2 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMikwJBVV95cUxPbjB0NlFYY1g3X3pkX1FWd0xJcjJJMUVuQlBZb01XQXhxUUoxVGZscDFVenZsQ2Uwa0UtRWgyVzVaTUthUnFsRkhGc3VWV2pjRDFTVDNZUlFUVDFkLTdzZnZrVDMxcG9UMVl6T1NiQ0N2d1VWbjYxakpVY2RKS1dWNldnTzVTWmpvMUxpamxTTUZQYmg1Y0lLd3paZXc3ZkhiczVydTFUNHdOS3ZRZVdFeEpVckJ1RVQ5RWowVGNrUHFoR0E1V21rRWpLdTdyUnJwLWVaeFg0WmxLRUI3UFJzUmI1VDZOVzExbEp6SzRrM0c2cV95eUsxS0VkQUNZa2dyZ0NYN01rNXYwdVNEbE82NzM2WQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9oWGx0TFRvc0JiTHhDMHpIZ25ZM0c3QURGMGIwdEl5UWgtRUtIdFd3UW5taUFGNnFMQ2E2ZG12eVE2cGdYNWh4NF9YaDVBWDNDWTVwM1ltUjJKMUUwZXc0U0Q2TU9iVkh5SEF2QnBDZmlleHptdzJHdzRvTmvSAYIBQVVfeXFMT2dPYmpkcHVyekVEY2V1c09ZbWxWekFkMFpFUk5nN213VDNXWWpTQVphRmZIbFpjZEFId1RfSDQzdjBCdFF1MzhWdlZWZ0tiRWlhYm15dUkwRTBobERlWVNaSHRoSHU1SF8yWXdYeFpiWnBTanhwNjdORE8tNzhJc2VKZw?oc=5"
     },
     {
-      "date": "2026-08-01",
-      "title": "MS, 메모리 부족 속 윈도우11 8GB RAM 최적화",
-      "titleEn": "Microsoft vows to make Windows 11 fly on 8GB RAM amid memory shortage — optimizations to reduce OS memory footprint have begun - Tom's Hardware",
+      "date": "2026-08-08",
+      "title": "중국 CXMT, DDR5-8800 장벽 돌파, SK하이닉스 격차 좁혀",
+      "titleEn": "China's memory-making champion smashes DDR5-8800 barrier on AMD platform — CXMT chips close the gap with SK hynix - Tom's Hardware",
       "source": "RSS",
-      "score": -0.3,
+      "score": -0.6,
       "tone": "neg",
       "conf": 80,
-      "hot": false,
-      "summary": "마이크로소프트가 메모리 부족 상황에서 윈도우 11이 8GB RAM에서도 원활하게 작동하도록 최적화하겠다고 밝혔다. 이는 운영체제 메모리 사용량 감소를 통해 수요 압력을 완화하려는 노력으로 해석된다.",
+      "hot": true,
+      "summary": "중국의 메모리 제조업체 CXMT가 AMD 플랫폼에서 DDR5-8800 장벽을 돌파하며 SK하이닉스와의 기술 격차를 좁혔습니다. 이는 장기적으로 DRAM 시장의 경쟁 심화와 공급 증가 가능성을 시사합니다.",
       "effects": {
         "short": {
           "tone": "neg",
@@ -300,10 +262,38 @@
         }
       },
       "linked": [
-        "A-4 관련",
-        "A-2 관련"
+        "A-1 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNWnhXUFhFRFJ1QzdHam8wMnRMR3FxYm40cDZvZVktX09DVEc5RXlMMWFDaFZqbFltTFpoOG9kSHZ5OFg1R1hJcFY0LVI0MElJVEJIY0tFV21iQS03R1VxWkZhcmU3ZjgyUjRNWjAzRTNjUEFRbUNMRWJJZ0RoRkxzQTlwdjVsRWtYTTQycTZvRThqOFdxZWJVVC1MUk9XWjNLQTFCUDB1dExyTFhaWDc3bTMtb21VdnhjNEozcWcxM2NpQl9aNkpxbTlfVTd4RVZoalhOTUtCRkFpZHN6eDRucGd2UFZlLU9IaG1FS1lnbHFwZUJpTzBGY2dqWDlteXc?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxQOUFRTEZZbmpuWHYwNU9xNV8wVUJBNzE1eHc0OWVqZjdnR2ZNSldtNjJNMWdQZUxIX3VKWjJ5UkRWQ2c1d1gweG0taHdKU05KM2lLMTBCQVBMUVdpZEJLUzVBX2hIZ1J1T2dpNjE5b19UYUdJMm5sLTJyWEFoOEJZNy1vV0w3YWpNdzhwOUV6Q3hybjhld1RscW1aUGsyc1FQdC1mdFV4N3NDQ3BzbFVXb0Yweng4S1pNTTZTQkFTR0dqMDZ0WmlsQ242Tm5HdWF3ZFJrWkU4czZCX2NOamhiNmplckl1a0hmV1hiVGln?oc=5"
+    },
+    {
+      "date": "2026-08-07",
+      "title": "삼성, AI 칩에 직접 적층하는 zHBM 메모리 공개",
+      "titleEn": "Samsung Unveils zHBM Memory Stacked Directly on AI Chips to Ease Shortage",
+      "source": "Startup Fortune",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 85,
+      "hot": false,
+      "summary": "삼성이 AI 칩에 직접 적층하는 zHBM 메모리를 공개하여 HBM 부족 현상을 완화하려 합니다. 이는 AI 메모리 공급을 늘리기 위한 기술 혁신으로, 장기적으로는 가격 안정화에 기여할 수 있습니다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQZ1JhUjByU0x0Zlp6TTJHZnJjWG5FZUZyUjA4RTZvZG5JclVNeURUZUFmVGI3bmVldGdKODRaeVRPWnBwd1VRS3ZyY3dQSjQ4YmlSaTd3YVQwcVJYRUwya0FqVHJrazY1b3lDbm50V0FpM3FJb1psUU5oYUpuVlVwR1VnNE82REdGR1czbGFqWS1oREFLcnRqa0pRX19TUE9TRFI0?oc=5"
     }
   ]
 }

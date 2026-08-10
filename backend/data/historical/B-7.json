@@ -2,15 +2,11 @@
   "signalId": "B-7",
   "source": "Hacker News Algolia API (queries: 4\uac74)",
   "mode": "real",
-  "collectedAt": "2026-08-03",
-  "rangeStart": "2025-07-07",
-  "rangeEnd": "2026-08-03",
+  "collectedAt": "2026-08-10",
+  "rangeStart": "2025-07-14",
+  "rangeEnd": "2026-08-10",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2025-07-07",
-      "value": 14.0
-    },
     {
       "week": "2025-07-14",
       "value": 3.0
@@ -209,7 +205,7 @@
     },
     {
       "week": "2026-06-22",
-      "value": 70.0
+      "value": 54.0
     },
     {
       "week": "2026-06-29",
@@ -225,14 +221,18 @@
     },
     {
       "week": "2026-07-20",
-      "value": 118.0
+      "value": 30.0
     },
     {
       "week": "2026-07-27",
-      "value": 23.0
+      "value": 17.0
     },
     {
       "week": "2026-08-03",
+      "value": 74.0
+    },
+    {
+      "week": "2026-08-10",
       "value": 0.0
     }
   ]
