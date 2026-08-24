@@ -1,10 +1,10 @@
 {
   "signalId": "B-1",
-  "source": "Google News 'Earnings Call sentiment' (180 entries, LLM 9\ud68c \ud638\ucd9c, 22\uc8fc)",
+  "source": "Google News 'Earnings Call sentiment' (180 entries, LLM 8\ud68c \ud638\ucd9c, 21\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-08-17",
+  "collectedAt": "2026-08-24",
   "rangeStart": "2026-01-05",
-  "rangeEnd": "2026-08-10",
+  "rangeEnd": "2026-08-17",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -12,16 +12,12 @@
       "value": 1.0
     },
     {
-      "week": "2026-01-26",
-      "value": 0.9
-    },
-    {
       "week": "2026-03-16",
       "value": 1.0
     },
     {
       "week": "2026-03-23",
-      "value": 0.8
+      "value": 1.0
     },
     {
       "week": "2026-03-30",
@@ -33,19 +29,19 @@
     },
     {
       "week": "2026-04-20",
-      "value": 0.5
-    },
-    {
-      "week": "2026-04-27",
       "value": 0.9
     },
     {
+      "week": "2026-04-27",
+      "value": 1.0
+    },
+    {
       "week": "2026-05-04",
-      "value": 0.0
+      "value": 0.9
     },
     {
       "week": "2026-05-11",
-      "value": 0.5
+      "value": -1.0
     },
     {
       "week": "2026-05-25",
@@ -69,7 +65,7 @@
     },
     {
       "week": "2026-06-29",
-      "value": 0.0
+      "value": -0.3333
     },
     {
       "week": "2026-07-06",
@@ -85,15 +81,15 @@
     },
     {
       "week": "2026-07-27",
-      "value": 0.0
-    },
-    {
-      "week": "2026-08-03",
-      "value": -1.0
+      "value": 0.3333
     },
     {
       "week": "2026-08-10",
       "value": 1.0
+    },
+    {
+      "week": "2026-08-17",
+      "value": 0.3333
     }
   ]
 }

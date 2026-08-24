@@ -1,7 +1,7 @@
 {
-  "collectedAt": "2026-08-17",
+  "collectedAt": "2026-08-24",
   "method": "키워드 휴리스틱",
-  "rawCount": 1154,
+  "rawCount": 1130,
   "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
   "events": [
     {
@@ -33,12 +33,12 @@
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "우크라이나",
+      "region": "미국",
       "risk": "high",
-      "title": "우크라이나 전쟁, Day 1,636: Kyiv Could 파업 러시아 With Ballistic 미사일s By End of 2026",
+      "title": "테러 threat looms over coastal destination as US 경고 attacks could 파업 without notic",
       "impact": "공급↓",
-      "date": "2026-08-17",
-      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-08-24",
+      "summary": "테러 사건 보도 (미국) — 국지적 리스크 신호. DRAM 가격 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -61,22 +61,22 @@
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "[모니터링] Fed 금리 정책 추적",
-      "impact": "가격?",
-      "date": "2026-08-15",
-      "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 금융 위기)",
+      "title": "유가s open week lower on US sanctions, Fed 금리 인상 expectations - Anadolu Ajansı",
+      "impact": "물류↑",
+      "date": "2026-08-24",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
-          "text": "(placeholder)"
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "long": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
         }
       },
       "links": [],
@@ -85,24 +85,102 @@
     {
       "id": "ev-5",
       "type": "기타",
-      "region": "글로벌",
+      "region": "미국",
       "risk": "low",
-      "title": "[모니터링] 글로벌 무역 정책 추적",
+      "title": "US 국채금리s 하락 ahead of Fed Chair 전쟁s...",
       "impact": "가격?",
-      "date": "2026-08-15",
-      "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 기타)",
+      "date": "2026-08-24",
+      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "단기 영향 평가 (휴리스틱 · 기타)"
         },
         "mid": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "중기 영향 평가 (휴리스틱 · 기타)"
         },
         "long": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "장기 영향 평가 (휴리스틱 · 기타)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-6",
+      "type": "물리적 충돌",
+      "region": "우크라이나",
+      "risk": "high",
+      "title": "Grain 가격 급등 after 우크라이나 전쟁 chokes off seaborne exports",
+      "impact": "공급↓",
+      "date": "2026-08-19",
+      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-8",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "Fed’s Daly Supported Rate Decision, 경고 of 인플레이션 Risks",
+      "impact": "가격?",
+      "date": "2026-08-05",
+      "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-9",
+      "type": "물리적 충돌",
+      "region": "중동",
+      "risk": "high",
+      "title": "러시아 Reaped $28 억 Export 급등 From Middle East 전쟁",
+      "impact": "공급↓",
+      "date": "2026-08-17",
+      "summary": "물리적 충돌 보도 (중동) — 지정학 리스크 신호 모니터링 필요. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
       "links": [],
