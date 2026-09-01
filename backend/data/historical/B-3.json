@@ -2,15 +2,11 @@
   "signalId": "B-3",
   "source": "Hacker News Algolia ('memory chip price') \u2014 Reddit \ub300\uccb4",
   "mode": "real",
-  "collectedAt": "2026-08-24",
-  "rangeStart": "2025-07-28",
-  "rangeEnd": "2026-08-24",
+  "collectedAt": "2026-09-01",
+  "rangeStart": "2025-08-04",
+  "rangeEnd": "2026-08-31",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2025-07-28",
-      "value": 0
-    },
     {
       "week": "2025-08-04",
       "value": 0
@@ -229,10 +225,14 @@
     },
     {
       "week": "2026-08-17",
-      "value": 0
+      "value": 1
     },
     {
       "week": "2026-08-24",
+      "value": 1
+    },
+    {
+      "week": "2026-08-31",
       "value": 0
     }
   ]

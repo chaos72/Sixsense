@@ -1,19 +1,15 @@
 {
   "signalId": "A-6",
-  "source": "Manifold Markets 'Will China launch a full-scale invasion of Taiwan before 2030?' (4590 bets \u2192 52\uc8fc)",
+  "source": "Manifold Markets 'Will China launch a full-scale invasion of Taiwan before 2030?' (4616 bets \u2192 52\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-08-24",
-  "rangeStart": "2025-07-28",
-  "rangeEnd": "2026-08-17",
+  "collectedAt": "2026-09-01",
+  "rangeStart": "2025-08-04",
+  "rangeEnd": "2026-08-31",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
-      "week": "2025-07-28",
-      "value": 0.3115
-    },
-    {
       "week": "2025-08-04",
-      "value": 0.3607
+      "value": 0.3633
     },
     {
       "week": "2025-08-11",
@@ -214,6 +210,10 @@
     {
       "week": "2026-08-17",
       "value": 0.3077
+    },
+    {
+      "week": "2026-08-31",
+      "value": 0.2751
     }
   ]
 }
