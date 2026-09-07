@@ -2,15 +2,11 @@
   "signalId": "A-4",
   "source": "KOSIS \uad11\uacf5\uc5c5\ub3d9\ud5a5 C26 \uc7ac\uace0\uc9c0\uc218 (\uc6d4\uac04\u2192\uc8fc\uac04 forward-fill)",
   "mode": "real",
-  "collectedAt": "2026-09-01",
-  "rangeStart": "2025-08-04",
-  "rangeEnd": "2026-08-31",
+  "collectedAt": "2026-09-07",
+  "rangeStart": "2025-08-11",
+  "rangeEnd": "2026-09-07",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2025-08-04",
-      "value": 5313050.0
-    },
     {
       "week": "2025-08-11",
       "value": 5313050.0
@@ -233,6 +229,10 @@
     },
     {
       "week": "2026-08-31",
+      "value": 4923610.0
+    },
+    {
+      "week": "2026-09-07",
       "value": 4923610.0
     }
   ]

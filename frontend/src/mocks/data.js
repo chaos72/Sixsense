@@ -2,8 +2,8 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/forecast/forecast_v2_*.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-01T00:28:50.262568Z
-// 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-01) · events 7건 (기상이변 제외)
+// 생성 시각: 2026-09-07T23:27:09.691242Z
+// 뉴스/이벤트: news 10건 (키워드 휴리스틱, 2026-09-07) · events 7건 (기상이변 제외)
 // UI 컴포넌트는 design_handoff_sixsense_dram_dashboard 의 SIXSENSE_DATA 스키마를 그대로 따른다.
 
 export const SIXSENSE_DATA = {
@@ -12,23 +12,23 @@ export const SIXSENSE_DATA = {
     "currentChange": "-4.5%",
     "pred7": 9.333,
     "pred7Change": "+25.0%",
-    "pred21": 8.583,
-    "pred21Change": "+15.0%",
+    "pred21": 9.034,
+    "pred21Change": "+21.0%",
     "updated": "2026-07-12 06:00 KST",
     "model": "GBR (단기) + LSTM (중장기) + Prophet (베이스)",
     "confidence": 81,
     "insight": {
-      "headline": "AI 수요 폭증, DRAM 가격 **급등** 전망",
-      "summary": "서버 DRAM 가격은 최근 하락세에도 불구하고 **AI 수요** 폭증에 힘입어 단기 및 중장기적으로 **강력한 상승세**가 예상됩니다. 빅테크 CapEx 증가와 HBM/DRAM 믹스 변화, 그리고 긍정적인 Earnings Call 감성 등 14개 프록시 신호가 이를 뒷받침합니다. 특히, HBM 수요가 레거시 DRAM 부족을 야기하며 DDR5 가격 급등을 초래한다는 뉴스는 **수급 불균형** 심화를 명확히 보여줍니다. 단기적으로 **+25.1%**의 급격한 상승이 예측되나, 중장기적으로는 상승폭이 다소 완화될 것으로 보입니다. 지정학적 리스크와 HBM 생산 전환 속도가 시장의 주요 **관전 포인트**입니다.",
+      "headline": "AI 수요 견인, 장기 상승 전환",
+      "summary": "현재 서버 DRAM 가격은 지난주 대비 4.5% 하락한 7.46달러를 기록했으나, 단기(7주 후) 25.1% 상승한 9.33달러, 중장기(21주 후) 21.0% 상승한 9.03달러로 강력한 반등이 예상됩니다. 이는 **빅테크 CapEx** 증가(A-2), **AI 메모리 부족** 관련 긍정 뉴스, 그리고 **HBM/D램 믹스** 변화(B-6)가 복합적으로 작용하여 **AI 수요**가 가격 상승을 견인하는 것으로 분석됩니다. 특히 마이크론의 AI 메모리 부족 언급과 윈도우 11의 고용량 RAM 요구는 수요 측면의 강력한 신호입니다. 다만, 높은 지정학 리스크(B-4)와 LTA 비율 하락(B-5)은 잠재적 하방 압력으로 작용할 수 있어 지속적인 모니터링이 필요합니다.",
       "tone": "pos",
-      "confidence": 90,
+      "confidence": 85,
       "horizon": "short",
       "keySignals": [
         "A-2",
         "B-6"
       ],
       "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-09-01T00:28:50"
+      "generatedAt": "2026-09-07T23:27:09"
     },
     "modelValidation": {
       "headline": "🎉 Phase 6 멀티 모델 예측 아키텍처 완료 — 단기 MAPE 7.54% → 4.54% (39.8% 개선)",
@@ -55,24 +55,24 @@ export const SIXSENSE_DATA = {
       "midRows": [
         {
           "model": "LSTM (PyTorch 2-layer hidden=64)",
-          "mape": 6.42
+          "mape": 7.46
         }
       ],
       "trainTimes": [
         {
           "name": "Prophet",
-          "sec": 0.79
+          "sec": 0.91
         },
         {
           "name": "Tree (단기)",
-          "sec": 2.21
+          "sec": 2.58
         },
         {
           "name": "LSTM (중장기)",
-          "sec": 4.97
+          "sec": 6.14
         }
       ],
-      "trainTotal": 8.0,
+      "trainTotal": 9.6,
       "architecture": "20개 신호 통합 DataFrame (108주 × 20열, sentiment 3주 MA)\n            │\n   ┌────────┼────────┐\n   ▼        ▼        ▼\n[Prophet] [Tree]  [LSTM]\nbaseline  단기      중장기\n         ─우수─    PyTorch\n         자동선정   2-layer",
       "envNote": "XGBoost/LightGBM 우선 사용 시도 → macOS libomp 미설치 → sklearn GBR/HistGBR fallback 자동 전환. brew install libomp 후 자동 XGBoost/LightGBM 활성 (코드 변경 불필요). LSTM은 PyTorch (libomp 무관, 즉시 작동)."
     }
@@ -349,37 +349,37 @@ export const SIXSENSE_DATA = {
     },
     {
       "week": 2,
-      "value": 7.902,
-      "lower": 7.507,
-      "upper": 8.297,
+      "value": 7.911,
+      "lower": 7.515,
+      "upper": 8.307,
       "type": "f7"
     },
     {
       "week": 3,
-      "value": 8.337,
-      "lower": 7.92,
-      "upper": 8.754,
+      "value": 8.357,
+      "lower": 7.939,
+      "upper": 8.775,
       "type": "f7"
     },
     {
       "week": 4,
-      "value": 8.559,
-      "lower": 8.131,
-      "upper": 8.987,
+      "value": 8.576,
+      "lower": 8.147,
+      "upper": 9.005,
       "type": "f7"
     },
     {
       "week": 5,
-      "value": 8.782,
-      "lower": 8.343,
-      "upper": 9.221,
+      "value": 8.798,
+      "lower": 8.358,
+      "upper": 9.238,
       "type": "f7"
     },
     {
       "week": 6,
-      "value": 9.058,
-      "lower": 8.605,
-      "upper": 9.511,
+      "value": 9.052,
+      "lower": 8.599,
+      "upper": 9.505,
       "type": "f7"
     },
     {
@@ -400,93 +400,93 @@ export const SIXSENSE_DATA = {
     },
     {
       "week": 9,
-      "value": 10.596,
-      "lower": 9.536,
-      "upper": 11.656,
+      "value": 10.699,
+      "lower": 9.629,
+      "upper": 11.769,
       "type": "f21"
     },
     {
       "week": 10,
-      "value": 10.756,
-      "lower": 9.68,
-      "upper": 11.832,
+      "value": 11.148,
+      "lower": 10.033,
+      "upper": 12.263,
       "type": "f21"
     },
     {
       "week": 11,
-      "value": 10.563,
-      "lower": 9.507,
-      "upper": 11.619,
+      "value": 10.79,
+      "lower": 9.711,
+      "upper": 11.869,
       "type": "f21"
     },
     {
       "week": 12,
-      "value": 10.243,
-      "lower": 9.219,
-      "upper": 11.267,
+      "value": 10.617,
+      "lower": 9.555,
+      "upper": 11.679,
       "type": "f21"
     },
     {
       "week": 13,
-      "value": 9.503,
-      "lower": 8.553,
-      "upper": 10.453,
+      "value": 9.744,
+      "lower": 8.77,
+      "upper": 10.718,
       "type": "f21"
     },
     {
       "week": 14,
-      "value": 9.298,
-      "lower": 8.368,
-      "upper": 10.228,
+      "value": 9.3,
+      "lower": 8.37,
+      "upper": 10.23,
       "type": "f21"
     },
     {
       "week": 15,
-      "value": 8.691,
-      "lower": 7.822,
-      "upper": 9.56,
+      "value": 8.904,
+      "lower": 8.014,
+      "upper": 9.794,
       "type": "f21"
     },
     {
       "week": 16,
-      "value": 9.005,
-      "lower": 8.105,
-      "upper": 9.906,
+      "value": 9.235,
+      "lower": 8.312,
+      "upper": 10.159,
       "type": "f21"
     },
     {
       "week": 17,
-      "value": 9.097,
-      "lower": 8.187,
-      "upper": 10.007,
+      "value": 8.939,
+      "lower": 8.045,
+      "upper": 9.833,
       "type": "f21"
     },
     {
       "week": 18,
-      "value": 8.924,
-      "lower": 8.032,
-      "upper": 9.816,
+      "value": 8.843,
+      "lower": 7.959,
+      "upper": 9.727,
       "type": "f21"
     },
     {
       "week": 19,
-      "value": 8.753,
-      "lower": 7.878,
-      "upper": 9.628,
+      "value": 8.701,
+      "lower": 7.831,
+      "upper": 9.571,
       "type": "f21"
     },
     {
       "week": 20,
-      "value": 8.844,
-      "lower": 7.96,
-      "upper": 9.728,
+      "value": 9.084,
+      "lower": 8.176,
+      "upper": 9.992,
       "type": "f21"
     },
     {
       "week": 21,
-      "value": 8.583,
-      "lower": 7.725,
-      "upper": 9.441,
+      "value": 9.034,
+      "lower": 8.131,
+      "upper": 9.937,
       "type": "f21"
     }
   ],
@@ -610,7 +610,7 @@ export const SIXSENSE_DATA = {
     },
     {
       "week": 3,
-      "value": 9.16,
+      "value": 9.161,
       "type": "histgbr"
     },
     {
@@ -696,19 +696,19 @@ export const SIXSENSE_DATA = {
       "id": "A-5",
       "name": "AWS Spot 가격",
       "source": "AWS EC2 m6i.xlarge spot",
-      "value": "$0.12",
-      "num": 0.1186,
+      "value": "$0.13",
+      "num": 0.1274,
       "tone": "pos",
       "desc": "p4d.24xlarge 시간당 (AWS Pricing API)",
       "spark": [
-        1.0,
-        0.492,
-        0.321,
+        0.555,
+        0.363,
         0.0,
-        0.253,
-        0.163,
-        0.207,
-        0.349
+        0.286,
+        0.184,
+        0.234,
+        0.651,
+        1.0
       ]
     },
     {
@@ -716,18 +716,18 @@ export const SIXSENSE_DATA = {
       "name": "Manifold 봉쇄확률",
       "source": "Manifold Markets 'Will China launch a fu",
       "value": "28%",
-      "num": 0.2751,
+      "num": 0.2814,
       "tone": "neu",
       "desc": "대만 침공 확률 (Manifold Markets)",
       "spark": [
         1.0,
-        0.988,
-        0.974,
-        0.803,
-        0.834,
-        0.806,
-        0.559,
-        0.0
+        0.986,
+        0.807,
+        0.839,
+        0.811,
+        0.554,
+        0.0,
+        0.084
       ]
     },
     {
@@ -760,13 +760,13 @@ export const SIXSENSE_DATA = {
       "tone": "pos",
       "desc": "메모리 4사 콜 감성 (Google News+LLM)",
       "spark": [
-        0.556,
-        1.0,
         0.0,
-        0.333,
-        0.333,
+        0.5,
+        0.1,
+        0.25,
+        0.5,
         1.0,
-        0.556,
+        0.25,
         1.0
       ]
     },
@@ -774,19 +774,19 @@ export const SIXSENSE_DATA = {
       "id": "B-5",
       "name": "LTA 비율",
       "source": "Google News 'LTA ratio'",
-      "value": "+1.00",
-      "num": 1.0,
-      "tone": "pos",
+      "value": "-1.00",
+      "num": -1.0,
+      "tone": "neg",
       "desc": "장기 계약가/현물가 (DRAMeXchange)",
       "spark": [
         1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
         1.0,
         1.0,
-        1.0
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        0.0
       ]
     },
     {
@@ -800,11 +800,11 @@ export const SIXSENSE_DATA = {
       "spark": [
         0.0,
         1.0,
-        0.4,
-        1.0,
+        0.5,
         1.0,
         1.0,
         0.25,
+        1.0,
         1.0
       ]
     },
@@ -812,317 +812,292 @@ export const SIXSENSE_DATA = {
       "id": "B-7",
       "name": "BOM 신호",
       "source": "Hacker News Algolia API",
-      "value": "+4.00",
-      "num": 4.0,
-      "tone": "pos",
+      "value": "+0.00",
+      "num": 0.0,
+      "tone": "neu",
       "desc": "PCB·기판 가격 (공급망 트랜스크립트)",
       "spark": [
+        0.091,
+        0.009,
         0.0,
-        0.04,
-        0.004,
-        0.0,
-        0.433,
         1.0,
-        0.136,
-        0.005
+        0.255,
+        0.03,
+        0.009,
+        0.0
       ]
     }
   ],
   "news": [
     {
+      "date": "2026-09-04",
+      "title": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears",
+      "titleEn": "Micron, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
+      "source": "finance.biggo.com",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears &nbsp;&nbsp; finance.biggo.com",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9YT3JrZDBzb0Y1d2psWk9TUDZwNWdNclhDR3Vqd2VJQ3JJUXA3RVBHVG5IVmlfaEwyQ0llam9PNXd3cWhlNm90TzhLZWduTHhEM2FXaXIxaFc0QUNqNEVWT0xPa3VLd2J2REVaTkQzSkVaWjFDTVE?oc=5"
+    },
+    {
+      "date": "2026-09-06",
+      "title": "마이크론 CEO touts 미국 투자 as differentiator amid targeted tariff pressure o",
+      "titleEn": "Micron CEO touts U.S. investment as differentiator amid targeted tariff pressure on Samsung, SK",
+      "source": "finance.biggo.com",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론 CEO touts 미국 투자 as differentiator amid targeted tariff pressure on 삼성, SK &nbsp;&nbsp; finance.biggo.com",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE42R1luYk05MG1OamhNRGpXeFNMYnUxWnpOeFBOR3JLVnlPamJSdkR5WElyTkJUdzdDd3B2Rk5RSDZPeU1IbFdzUlpzb1J6RnZPNS1YSzZjUjZENGlZUlE5M1UzNF9uU2V0RWswTGFVMGlCSVU3bWc?oc=5"
+    },
+    {
+      "date": "2026-09-05",
+      "title": "Stripped-down Windows 11 for AI developers 수요s 64GB RAM and insane 250",
+      "titleEn": "Stripped-down Windows 11 for AI developers demands 64GB RAM and insane 250 GB/s bandwidth — Project Zenith will debut on AMD's flagship Ryzen AI Halo platform - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "Stripped-down Windows 11 for AI developers 수요s 64GB RAM and insane 250 GB/s bandwidth — Project Zenith will debut on AMD's flagship Ryzen AI Halo platform &nbsp;&nbsp; Tom's Ha",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxPcWhMVnBRa0ZYYXd2b3FjRHpfckpPVTlWR1M2SWVjNnI1ZkhpcDVrRGpzNDh1SzhQWExrZ0tzdUpXSXBNUm9pYnB5UVhjdFA2VDlDUTVYcGFzakNHUFpSUDBzdHp5akRpYkV3c29OYmMweWhvQzVxTnBKeWtHRk5LckRuc3ZHR2lTZlE2Wl9FMHdJZWc4VEFlMG5ITUFtb21VcTNFYmc3NUc2NHpPQmpGRl9xRW1zNVF1M21qV2N0MDdKSHltbnZiejd3QWw2djFDSlV6RTdmaE5EWE9faVJYTEw0SDZZM1pBVnF2VlB2V2xzd293T2FSR2FGT0FHZjNSUGhja2pzMm5HS1VYdmJDQWltVGs0RDBXVG1PeWxNUDd2SzlnYm0tOA?oc=5"
+    },
+    {
+      "date": "2026-09-02",
+      "title": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidt",
+      "titleEn": "Micron says tightly coupled DRAM could deliver more than 10x HBM bandwidth",
+      "source": "digitimes.com",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidth &nbsp;&nbsp; digitimes.com",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPeEs2ejhUaFhQbk9qZGxkWWhuSG9rdE5MWWhWNUhHY2lQMlRvNXJNR0dGWXI4ZGJwT2xWU29kb2VaYXpiMkFZQ0d3ZU03SHEtOU44V2R6S2dBQVlhcWtsVFVDLVY1eXM5bjE0WmItZ2JIdHIwTVJyeFVHOXMxSzVEUzFtVS0tYjRB?oc=5"
+    },
+    {
       "date": "2026-08-28",
-      "title": "DDR5 가격 5배 급등, HBM 수요가 레거시 DRAM 부족 야기",
-      "titleEn": "DDR5 Prices Surge Fivefold in a Year — China's HBM Obsession Creates a Legacy DRAM Shortage Paradox",
-      "source": "finance.biggo.com",
-      "score": 0.95,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "DDR5 가격이 1년 만에 5배 급등했다. 중국의 HBM 집중이 레거시 DRAM 부족 현상을 야기하는 역설적인 상황이다. 이는 AI 메모리 생산에 자원이 집중되면서 일반 DRAM 공급이 줄어들어 가격이 상승하고 있음을 시사한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB1bDI0eE9hSXB4V1c2Y04xWjVXbDdpd213bXNVdndoV19JSjBHWFRCMHZ2LUo1U3I3UW1UbDBFcE5WLUcyNWJYcHN3RWR4SWVaajZ2MkQwSzJzMlB1NFJqQWxwM2VVR2hKOUI1S3VFMnQ5QVRCRHc?oc=5"
-    },
-    {
-      "date": "2026-08-06",
-      "title": "AI발 메모리 부족: DRAM 가격, 인플레이션 및 시장 위험",
-      "titleEn": "The AI-Driven Memory Shortage: DRAM Prices, Inflation and Market Risks",
-      "source": "J.P. Morgan",
-      "score": 0.95,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "AI로 인한 메모리 부족 현상이 DRAM 가격 상승, 인플레이션 및 시장 위험을 초래하고 있다. 이는 AI 기술 발전이 메모리 시장에 미치는 광범위한 영향을 보여준다. DRAM 가격 상승의 주요 동인으로 작용할 것으로 분석된다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPd2JSc2c3QTJJY1c1NncwWjdRRVVCclBSOTloN01tRG5YSlFRUEx4R0c3cUhROHZoVG1QcG1kTkIwM0J2QWZMa0dvMC1jT3hoVzI2UWI4QUNRTWdHc2tHZzlTbm9nZkN5eU5JdzFJMmNScl9RWjRXN3B3YVVMcWNvM0tydVk2UFVmUzVobkRETG45TmNneWZvRDh3N0d1aGhOSEx1ZA?oc=5"
-    },
-    {
-      "date": "2026-08-31",
-      "title": "HBM 수출가 70달러 돌파, 메모리 부족 심화",
-      "titleEn": "Memory Shortage Deepens as HBM Export Price Tops $70",
-      "source": "Seoul Economic Daily",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "HBM 수출 가격이 70달러를 돌파하며 메모리 부족 현상이 심화되고 있다. 이는 고성능 AI 메모리에 대한 강력한 수요와 제한된 공급이 지속되고 있음을 나타낸다. DRAM 시장 전반에 긍정적인 가격 압력을 가할 수 있다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPTlVaMU5iNkhpMWdjTDBxa3Y0STdTeWotd3h5SFh4MjIxMTQ5RXEtWnczRlBDSGxNYy1RZDBKbjNoUTRhaWpUV09UZlRrOWJDQUZNbkRnNTF4Ti1VLXE3MXhCQ0kwY1ltd1dCbVd1aUxJYUtNZXp0TkVGUjN2Rm93b3pHZmd6cXZDWTIxY0VjTXRDQm1Ibmd3Wg?oc=5"
-    },
-    {
-      "date": "2026-08-11",
-      "title": "JP모건, AI 메모리 부족 2028년까지 지속 전망",
-      "titleEn": "JPMorgan Analyzes AI Hardware Costs; Memory Shortage May Persist Until 2028 - 富途牛牛",
+      "title": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more comput",
+      "titleEn": "NVIDIA NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI chips - igor´sLAB",
       "source": "RSS",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 95,
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
       "hot": true,
-      "summary": "JP모건은 AI 하드웨어 비용을 분석하며 메모리 부족 현상이 2028년까지 지속될 수 있다고 전망했다. 이는 AI 수요가 공급을 계속 초과할 것이라는 시장의 우려를 반영한다. 장기적인 DRAM 가격 상승 압력을 시사한다.",
+      "summary": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI 칩s &nbsp;&nbsp; igor´sLAB",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOMHZxcDdZWDFkMUgzeWgyWjFBOGc3Z3ptUHZDY3Y5VDkwVW1HTTBEV1ZubzhsU3JJTU05MmlrbjdtVWZjYVZyeEFJeHdobGM5d1BSUUNPTFlQWHNRVFNIeVU0VUQ5RHVzdWpFamZ4LVEwaUVIUHhVV3R2X01rd1hHU2VYTUhoemZxdWQ3Z3d4VW8za2NmZTI1V1BncGktZDBLWEQxOFdyNEFhSUthbk9R?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUDZtX09ONGRUSktmamtFZzJVOGlfOHFMLWNnOERkTG16UWVPcWVnRjNTUy0wTktzbmVkRlIzVWpockRYdGpXUkxxTzJHbFZ6dUl0bmQ3Ym14OFhJalVNNHlXLXpDaGFhQ1RNeGlTZV9DaldsVENfQkxySWExeUh4aGF3bXhqMUhFWGhnMw?oc=5"
     },
     {
-      "date": "2026-08-10",
-      "title": "마이크론, AI 메모리 부족 2027년 이후까지 지속 경고",
-      "titleEn": "Micron Warns AI-Driven Memory Shortage Could Stretch Past 2027 as DRAM Supply Fails to Keep Pace",
-      "source": "finance.biggo.com",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "마이크론은 AI 기반 메모리 부족 현상이 DRAM 공급이 수요를 따라가지 못해 2027년 이후까지 이어질 수 있다고 경고했다. 이는 AI 시장의 폭발적인 성장이 메모리 공급망에 지속적인 압력을 가하고 있음을 의미한다. DRAM 가격에 긍정적인 영향을 미칠 것이다.",
+      "date": "2026-09-06",
+      "title": "Hot Chips 2026: HBM Base Die Evolves from a 메모리 Interface into a Compu",
+      "titleEn": "Hot Chips 2026: HBM Base Die Evolves from a Memory Interface into a Computing Engine — Samsung Unveils a Three-Phase Roadmap Toward Custom HBM, aHBM, and zHBM",
+      "source": "semivision",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Hot Chips 2026: HBM Base Die Evolves from a 메모리 Interface into a Computing Engine — 삼성 Unveils a Three-Phase Roadmap To전쟁d Custom HBM, aHBM, and zHBM &nbsp;&nbsp; semivisi",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBmbFROb010aWlfRG5ZY2FWYmpzcVZSYlUxNk8zVUxXSUhvb3RzZGZsdVBxR0FlUzgtRmE3ZzRWZnFhQW9TRGRCbW9qWWc1OWVUX2d1Z2l6aFRneEgzbnhGa1VxRFREcGpJYl9aYXJZWXNvSklwelE?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNUkNpbDZ6SFZ1ZlZRQXUzMjU3TmtpMWg4N2xnWTRBSHJ1Z2xtdW9BZWpLUE1xVGdNTlNYaXlqX0VteE56Y2VjbXNzNV9zRlNBTHBJa1VzbUJiVVE1OVhLaTUxMFhHMUZuM0NVSl9tTHY2VzBRNVpsTk1WUG5ZUk1uM253?oc=5"
     },
     {
-      "date": "2026-08-31",
-      "title": "마이크론 투자 확대, 엔비디아 구매 급증",
-      "titleEn": "AI Memory Battle Heats Up: Micron Doubles Capex, Nvidia's Purchase Commitments Surge 135%",
-      "source": "finance.biggo.com",
-      "score": 0.85,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "마이크론이 AI 메모리 수요 증가에 대응하여 설비 투자를 두 배로 늘렸다. 엔비디아의 구매 약정 또한 135% 급증하며 AI 메모리 시장의 뜨거운 경쟁을 보여준다. 이는 AI 관련 DRAM 수요가 매우 강하다는 신호이다.",
+      "date": "2026-09-04",
+      "title": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To O",
+      "titleEn": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To Overcome EUV Sanctions & Make 3D DRAM Chips",
+      "source": "Wccftech",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To Overcome EUV Sanctions & Make 3D DRAM Chips &nbsp;&nbsp; Wccftech",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9pT2RubjhxSlZlZWtyRm1YbTFHbXRxZGZSR1B3OTE5b2hWLXZWTm5jdUVuSUNYOXpkc0ptRGcyQXRSTGVXcFkxbnd5clFFWFJoc2NaaTBXN3JvT1RYOVdmTjByQnBDd3pQSWJ4SWR5TVVmcURYVHc?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPNGFlem1NalMtWW93amtLZC1hbmFndE1vbkRMSURqME9FNVdtU3hvZldJTi1CX1dEZW5iSko4cVRRY2dnX2NKb1Zqa1V5cnlMYXdMSmpLNGc2WVYyV2QxblFiR2l1YUQtTEk5dEtlcGVaVUJOOFVWYlRHZVBXOHVQVEVOZ2lxZjE1VEIyVWtZU1h5dV9vWGtYVFg5X09CUm4ySWhRaVZpUXFzaG1xZlhWYzhNYXd1NjBmOWVHSWJ1TTM5YUNnVG9uY2wtSGh4akM5aGdtZ2g2M3U5OEk3NnY2czFzX3piMFNnWHfSAe8BQVVfeXFMTWlpVXBhNjlWT21HdlhSWjNYa2xQbDBxaFo2Vm9TcGtiY0hXeFZUd09pRjk4VWdrNEtBMVkxcnQtQ2prSUxWOE8yTEZtOTFnM2RBM3ZCOEw1Z1ZpNkIwQlo5T1hFdV9JcmVzQnZvbjJLS1lTMEprTkNGMC1BYmEwcDhWTDVWXzlZVXVSSWEzeENxMWNoTHZYeGRfSGw4anY2NW9qdnBsLXM0MXFyUEFoVlJraW1VQUEyZXdXeGI2UzR5LWg1dlFabV9ndHZ6cWI1RENwT0dWZTg5U25keEFldHY3ZFpHZHdfQ01KMHhxdVU?oc=5"
     },
     {
-      "date": "2026-08-27",
-      "title": "엔비디아 공급 약정 급증, 메모리 비용 상승",
-      "titleEn": "[News] NVIDIA’s Supply Commitments Soar to $279B as Memory Costs Surge; New NVHBM Boosts Bandwidth 30%",
-      "source": "TrendForce",
-      "score": 0.8,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "엔비디아의 공급 약정이 2,790억 달러로 급증했으며, 메모리 비용도 함께 상승하고 있다. 새로운 NVHBM 기술은 대역폭을 30% 향상시킨다. 이는 AI 칩에 대한 강력한 수요와 고성능 메모리 가격 상승 압력을 반영한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQRVI4dVJHY3dyNnVIaVlWUHFWV0tHblVJdFF4UkFwN09BYVQ1VzFRajZoeXViZ2ZSY1FFdC10eGlLNVNLSk1wNUdnSjdxQm4tRnk3ZTB5NHl4UUVOWVlteWtybmZVdW1TMjlVcUxybF9acDFtRVZqX3ZVVzBGM0xxS3JZNkV0LXBIR0pjMUhjOS1DOElPeFlORGdfeHVMMGl2OVM2Rk9RbGhkRXRZYmVBMWxZTnZRX00zVi1zRWNrNTFHN01PYmJIR1ZmZDVTRGs0bFdLMlpPdWstWFhQdDhCbkpQMmlGcjk0UHc?oc=5"
-    },
-    {
-      "date": "2026-08-25",
-      "title": "삼성, LPDDR5X-PIM 공개",
-      "titleEn": "hot Chips 2026: Samsung makes LPDDR5X smart with logic unit in memory — LPDDR5X-PIM is 3.01x faster than LPDDR5X in AI inference with 8x the bandwidth - Tom's Hardware",
+      "date": "2026-09-01",
+      "title": "Hot Chips 2026: 삼성 reveals a three-phase HBM roadmap that puts logic a",
+      "titleEn": "Hot Chips 2026: Samsung reveals a three-phase HBM roadmap that puts logic and compute inside memory — zHBM ultimately stacks DRAM directly on top of the processor - Tom's Hardware",
       "source": "RSS",
-      "score": 0.75,
-      "tone": "pos",
-      "conf": 90,
-      "hot": true,
-      "summary": "삼성전자가 Hot Chips 2026에서 LPDDR5X-PIM 기술을 공개했다. 이는 AI 추론에서 LPDDR5X보다 3.01배 빠르고 대역폭이 8배 높아 AI 메모리 성능을 크게 향상시킨다. 새로운 기술은 고성능 메모리 수요를 촉진할 것으로 예상된다.",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Hot Chips 2026: 삼성 reveals a three-phase HBM roadmap that puts logic and compute inside 메모리 — zHBM ultimately stacks DRAM directly on top of the processor &nbsp;&nbsp; Tom'",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMioAJBVV95cUxPRG92VVR0U3V6MXQyUFMydHVlMDhsQzhTZk5sckpZeVBGbmNiODNZb0h1QXNucUhmZkdEYkd6ZkFNckllNXZYRmRBY2NzU3RlbUpBUEVjSHJ1UGlsakVmaFpVT1BWRXN6YXBaWUFTZkozSFFSdEJZazdPcnZjeXByYV9QS1NRSGhaS2g4TURsNGRkelQzSmFqa1otcjZOQjJ0ZzRWeGxjMmdudW5kNXJRakk0U2FoWllMWDV6amgzNVREVHloeXB6d1BoY21WcXNRd0pGdTBwNlJvSDZzaTJhUUVUS3ZHV2UzUVFGbXlpZGt2dGRMOXFfVmF5aHVkZkpPQ0EybXdtemZlcVZQb3VWdWZlVzlnWmFKOUphMC1OdXI?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxOMEVZWHRkVm45Q19lY0x0S2ZLRzhqTkdaOExrUmRvSTRvNTNhV3NveFBScTktYW42RnUyQjI1RFdDY25hQUVCZWxjNDZrSThKTzV0WWdKTEtzaEM0dGRTcHM2enh0cTlRN09RXzBTOWdqOVYxVkZaRE53UTNfOG5yQkJUSU8zSzN0a3JxNV9xLVZ4Y3o2WUszMzlOOExpbm9nMl9HckRia05UQl9WNzBQQWJBVV94RW12UE9EbzNlQnhwVUQ5TVlZRHRrWF9rVXpIV2J6eWpvSmhsWVUySVFmVzZmMEdIR3E0V1RiZnRFUmxaT1BmWkpEd0NldkJhczVmVmx0WWhlY0w2T3YxbnZ5NzdnZ0VuV21UWjZtSFd2VVRGcFBxdEZuUWdzTG9ieTkxdXRDTU5HaUR4a1RvdFE?oc=5"
     },
     {
       "date": "2026-08-31",
-      "title": "中 CXMT, LPDDR6 양산 발표",
+      "title": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck",
+      "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
+      "source": "economy.ac",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race &nbsp;&nbsp; economy.ac",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBGY3NZZm1keDlNaXB2dzlHTWdSR3UxSDBucktFOEhfcGpsNk9vRTdicDFkNlFMUGdsdklCeFNuUzNyczFadUZoR3lNaDVyZHAzQzNMVHlaQQ?oc=5"
+    },
+    {
+      "date": "2026-08-31",
+      "title": "중국's CXMT beats Western chipmakers to announcement of LPDDR6 mass 생산 —",
       "titleEn": "China's CXMT beats Western chipmakers to announcement of LPDDR6 mass production — Xiaomi smartphones to debut industry’s first LPDDR6 chips - Tom's Hardware",
       "source": "RSS",
-      "score": -0.3,
-      "tone": "neg",
-      "conf": 85,
-      "hot": false,
-      "summary": "중국 CXMT가 서방 칩 제조업체들을 제치고 LPDDR6 양산을 발표했다. 샤오미 스마트폰에 업계 최초로 LPDDR6 칩이 탑재될 예정이다. 이는 중국 메모리 기술의 발전을 보여주며, 장기적으로는 시장 경쟁을 심화시킬 수 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxOUWRfRmhES2swNnctQ2pHckQ0V1BRNXYyVUFVWWVDQUx5QmRraGJTaXdpUTNIMU53Q2VZWmhvMERzX1ZpVFg0ZGszcXdrUVdiWVQtNlhGekotRmRJVXZYdnY3d0xTTGtpTmJjX1psWllKbkRkNjZGSnFZLUFyel9IOUhVWGlWS0pUWHJPMnhqTzZJcnhKbndUQllsZG5VanM4SFNqcG5VLU14MlNqMUo0VXdHcVphZ0hSc2Q5NWdic3U4YzZpYllVY2RKTFJzVzE5U29PcGpqM3VlSGFmWGUyQjhpVmFsR1M0Z21CdERnYnM4UU9laVpkMGhnTHZVRGpyWXFzakRpXzJERmZqV2xXSg?oc=5"
-    },
-    {
-      "date": "2026-08-25",
-      "title": "마이크론, HBM과 DDR5 격차 확대 언급",
-      "titleEn": "Hot Chips 2026: Micron says the silicon gap between HBM and DDR5 is widening with every generation - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.2,
+      "score": 0.0,
       "tone": "neu",
-      "conf": 80,
+      "conf": 50,
       "hot": false,
-      "summary": "마이크론은 Hot Chips 2026에서 HBM과 DDR5 간의 실리콘 격차가 세대가 거듭될수록 벌어지고 있다고 밝혔다. 이는 AI 및 고성능 컴퓨팅 시장에서 HBM의 중요성이 더욱 커지고 있음을 시사한다. 일반 DRAM 시장에는 중립적이지만 HBM 수요를 강조한다.",
+      "summary": "중국's CXMT beats Western chipmakers to announcement of LPDDR6 mass 생산 — Xiaomi smartphones to debut industry’s first LPDDR6 chips &nbsp;&nbsp; Tom's Hard전쟁e",
       "effects": {
         "short": {
           "tone": "neu",
-          "text": "단기 분석"
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
           "tone": "neu",
-          "text": "중기 분석"
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
           "tone": "neu",
-          "text": "장기 분석"
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOcm5wQkY3M1J5ZElmTm1MTEx2U29aZ0R5cGVrVHhBUEFpcWFtcnk0Q3VBR2J3TkRjczZXRGsyT1FtU0NRMDBBUmI4RjFxaFU1a3o3RXQ2MmFYanJ6RzhzOVJhSUdrWnVIazY3bl83OVVNMmZ0aG51YXlXQ3JCOS11a1BVMVVmV0VkeVVtU3dIY25SOWx5U2tPOVZGUXpUa3ZiWHpHZUJZdDNmQXRDX1F2aVNjU1JBSzVSSmlDNnB4MnU3Tkh1UHFXeU5KLXlEMW84Rmdua0FMQQ?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxOUWRfRmhES2swNnctQ2pHckQ0V1BRNXYyVUFVWWVDQUx5QmRraGJTaXdpUTNIMU53Q2VZWmhvMERzX1ZpVFg0ZGszcXdrUVdiWVQtNlhGekotRmRJVXZYdnY3d0xTTGtpTmJjX1psWllKbkRkNjZGSnFZLUFyel9IOUhVWGlWS0pUWHJPMnhqTzZJcnhKbndUQllsZG5VanM4SFNqcG5VLU14MlNqMUo0VXdHcVphZ0hSc2Q5NWdic3U4YzZpYllVY2RKTFJzVzE5U29PcGpqM3VlSGFmWGUyQjhpVmFsR1M0Z21CdERnYnM4UU9laVpkMGhnTHZVRGpyWXFzakRpXzJERmZqV2xXSg?oc=5"
     }
   ],
   "macro": [
@@ -1259,80 +1234,76 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "중동",
+      "region": "이스라엘",
       "risk": "high",
-      "title": "헤즈볼라, 장기전 대비 게릴라전 및 드론 공격 전환",
-      "impact": "물류↑",
-      "date": "2026-08-31",
-      "summary": "헤즈볼라가 장기전에 대비하여 게릴라전과 드론 공격으로 전략을 전환하고 있다. 이는 중동 지역의 긴장이 고조되고 있음을 시사하며, 잠재적으로 유가 상승 및 글로벌 공급망 불안정을 야기할 수 있다. 지정학적 위험이 증가하고 있다.",
+      "title": "Katz threatens 'all-out 전쟁' on PA over West Bank 'October 7-style attack' 테러 thr",
+      "impact": "공급↓",
+      "date": "2026-09-07",
+      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "중동 지역의 불안정은 유가 상승을 유발하여 생산 및 물류 비용 증가로 이어질 수 있다."
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "mid": {
-          "tone": "neg",
-          "text": "글로벌 해상 운송 경로에 대한 잠재적 위협은 반도체 부품 운송 지연을 초래할 수 있다."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "long": {
-          "tone": "neg",
-          "text": "지정학적 위험 증가는 글로벌 경제 불확실성을 높여 장기적인 투자 심리를 위축시킬 수 있다."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
       "links": [],
-      "affects": [
-        "B-4"
-      ]
+      "affects": []
     },
     {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "글로벌",
+      "region": "이란",
       "risk": "high",
-      "title": "바클레이즈, 연준 추가 2회 금리 인상 전망",
-      "impact": "수요↓",
+      "title": "유가s 급등 as 미국 and 이란 Exchange 파업 - 원유 가격 Today | 유가가격.com",
+      "impact": "가격?",
       "date": "2026-08-31",
-      "summary": "바클레이즈는 워시 연설 이후 연준이 올해 두 차례 더 금리를 인상할 것으로 전망했다. 이는 시장의 긴축 통화 정책에 대한 우려를 심화시키고 있다. 고금리 환경이 지속될 경우 기업 투자 및 소비자 지출에 부정적인 영향을 미칠 수 있다.",
+      "summary": "국제 유가 변동 보도 (이란) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "추가 금리 인상 가능성은 기업의 자금 조달 비용을 높여 단기적인 투자 심리를 위축시킬 수 있다."
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
-          "tone": "neg",
-          "text": "고금리 장기화는 글로벌 경기 둔화 압력을 가중시켜 IT 제품 및 DRAM 수요에 지속적인 하방 압력을 줄 수 있다."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "long": {
-          "tone": "neg",
-          "text": "기술 기업의 CapEx 축소로 이어져 장기적인 DRAM 시장 성장에 부정적인 영향을 미칠 수 있다."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
         }
       },
       "links": [],
-      "affects": [
-        "A-2"
-      ]
+      "affects": []
     },
     {
       "id": "ev-5",
       "type": "기타",
       "region": "글로벌",
-      "risk": "low",
-      "title": "[모니터링] 글로벌 무역 정책 추적",
+      "risk": "high",
+      "title": "Two IDF soldiers injured by Hezbollah 테러ist in southern Lebanon, military 파업 in ",
       "impact": "가격?",
-      "date": "2026-08-15",
-      "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 기타)",
+      "date": "2026-09-07",
+      "summary": "글로벌 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "단기 영향 평가 (휴리스틱 · 기타)"
         },
         "mid": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "중기 영향 평가 (휴리스틱 · 기타)"
         },
         "long": {
           "tone": "neu",
-          "text": "(placeholder)"
+          "text": "장기 영향 평가 (휴리스틱 · 기타)"
         }
       },
       "links": [],
@@ -1341,86 +1312,80 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-6",
       "type": "물리적 충돌",
-      "region": "중동",
+      "region": "글로벌",
       "risk": "high",
-      "title": "미국-이란 공방에 유가 급등",
-      "impact": "물류↑",
-      "date": "2026-08-31",
-      "summary": "미국과 이란 간의 공방으로 인해 국제 유가가 급등했다. 이는 중동 지역의 군사적 긴장 고조가 에너지 시장에 직접적인 영향을 미치고 있음을 보여준다. 유가 상승은 전반적인 생산 비용 증가와 인플레이션 압력을 가중시킬 것이다.",
+      "title": "Netanyahu, Katz direct IDF to target senior PA officials in 'all-out 전쟁' on West",
+      "impact": "공급↓",
+      "date": "2026-09-07",
+      "summary": "테러 사건 보도 (글로벌) — 국지적 리스크 신호. DRAM 가격 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "유가 급등은 반도체 생산 및 운송 비용을 즉각적으로 증가시켜 DRAM 가격에 상방 압력을 가할 수 있다."
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "mid": {
-          "tone": "neg",
-          "text": "에너지 비용 증가는 기업의 수익성을 악화시키고, 소비자 구매력 감소로 이어져 수요 둔화를 초래할 수 있다."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "long": {
-          "tone": "neg",
-          "text": "지정학적 불안정 장기화는 글로벌 경제 성장을 저해하고, 반도체 산업의 투자 환경을 악화시킬 수 있다."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
       "links": [],
-      "affects": [
-        "B-4"
-      ]
+      "affects": []
     },
     {
       "id": "ev-8",
       "type": "금융 위기",
       "region": "미국",
-      "risk": "high",
-      "title": "미 국채 수익률 4.75% 돌파, 매파적 연준과 유가 영향",
-      "impact": "수요↓",
-      "date": "2026-08-31",
-      "summary": "매파적인 연준 기조와 유가 상승으로 인해 미국 국채 10년물 수익률이 4.75%를 돌파했다. 이는 시장의 금리 인상 우려를 반영하며, 자금 조달 비용 상승과 투자 심리 위축으로 이어질 수 있다. 기술주 및 반도체 섹터에 부정적이다.",
+      "risk": "mid",
+      "title": "Canadian Dollar finds support from 유가 급등 despite Fed 금리 인상 bets",
+      "impact": "물류↑",
+      "date": "2026-09-07",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "높은 국채 수익률은 기업의 차입 비용을 증가시켜 단기적인 투자 계획에 제동을 걸 수 있다."
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
-          "tone": "neg",
-          "text": "기술 기업의 자금 조달 환경 악화는 신규 데이터센터 구축 등 대규모 프로젝트 지연으로 이어질 수 있다."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "long": {
-          "tone": "neg",
-          "text": "글로벌 경제 성장 둔화 압력이 가중되어 장기적인 DRAM 수요 전망을 어둡게 할 수 있다."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
         }
       },
       "links": [],
-      "affects": [
-        "A-2"
-      ]
+      "affects": []
     },
     {
       "id": "ev-9",
       "type": "물리적 충돌",
-      "region": "중동",
+      "region": "이란",
       "risk": "high",
-      "title": "호르무즈 해협 혼란에 유가 급등",
-      "impact": "물류↑",
-      "date": "2026-08-21",
-      "summary": "호르무즈 해협의 혼란으로 인해 브렌트유와 WTI 유가가 급등했다. 이는 중동 지역의 지정학적 불안정이 글로벌 에너지 공급망에 직접적인 위협이 되고 있음을 보여준다. 유가 상승은 전 세계적인 인플레이션 압력을 가중시킬 것이다.",
+      "title": "U.S.-Iran War, High Oil Fuel Grain Surge, ETFs Rally - 조선일보",
+      "impact": "공급↓",
+      "date": "2026-09-07",
+      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "유가 급등은 반도체 생산 및 운송 비용을 즉각적으로 증가시켜 DRAM 가격에 상방 압력을 가할 수 있다."
+          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "mid": {
-          "tone": "neg",
-          "text": "에너지 비용 증가는 기업의 수익성을 악화시키고, 소비자 구매력 감소로 이어져 수요 둔화를 초래할 수 있다."
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
         },
         "long": {
-          "tone": "neg",
-          "text": "지정학적 불안정 장기화는 글로벌 경제 성장을 저해하고, 반도체 산업의 투자 환경을 악화시킬 수 있다."
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
         }
       },
       "links": [],
-      "affects": [
-        "B-4"
-      ]
+      "affects": []
     }
   ],
   "accuracy": [
@@ -1644,7 +1609,7 @@ export const SIXSENSE_DATA = {
         "name": "AWS Spot 가격",
         "then": "+0.13",
         "thenTone": "neu",
-        "now": "+0.12",
+        "now": "+0.13",
         "nowTone": "neg",
         "direction": "down",
         "change": "약화"
@@ -1682,9 +1647,9 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
-        "then": "+0.12",
+        "then": "+0.09",
         "thenTone": "neu",
-        "now": "+0.13",
+        "now": "+0.16",
         "nowTone": "pos",
         "direction": "up",
         "change": "개선"
@@ -1692,27 +1657,37 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-3",
         "name": "Reddit/HN",
-        "then": "+0.00",
+        "then": "+1.00",
         "thenTone": "neu",
         "now": "+0.00",
-        "nowTone": "neu",
-        "direction": "flat",
-        "change": "유사"
+        "nowTone": "neg",
+        "direction": "down",
+        "change": "약화"
       },
       {
         "id": "B-4",
         "name": "지정학 리스크",
-        "then": "152.7",
+        "then": "167.5",
         "thenTone": "neu",
-        "now": "152.7",
+        "now": "117.9",
+        "nowTone": "neg",
+        "direction": "down",
+        "change": "약화"
+      },
+      {
+        "id": "B-5",
+        "name": "LTA 비율",
+        "then": "-1.00",
+        "thenTone": "neu",
+        "now": "-1.00",
         "nowTone": "neu",
         "direction": "flat",
         "change": "유사"
       },
       {
-        "id": "B-5",
-        "name": "LTA 비율",
-        "then": "+0.00",
+        "id": "B-6",
+        "name": "HBM/D램 믹스",
+        "then": "+0.33",
         "thenTone": "neu",
         "now": "+1.00",
         "nowTone": "pos",
@@ -1720,24 +1695,14 @@ export const SIXSENSE_DATA = {
         "change": "개선"
       },
       {
-        "id": "B-6",
-        "name": "HBM/D램 믹스",
-        "then": "+1.00",
+        "id": "B-7",
+        "name": "BOM 신호",
+        "then": "+0.00",
         "thenTone": "neu",
-        "now": "+1.00",
+        "now": "+0.00",
         "nowTone": "neu",
         "direction": "flat",
         "change": "유사"
-      },
-      {
-        "id": "B-7",
-        "name": "BOM 신호",
-        "then": "12.0",
-        "thenTone": "neu",
-        "now": "+4.00",
-        "nowTone": "neg",
-        "direction": "down",
-        "change": "약화"
       }
     ]
   },
@@ -1746,7 +1711,7 @@ export const SIXSENSE_DATA = {
       "total": 20,
       "success": 20,
       "fail": 0,
-      "newCount": 624
+      "newCount": 635
     },
     "week": "2026-07-12",
     "groupA": [
@@ -1772,7 +1737,7 @@ export const SIXSENSE_DATA = {
         "id": "A-3",
         "name": "관세청 수출",
         "source": "관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 (12",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1781,7 +1746,7 @@ export const SIXSENSE_DATA = {
         "id": "A-4",
         "name": "재고/출하 지수",
         "source": "KOSIS 광공업동향 C26 재고지수 (월간→주간 forward-fill)",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1790,7 +1755,7 @@ export const SIXSENSE_DATA = {
         "id": "A-5",
         "name": "AWS Spot 가격",
         "source": "AWS EC2 m6i.xlarge spot (us-east-1a, 최대 90일)",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 14,
         "prev": 13,
         "status": "ok"
@@ -1799,7 +1764,7 @@ export const SIXSENSE_DATA = {
         "id": "A-6",
         "name": "Manifold 봉쇄확률",
         "source": "Manifold Markets 'Will China launch a full-scale i",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 52,
         "prev": 51,
         "status": "ok"
@@ -1819,25 +1784,25 @@ export const SIXSENSE_DATA = {
         "id": "B-1",
         "name": "Earnings Call",
         "source": "Google News 'Earnings Call sentiment' (180 entries",
-        "time": "2026-09-01 06:00",
-        "newItems": 23,
-        "prev": 22,
+        "time": "2026-09-07 06:00",
+        "newItems": 20,
+        "prev": 19,
         "status": "ok"
       },
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
-        "source": "TechNews.tw + Digitimes + Google News RSS (1014 en",
-        "time": "2026-09-01 06:00",
-        "newItems": 23,
-        "prev": 22,
+        "source": "TechNews.tw + Digitimes + Google News RSS (990 ent",
+        "time": "2026-09-07 06:00",
+        "newItems": 27,
+        "prev": 26,
         "status": "ok"
       },
       {
         "id": "B-3",
         "name": "Reddit/HN",
         "source": "Hacker News Algolia ('memory chip price') — Reddit",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1846,7 +1811,7 @@ export const SIXSENSE_DATA = {
         "id": "B-4",
         "name": "지정학 리스크",
         "source": "Caldara & Iacoviello GPR Index (https://www.matteo",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"
@@ -1854,26 +1819,26 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-5",
         "name": "LTA 비율",
-        "source": "Google News 'LTA ratio' (84 entries, LLM 1회 호출, 18",
-        "time": "2026-09-01 06:00",
-        "newItems": 18,
-        "prev": 17,
+        "source": "Google News 'LTA ratio' (141 entries, 키워드 fallback",
+        "time": "2026-09-07 06:00",
+        "newItems": 26,
+        "prev": 25,
         "status": "ok"
       },
       {
         "id": "B-6",
         "name": "HBM/D램 믹스",
-        "source": "Google News 'HBM mix' (121 entries, 키워드 fallback, ",
-        "time": "2026-09-01 06:00",
-        "newItems": 40,
-        "prev": 39,
+        "source": "Google News 'HBM mix' (167 entries, LLM 8회 호출, 42주",
+        "time": "2026-09-07 06:00",
+        "newItems": 42,
+        "prev": 41,
         "status": "ok"
       },
       {
         "id": "B-7",
         "name": "BOM 신호",
         "source": "Hacker News Algolia API (queries: 4건)",
-        "time": "2026-09-01 06:00",
+        "time": "2026-09-07 06:00",
         "newItems": 57,
         "prev": 56,
         "status": "ok"

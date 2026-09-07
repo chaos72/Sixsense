@@ -1,304 +1,279 @@
 {
-  "collectedAt": "2026-09-01",
-  "method": "Gemini LLM 분류",
+  "collectedAt": "2026-09-07",
+  "method": "키워드 휴리스틱",
   "lookbackDays": 30,
-  "rawCount": 769,
+  "rawCount": 695,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
+      "date": "2026-09-04",
+      "title": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears",
+      "titleEn": "Micron, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
+      "source": "finance.biggo.com",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears &nbsp;&nbsp; finance.biggo.com",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9YT3JrZDBzb0Y1d2psWk9TUDZwNWdNclhDR3Vqd2VJQ3JJUXA3RVBHVG5IVmlfaEwyQ0llam9PNXd3cWhlNm90TzhLZWduTHhEM2FXaXIxaFc0QUNqNEVWT0xPa3VLd2J2REVaTkQzSkVaWjFDTVE?oc=5"
+    },
+    {
+      "date": "2026-09-06",
+      "title": "마이크론 CEO touts 미국 투자 as differentiator amid targeted tariff pressure o",
+      "titleEn": "Micron CEO touts U.S. investment as differentiator amid targeted tariff pressure on Samsung, SK",
+      "source": "finance.biggo.com",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론 CEO touts 미국 투자 as differentiator amid targeted tariff pressure on 삼성, SK &nbsp;&nbsp; finance.biggo.com",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE42R1luYk05MG1OamhNRGpXeFNMYnUxWnpOeFBOR3JLVnlPamJSdkR5WElyTkJUdzdDd3B2Rk5RSDZPeU1IbFdzUlpzb1J6RnZPNS1YSzZjUjZENGlZUlE5M1UzNF9uU2V0RWswTGFVMGlCSVU3bWc?oc=5"
+    },
+    {
+      "date": "2026-09-05",
+      "title": "Stripped-down Windows 11 for AI developers 수요s 64GB RAM and insane 250",
+      "titleEn": "Stripped-down Windows 11 for AI developers demands 64GB RAM and insane 250 GB/s bandwidth — Project Zenith will debut on AMD's flagship Ryzen AI Halo platform - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "Stripped-down Windows 11 for AI developers 수요s 64GB RAM and insane 250 GB/s bandwidth — Project Zenith will debut on AMD's flagship Ryzen AI Halo platform &nbsp;&nbsp; Tom's Ha",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxPcWhMVnBRa0ZYYXd2b3FjRHpfckpPVTlWR1M2SWVjNnI1ZkhpcDVrRGpzNDh1SzhQWExrZ0tzdUpXSXBNUm9pYnB5UVhjdFA2VDlDUTVYcGFzakNHUFpSUDBzdHp5akRpYkV3c29OYmMweWhvQzVxTnBKeWtHRk5LckRuc3ZHR2lTZlE2Wl9FMHdJZWc4VEFlMG5ITUFtb21VcTNFYmc3NUc2NHpPQmpGRl9xRW1zNVF1M21qV2N0MDdKSHltbnZiejd3QWw2djFDSlV6RTdmaE5EWE9faVJYTEw0SDZZM1pBVnF2VlB2V2xzd293T2FSR2FGT0FHZjNSUGhja2pzMm5HS1VYdmJDQWltVGs0RDBXVG1PeWxNUDd2SzlnYm0tOA?oc=5"
+    },
+    {
+      "date": "2026-09-02",
+      "title": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidt",
+      "titleEn": "Micron says tightly coupled DRAM could deliver more than 10x HBM bandwidth",
+      "source": "digitimes.com",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
+      "hot": true,
+      "summary": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidth &nbsp;&nbsp; digitimes.com",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPeEs2ejhUaFhQbk9qZGxkWWhuSG9rdE5MWWhWNUhHY2lQMlRvNXJNR0dGWXI4ZGJwT2xWU29kb2VaYXpiMkFZQ0d3ZU03SHEtOU44V2R6S2dBQVlhcWtsVFVDLVY1eXM5bjE0WmItZ2JIdHIwTVJyeFVHOXMxSzVEUzFtVS0tYjRB?oc=5"
+    },
+    {
       "date": "2026-08-28",
-      "title": "DDR5 가격 5배 급등, HBM 수요가 레거시 DRAM 부족 야기",
-      "titleEn": "DDR5 Prices Surge Fivefold in a Year — China's HBM Obsession Creates a Legacy DRAM Shortage Paradox",
-      "source": "finance.biggo.com",
-      "score": 0.95,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "DDR5 가격이 1년 만에 5배 급등했다. 중국의 HBM 집중이 레거시 DRAM 부족 현상을 야기하는 역설적인 상황이다. 이는 AI 메모리 생산에 자원이 집중되면서 일반 DRAM 공급이 줄어들어 가격이 상승하고 있음을 시사한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB1bDI0eE9hSXB4V1c2Y04xWjVXbDdpd213bXNVdndoV19JSjBHWFRCMHZ2LUo1U3I3UW1UbDBFcE5WLUcyNWJYcHN3RWR4SWVaajZ2MkQwSzJzMlB1NFJqQWxwM2VVR2hKOUI1S3VFMnQ5QVRCRHc?oc=5"
-    },
-    {
-      "date": "2026-08-06",
-      "title": "AI발 메모리 부족: DRAM 가격, 인플레이션 및 시장 위험",
-      "titleEn": "The AI-Driven Memory Shortage: DRAM Prices, Inflation and Market Risks",
-      "source": "J.P. Morgan",
-      "score": 0.95,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "AI로 인한 메모리 부족 현상이 DRAM 가격 상승, 인플레이션 및 시장 위험을 초래하고 있다. 이는 AI 기술 발전이 메모리 시장에 미치는 광범위한 영향을 보여준다. DRAM 가격 상승의 주요 동인으로 작용할 것으로 분석된다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPd2JSc2c3QTJJY1c1NncwWjdRRVVCclBSOTloN01tRG5YSlFRUEx4R0c3cUhROHZoVG1QcG1kTkIwM0J2QWZMa0dvMC1jT3hoVzI2UWI4QUNRTWdHc2tHZzlTbm9nZkN5eU5JdzFJMmNScl9RWjRXN3B3YVVMcWNvM0tydVk2UFVmUzVobkRETG45TmNneWZvRDh3N0d1aGhOSEx1ZA?oc=5"
-    },
-    {
-      "date": "2026-08-31",
-      "title": "HBM 수출가 70달러 돌파, 메모리 부족 심화",
-      "titleEn": "Memory Shortage Deepens as HBM Export Price Tops $70",
-      "source": "Seoul Economic Daily",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "HBM 수출 가격이 70달러를 돌파하며 메모리 부족 현상이 심화되고 있다. 이는 고성능 AI 메모리에 대한 강력한 수요와 제한된 공급이 지속되고 있음을 나타낸다. DRAM 시장 전반에 긍정적인 가격 압력을 가할 수 있다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPTlVaMU5iNkhpMWdjTDBxa3Y0STdTeWotd3h5SFh4MjIxMTQ5RXEtWnczRlBDSGxNYy1RZDBKbjNoUTRhaWpUV09UZlRrOWJDQUZNbkRnNTF4Ti1VLXE3MXhCQ0kwY1ltd1dCbVd1aUxJYUtNZXp0TkVGUjN2Rm93b3pHZmd6cXZDWTIxY0VjTXRDQm1Ibmd3Wg?oc=5"
-    },
-    {
-      "date": "2026-08-11",
-      "title": "JP모건, AI 메모리 부족 2028년까지 지속 전망",
-      "titleEn": "JPMorgan Analyzes AI Hardware Costs; Memory Shortage May Persist Until 2028 - 富途牛牛",
+      "title": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more comput",
+      "titleEn": "NVIDIA NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI chips - igor´sLAB",
       "source": "RSS",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 95,
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 50,
       "hot": true,
-      "summary": "JP모건은 AI 하드웨어 비용을 분석하며 메모리 부족 현상이 2028년까지 지속될 수 있다고 전망했다. 이는 AI 수요가 공급을 계속 초과할 것이라는 시장의 우려를 반영한다. 장기적인 DRAM 가격 상승 압력을 시사한다.",
+      "summary": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI 칩s &nbsp;&nbsp; igor´sLAB",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neg",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOMHZxcDdZWDFkMUgzeWgyWjFBOGc3Z3ptUHZDY3Y5VDkwVW1HTTBEV1ZubzhsU3JJTU05MmlrbjdtVWZjYVZyeEFJeHdobGM5d1BSUUNPTFlQWHNRVFNIeVU0VUQ5RHVzdWpFamZ4LVEwaUVIUHhVV3R2X01rd1hHU2VYTUhoemZxdWQ3Z3d4VW8za2NmZTI1V1BncGktZDBLWEQxOFdyNEFhSUthbk9R?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUDZtX09ONGRUSktmamtFZzJVOGlfOHFMLWNnOERkTG16UWVPcWVnRjNTUy0wTktzbmVkRlIzVWpockRYdGpXUkxxTzJHbFZ6dUl0bmQ3Ym14OFhJalVNNHlXLXpDaGFhQ1RNeGlTZV9DaldsVENfQkxySWExeUh4aGF3bXhqMUhFWGhnMw?oc=5"
     },
     {
-      "date": "2026-08-10",
-      "title": "마이크론, AI 메모리 부족 2027년 이후까지 지속 경고",
-      "titleEn": "Micron Warns AI-Driven Memory Shortage Could Stretch Past 2027 as DRAM Supply Fails to Keep Pace",
-      "source": "finance.biggo.com",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "마이크론은 AI 기반 메모리 부족 현상이 DRAM 공급이 수요를 따라가지 못해 2027년 이후까지 이어질 수 있다고 경고했다. 이는 AI 시장의 폭발적인 성장이 메모리 공급망에 지속적인 압력을 가하고 있음을 의미한다. DRAM 가격에 긍정적인 영향을 미칠 것이다.",
+      "date": "2026-09-06",
+      "title": "Hot Chips 2026: HBM Base Die Evolves from a 메모리 Interface into a Compu",
+      "titleEn": "Hot Chips 2026: HBM Base Die Evolves from a Memory Interface into a Computing Engine — Samsung Unveils a Three-Phase Roadmap Toward Custom HBM, aHBM, and zHBM",
+      "source": "semivision",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Hot Chips 2026: HBM Base Die Evolves from a 메모리 Interface into a Computing Engine — 삼성 Unveils a Three-Phase Roadmap To전쟁d Custom HBM, aHBM, and zHBM &nbsp;&nbsp; semivisi",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBmbFROb010aWlfRG5ZY2FWYmpzcVZSYlUxNk8zVUxXSUhvb3RzZGZsdVBxR0FlUzgtRmE3ZzRWZnFhQW9TRGRCbW9qWWc1OWVUX2d1Z2l6aFRneEgzbnhGa1VxRFREcGpJYl9aYXJZWXNvSklwelE?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNUkNpbDZ6SFZ1ZlZRQXUzMjU3TmtpMWg4N2xnWTRBSHJ1Z2xtdW9BZWpLUE1xVGdNTlNYaXlqX0VteE56Y2VjbXNzNV9zRlNBTHBJa1VzbUJiVVE1OVhLaTUxMFhHMUZuM0NVSl9tTHY2VzBRNVpsTk1WUG5ZUk1uM253?oc=5"
     },
     {
-      "date": "2026-08-31",
-      "title": "마이크론 투자 확대, 엔비디아 구매 급증",
-      "titleEn": "AI Memory Battle Heats Up: Micron Doubles Capex, Nvidia's Purchase Commitments Surge 135%",
-      "source": "finance.biggo.com",
-      "score": 0.85,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "마이크론이 AI 메모리 수요 증가에 대응하여 설비 투자를 두 배로 늘렸다. 엔비디아의 구매 약정 또한 135% 급증하며 AI 메모리 시장의 뜨거운 경쟁을 보여준다. 이는 AI 관련 DRAM 수요가 매우 강하다는 신호이다.",
+      "date": "2026-09-04",
+      "title": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To O",
+      "titleEn": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To Overcome EUV Sanctions & Make 3D DRAM Chips",
+      "source": "Wccftech",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To Overcome EUV Sanctions & Make 3D DRAM Chips &nbsp;&nbsp; Wccftech",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9pT2RubjhxSlZlZWtyRm1YbTFHbXRxZGZSR1B3OTE5b2hWLXZWTm5jdUVuSUNYOXpkc0ptRGcyQXRSTGVXcFkxbnd5clFFWFJoc2NaaTBXN3JvT1RYOVdmTjByQnBDd3pQSWJ4SWR5TVVmcURYVHc?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPNGFlem1NalMtWW93amtLZC1hbmFndE1vbkRMSURqME9FNVdtU3hvZldJTi1CX1dEZW5iSko4cVRRY2dnX2NKb1Zqa1V5cnlMYXdMSmpLNGc2WVYyV2QxblFiR2l1YUQtTEk5dEtlcGVaVUJOOFVWYlRHZVBXOHVQVEVOZ2lxZjE1VEIyVWtZU1h5dV9vWGtYVFg5X09CUm4ySWhRaVZpUXFzaG1xZlhWYzhNYXd1NjBmOWVHSWJ1TTM5YUNnVG9uY2wtSGh4akM5aGdtZ2g2M3U5OEk3NnY2czFzX3piMFNnWHfSAe8BQVVfeXFMTWlpVXBhNjlWT21HdlhSWjNYa2xQbDBxaFo2Vm9TcGtiY0hXeFZUd09pRjk4VWdrNEtBMVkxcnQtQ2prSUxWOE8yTEZtOTFnM2RBM3ZCOEw1Z1ZpNkIwQlo5T1hFdV9JcmVzQnZvbjJLS1lTMEprTkNGMC1BYmEwcDhWTDVWXzlZVXVSSWEzeENxMWNoTHZYeGRfSGw4anY2NW9qdnBsLXM0MXFyUEFoVlJraW1VQUEyZXdXeGI2UzR5LWg1dlFabV9ndHZ6cWI1RENwT0dWZTg5U25keEFldHY3ZFpHZHdfQ01KMHhxdVU?oc=5"
     },
     {
-      "date": "2026-08-27",
-      "title": "엔비디아 공급 약정 급증, 메모리 비용 상승",
-      "titleEn": "[News] NVIDIA’s Supply Commitments Soar to $279B as Memory Costs Surge; New NVHBM Boosts Bandwidth 30%",
-      "source": "TrendForce",
-      "score": 0.8,
-      "tone": "pos",
-      "conf": 95,
-      "hot": true,
-      "summary": "엔비디아의 공급 약정이 2,790억 달러로 급증했으며, 메모리 비용도 함께 상승하고 있다. 새로운 NVHBM 기술은 대역폭을 30% 향상시킨다. 이는 AI 칩에 대한 강력한 수요와 고성능 메모리 가격 상승 압력을 반영한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQRVI4dVJHY3dyNnVIaVlWUHFWV0tHblVJdFF4UkFwN09BYVQ1VzFRajZoeXViZ2ZSY1FFdC10eGlLNVNLSk1wNUdnSjdxQm4tRnk3ZTB5NHl4UUVOWVlteWtybmZVdW1TMjlVcUxybF9acDFtRVZqX3ZVVzBGM0xxS3JZNkV0LXBIR0pjMUhjOS1DOElPeFlORGdfeHVMMGl2OVM2Rk9RbGhkRXRZYmVBMWxZTnZRX00zVi1zRWNrNTFHN01PYmJIR1ZmZDVTRGs0bFdLMlpPdWstWFhQdDhCbkpQMmlGcjk0UHc?oc=5"
-    },
-    {
-      "date": "2026-08-25",
-      "title": "삼성, LPDDR5X-PIM 공개",
-      "titleEn": "hot Chips 2026: Samsung makes LPDDR5X smart with logic unit in memory — LPDDR5X-PIM is 3.01x faster than LPDDR5X in AI inference with 8x the bandwidth - Tom's Hardware",
+      "date": "2026-09-01",
+      "title": "Hot Chips 2026: 삼성 reveals a three-phase HBM roadmap that puts logic a",
+      "titleEn": "Hot Chips 2026: Samsung reveals a three-phase HBM roadmap that puts logic and compute inside memory — zHBM ultimately stacks DRAM directly on top of the processor - Tom's Hardware",
       "source": "RSS",
-      "score": 0.75,
-      "tone": "pos",
-      "conf": 90,
-      "hot": true,
-      "summary": "삼성전자가 Hot Chips 2026에서 LPDDR5X-PIM 기술을 공개했다. 이는 AI 추론에서 LPDDR5X보다 3.01배 빠르고 대역폭이 8배 높아 AI 메모리 성능을 크게 향상시킨다. 새로운 기술은 고성능 메모리 수요를 촉진할 것으로 예상된다.",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Hot Chips 2026: 삼성 reveals a three-phase HBM roadmap that puts logic and compute inside 메모리 — zHBM ultimately stacks DRAM directly on top of the processor &nbsp;&nbsp; Tom'",
       "effects": {
         "short": {
-          "tone": "pos",
-          "text": "단기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
-          "tone": "pos",
-          "text": "장기 분석"
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMioAJBVV95cUxPRG92VVR0U3V6MXQyUFMydHVlMDhsQzhTZk5sckpZeVBGbmNiODNZb0h1QXNucUhmZkdEYkd6ZkFNckllNXZYRmRBY2NzU3RlbUpBUEVjSHJ1UGlsakVmaFpVT1BWRXN6YXBaWUFTZkozSFFSdEJZazdPcnZjeXByYV9QS1NRSGhaS2g4TURsNGRkelQzSmFqa1otcjZOQjJ0ZzRWeGxjMmdudW5kNXJRakk0U2FoWllMWDV6amgzNVREVHloeXB6d1BoY21WcXNRd0pGdTBwNlJvSDZzaTJhUUVUS3ZHV2UzUVFGbXlpZGt2dGRMOXFfVmF5aHVkZkpPQ0EybXdtemZlcVZQb3VWdWZlVzlnWmFKOUphMC1OdXI?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxOMEVZWHRkVm45Q19lY0x0S2ZLRzhqTkdaOExrUmRvSTRvNTNhV3NveFBScTktYW42RnUyQjI1RFdDY25hQUVCZWxjNDZrSThKTzV0WWdKTEtzaEM0dGRTcHM2enh0cTlRN09RXzBTOWdqOVYxVkZaRE53UTNfOG5yQkJUSU8zSzN0a3JxNV9xLVZ4Y3o2WUszMzlOOExpbm9nMl9HckRia05UQl9WNzBQQWJBVV94RW12UE9EbzNlQnhwVUQ5TVlZRHRrWF9rVXpIV2J6eWpvSmhsWVUySVFmVzZmMEdIR3E0V1RiZnRFUmxaT1BmWkpEd0NldkJhczVmVmx0WWhlY0w2T3YxbnZ5NzdnZ0VuV21UWjZtSFd2VVRGcFBxdEZuUWdzTG9ieTkxdXRDTU5HaUR4a1RvdFE?oc=5"
     },
     {
       "date": "2026-08-31",
-      "title": "中 CXMT, LPDDR6 양산 발표",
+      "title": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck",
+      "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
+      "source": "economy.ac",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race &nbsp;&nbsp; economy.ac",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBGY3NZZm1keDlNaXB2dzlHTWdSR3UxSDBucktFOEhfcGpsNk9vRTdicDFkNlFMUGdsdklCeFNuUzNyczFadUZoR3lNaDVyZHAzQzNMVHlaQQ?oc=5"
+    },
+    {
+      "date": "2026-08-31",
+      "title": "중국's CXMT beats Western chipmakers to announcement of LPDDR6 mass 생산 —",
       "titleEn": "China's CXMT beats Western chipmakers to announcement of LPDDR6 mass production — Xiaomi smartphones to debut industry’s first LPDDR6 chips - Tom's Hardware",
       "source": "RSS",
-      "score": -0.3,
-      "tone": "neg",
-      "conf": 85,
-      "hot": false,
-      "summary": "중국 CXMT가 서방 칩 제조업체들을 제치고 LPDDR6 양산을 발표했다. 샤오미 스마트폰에 업계 최초로 LPDDR6 칩이 탑재될 예정이다. 이는 중국 메모리 기술의 발전을 보여주며, 장기적으로는 시장 경쟁을 심화시킬 수 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxOUWRfRmhES2swNnctQ2pHckQ0V1BRNXYyVUFVWWVDQUx5QmRraGJTaXdpUTNIMU53Q2VZWmhvMERzX1ZpVFg0ZGszcXdrUVdiWVQtNlhGekotRmRJVXZYdnY3d0xTTGtpTmJjX1psWllKbkRkNjZGSnFZLUFyel9IOUhVWGlWS0pUWHJPMnhqTzZJcnhKbndUQllsZG5VanM4SFNqcG5VLU14MlNqMUo0VXdHcVphZ0hSc2Q5NWdic3U4YzZpYllVY2RKTFJzVzE5U29PcGpqM3VlSGFmWGUyQjhpVmFsR1M0Z21CdERnYnM4UU9laVpkMGhnTHZVRGpyWXFzakRpXzJERmZqV2xXSg?oc=5"
-    },
-    {
-      "date": "2026-08-25",
-      "title": "마이크론, HBM과 DDR5 격차 확대 언급",
-      "titleEn": "Hot Chips 2026: Micron says the silicon gap between HBM and DDR5 is widening with every generation - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.2,
+      "score": 0.0,
       "tone": "neu",
-      "conf": 80,
+      "conf": 50,
       "hot": false,
-      "summary": "마이크론은 Hot Chips 2026에서 HBM과 DDR5 간의 실리콘 격차가 세대가 거듭될수록 벌어지고 있다고 밝혔다. 이는 AI 및 고성능 컴퓨팅 시장에서 HBM의 중요성이 더욱 커지고 있음을 시사한다. 일반 DRAM 시장에는 중립적이지만 HBM 수요를 강조한다.",
+      "summary": "중국's CXMT beats Western chipmakers to announcement of LPDDR6 mass 생산 — Xiaomi smartphones to debut industry’s first LPDDR6 chips &nbsp;&nbsp; Tom's Hard전쟁e",
       "effects": {
         "short": {
           "tone": "neu",
-          "text": "단기 분석"
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "mid": {
           "tone": "neu",
-          "text": "중기 분석"
+          "text": "LLM 비활성 — 휴리스틱 분류"
         },
         "long": {
           "tone": "neu",
-          "text": "장기 분석"
+          "text": "LLM 비활성 — 휴리스틱 분류"
         }
       },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOcm5wQkY3M1J5ZElmTm1MTEx2U29aZ0R5cGVrVHhBUEFpcWFtcnk0Q3VBR2J3TkRjczZXRGsyT1FtU0NRMDBBUmI4RjFxaFU1a3o3RXQ2MmFYanJ6RzhzOVJhSUdrWnVIazY3bl83OVVNMmZ0aG51YXlXQ3JCOS11a1BVMVVmV0VkeVVtU3dIY25SOWx5U2tPOVZGUXpUa3ZiWHpHZUJZdDNmQXRDX1F2aVNjU1JBSzVSSmlDNnB4MnU3Tkh1UHFXeU5KLXlEMW84Rmdua0FMQQ?oc=5"
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxOUWRfRmhES2swNnctQ2pHckQ0V1BRNXYyVUFVWWVDQUx5QmRraGJTaXdpUTNIMU53Q2VZWmhvMERzX1ZpVFg0ZGszcXdrUVdiWVQtNlhGekotRmRJVXZYdnY3d0xTTGtpTmJjX1psWllKbkRkNjZGSnFZLUFyel9IOUhVWGlWS0pUWHJPMnhqTzZJcnhKbndUQllsZG5VanM4SFNqcG5VLU14MlNqMUo0VXdHcVphZ0hSc2Q5NWdic3U4YzZpYllVY2RKTFJzVzE5U29PcGpqM3VlSGFmWGUyQjhpVmFsR1M0Z21CdERnYnM4UU9laVpkMGhnTHZVRGpyWXFzakRpXzJERmZqV2xXSg?oc=5"
     }
   ]
 }
