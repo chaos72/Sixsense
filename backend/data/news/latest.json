@@ -1,8 +1,8 @@
 {
-  "collectedAt": "2026-09-07",
+  "collectedAt": "2026-09-14",
   "method": "키워드 휴리스틱",
   "lookbackDays": 30,
-  "rawCount": 695,
+  "rawCount": 648,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
@@ -33,15 +33,15 @@
       "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9YT3JrZDBzb0Y1d2psWk9TUDZwNWdNclhDR3Vqd2VJQ3JJUXA3RVBHVG5IVmlfaEwyQ0llam9PNXd3cWhlNm90TzhLZWduTHhEM2FXaXIxaFc0QUNqNEVWT0xPa3VLd2J2REVaTkQzSkVaWjFDTVE?oc=5"
     },
     {
-      "date": "2026-09-06",
-      "title": "마이크론 CEO touts 미국 투자 as differentiator amid targeted tariff pressure o",
-      "titleEn": "Micron CEO touts U.S. investment as differentiator amid targeted tariff pressure on Samsung, SK",
+      "date": "2026-08-28",
+      "title": "DDR5 가격 급등 Fivefold in a Year — 중국's HBM Obsession Creates a Legacy DR",
+      "titleEn": "DDR5 Prices Surge Fivefold in a Year — China's HBM Obsession Creates a Legacy DRAM Shortage Paradox",
       "source": "finance.biggo.com",
-      "score": 0.5,
+      "score": 0.67,
       "tone": "pos",
       "conf": 50,
       "hot": true,
-      "summary": "마이크론 CEO touts 미국 투자 as differentiator amid targeted tariff pressure on 삼성, SK &nbsp;&nbsp; finance.biggo.com",
+      "summary": "DDR5 가격 급등 Fivefold in a Year — 중국's HBM Obsession Creates a Legacy DRAM 부족 Paradox &nbsp;&nbsp; finance.biggo.com",
       "effects": {
         "short": {
           "tone": "pos",
@@ -57,18 +57,45 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE42R1luYk05MG1OamhNRGpXeFNMYnUxWnpOeFBOR3JLVnlPamJSdkR5WElyTkJUdzdDd3B2Rk5RSDZPeU1IbFdzUlpzb1J6RnZPNS1YSzZjUjZENGlZUlE5M1UzNF9uU2V0RWswTGFVMGlCSVU3bWc?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB1bDI0eE9hSXB4V1c2Y04xWjVXbDdpd213bXNVdndoV19JSjBHWFRCMHZ2LUo1U3I3UW1UbDBFcE5WLUcyNWJYcHN3RWR4SWVaajZ2MkQwSzJzMlB1NFJqQWxwM2VVR2hKOUI1S3VFMnQ5QVRCRHc?oc=5"
     },
     {
-      "date": "2026-09-05",
-      "title": "Stripped-down Windows 11 for AI developers 수요s 64GB RAM and insane 250",
-      "titleEn": "Stripped-down Windows 11 for AI developers demands 64GB RAM and insane 250 GB/s bandwidth — Project Zenith will debut on AMD's flagship Ryzen AI Halo platform - Tom's Hardware",
+      "date": "2026-09-11",
+      "title": "Exceleram 경고 of escalating 메모리 부족",
+      "titleEn": "Exceleram warns of escalating memory shortages",
+      "source": "OC3D",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "Exceleram 경고 of escalating 메모리 부족 &nbsp;&nbsp; OC3D",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNTThTUHA3SXdpc3hrRUUyNndvZlk2MWpkU3dNUFBib0ZQajA3T1ZfbDhOTjE0RnZSTFZSVXBCMC02aTN1LWo3YUlIdUFaZlpMUnpYaHJNYi1URlhab0YyeGFfM1FZdXEyQkVCSFBWUGRQRHZuMGhkT1pWLWNOYVpzUEhiSU1ic3Nrc3RB?oc=5"
+    },
+    {
+      "date": "2026-09-11",
+      "title": "엔비디아’s Export Ban Backfires as Chinese Competitors Raise 가격 50% - 247w",
+      "titleEn": "NVIDIA’s Export Ban Backfires as Chinese Competitors Raise Prices 50% - 247wallst.com",
       "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "Stripped-down Windows 11 for AI developers 수요s 64GB RAM and insane 250 GB/s bandwidth — Project Zenith will debut on AMD's flagship Ryzen AI Halo platform &nbsp;&nbsp; Tom's Ha",
+      "summary": "엔비디아’s Export Ban Backfires as Chinese Competitors Raise 가격 50% &nbsp;&nbsp; 247wallst.com",
       "effects": {
         "short": {
           "tone": "neg",
@@ -84,18 +111,45 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxPcWhMVnBRa0ZYYXd2b3FjRHpfckpPVTlWR1M2SWVjNnI1ZkhpcDVrRGpzNDh1SzhQWExrZ0tzdUpXSXBNUm9pYnB5UVhjdFA2VDlDUTVYcGFzakNHUFpSUDBzdHp5akRpYkV3c29OYmMweWhvQzVxTnBKeWtHRk5LckRuc3ZHR2lTZlE2Wl9FMHdJZWc4VEFlMG5ITUFtb21VcTNFYmc3NUc2NHpPQmpGRl9xRW1zNVF1M21qV2N0MDdKSHltbnZiejd3QWw2djFDSlV6RTdmaE5EWE9faVJYTEw0SDZZM1pBVnF2VlB2V2xzd293T2FSR2FGT0FHZjNSUGhja2pzMm5HS1VYdmJDQWltVGs0RDBXVG1PeWxNUDd2SzlnYm0tOA?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNd2JBZWpwa3lsVUtUbEdJZEJGNFk1eXREdnk4UHJlaHAzeDhhWGJBWXJ1SDFCSVRiR0RQeTBOd25mZS1JQlZsWFA2OE1WQnZkWVp5dXllZG4xM19YRnQ4Wjc4bVVoTG1GZFZjUEJSTGhKcm9GN1l0akFvSFhidURmN2dRZ3dVNVZyS1d0RUMwTmNWNm9vR25NRHhFS2Q3STczaG44S0FxSm5ObzE4WFVIWA?oc=5"
+    },
+    {
+      "date": "2026-09-11",
+      "title": "Exceleram 경고 RAM 부족 is still escalating",
+      "titleEn": "Exceleram warns RAM shortage is still escalating",
+      "source": "KitGuru",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "Exceleram 경고 RAM 부족 is still escalating &nbsp;&nbsp; KitGuru",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQM0FtSUdJc0R6ckV1UmFkUmk5WUtUZUNwOUxJS2NGMl9pNnhoMTludFo0V3NMdXBZdl9MRzcwRzk4SjhwZ1JON1d3R0EzZkZ3LVg2a1VrUDFlQ0dCYS1JYndORGVyZUdqUDc4M0ZXNlgxalQzX25nLXk0ZlRZS3RzcHkwRE8xcDhzWUNjQTdRZlhqMlIxUU8yc1FleDBtMTYybV9GTzc2bGNtZw?oc=5"
     },
     {
       "date": "2026-09-02",
       "title": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidt",
       "titleEn": "Micron says tightly coupled DRAM could deliver more than 10x HBM bandwidth",
-      "source": "digitimes.com",
+      "source": "digitimes",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidth &nbsp;&nbsp; digitimes.com",
+      "summary": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidth &nbsp;&nbsp; digitimes",
       "effects": {
         "short": {
           "tone": "neg",
@@ -116,13 +170,13 @@
     {
       "date": "2026-08-28",
       "title": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more comput",
-      "titleEn": "NVIDIA NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI chips - igor´sLAB",
-      "source": "RSS",
+      "titleEn": "NVIDIA NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI chips",
+      "source": "igorslab.de",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI 칩s &nbsp;&nbsp; igor´sLAB",
+      "summary": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI 칩s &nbsp;&nbsp; igorslab.de",
       "effects": {
         "short": {
           "tone": "neg",
@@ -141,88 +195,7 @@
       "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUDZtX09ONGRUSktmamtFZzJVOGlfOHFMLWNnOERkTG16UWVPcWVnRjNTUy0wTktzbmVkRlIzVWpockRYdGpXUkxxTzJHbFZ6dUl0bmQ3Ym14OFhJalVNNHlXLXpDaGFhQ1RNeGlTZV9DaldsVENfQkxySWExeUh4aGF3bXhqMUhFWGhnMw?oc=5"
     },
     {
-      "date": "2026-09-06",
-      "title": "Hot Chips 2026: HBM Base Die Evolves from a 메모리 Interface into a Compu",
-      "titleEn": "Hot Chips 2026: HBM Base Die Evolves from a Memory Interface into a Computing Engine — Samsung Unveils a Three-Phase Roadmap Toward Custom HBM, aHBM, and zHBM",
-      "source": "semivision",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "Hot Chips 2026: HBM Base Die Evolves from a 메모리 Interface into a Computing Engine — 삼성 Unveils a Three-Phase Roadmap To전쟁d Custom HBM, aHBM, and zHBM &nbsp;&nbsp; semivisi",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNUkNpbDZ6SFZ1ZlZRQXUzMjU3TmtpMWg4N2xnWTRBSHJ1Z2xtdW9BZWpLUE1xVGdNTlNYaXlqX0VteE56Y2VjbXNzNV9zRlNBTHBJa1VzbUJiVVE1OVhLaTUxMFhHMUZuM0NVSl9tTHY2VzBRNVpsTk1WUG5ZUk1uM253?oc=5"
-    },
-    {
-      "date": "2026-09-04",
-      "title": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To O",
-      "titleEn": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To Overcome EUV Sanctions & Make 3D DRAM Chips",
-      "source": "Wccftech",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "Chinese Firm Naura Claims Big Breakthrough That Could Enable CXMT To Overcome EUV Sanctions & Make 3D DRAM Chips &nbsp;&nbsp; Wccftech",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPNGFlem1NalMtWW93amtLZC1hbmFndE1vbkRMSURqME9FNVdtU3hvZldJTi1CX1dEZW5iSko4cVRRY2dnX2NKb1Zqa1V5cnlMYXdMSmpLNGc2WVYyV2QxblFiR2l1YUQtTEk5dEtlcGVaVUJOOFVWYlRHZVBXOHVQVEVOZ2lxZjE1VEIyVWtZU1h5dV9vWGtYVFg5X09CUm4ySWhRaVZpUXFzaG1xZlhWYzhNYXd1NjBmOWVHSWJ1TTM5YUNnVG9uY2wtSGh4akM5aGdtZ2g2M3U5OEk3NnY2czFzX3piMFNnWHfSAe8BQVVfeXFMTWlpVXBhNjlWT21HdlhSWjNYa2xQbDBxaFo2Vm9TcGtiY0hXeFZUd09pRjk4VWdrNEtBMVkxcnQtQ2prSUxWOE8yTEZtOTFnM2RBM3ZCOEw1Z1ZpNkIwQlo5T1hFdV9JcmVzQnZvbjJLS1lTMEprTkNGMC1BYmEwcDhWTDVWXzlZVXVSSWEzeENxMWNoTHZYeGRfSGw4anY2NW9qdnBsLXM0MXFyUEFoVlJraW1VQUEyZXdXeGI2UzR5LWg1dlFabV9ndHZ6cWI1RENwT0dWZTg5U25keEFldHY3ZFpHZHdfQ01KMHhxdVU?oc=5"
-    },
-    {
-      "date": "2026-09-01",
-      "title": "Hot Chips 2026: 삼성 reveals a three-phase HBM roadmap that puts logic a",
-      "titleEn": "Hot Chips 2026: Samsung reveals a three-phase HBM roadmap that puts logic and compute inside memory — zHBM ultimately stacks DRAM directly on top of the processor - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "Hot Chips 2026: 삼성 reveals a three-phase HBM roadmap that puts logic and compute inside 메모리 — zHBM ultimately stacks DRAM directly on top of the processor &nbsp;&nbsp; Tom'",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxOMEVZWHRkVm45Q19lY0x0S2ZLRzhqTkdaOExrUmRvSTRvNTNhV3NveFBScTktYW42RnUyQjI1RFdDY25hQUVCZWxjNDZrSThKTzV0WWdKTEtzaEM0dGRTcHM2enh0cTlRN09RXzBTOWdqOVYxVkZaRE53UTNfOG5yQkJUSU8zSzN0a3JxNV9xLVZ4Y3o2WUszMzlOOExpbm9nMl9HckRia05UQl9WNzBQQWJBVV94RW12UE9EbzNlQnhwVUQ5TVlZRHRrWF9rVXpIV2J6eWpvSmhsWVUySVFmVzZmMEdIR3E0V1RiZnRFUmxaT1BmWkpEd0NldkJhczVmVmx0WWhlY0w2T3YxbnZ5NzdnZ0VuV21UWjZtSFd2VVRGcFBxdEZuUWdzTG9ieTkxdXRDTU5HaUR4a1RvdFE?oc=5"
-    },
-    {
-      "date": "2026-08-31",
+      "date": "2026-09-08",
       "title": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck",
       "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
       "source": "economy.ac",
@@ -249,15 +222,15 @@
       "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBGY3NZZm1keDlNaXB2dzlHTWdSR3UxSDBucktFOEhfcGpsNk9vRTdicDFkNlFMUGdsdklCeFNuUzNyczFadUZoR3lNaDVyZHAzQzNMVHlaQQ?oc=5"
     },
     {
-      "date": "2026-08-31",
-      "title": "중국's CXMT beats Western chipmakers to announcement of LPDDR6 mass 생산 —",
-      "titleEn": "China's CXMT beats Western chipmakers to announcement of LPDDR6 mass production — Xiaomi smartphones to debut industry’s first LPDDR6 chips - Tom's Hardware",
+      "date": "2026-09-08",
+      "title": "Tech enthusiast finds $12,000 stack of RAM in their garage — work let ",
+      "titleEn": "Tech enthusiast finds $12,000 stack of RAM in their garage — work let them keep an old server stuffed with 1,920GB of DDR4 - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
       "hot": false,
-      "summary": "중국's CXMT beats Western chipmakers to announcement of LPDDR6 mass 생산 — Xiaomi smartphones to debut industry’s first LPDDR6 chips &nbsp;&nbsp; Tom's Hard전쟁e",
+      "summary": "Tech enthusiast finds $12,000 stack of RAM in their garage — work let them keep an old 서버 stuffed with 1,920GB of DDR4 &nbsp;&nbsp; Tom's Hard전쟁e",
       "effects": {
         "short": {
           "tone": "neu",
@@ -273,7 +246,34 @@
         }
       },
       "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxOUWRfRmhES2swNnctQ2pHckQ0V1BRNXYyVUFVWWVDQUx5QmRraGJTaXdpUTNIMU53Q2VZWmhvMERzX1ZpVFg0ZGszcXdrUVdiWVQtNlhGekotRmRJVXZYdnY3d0xTTGtpTmJjX1psWllKbkRkNjZGSnFZLUFyel9IOUhVWGlWS0pUWHJPMnhqTzZJcnhKbndUQllsZG5VanM4SFNqcG5VLU14MlNqMUo0VXdHcVphZ0hSc2Q5NWdic3U4YzZpYllVY2RKTFJzVzE5U29PcGpqM3VlSGFmWGUyQjhpVmFsR1M0Z21CdERnYnM4UU9laVpkMGhnTHZVRGpyWXFzakRpXzJERmZqV2xXSg?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxPX2xsTTEtRmdfeDZaWTI2REpxNmlGYjlzanduWWJhMHdhT2Y3YTBVMElyTjc2cFQ4dGxfT3JoMTl6M1NZZzRCdGliODg5WF9nMFRHaUZLZWlnT1pKbURhS2w2WFZwX3REaE1uWXlSMnFjd0w5WU1qSjFaSDBvenNveWlqYzc2WmdOd0c4aGZQVVdhdDBYeUJWVVpQVEpoUW56d2pNLTNESlB6MXF3YlNrNVUwVU5fMUV3Wnc2SjJoSGM3UzNDdXduYTB0NTZCdHV1eW9iT2dJWEVVSWlpbmlKWGZtbkNudnJxUWpDcjhscjA2aks5TEhjSk9uSnJVUmM?oc=5"
+    },
+    {
+      "date": "2026-08-28",
+      "title": "New US export controls 보고edly target Chinese access to remote AI 서버s —",
+      "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "New US export controls 보고edly target Chinese access to remote AI 서버s — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September &nbsp;&nb",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxNV3RGYmw3MU9Ua3ltUW91dXBjSURjWlhYcnIxZ3A0Nkx5cVJJUEZtam1hak8zazhDeS1jRExGYzhvcHVTUmNRT3AzV2JnVjh1R09GdUlRaXgwbElHdHdxRWZ3RUREbDVHSVpYVjZOVXV3SENsWFpqSG9PQ1h0b1dVT19CaEdhbHpDSklSbmRmNC1KeWJ3Z1ZtaFhWekhpY0pBTGFPSGtmbDFqenFNVmF2NThpNm9lMWtDdmU0UHFtcEhFUnRjTmw4U1RvdVFDWVdsNTZmcmljdGlMbHB6bmM4QUJ6OXJ3VlNabU04MmVzMlUtck52ZlhFdF9CTFI0aTVTU0xNQXpKVmlwMVEzdy1pYUhBb2YyZmFBY2NTTHBaR1lfM0RwQ3gwY0NGZHc2TVBTbzFqRXdFaFgtclVpTUE?oc=5"
     }
   ]
 }

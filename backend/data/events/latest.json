@@ -1,7 +1,7 @@
 {
-  "collectedAt": "2026-09-07",
+  "collectedAt": "2026-09-14",
   "method": "키워드 휴리스틱",
-  "rawCount": 1129,
+  "rawCount": 1142,
   "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
   "events": [
     {
@@ -33,12 +33,12 @@
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "이스라엘",
+      "region": "우크라이나",
       "risk": "high",
-      "title": "Katz threatens 'all-out 전쟁' on PA over West Bank 'October 7-style attack' 테러 thr",
+      "title": "Trump calls on 우크라이나 to halt 파업 on 러시아n diesel fuel, citing a global 부족",
       "impact": "공급↓",
-      "date": "2026-09-07",
-      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-09-14",
+      "summary": "우크라이나 분쟁 관련 보도 — 글로벌 공급망 리스크 프리미엄 상승 및 에너지/원자재 가격 변동성 확대 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
@@ -63,7 +63,7 @@
       "risk": "high",
       "title": "유가s 급등 as 미국 and 이란 Exchange 파업 - 원유 가격 Today | 유가가격.com",
       "impact": "가격?",
-      "date": "2026-08-31",
+      "date": "2026-08-30",
       "summary": "국제 유가 변동 보도 (이란) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -86,10 +86,10 @@
       "id": "ev-5",
       "type": "기타",
       "region": "글로벌",
-      "risk": "high",
-      "title": "Two IDF soldiers injured by Hezbollah 테러ist in southern Lebanon, military 파업 in ",
+      "risk": "low",
+      "title": "AI 경고s Weigh on Global Stocks as 유가s 급등 Again",
       "impact": "가격?",
-      "date": "2026-09-07",
+      "date": "2026-09-14",
       "summary": "글로벌 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -109,39 +109,13 @@
       "affects": []
     },
     {
-      "id": "ev-6",
-      "type": "물리적 충돌",
-      "region": "글로벌",
-      "risk": "high",
-      "title": "Netanyahu, Katz direct IDF to target senior PA officials in 'all-out 전쟁' on West",
-      "impact": "공급↓",
-      "date": "2026-09-07",
-      "summary": "테러 사건 보도 (글로벌) — 국지적 리스크 신호. DRAM 가격 직접 영향은 제한적. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-8",
+      "id": "ev-7",
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "Canadian Dollar finds support from 유가 급등 despite Fed 금리 인상 bets",
+      "title": "Trump turns up the heat on 전쟁sh as Fed 금리 인상 looms",
       "impact": "물류↑",
-      "date": "2026-09-07",
+      "date": "2026-09-05",
       "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -162,25 +136,25 @@
     },
     {
       "id": "ev-9",
-      "type": "물리적 충돌",
-      "region": "이란",
-      "risk": "high",
-      "title": "U.S.-Iran War, High Oil Fuel Grain Surge, ETFs Rally - 조선일보",
-      "impact": "공급↓",
-      "date": "2026-09-07",
-      "summary": "중동 군사 긴장 보도 (이란) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "What a Fed 금리 인상 Actually Means for the US Economy and 인플레이션",
+      "impact": "물류↑",
+      "date": "2026-09-10",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
           "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "long": {
           "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
         }
       },
       "links": [],

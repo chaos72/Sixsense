@@ -1,10 +1,10 @@
 {
   "signalId": "B-2",
-  "source": "TechNews.tw + Digitimes + Google News RSS (990 entries, \ud0a4\uc6cc\ub4dc sentiment, 27\uc8fc)",
+  "source": "TechNews.tw + Digitimes + Google News RSS (1008 entries, \ud0a4\uc6cc\ub4dc sentiment, 28\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-09-07",
+  "collectedAt": "2026-09-14",
   "rangeStart": "2025-12-15",
-  "rangeEnd": "2026-09-07",
+  "rangeEnd": "2026-09-14",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -25,14 +25,14 @@
     },
     {
       "week": "2026-03-16",
-      "value": 1.0
+      "value": 0.3333
     },
     {
-      "week": "2026-03-30",
+      "week": "2026-03-23",
       "value": 0.0
     },
     {
-      "week": "2026-04-13",
+      "week": "2026-03-30",
       "value": 0.0
     },
     {
@@ -41,7 +41,7 @@
     },
     {
       "week": "2026-05-04",
-      "value": 0.0
+      "value": 0.25
     },
     {
       "week": "2026-05-11",
@@ -53,11 +53,11 @@
     },
     {
       "week": "2026-05-25",
-      "value": 0.5
+      "value": 0.4286
     },
     {
       "week": "2026-06-01",
-      "value": 0.125
+      "value": 0.1111
     },
     {
       "week": "2026-06-08",
@@ -65,11 +65,11 @@
     },
     {
       "week": "2026-06-15",
-      "value": 0.125
+      "value": 0.12
     },
     {
       "week": "2026-06-22",
-      "value": 0.3182
+      "value": 0.2581
     },
     {
       "week": "2026-06-29",
@@ -77,43 +77,47 @@
     },
     {
       "week": "2026-07-06",
-      "value": -0.0238
+      "value": 0.0208
     },
     {
       "week": "2026-07-13",
-      "value": 0.0857
+      "value": 0.1538
     },
     {
       "week": "2026-07-20",
-      "value": 0.2973
+      "value": 0.1667
     },
     {
       "week": "2026-07-27",
-      "value": 0.2281
+      "value": 0.1719
     },
     {
       "week": "2026-08-03",
-      "value": 0.2206
+      "value": 0.1515
     },
     {
       "week": "2026-08-10",
-      "value": 0.1143
+      "value": 0.1786
     },
     {
       "week": "2026-08-17",
-      "value": 0.1071
+      "value": 0.0612
     },
     {
       "week": "2026-08-24",
-      "value": 0.0815
+      "value": 0.0765
     },
     {
       "week": "2026-08-31",
-      "value": 0.1223
+      "value": 0.0886
     },
     {
       "week": "2026-09-07",
-      "value": 0.1608
+      "value": 0.1527
+    },
+    {
+      "week": "2026-09-14",
+      "value": 0.1185
     }
   ]
 }
