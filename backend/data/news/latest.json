@@ -1,279 +1,309 @@
 {
-  "collectedAt": "2026-09-14",
-  "method": "키워드 휴리스틱",
+  "collectedAt": "2026-09-20",
+  "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 648,
+  "rawCount": 744,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
-      "date": "2026-09-04",
-      "title": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears",
-      "titleEn": "Micron, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
-      "source": "finance.biggo.com",
-      "score": 0.67,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears &nbsp;&nbsp; finance.biggo.com",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9YT3JrZDBzb0Y1d2psWk9TUDZwNWdNclhDR3Vqd2VJQ3JJUXA3RVBHVG5IVmlfaEwyQ0llam9PNXd3cWhlNm90TzhLZWduTHhEM2FXaXIxaFc0QUNqNEVWT0xPa3VLd2J2REVaTkQzSkVaWjFDTVE?oc=5"
-    },
-    {
       "date": "2026-08-28",
-      "title": "DDR5 가격 급등 Fivefold in a Year — 중국's HBM Obsession Creates a Legacy DR",
+      "title": "DDR5 가격 5배 급등, HBM 집중으로 레거시 DRAM 부족",
       "titleEn": "DDR5 Prices Surge Fivefold in a Year — China's HBM Obsession Creates a Legacy DRAM Shortage Paradox",
       "source": "finance.biggo.com",
-      "score": 0.67,
+      "score": 0.95,
       "tone": "pos",
-      "conf": 50,
+      "conf": 96,
       "hot": true,
-      "summary": "DDR5 가격 급등 Fivefold in a Year — 중국's HBM Obsession Creates a Legacy DRAM 부족 Paradox &nbsp;&nbsp; finance.biggo.com",
+      "summary": "DDR5 가격이 1년 만에 5배 급등했으며, 중국의 HBM 집중이 레거시 DRAM 부족 현상을 야기하는 역설적인 상황을 만들고 있다. 이는 AI용 HBM 생산 전환으로 인해 일반 DRAM 공급이 줄어들면서 가격이 크게 상승했음을 의미한다.",
       "effects": {
         "short": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "단기 분석"
         },
         "mid": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "중기 분석"
         },
         "long": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "장기 분석"
         }
       },
-      "linked": [],
+      "linked": [
+        "B-6 관련",
+        "A-4 관련"
+      ],
       "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB1bDI0eE9hSXB4V1c2Y04xWjVXbDdpd213bXNVdndoV19JSjBHWFRCMHZ2LUo1U3I3UW1UbDBFcE5WLUcyNWJYcHN3RWR4SWVaajZ2MkQwSzJzMlB1NFJqQWxwM2VVR2hKOUI1S3VFMnQ5QVRCRHc?oc=5"
     },
     {
-      "date": "2026-09-11",
-      "title": "Exceleram 경고 of escalating 메모리 부족",
-      "titleEn": "Exceleram warns of escalating memory shortages",
-      "source": "OC3D",
-      "score": 0.5,
+      "date": "2026-09-16",
+      "title": "AI 메모리 부족, 기기 제조 방식 변화",
+      "titleEn": "AI-induced memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.9,
       "tone": "pos",
-      "conf": 50,
+      "conf": 95,
       "hot": true,
-      "summary": "Exceleram 경고 of escalating 메모리 부족 &nbsp;&nbsp; OC3D",
+      "summary": "AI로 인한 메모리 부족 현상이 심화되어 기기 제조 방식이 변화하고 있으며, 메모리 비용이 재료비의 60%를 차지하게 되었다. 이는 소규모 노트북 및 휴대폰 제조업체들이 제품을 재설계하고 가짜 칩 테스트를 해야 하는 상황으로 이어지고 있다.",
       "effects": {
         "short": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "단기 분석"
         },
         "mid": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "중기 분석"
         },
         "long": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "장기 분석"
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNTThTUHA3SXdpc3hrRUUyNndvZlk2MWpkU3dNUFBib0ZQajA3T1ZfbDhOTjE0RnZSTFZSVXBCMC02aTN1LWo3YUlIdUFaZlpMUnpYaHJNYi1URlhab0YyeGFfM1FZdXEyQkVCSFBWUGRQRHZuMGhkT1pWLWNOYVpzUEhiSU1ic3Nrc3RB?oc=5"
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxOS1dYNmpYUTBQd3djYlRQTEpzOXNxaWNSOElGbGd5NmptTklaUkNlNTMwR0xXa01FQWdwQ0tsVFZYR0NVcmdobkJJcW5RaG05QldZRU0yN0U4enJZOW5JSU1Mc3U2M3liOF9OdWpaQzlOUklCX1hxZG1iQV8xM0p6V3JWS1JTMmIzb1E4ZnVlV1ZITkJIUGx3U3VabWR1b3pXUXFfYVVEVTdrUGo5S3J2RzJ4aFhuVElsa25wcndnVlduQ1ZZWWw5WUg0RThvQTRaSHFqY0R1UEQtNHlnMThnLU56UWZhem43RDZUTzB0b3FPZ2N1Y2JkNlNqakFaUk9mN1l1R0VvQTdabnh0TEN4UXVJVVp0OXR6SllMMXNiT1JGTmczQjFzRjdBVTZDaFpYSjlNYUUxRUdveGxDd2RFZXk0aVRQRWhxNlpZenRlRkhaS2lwTDROd2lVYnJ4Wk1VYWF3dXhzUlB2RTA?oc=5"
     },
     {
-      "date": "2026-09-11",
-      "title": "엔비디아’s Export Ban Backfires as Chinese Competitors Raise 가격 50% - 247w",
-      "titleEn": "NVIDIA’s Export Ban Backfires as Chinese Competitors Raise Prices 50% - 247wallst.com",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "엔비디아’s Export Ban Backfires as Chinese Competitors Raise 가격 50% &nbsp;&nbsp; 247wallst.com",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNd2JBZWpwa3lsVUtUbEdJZEJGNFk1eXREdnk4UHJlaHAzeDhhWGJBWXJ1SDFCSVRiR0RQeTBOd25mZS1JQlZsWFA2OE1WQnZkWVp5dXllZG4xM19YRnQ4Wjc4bVVoTG1GZFZjUEJSTGhKcm9GN1l0akFvSFhidURmN2dRZ3dVNVZyS1d0RUMwTmNWNm9vR25NRHhFS2Q3STczaG44S0FxSm5ObzE4WFVIWA?oc=5"
-    },
-    {
-      "date": "2026-09-11",
-      "title": "Exceleram 경고 RAM 부족 is still escalating",
-      "titleEn": "Exceleram warns RAM shortage is still escalating",
-      "source": "KitGuru",
-      "score": 0.5,
+      "date": "2026-09-04",
+      "title": "마이크론, 샌디스크 AI 메모리 부족으로 급등",
+      "titleEn": "Micron, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
+      "source": "finance.biggo.com",
+      "score": 0.85,
       "tone": "pos",
-      "conf": 50,
+      "conf": 93,
       "hot": true,
-      "summary": "Exceleram 경고 RAM 부족 is still escalating &nbsp;&nbsp; KitGuru",
+      "summary": "AI 메모리 부족 현상이 금리 인상 우려를 압도하며 마이크론과 샌디스크 주가가 급등했다. 이는 AI 관련 메모리 수요가 매우 강력하여 시장의 거시경제적 불안 요소를 상쇄할 만큼 DRAM 가격에 긍정적인 영향을 미치고 있음을 보여준다.",
       "effects": {
         "short": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "단기 분석"
         },
         "mid": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "중기 분석"
         },
         "long": {
           "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "text": "장기 분석"
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQM0FtSUdJc0R6ckV1UmFkUmk5WUtUZUNwOUxJS2NGMl9pNnhoMTludFo0V3NMdXBZdl9MRzcwRzk4SjhwZ1JON1d3R0EzZkZ3LVg2a1VrUDFlQ0dCYS1JYndORGVyZUdqUDc4M0ZXNlgxalQzX25nLXk0ZlRZS3RzcHkwRE8xcDhzWUNjQTdRZlhqMlIxUU8yc1FleDBtMTYybV9GTzc2bGNtZw?oc=5"
+      "linked": [
+        "A-2 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9YT3JrZDBzb0Y1d2psWk9TUDZwNWdNclhDR3Vqd2VJQ3JJUXA3RVBHVG5IVmlfaEwyQ0llam9PNXd3cWhlNm90TzhLZWduTHhEM2FXaXIxaFc0QUNqNEVWT0xPa3VLd2J2REVaTkQzSkVaWjFDTVE?oc=5"
     },
     {
-      "date": "2026-09-02",
-      "title": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidt",
-      "titleEn": "Micron says tightly coupled DRAM could deliver more than 10x HBM bandwidth",
-      "source": "digitimes",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
+      "date": "2026-09-16",
+      "title": "인텔 CEO, 메모리 부족 심화 경고",
+      "titleEn": "Intel CEO Warns of Worsening Memory Shortage",
+      "source": "ForkLog",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 92,
       "hot": true,
-      "summary": "마이크론 says tightly 쿠데타led DRAM could deliver more than 10x HBM bandwidth &nbsp;&nbsp; digitimes",
+      "summary": "인텔 CEO가 메모리 부족 현상이 더욱 심화될 것이라고 경고했다. 이는 AI 및 고성능 컴퓨팅 수요 증가에 비해 공급이 충분하지 않아 DRAM 가격 상승 압력이 커질 수 있음을 시사한다.",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "단기 분석"
         },
         "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "중기 분석"
         },
         "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "장기 분석"
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPeEs2ejhUaFhQbk9qZGxkWWhuSG9rdE5MWWhWNUhHY2lQMlRvNXJNR0dGWXI4ZGJwT2xWU29kb2VaYXpiMkFZQ0d3ZU03SHEtOU44V2R6S2dBQVlhcWtsVFVDLVY1eXM5bjE0WmItZ2JIdHIwTVJyeFVHOXMxSzVEUzFtVS0tYjRB?oc=5"
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5JSjNFVkdxXzJuUl9HempKX3ItQ2NTWHotQkQtdHVqbTl0SkllamFvMG00UzdPemlHUmY2eEJ2MDZpSlZ5d2UzN3VNTmJVM2UwRG5tVkpodmtsY3hIOUVzVVp1a1VmVDZ4WjZnRWNWNGxTcVJnMkFZ?oc=5"
     },
     {
-      "date": "2026-08-28",
-      "title": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more comput",
-      "titleEn": "NVIDIA NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI chips",
-      "source": "igorslab.de",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
+      "date": "2026-09-17",
+      "title": "AI 서버 주식 랠리, 하드웨어 수요 확대",
+      "titleEn": "AI server stocks rally as hardware demand broad...",
+      "source": "Pluang",
+      "score": 0.75,
+      "tone": "pos",
+      "conf": 90,
       "hot": true,
-      "summary": "엔비디아 NVHBM: Up to 30 percent more bandwidth and 25 percent more compute area for custom AI 칩s &nbsp;&nbsp; igorslab.de",
+      "summary": "AI 서버 관련 주식들이 강세를 보이며 하드웨어 수요가 광범위하게 확대되고 있다. 이는 AI 기술 발전에 따른 서버 인프라 구축 가속화로 메모리 수요 증가에 긍정적인 영향을 미칠 것으로 예상된다.",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "단기 분석"
         },
         "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "중기 분석"
         },
         "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "장기 분석"
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUDZtX09ONGRUSktmamtFZzJVOGlfOHFMLWNnOERkTG16UWVPcWVnRjNTUy0wTktzbmVkRlIzVWpockRYdGpXUkxxTzJHbFZ6dUl0bmQ3Ym14OFhJalVNNHlXLXpDaGFhQ1RNeGlTZV9DaldsVENfQkxySWExeUh4aGF3bXhqMUhFWGhnMw?oc=5"
+      "linked": [
+        "A-2 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOTWlyYWxYRnBseWE4RjJLZWhKOXVlbl9RNUo4RFlnV0hMWTJGWFJFclhrU1BZeWM4UW5kTWVicDdIdXVPMFJWaXJ1TzNTTmdMa2JKbU5XSWNUYWdSekFSYWliZTZVckk2aF9kR1MxUlBhb0JCbnB5Smp6blNuTFlFVjZLY3VGRmZzaHJqekx1eEJRM3lETERTeldQb21fU2RDLWx0aUJZR2lVMm1BdEIzTQ?oc=5"
     },
     {
-      "date": "2026-09-08",
-      "title": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck",
-      "titleEn": "“Nvidia Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race",
-      "source": "economy.ac",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "“엔비디아 Is Hamstrung Too”: Packaging Emerges as AI Chips’ New Bottleneck, Intensifying Global Capex Race &nbsp;&nbsp; economy.ac",
+      "date": "2026-09-18",
+      "title": "엔비디아 성장 병목: 메모리 칩과 변전소",
+      "titleEn": "Nvidia's Doubling Promise Has Two Bottlenecks: Memory Chips and Substations",
+      "source": "AD HOC NEWS",
+      "score": 0.7,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "엔비디아의 성장 약속에 메모리 칩과 변전소가 두 가지 주요 병목 현상으로 지목되었다. 이는 AI 가속기 수요가 폭증하면서 고성능 메모리 칩의 공급 부족이 심화될 수 있음을 시사하며, DRAM 가격 상승 압력으로 작용할 수 있다.",
       "effects": {
         "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "단기 분석"
         },
         "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "중기 분석"
         },
         "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "장기 분석"
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBGY3NZZm1keDlNaXB2dzlHTWdSR3UxSDBucktFOEhfcGpsNk9vRTdicDFkNlFMUGdsdklCeFNuUzNyczFadUZoR3lNaDVyZHAzQzNMVHlaQQ?oc=5"
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOdm9kVGtBcmNtZngzWmxxQVhIakFKUHJHUGRpc29LejI4akFDWk5YYXZJTEZZWUhacF90SkwxSU1va2p3RlFwU1poMHdzb2FqZGJhOS1WbUVkOFpqZUxCSU9KZWcxZmtiVFJuQm9iM2NOZEFFTnZsYkxBOVd1RElXVWRlekt3WTFwYTkxcTJtWm02eDlRNjhWRDV3QWRzUWxMZmRndXYycDA5YklRakI1RE9tSFdpY3ZyaFg2eWExZTdKUWFSR0x5TGllX3hmOG8?oc=5"
     },
     {
-      "date": "2026-09-08",
-      "title": "Tech enthusiast finds $12,000 stack of RAM in their garage — work let ",
-      "titleEn": "Tech enthusiast finds $12,000 stack of RAM in their garage — work let them keep an old server stuffed with 1,920GB of DDR4 - Tom's Hardware",
+      "date": "2026-09-18",
+      "title": "마이크론, 고대역폭 메모리 수요로 급등",
+      "titleEn": "Micron Technology Soars on High-Bandwidth Memory Demand",
+      "source": "Intellectia AI",
+      "score": 0.7,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "마이크론 테크놀로지가 고대역폭 메모리(HBM) 수요 증가에 힘입어 주가가 급등했다. 이는 AI 및 데이터 센터 시장에서 HBM의 강력한 수요가 지속되고 있음을 나타내며, 메모리 제조업체들의 실적 개선에 긍정적인 영향을 미치고 있다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPYXFrZlNhOGN0cExpYmt3Y0VuV1liTzZUajJRdDJISE1yV2o2cGJPYTg3bDZ6R2hGSWF6dnZmYTZ1TnFxQ3NneTV2MFBjdWlYcUZZTVRjRnVqdE1ad29wQWZjcFpkU0RSZzNKNmJUWkNISjNPZDBWaG1qVU1kSTRMc0dQTjJUbmlGcm9qSUlkRDdWZw?oc=5"
+    },
+    {
+      "date": "2026-09-18",
+      "title": "삼성, AI 부족으로부터 PC 시장 보호 위해 DDR5 모듈 생산 분리",
+      "titleEn": "Samsung Offloads DDR5 Module Output To Shield PC Market From AI Shortages",
+      "source": "Ubergizmo",
+      "score": 0.65,
+      "tone": "pos",
+      "conf": 89,
+      "hot": true,
+      "summary": "삼성전자가 AI 관련 메모리 부족 현상으로부터 PC 시장을 보호하기 위해 DDR5 모듈 생산을 분리하고 있다. 이는 AI용 메모리 수요가 매우 강하여 다른 부문의 공급에 영향을 미치고 있음을 보여주며, 전반적인 DRAM 공급 부족을 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNNU9sZGRkbW90TkVaR0lCUDlrWVpVakRoeVRoX0tLV1c1QjI3UDRQTFdlbkJscEZJT1Rha1NzRlpERHRlRGQ0SlZhQ2NzZFBnUUZjVUdMdHpYNnl0LW9KQklZdWVBeFpQdEZVRGNjLUZZTm1hQmNaNGJJSlJNendjejFvVjFrdTZmZmRlbFhpeUxkVGJ0T2hZc2tPSjdJWTRRY1ZoajdQSlhvSEdV?oc=5"
+    },
+    {
+      "date": "2026-09-16",
+      "title": "삼성, AI HBM으로 메모리 제조 전환",
+      "titleEn": "Samsung shifts memory manufacturing focus toward AI-driven high-bandwidth memory",
+      "source": "globalsources.com",
+      "score": 0.6,
+      "tone": "pos",
+      "conf": 88,
+      "hot": true,
+      "summary": "삼성전자가 AI 기반 고대역폭 메모리(HBM) 제조에 집중하기 위해 메모리 생산 초점을 전환하고 있다. 이는 AI 시장의 폭발적인 성장에 대응하기 위한 전략으로, 기존 DRAM 생산량에 영향을 미쳐 가격 변동을 야기할 수 있다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQb3JjVEVROUQ0TUJEcFh6OGdUYzdwRFFsNlh5RlJTSkJrYmRXdjd4Y0hBWWlSaXFtWmhOUjJWSVNLcE14dUFYU0RkMFJSTTh1VWFmeDlEbWZTclNsMjR6cEpFdzgxWU5seEdJQkhLSHJ0clpkSDFWMW5MTUJjRW10TTRvWlFDMENJSHV1MHZvTzlZdDVNOFlpdThtdGxVXzhOa3pfUlRkQzZydlZNYzFlVUVBSFFCeEdXVWNWWTYza2ZGOEtZOWc?oc=5"
+    },
+    {
+      "date": "2026-09-18",
+      "title": "NOR 플래시/SLC NAND 생산 위협, 고수익 제품으로 전환",
+      "titleEn": "NOR Flash and SLC NAND production are under threat as capacity gets routed to more profitable products — 'severe undersupply' threatens everyday electronics - Tom's Hardware",
       "source": "RSS",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "Tech enthusiast finds $12,000 stack of RAM in their garage — work let them keep an old 서버 stuffed with 1,920GB of DDR4 &nbsp;&nbsp; Tom's Hard전쟁e",
+      "score": 0.6,
+      "tone": "pos",
+      "conf": 88,
+      "hot": true,
+      "summary": "NOR 플래시 및 SLC NAND 생산이 고수익 제품으로 생산 능력이 전환되면서 위협받고 있다. 이는 AI용 HBM 등 고부가가치 메모리 생산에 집중하면서 다른 메모리 유형의 공급이 줄어들어 가격 상승 압력이 발생할 수 있음을 의미한다.",
       "effects": {
         "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "단기 분석"
         },
         "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "중기 분석"
         },
         "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
+          "tone": "pos",
+          "text": "장기 분석"
         }
       },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxPX2xsTTEtRmdfeDZaWTI2REpxNmlGYjlzanduWWJhMHdhT2Y3YTBVMElyTjc2cFQ4dGxfT3JoMTl6M1NZZzRCdGliODg5WF9nMFRHaUZLZWlnT1pKbURhS2w2WFZwX3REaE1uWXlSMnFjd0w5WU1qSjFaSDBvenNveWlqYzc2WmdOd0c4aGZQVVdhdDBYeUJWVVpQVEpoUW56d2pNLTNESlB6MXF3YlNrNVUwVU5fMUV3Wnc2SjJoSGM3UzNDdXduYTB0NTZCdHV1eW9iT2dJWEVVSWlpbmlKWGZtbkNudnJxUWpDcjhscjA2aks5TEhjSk9uSnJVUmM?oc=5"
-    },
-    {
-      "date": "2026-08-28",
-      "title": "New US export controls 보고edly target Chinese access to remote AI 서버s —",
-      "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.0,
-      "tone": "neu",
-      "conf": 50,
-      "hot": false,
-      "summary": "New US export controls 보고edly target Chinese access to remote AI 서버s — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September &nbsp;&nb",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxNV3RGYmw3MU9Ua3ltUW91dXBjSURjWlhYcnIxZ3A0Nkx5cVJJUEZtam1hak8zazhDeS1jRExGYzhvcHVTUmNRT3AzV2JnVjh1R09GdUlRaXgwbElHdHdxRWZ3RUREbDVHSVpYVjZOVXV3SENsWFpqSG9PQ1h0b1dVT19CaEdhbHpDSklSbmRmNC1KeWJ3Z1ZtaFhWekhpY0pBTGFPSGtmbDFqenFNVmF2NThpNm9lMWtDdmU0UHFtcEhFUnRjTmw4U1RvdVFDWVdsNTZmcmljdGlMbHB6bmM4QUJ6OXJ3VlNabU04MmVzMlUtck52ZlhFdF9CTFI0aTVTU0xNQXpKVmlwMVEzdy1pYUhBb2YyZmFBY2NTTHBaR1lfM0RwQ3gwY0NGZHc2TVBTbzFqRXdFaFgtclVpTUE?oc=5"
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMipwJBVV95cUxQdWxTYWdrTDF5OEtIR2tGUGxXQUI2UldpWkp6R2R5RGRLWjN6R0p2OTJrZUNjcFF1RTBKVDFKNUNmSTBrYXVUMjRGMjZyem5xOGljYXBkYng4U3B1bDhZa0tSMjFfMDRFeXVRMGc4NGthc3FZVEUwSXd1N2lsdk90WTBDUWZwZXRUU1V0Y243MndLckxJQ256a1pUeEVnNUs0NjQ5Ymx3LWdPcG9rODlScXBRMmRYLTVzSFZlSWh3dnYyMmZrdXRHa1htWUg5NE5ueVNnZUc3UFU3NGJlZXFEV2JMUnRsSEhuQjloN2Vlc1hnWk12WkxBVEI2ZnZnRnZMTXFOdG9MbHBEZGVPNFhYV1Ztcm51VHFmNFlCdTVXcUJGSGRsUFk4?oc=5"
     }
   ]
 }
