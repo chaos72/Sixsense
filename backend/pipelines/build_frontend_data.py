@@ -239,20 +239,32 @@ def build_forecasts(forecast_json: dict, current_price: float | None = None) -> 
     gbr_last_idx = gbr_raw[-1] if gbr_raw else cur_idx
     lstm_raw = _anchor_scale(lstm_raw, gbr_last_idx)
 
-    # forecast7 (GBR, 1~7w) — Single yhat, CI는 ±5% 임의 추정
+    # 신뢰구간 — 임의의 ±5%/±10% 대신 실제 held-out 오차(MAPE)를 폭으로 쓴다.
+    # (오차가 50%인 예측을 ±10% 띠로 그리면 실제보다 정확해 보이는 착시가 생김)
+    _models = forecast_json.get("models", {})
+    _tv = (_models.get("tree_short", {}).get("validation") or {})
+    _win = _tv.get("winner")
+    _short_band = (_tv.get(f"{_win}_mape") if _win else None) or 5.0
+    _mid_band = (_models.get("lstm_mid", {}).get("validation") or {}).get("avg_mape_held_out") or 10.0
+    _short_band /= 100.0
+    _mid_band /= 100.0
+
+    # forecast7 (우수 모델, 1~7w) — 신뢰구간 = 단기 held-out MAPE
     forecast7 = []
     for i, yhat in enumerate(gbr_raw, start=1):
         v = round(yhat * SCALE, 3)
         forecast7.append({"week": i, "value": v,
-                          "lower": round(v * 0.95, 3), "upper": round(v * 1.05, 3),
+                          "lower": round(v * (1 - _short_band), 3),
+                          "upper": round(v * (1 + _short_band), 3),
                           "type": "f7"})
 
-    # forecast21 (LSTM, 8~21w) — CI ±10%
+    # forecast21 (LSTM, 8~21w) — 신뢰구간 = 중장기 held-out MAPE
     forecast21 = []
     for offset, yhat in enumerate(lstm_raw):
         v = round(yhat * SCALE, 3)
         forecast21.append({"week": 8 + offset, "value": v,
-                           "lower": round(v * 0.90, 3), "upper": round(v * 1.10, 3),
+                           "lower": round(v * (1 - _mid_band), 3),
+                           "upper": round(v * (1 + _mid_band), 3),
                            "type": "f21"})
 
     # forecast_prophet (Prophet, 1~21w 전체 baseline)
@@ -442,6 +454,25 @@ def build_model_validation() -> dict:
 
     mapes = {n: _mape(preds[n]) for n in names}
 
+    # 대표 지표는 rolling-origin 값(표본이 커서 안정적)을 우선 사용한다.
+    # 표에서 계산한 값은 단일 시점(7점)이라 실행마다 크게 흔들리므로 폴백으로만 쓴다.
+    eval_n = None
+    mr = _re.search(r"단기 MAPE[^—\n]*—\s*(\S+):\s*([\d.]+)%,\s*(\S+):\s*([\d.]+)%", txt)
+    if mr:
+        for nm, val in ((mr.group(1), mr.group(2)), (mr.group(3), mr.group(4))):
+            key = next((n for n in names if n.lower() == nm.lower()), None)
+            if key:
+                mapes[key] = float(val)
+    mn = _re.search(r"rolling-origin,\s*N=(\d+)", txt)
+    if mn:
+        eval_n = int(mn.group(1))
+
+    # 단순 기준선(naive) — 모델이 '마지막 값 유지'보다 나은지 보는 잣대
+    naive_short = None
+    mns = _re.search(r"단순 기준선\(naive\) MAPE:\s*([\d.]+)%", txt)
+    if mns:
+        naive_short = float(mns.group(1))
+
     # 우수 모델 — 🏆 줄 우선, 없으면 트리 2종 중 MAPE 최소
     winner = None
     mw = _re.search(r"🏆\s*단기 우수 모델:\s*(\S+)", txt)
@@ -468,11 +499,32 @@ def build_model_validation() -> dict:
             eval_label = "중간"
         short_rows.append({"model": n, "mape": mapes[n], "eval": eval_label, "winner": is_winner})
 
+    if naive_short is not None:
+        short_rows.append({"model": "단순 기준선 (마지막 값 유지)", "mape": naive_short,
+                           "eval": "기준선", "winner": False})
+
     # 중장기 LSTM held-out — 없으면 None (화면에 '미측정' 표시)
     mid_mape = None
     mm = _re.search(r"LSTM held-out MAPE:\s*([\d.]+)%", txt)
     if mm:
         mid_mape = float(mm.group(1))
+    mid_naive = None
+    mmn = _re.search(r"중장기 단순 기준선\(naive\) MAPE:\s*([\d.]+)%", txt)
+    if mmn:
+        mid_naive = float(mmn.group(1))
+
+    mid_rows = [{"model": "LSTM (PyTorch 2-layer hidden=64)", "mape": mid_mape}]
+    if mid_naive is not None:
+        mid_rows.append({"model": "단순 기준선 (마지막 값 유지)", "mape": mid_naive})
+
+    # 중장기 신뢰성 경고 — 단순 기준선보다 나쁘거나 오차가 크면 화면에 주의 문구를 띄운다.
+    mid_caution = None
+    if mid_mape is not None and mid_naive is not None and mid_mape > mid_naive:
+        mid_caution = (f"중장기 LSTM 오차({mid_mape}%)가 단순 기준선({mid_naive}%)보다 큽니다. "
+                       "8~21주 예측은 방향성 참고용으로만 보세요.")
+    elif mid_mape is not None and mid_mape >= 20:
+        mid_caution = (f"중장기 예측 오차가 큽니다(MAPE {mid_mape}%). "
+                       "8~21주 예측은 방향성 참고용으로만 보세요.")
 
     # 학습 시간 — 실제 기록된 모델명 그대로 사용
     train_times = {}
@@ -481,15 +533,17 @@ def build_model_validation() -> dict:
     _labels = {"prophet": "Prophet", "tree_short": "Tree (단기)", "lstm_mid": "LSTM (중장기)"}
 
     if baseline is not None and winner_mape is not None:
+        _n_txt = f", rolling-origin N={eval_n}" if eval_n else ""
         headline = (f"단기 예측 검증 — 우수 모델 {str(winner).upper()} MAPE {winner_mape}% "
-                    f"(Prophet 기준선 {baseline}%)")
+                    f"(Prophet 기준선 {baseline}%{_n_txt})")
     else:
         headline = "단기 예측 검증 — 측정값 없음"
 
     return {
         "headline": headline,
         "shortRows": short_rows,
-        "midRows": [{"model": "LSTM (PyTorch 2-layer hidden=64)", "mape": mid_mape}],
+        "midRows": mid_rows,
+        "midCaution": mid_caution,
         "trainTimes": [{"name": _labels.get(k, k), "sec": v} for k, v in train_times.items()],
         "trainTotal": round(sum(train_times.values()), 1) if train_times else 0,
         "architecture": ARCH_DIAGRAM,

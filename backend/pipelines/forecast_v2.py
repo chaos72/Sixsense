@@ -134,6 +134,11 @@ def train_tree_short(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
     results = {model_a_name: [], model_b_name: []}
     feature_only_cols = [c for c in feat_df.columns if c != target]
 
+    # rolling-origin 검증용 수집통 — 단일 시점(7점)만 쓰면 MAPE 변동이 커서,
+    # cutoff 이후 여러 시작 시점에서 평가해 표본을 28점 수준으로 늘린다.
+    # naive = '마지막 관측값이 그대로 유지' 기준선 (모델이 이보다 나은지 판별용).
+    roll_actual, roll_a, roll_b, roll_naive = [], [], [], []
+
     for h in range(1, SHORT_H + 1):
         y_h = feat_df[target].shift(-h)
         X = feat_df[feature_only_cols]
@@ -160,6 +165,23 @@ def train_tree_short(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
         results[model_a_name].append({"week": target_week.date().isoformat(), "yhat": pred_a, "horizon": h})
         results[model_b_name].append({"week": target_week.date().isoformat(), "yhat": pred_b, "horizon": h})
 
+        # rolling-origin 평가 — 시작 시점 o 를 cutoff 이후로 옮겨가며 h주 뒤를 맞혔는지 본다.
+        # 모델 파라미터는 cutoff 이전 정답만 보고 학습됐고, o 시점 피처는 그 시점에 실제로
+        # 알 수 있는 값이므로 누수가 아니다.
+        for o in X.index[X.index >= TRAIN_CUTOFF]:
+            tw = o + pd.Timedelta(weeks=h)
+            tw = tw - pd.Timedelta(days=tw.weekday())
+            m_row = df[df.index == tw]
+            if len(m_row) == 0:
+                continue
+            x_o = X.loc[[o]]
+            roll_actual.append(float(m_row[target].iloc[0]))
+            roll_a.append(float(m_a.predict(x_o)[0]))
+            roll_b.append(float(m_b.predict(x_o)[0]))
+            # naive: o 시점에 관측된 target 값을 그대로 h주 뒤 예측으로 사용
+            base_row = df[df.index == o]
+            roll_naive.append(float(base_row[target].iloc[0]) if len(base_row) else float("nan"))
+
     # 사후 검증으로 우수 모델 선정
     actuals = []
     for h in range(1, SHORT_H + 1):
@@ -177,12 +199,23 @@ def train_tree_short(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
     valid_pairs = [(a, x, l) for a, x, l in zip(actuals, a_preds, b_preds) if a is not None]
     if valid_pairs:
         a_arr, x_arr, l_arr = zip(*valid_pairs)
-        a_mape = mape(a_arr, x_arr)
-        b_mape = mape(a_arr, l_arr)
+        a_mape_single = mape(a_arr, x_arr)
+        b_mape_single = mape(a_arr, l_arr)
+    else:
+        a_mape_single = b_mape_single = float("nan")
+
+    # 대표 지표는 rolling-origin 결과를 쓴다 — 단일 시점(7점)은 표본이 작아 실행마다 크게 흔들림.
+    roll_ok = [(a, x, l, n) for a, x, l, n in zip(roll_actual, roll_a, roll_b, roll_naive)
+               if a and n == n]  # n == n : NaN 제외
+    if roll_ok:
+        ra, rx, rl, rn = zip(*roll_ok)
+        a_mape = mape(ra, rx)
+        b_mape = mape(ra, rl)
+        naive_mape = mape(ra, rn)
         winner = model_a_name if a_mape <= b_mape else model_b_name
     else:
-        a_mape = b_mape = float("nan")
-        winner = model_a_name
+        a_mape, b_mape, naive_mape = a_mape_single, b_mape_single, float("nan")
+        winner = model_a_name if a_mape_single <= b_mape_single else model_b_name
 
     return {
         "models": results,
@@ -192,6 +225,11 @@ def train_tree_short(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
         "validation": {
             f"{model_a_name}_mape": round(a_mape, 2) if not np.isnan(a_mape) else None,
             f"{model_b_name}_mape": round(b_mape, 2) if not np.isnan(b_mape) else None,
+            "naive_mape": round(naive_mape, 2) if not np.isnan(naive_mape) else None,
+            "eval_points": len(roll_ok),
+            "eval_method": "rolling-origin",
+            f"{model_a_name}_mape_single": round(a_mape_single, 2) if not np.isnan(a_mape_single) else None,
+            f"{model_b_name}_mape_single": round(b_mape_single, 2) if not np.isnan(b_mape_single) else None,
             "winner": winner,
             "actuals": [{"week": (TRAIN_CUTOFF + pd.Timedelta(weeks=h)
                                   - pd.Timedelta(days=(TRAIN_CUTOFF + pd.Timedelta(weeks=h)).weekday())
@@ -290,6 +328,8 @@ def train_lstm_mid(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
     # 사후 검증 — 학습에 사용하지 않은 시퀀스로 MAPE
     test_mask = ~train_mask
     test_mape = None
+    naive_mape_mid = None
+    n_test_seq = int(test_mask.sum())
     if test_mask.sum() > 0:
         X_te, Y_te = X[test_mask], Y[test_mask]
         Xn_te = (X_te - mean) / std
@@ -298,17 +338,28 @@ def train_lstm_mid(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
         P_te = Pn_te * y_std + y_mean
         # 21주 평균 MAPE
         mapes = []
+        # 단순 기준선(naive) — 마지막 관측값이 21주 내내 유지된다고 가정.
+        # X 의 마지막 피처 열이 target 이므로 X_te[i][-1][-1] 이 직전 관측값이다.
+        # LSTM 이 이 기준선보다 나쁘면 중장기 예측을 신뢰할 수 없다는 뜻.
+        naive_mapes = []
         for i in range(len(Y_te)):
             m_i = mape(Y_te[i], P_te[i])
             if not np.isinf(m_i):
                 mapes.append(m_i)
+            n_i = mape(Y_te[i], np.full(MID_H, float(X_te[i][-1][-1])))
+            if not np.isinf(n_i):
+                naive_mapes.append(n_i)
         if mapes:
             test_mape = float(np.mean(mapes))
+        if naive_mapes:
+            naive_mape_mid = float(np.mean(naive_mapes))
 
     return {
         "model": "LSTM (PyTorch, 2-layer, hidden=64, seq=12)",
         "predictions": predictions,
-        "validation": {"avg_mape_held_out": round(test_mape, 2) if test_mape else None},
+        "validation": {"avg_mape_held_out": round(test_mape, 2) if test_mape else None,
+                       "naive_mape_held_out": round(naive_mape_mid, 2) if naive_mape_mid else None,
+                       "n_test_sequences": n_test_seq},
     }
 
 
@@ -413,7 +464,11 @@ def main():
     if tree_meta and "validation" in tree_meta:
         v = tree_meta["validation"]
         lines.append("")
-        lines.append(f"단기 MAPE — {ma_name}: {v.get(f'{ma_name}_mape')}%, {mb_name}: {v.get(f'{mb_name}_mape')}%")
+        _n = v.get("eval_points") or 0
+        lines.append(f"단기 MAPE (rolling-origin, N={_n}) — "
+                     f"{ma_name}: {v.get(f'{ma_name}_mape')}%, {mb_name}: {v.get(f'{mb_name}_mape')}%")
+        if v.get("naive_mape") is not None:
+            lines.append(f"단순 기준선(naive) MAPE: {v['naive_mape']}%")
         lines.append(f"🏆 단기 우수 모델: {v['winner'].upper()}")
 
     # 중장기 비교
@@ -437,6 +492,9 @@ def main():
         if v.get("avg_mape_held_out"):
             lines.append("")
             lines.append(f"LSTM held-out MAPE: {v['avg_mape_held_out']}%")
+            if v.get("naive_mape_held_out") is not None:
+                lines.append(f"중장기 단순 기준선(naive) MAPE: {v['naive_mape_held_out']}%"
+                             f"  (검증 시퀀스 {v.get('n_test_sequences', 0)}개)")
 
     # 소요 시간
     lines.append("")

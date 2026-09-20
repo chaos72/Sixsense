@@ -175,6 +175,7 @@ function ModelValidationPanel({ mv }) {
               ))}
             </tbody>
           </table>
+          {mv.midCaution && <div className="mid-caution">⚠ {mv.midCaution}</div>}
           <div className="model-train-time">
             ⏱ 학습 시간 (전체 파이프라인): <span className="num">~{mv.trainTotal}초</span>{" "}
             ({mv.trainTimes.map((t, i) => (
