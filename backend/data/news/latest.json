@@ -2,7 +2,7 @@
   "collectedAt": "2026-09-20",
   "method": "키워드 휴리스틱",
   "lookbackDays": 30,
-  "rawCount": 741,
+  "rawCount": 738,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
@@ -62,8 +62,8 @@
     {
       "date": "2026-09-16",
       "title": "AI-induced 메모리 부족 is changing how devices are built, Fairphone says 메모",
-      "titleEn": "AI-induced memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips",
-      "source": "tomshardware.com",
+      "titleEn": "AI-induced memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips - Tom's Hardware",
+      "source": "RSS",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
@@ -224,13 +224,13 @@
     {
       "date": "2026-08-26",
       "title": "엔비디아 custom 'NVHBM' promises 30% higher bandwidth, 15% lower power tha",
-      "titleEn": "Nvidia custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners",
-      "source": "tomshardware.com",
+      "titleEn": "Nvidia custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners - Tom's Hardware",
+      "source": "RSS",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "엔비디아 custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners &nbsp;&nbsp; tomshar",
+      "summary": "엔비디아 custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners &nbsp;&nbsp; Tom's H",
       "effects": {
         "short": {
           "tone": "neg",
@@ -251,8 +251,8 @@
     {
       "date": "2026-08-28",
       "title": "New US export controls 보고edly target Chinese access to remote AI 서버s —",
-      "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September",
-      "source": "tomshardware.com",
+      "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September - Tom's Hardware",
+      "source": "RSS",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
