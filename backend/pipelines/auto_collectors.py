@@ -761,7 +761,7 @@ def _llm_sentiment(text: str, prompt_topic: str) -> float:
     if gemini_key:
         try:
             # 모델 우선순위: 2.5-flash (안정) → 2.0-flash → 1.5-flash-8b (한도 다른 풀)
-            for model in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b"):
+            for model in ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash-lite"):
                 r = requests.post(
                     f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
                     headers={"Content-Type": "application/json"},

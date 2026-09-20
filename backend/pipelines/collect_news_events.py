@@ -407,7 +407,7 @@ def llm_translate_batch(texts: list[str]) -> list[str] | None:
     # 1. Gemini
     gkey = os.getenv("GEMINI_API_KEY")
     if gkey:
-        for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
+        for model in ("gemini-2.5-flash", "gemini-flash-latest"):
             try:
                 r = requests.post(
                     f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gkey}",
@@ -682,7 +682,7 @@ def llm_enrich(entries: list[dict]) -> list[dict] | None:
 {schema}
 """
 
-    for model in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b"):
+    for model in ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash-lite"):
         try:
             r = requests.post(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
@@ -911,7 +911,7 @@ def heuristic_fallback(entries: list[dict]) -> tuple[list[dict], list[dict]]:
             "type": cat,
             "region": region,
             "risk": risk,
-            "title": korean_title(e["title"])[:80],
+            "title": safe_korean_title(e["title"])[:80],
             "impact": impact,
             "date": e["date"],
             "summary": kr_summary,
@@ -1005,7 +1005,7 @@ def llm_enrich_split(news_pool: list[dict], events_pool: list[dict]) -> dict | N
 {schema}
 """
 
-    for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
+    for model in ("gemini-2.5-flash", "gemini-flash-latest"):
         try:
             r = requests.post(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
@@ -1055,11 +1055,11 @@ def merge_news_only(enriched_news: list[dict], pool: list[dict]) -> list[dict]:
         summary_ko = item.get("summary_ko") or src["summary"][:200]
         if not re.search(r"[가-힣]", summary_ko):
             # USER-REQUESTED EXTENSION (#14) — 영문 잔여 시 한국어 키워드 치환 + source prefix
-            summary_ko = f"({src['source']}) {korean_title(summary_ko[:160])}"
+            summary_ko = f"({src['source']}) {safe_korean_title(summary_ko[:160])}"
         # title 도 LLM 누락 시 한국어 키워드 치환 적용
         title_kr = item.get("title_ko")
         if not title_kr or not re.search(r"[가-힣]", title_kr):
-            title_kr = korean_title(src["title"])[:60]
+            title_kr = safe_korean_title(src["title"])[:60]
         out.append({
             "date": src["date"],
             "title": title_kr,
@@ -1104,7 +1104,7 @@ def merge_events_only(enriched_events: list[dict], pool: list[dict]) -> list[dic
         # USER-REQUESTED EXTENSION (#14) — LLM 이 title_ko 누락 시 한국어 키워드 치환
         title_kr = item.get("title_ko")
         if not title_kr or not re.search(r"[가-힣]", title_kr):
-            title_kr = korean_title(src["title"])[:80]
+            title_kr = safe_korean_title(src["title"])[:80]
         raw.append({
             "id": "ev-tmp",
             "type": ev_type,
@@ -1144,7 +1144,7 @@ def heuristic_news_only(entries: list[dict]) -> list[dict]:
         # USER-REQUESTED EXTENSION (#14) — title 도 한국어로 자동 치환
         out.append({
             "date": e["date"],
-            "title": korean_title(e["title"])[:70],
+            "title": safe_korean_title(e["title"])[:70],
             "titleEn": e["title"],
             "source": e["source"],
             "score": score,

@@ -227,7 +227,7 @@ def call_gemini(prompt: str) -> tuple[dict | None, str]:
     key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
     if not key:
         return None, "Gemini 키 없음"
-    for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
+    for model in ("gemini-2.5-flash", "gemini-flash-latest"):
         try:
             r = requests.post(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
