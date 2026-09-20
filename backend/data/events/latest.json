@@ -1,7 +1,7 @@
 {
   "collectedAt": "2026-09-20",
   "method": "키워드 휴리스틱",
-  "rawCount": 1176,
+  "rawCount": 1166,
   "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
   "events": [
     {
@@ -33,24 +33,24 @@
     {
       "id": "ev-2",
       "type": "물리적 충돌",
-      "region": "이스라엘",
-      "risk": "high",
-      "title": "Netanel Shukrun identified as Neveh Tzuf 테러 attack victim, IDF catches 테러ist nea",
+      "region": "중동",
+      "risk": "mid",
+      "title": "[모니터링] 중동 군사 긴장 추적",
       "impact": "공급↓",
-      "date": "2026-09-20",
-      "summary": "중동 군사 긴장 보도 (이스라엘) — 유가 상승 압력 + 호르무즈 해협 물류 차질 가능. DRAM 직접 영향은 제한적이나 거시 환경 악화. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-09-18",
+      "summary": "관련 헤드라인 미수집 (RSS 30일 윈도우 외) — 다음 주 수집 대기. (카테고리: 물리적 충돌)",
       "effects": {
         "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 물리적 충돌)"
+          "tone": "neu",
+          "text": "(placeholder)"
         },
         "mid": {
           "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 물리적 충돌)"
+          "text": "(placeholder)"
         },
         "long": {
           "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 물리적 충돌)"
+          "text": "(placeholder)"
         }
       },
       "links": [],
@@ -59,15 +59,15 @@
     {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "미국",
+      "region": "글로벌",
       "risk": "mid",
-      "title": "Stock Market Today (Sept. 17, 2026): Dow 급등 after Fed 금리 인상 decision",
-      "impact": "물류↑",
-      "date": "2026-09-17",
-      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "title": "10-year 국채금리 tops 4.9%, highest since 2023, as 유가 급등 raises 인플레이션 fears",
+      "impact": "가격?",
+      "date": "2026-09-10",
+      "summary": "국제 유가 변동 보도 (글로벌) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neg",
+          "tone": "neu",
           "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
@@ -87,9 +87,9 @@
       "type": "기타",
       "region": "미국",
       "risk": "low",
-      "title": "AI 경고: Federal cybersecurity agencies 경고 US adversaries could use artificial int",
+      "title": "Fed under 전쟁sh hands down unanimous September rate decision",
       "impact": "가격?",
-      "date": "2026-09-18",
+      "date": "2026-09-16",
       "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -113,13 +113,13 @@
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "Fed Rate 증가 Puts Borrowers on Notice as 전쟁sh Takes Hard Line on 인플레이션 | The 10-P",
-      "impact": "가격?",
-      "date": "2026-09-17",
-      "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "title": "What a Fed 금리 인상 means for your bank accounts, loans, credit cards, and 투자",
+      "impact": "물류↑",
+      "date": "2026-09-16",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
@@ -136,58 +136,6 @@
     },
     {
       "id": "ev-7",
-      "type": "기타",
-      "region": "미국",
-      "risk": "low",
-      "title": "Three words from Kevin 전쟁sh have Wall Street wondering how far the Fed will go w",
-      "impact": "가격?",
-      "date": "2026-09-18",
-      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 영향 평가 (휴리스틱 · 기타)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 기타)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 기타)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-8",
-      "type": "금융 위기",
-      "region": "중동",
-      "risk": "mid",
-      "title": "원유 가격 급등 Over 4% Following Attack on Key Middle East Export Route",
-      "impact": "가격?",
-      "date": "2026-09-17",
-      "summary": "국제 유가 변동 보도 (중동) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
-        }
-      },
-      "links": [],
-      "affects": []
-    },
-    {
-      "id": "ev-9",
       "type": "기타",
       "region": "글로벌",
       "risk": "low",
@@ -213,17 +161,69 @@
       "affects": []
     },
     {
-      "id": "ev-10",
+      "id": "ev-8",
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "Federal Reserve interest 금리 인상 may trigger another brutal move for US 국채금리s",
-      "impact": "물류↑",
-      "date": "2026-09-17",
+      "title": "10-year 국채금리 climbs back to 5% after Fed hikes rates, 전쟁sh highlights 인플레이션 risk",
+      "impact": "가격?",
+      "date": "2026-09-16",
       "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neg",
+          "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 금융 위기)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 금융 위기)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-9",
+      "type": "기타",
+      "region": "미국",
+      "risk": "low",
+      "title": "AI 경고: Federal cybersecurity agencies 경고 US adversaries could use artificial int",
+      "impact": "가격?",
+      "date": "2026-09-18",
+      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "단기 영향 평가 (휴리스틱 · 기타)"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 영향 평가 (휴리스틱 · 기타)"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 영향 평가 (휴리스틱 · 기타)"
+        }
+      },
+      "links": [],
+      "affects": []
+    },
+    {
+      "id": "ev-10",
+      "type": "금융 위기",
+      "region": "미국",
+      "risk": "mid",
+      "title": "Fed Raises Rates in First Major Step by 전쟁sh to Contain 인플레이션",
+      "impact": "가격?",
+      "date": "2026-09-16",
+      "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "effects": {
+        "short": {
+          "tone": "neu",
           "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
