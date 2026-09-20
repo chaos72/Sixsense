@@ -158,6 +158,7 @@ function ModelValidationPanel({ mv }) {
               ))}
             </tbody>
           </table>
+          {mv.shortCaution && <div className="mid-caution">⚠ {mv.shortCaution}</div>}
         </div>
 
         <div className="card">

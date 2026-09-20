@@ -503,6 +503,13 @@ def build_model_validation() -> dict:
         short_rows.append({"model": "단순 기준선 (마지막 값 유지)", "mape": naive_short,
                            "eval": "기준선", "winner": False})
 
+    # 단기 신뢰성 경고 — '우수 모델'이라도 단순 기준선을 못 이기면 모델의 추가 가치가 없다는 뜻.
+    # Prophet 대비 개선율만 보면 성과처럼 보이므로 반드시 함께 표시한다.
+    short_caution = None
+    if naive_short is not None and winner_mape is not None and naive_short < winner_mape:
+        short_caution = (f"단기 우수 모델 오차({winner_mape}%)가 단순 기준선({naive_short}%)보다 큽니다. "
+                         "현재 모델은 '마지막 값 유지'보다 나은 예측을 하지 못하고 있습니다.")
+
     # 중장기 LSTM held-out — 없으면 None (화면에 '미측정' 표시)
     mid_mape = None
     mm = _re.search(r"LSTM held-out MAPE:\s*([\d.]+)%", txt)
@@ -542,6 +549,7 @@ def build_model_validation() -> dict:
     return {
         "headline": headline,
         "shortRows": short_rows,
+        "shortCaution": short_caution,
         "midRows": mid_rows,
         "midCaution": mid_caution,
         "trainTimes": [{"name": _labels.get(k, k), "sec": v} for k, v in train_times.items()],
