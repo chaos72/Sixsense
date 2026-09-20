@@ -181,6 +181,18 @@ def parse_model_comparison_series() -> dict:
         if row:
             out["prophet"].append((row.group(1), float(row.group(2))))
             out["lstm"].append((row.group(1), float(row.group(3))))
+
+    # 어느 열이 '우수 모델'인지 판별 — 표의 3열=hist_gbr 슬롯, 4열=gbr 슬롯.
+    # 실제 모델명(xgboost/lightgbm 등)은 환경에 따라 달라지므로 헤더와 🏆 줄로 매칭한다.
+    out["_winner_slot"] = None
+    mh = re.search(r"Week\s+\S+\s+(\S+)\s+(\S+)\s+실측", txt)
+    mw = re.search(r"🏆\s*단기 우수 모델:\s*(\S+)", txt)
+    if mh and mw:
+        w = mw.group(1).strip().lower()
+        if mh.group(1).lower() == w:
+            out["_winner_slot"] = "hist_gbr"   # 3열이 우수
+        elif mh.group(2).lower() == w:
+            out["_winner_slot"] = "gbr"        # 4열이 우수
     return out
 
 
@@ -203,10 +215,14 @@ def build_forecasts(forecast_json: dict, current_price: float | None = None) -> 
         return [v * factor for v in series_vals]
 
     # 각 모델 raw 값 추출 (SCALE 적용 전 인덱스값)
-    gbr_raw = [yhat for (_, yhat) in parsed["gbr"][:7]]
+    # 주 예측선(forecast7)은 '우수 모델' 값을 쓴다. 이전에는 항상 4열(gbr 슬롯)을 썼기 때문에
+    # 우수 모델이 3열이면 화면 주 예측선이 '진 모델'을 쓰는 불일치가 있었다.
+    win_slot = parsed.get("_winner_slot") or "gbr"
+    runner_slot = "hist_gbr" if win_slot == "gbr" else "gbr"
+    gbr_raw = [yhat for (_, yhat) in parsed[win_slot][:7]]
     lstm_raw = [yhat for (_, yhat) in parsed["lstm"][:14]]
     prophet_raw = [yhat for (_, yhat) in parsed["prophet"][:21]]
-    histgbr_raw = [yhat for (_, yhat) in parsed["hist_gbr"][:7]]
+    histgbr_raw = [yhat for (_, yhat) in parsed[runner_slot][:7]]
 
     # current_price 는 $ 단위 → 인덱스값으로 환산 (anchor 비교 위해)
     cur_idx = (current_price / SCALE) if current_price else None
@@ -377,65 +393,110 @@ EVENTS_FILE = ROOT / "backend/data/events/latest.json"
 INSIGHT_FILE = ROOT / "backend/data/insight/latest.json"
 
 
+ARCH_DIAGRAM = (
+    "20개 신호 통합 DataFrame (108주 × 20열, sentiment 3주 MA)\n"
+    "            │\n"
+    "   ┌────────┼────────┐\n"
+    "   ▼        ▼        ▼\n"
+    "[Prophet] [Tree]  [LSTM]\n"
+    "baseline  단기      중장기\n"
+    "         ─우수─    PyTorch\n"
+    "         자동선정   2-layer"
+)
+
+
 def build_model_validation() -> dict:
     """USER-REQUESTED EXTENSION (2026-05-18 #3) — §02 Phase 6 검증 패널 데이터.
     forecast/model_comparison.txt 파싱 시도, 실패 시 사용자 명세값 fallback."""
+    import re as _re
     cmp_file = FORECAST / "model_comparison.txt"
-    short_models = {"Prophet (기존)": 7.54, "sklearn HistGBR": 6.86, "sklearn GBR": 4.54}
-    mid_mape = 9.19
-    train_times = {"prophet": 0.64, "tree_short": 4.22, "lstm_mid": 6.52}
 
-    if cmp_file.exists():
-        import re as _re
-        txt = cmp_file.read_text()
-        m = _re.search(r"단기 MAPE\s*—\s*hist_gbr:\s*([\d.]+)%,\s*gbr:\s*([\d.]+)%", txt)
-        if m:
-            short_models["sklearn HistGBR"] = float(m.group(1))
-            short_models["sklearn GBR"] = float(m.group(2))
-        m = _re.search(r"LSTM held-out MAPE:\s*([\d.]+)%", txt)
-        if m:
-            mid_mape = float(m.group(1))
-        for k in train_times:
-            m = _re.search(rf"{k}\s+([\d.]+)s", txt)
-            if m:
-                train_times[k] = float(m.group(1))
+    # 하드코딩 폴백 제거 — 파일이 없으면 '측정값 없음'을 명시한다.
+    # (이전에는 파싱 실패 시 예시값 7.54/6.86/4.54/9.19 가 그대로 화면에 표시되어
+    #  실제 성능과 달랐다. 모델명이 hist_gbr/gbr → xgboost/lightgbm 으로 바뀌면서
+    #  정규식이 매칭되지 않은 것이 원인.)
+    if not cmp_file.exists():
+        return {"headline": "모델 검증 데이터 없음 — forecast_v2 실행 필요",
+                "shortRows": [], "midRows": [], "trainTimes": [], "trainTotal": 0,
+                "architecture": ARCH_DIAGRAM, "envNote": ""}
 
-    baseline = short_models["Prophet (기존)"]
-    winner_mape = min(short_models["sklearn HistGBR"], short_models["sklearn GBR"])
-    improvement = round((baseline - winner_mape) / baseline * 100, 1)
+    txt = cmp_file.read_text()
+
+    # 단기 표 헤더에서 실제 모델명 추출 (예: "Week  Prophet  xgboost  lightgbm  실측")
+    mh = _re.search(r"Week\s+(\S+)\s+(\S+)\s+(\S+)\s+실측", txt)
+    names = [mh.group(1), mh.group(2), mh.group(3)] if mh else ["Prophet", "model_a", "model_b"]
+
+    # 표의 예측/실측 값에서 MAPE 를 직접 계산 — 출력 문구 형식에 의존하지 않는다.
+    preds = {n: [] for n in names}
+    actuals = []
+    for line in txt.split("\n"):
+        row = _re.match(r"\s*\d{4}-\d{2}-\d{2}\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*$", line)
+        if row:
+            for i, n in enumerate(names):
+                preds[n].append(float(row.group(1 + i)))
+            actuals.append(float(row.group(4)))
+
+    def _mape(ps: list[float]):
+        vals = [abs(p - a) / a * 100 for p, a in zip(ps, actuals) if a]
+        return round(sum(vals) / len(vals), 2) if vals else None
+
+    mapes = {n: _mape(preds[n]) for n in names}
+
+    # 우수 모델 — 🏆 줄 우선, 없으면 트리 2종 중 MAPE 최소
+    winner = None
+    mw = _re.search(r"🏆\s*단기 우수 모델:\s*(\S+)", txt)
+    if mw:
+        w = mw.group(1).strip().lower()
+        winner = next((n for n in names if n.lower() == w), None)
+    if winner is None:
+        cands = [(mapes[n], n) for n in names[1:] if mapes[n] is not None]
+        winner = min(cands)[1] if cands else None
+
+    baseline = mapes.get(names[0])          # Prophet 기준선
+    winner_mape = mapes.get(winner) if winner else None
+    improvement = (round((baseline - winner_mape) / baseline * 100, 1)
+                   if baseline and winner_mape else None)
 
     short_rows = []
-    for name, mape in short_models.items():
-        is_winner = (mape == winner_mape and "GBR" in name and "Hist" not in name)
-        eval_label = "39.7% 개선" if is_winner else ("baseline" if "Prophet" in name else "중간")
-        if is_winner:
-            eval_label = f"{improvement}% 개선"
-        short_rows.append({"model": name, "mape": mape, "eval": eval_label, "winner": is_winner})
+    for n in names:
+        is_winner = (n == winner)
+        if n == names[0]:
+            eval_label = "baseline"
+        elif is_winner and improvement is not None:
+            eval_label = f"{improvement}% 개선" if improvement >= 0 else f"{abs(improvement)}% 악화"
+        else:
+            eval_label = "중간"
+        short_rows.append({"model": n, "mape": mapes[n], "eval": eval_label, "winner": is_winner})
+
+    # 중장기 LSTM held-out — 없으면 None (화면에 '미측정' 표시)
+    mid_mape = None
+    mm = _re.search(r"LSTM held-out MAPE:\s*([\d.]+)%", txt)
+    if mm:
+        mid_mape = float(mm.group(1))
+
+    # 학습 시간 — 실제 기록된 모델명 그대로 사용
+    train_times = {}
+    for m in _re.finditer(r"^\s{2,}(\w+)\s+([\d.]+)s\s*$", txt, _re.M):
+        train_times[m.group(1)] = float(m.group(2))
+    _labels = {"prophet": "Prophet", "tree_short": "Tree (단기)", "lstm_mid": "LSTM (중장기)"}
+
+    if baseline is not None and winner_mape is not None:
+        headline = (f"단기 예측 검증 — 우수 모델 {str(winner).upper()} MAPE {winner_mape}% "
+                    f"(Prophet 기준선 {baseline}%)")
+    else:
+        headline = "단기 예측 검증 — 측정값 없음"
 
     return {
-        "headline": f"🎉 Phase 6 멀티 모델 예측 아키텍처 완료 — 단기 MAPE {baseline}% → {winner_mape}% ({improvement}% 개선)",
+        "headline": headline,
         "shortRows": short_rows,
         "midRows": [{"model": "LSTM (PyTorch 2-layer hidden=64)", "mape": mid_mape}],
-        "trainTimes": [
-            {"name": "Prophet", "sec": train_times["prophet"]},
-            {"name": "Tree (단기)", "sec": train_times["tree_short"]},
-            {"name": "LSTM (중장기)", "sec": train_times["lstm_mid"]},
-        ],
-        "trainTotal": round(sum(train_times.values()), 1),
-        "architecture": (
-            "20개 신호 통합 DataFrame (108주 × 20열, sentiment 3주 MA)\n"
-            "            │\n"
-            "   ┌────────┼────────┐\n"
-            "   ▼        ▼        ▼\n"
-            "[Prophet] [Tree]  [LSTM]\n"
-            "baseline  단기      중장기\n"
-            "         ─우수─    PyTorch\n"
-            "         자동선정   2-layer"
-        ),
+        "trainTimes": [{"name": _labels.get(k, k), "sec": v} for k, v in train_times.items()],
+        "trainTotal": round(sum(train_times.values()), 1) if train_times else 0,
+        "architecture": ARCH_DIAGRAM,
         "envNote": (
-            "XGBoost/LightGBM 우선 사용 시도 → macOS libomp 미설치 → "
-            "sklearn GBR/HistGBR fallback 자동 전환. brew install libomp 후 "
-            "자동 XGBoost/LightGBM 활성 (코드 변경 불필요). LSTM은 PyTorch (libomp 무관, 즉시 작동)."
+            f"단기 트리 엔진: {' + '.join(names[1:])} (실행 환경에 따라 자동 선택 — "
+            "XGBoost/LightGBM 우선, libomp 미설치 시 sklearn GBR/HistGBR). "
+            "LSTM은 PyTorch. MAPE는 학습에 사용하지 않은 held-out 구간에서 측정한 값입니다."
         ),
     }
 
@@ -484,9 +545,14 @@ def build_accuracy(target_rows: list[dict], forecast_json: dict) -> list[dict]:
     actual_by_week = {r["week"]: round(r["value"] * SCALE, 3) for r in target_rows}
     models = forecast_json.get("models", {})
 
-    short_src = models.get("gbr", {}).get("predictions", []) or \
-                models.get("hist_gbr", {}).get("predictions", []) or \
-                models.get("prophet", {}).get("predictions", [])
+    # 우수 모델(tree_short 의 winner) 예측을 우선 사용한다.
+    # 이전에는 gbr/hist_gbr 키를 찾았는데 실제 JSON 키는 tree_short 이라 항상 Prophet 으로
+    # 폴백되어, 차트(트리 모델)와 정확도 패널(Prophet)이 서로 다른 모델을 가리켰다.
+    _tree = models.get("tree_short", {})
+    _winner = (_tree.get("validation") or {}).get("winner")
+    short_src = (_tree.get("models", {}).get(_winner) or []) if _winner else []
+    if not short_src:
+        short_src = models.get("prophet", {}).get("predictions", [])
     cutoff = forecast_json.get("trainCutoff", "2026-01-31")
 
     for p in short_src[:7]:

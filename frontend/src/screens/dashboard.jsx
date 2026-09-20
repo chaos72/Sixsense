@@ -152,7 +152,7 @@ function ModelValidationPanel({ mv }) {
               {mv.shortRows.map((r) => (
                 <tr key={r.model} className={r.winner ? "winner" : ""}>
                   <td>{r.model}</td>
-                  <td className="num-cell">{r.mape.toFixed(2)}%</td>
+                  <td className="num-cell">{typeof r.mape === "number" ? `${r.mape.toFixed(2)}%` : "미측정"}</td>
                   <td>{r.eval}</td>
                 </tr>
               ))}
@@ -170,7 +170,7 @@ function ModelValidationPanel({ mv }) {
               {mv.midRows.map((r) => (
                 <tr key={r.model}>
                   <td>{r.model}</td>
-                  <td className="num-cell">{r.mape.toFixed(2)}%</td>
+                  <td className="num-cell">{typeof r.mape === "number" ? `${r.mape.toFixed(2)}%` : "미측정"}</td>
                 </tr>
               ))}
             </tbody>

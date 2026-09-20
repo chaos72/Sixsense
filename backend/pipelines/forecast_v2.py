@@ -138,7 +138,11 @@ def train_tree_short(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
         y_h = feat_df[target].shift(-h)
         X = feat_df[feature_only_cols]
         valid = y_h.notna()
-        X_tr, y_tr = X.loc[valid & train_mask], y_h.loc[valid & train_mask]
+        # 누수 방지 — 행 t 의 정답은 target[t+h] 이므로 t <= TRAIN_CUTOFF 로 자르면
+        # cutoff 직전 행들의 정답이 검증구간(cutoff 이후) 값이 되어 모델이 정답을 미리 본다.
+        # 정답까지 학습구간 안에 들어오도록 t <= TRAIN_CUTOFF - h 로 제한한다.
+        train_mask_h = feat_df.index <= (TRAIN_CUTOFF - pd.Timedelta(weeks=h))
+        X_tr, y_tr = X.loc[valid & train_mask_h], y_h.loc[valid & train_mask_h]
         if len(X_tr) < 10:
             continue
 
@@ -213,7 +217,9 @@ def train_lstm_mid(df: pd.DataFrame, target: str, fcols: list[str]) -> dict:
         raise RuntimeError(f"LSTM 시퀀스 부족: {len(X)}")
 
     # train/eval split by date
-    train_mask = dates <= TRAIN_CUTOFF
+    # 누수 방지 — 시퀀스 dates[i] 의 정답은 그 주부터 MID_H 주간이므로 dates <= TRAIN_CUTOFF 로
+    # 자르면 정답이 검증구간을 침범한다. 정답 전체가 학습구간에 들어오도록 시작주를 앞당긴다.
+    train_mask = dates <= (TRAIN_CUTOFF - pd.Timedelta(weeks=MID_H - 1))
     X_tr, Y_tr = X[train_mask], Y[train_mask]
     if len(X_tr) < 5:
         # Cutoff 너무 이르면 모든 가능 시퀀스로 학습
