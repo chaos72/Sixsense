@@ -918,6 +918,50 @@ def collect_B6_hbm_mix():
 # ──────────────────────────────────────────────────────────────────────────────
 # Registry + main
 # ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# target-dram — DRAM 가격 proxy (메모리 3사 주가 블렌드, Yahoo Finance 무료)
+# ──────────────────────────────────────────────────────────────────────────────
+def collect_target_dram():
+    """DRAM 계약가는 유료(DRAMeXchange/TrendForce)라 무료 proxy 로 대체.
+    메모리 3사 주가 가중 블렌드: MU(50%) + SK하이닉스 000660.KS(30%) + 삼성전자 005930.KS(20%).
+    각 종목을 고정 anchor(2025-06-16, 기존 히스토리 base=100) 대비 정규화해 가중합 → 연속성 유지.
+    통화(USD/KRW)는 각자 base 대비 비율로 상쇄되어 환율 변환 불필요."""
+    import yfinance as yf
+    ANCHOR = "2025-06-16"  # 기존 target-dram.json 첫 주 = base 100 (연속성 고정 기준)
+
+    def _weekly(ticker: str) -> dict:
+        df = yf.download(ticker, start=ANCHOR, end=date.today().isoformat(),
+                         interval="1wk", progress=False, auto_adjust=False)
+        out = {}
+        if len(df) == 0:
+            return out
+        for idx, row in df.iterrows():
+            try:
+                c = row["Close"]
+                v = float(c.iloc[0] if hasattr(c, "iloc") else c)
+                if v == v:  # NaN 제외
+                    out[idx.date().isoformat()] = v
+            except Exception:
+                pass
+        return out
+
+    mu, sk, ss = _weekly("MU"), _weekly("000660.KS"), _weekly("005930.KS")
+    if not (mu and sk and ss):
+        raise RuntimeError("메모리 3사 주가 수집 실패 (yfinance 차단 가능성)")
+    weeks = sorted(set(mu) & set(sk) & set(ss))
+    if len(weeks) < 10:
+        raise RuntimeError(f"공통 주 부족 ({len(weeks)}주)")
+    base_mu, base_sk, base_ss = mu[weeks[0]], sk[weeks[0]], ss[weeks[0]]
+    data = [
+        {"week": w,
+         "value": round((0.5 * (mu[w] / base_mu) + 0.3 * (sk[w] / base_sk)
+                         + 0.2 * (ss[w] / base_ss)) * 100, 4)}
+        for w in weeks
+    ]
+    source = "Yahoo Finance blend: MU (50%) + SK Hynix (30%) + Samsung (20%), normalized to base 100"
+    return data, "real-proxy", source
+
+
 COLLECTORS = {
     "A-3": collect_A3_kcs,
     "A-4": collect_A4_kosis,
@@ -930,6 +974,7 @@ COLLECTORS = {
     "B-5": collect_B5_lta_sentiment,
     "B-6": collect_B6_hbm_mix,
     "B-7": collect_B7_bom_hn,
+    "target-dram": collect_target_dram,
 }
 
 

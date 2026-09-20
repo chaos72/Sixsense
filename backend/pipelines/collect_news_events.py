@@ -333,6 +333,27 @@ def korean_title(en_title: str) -> str:
     return out
 
 
+# 문장 문법을 깨지 않는 '고유명사'만 치환 (회사명·국가명). 동사/일반명사는 제외 —
+# LLM 번역이 모두 실패했을 때의 폴백에서 한·영 혼합 깨짐("all-out 전쟁")을 방지한다.
+SAFE_NOUN_KEYS = (
+    "SK Hynix", "SK hynix", "Hynix", "Samsung Electronics", "Samsung",
+    "Micron Technology", "Micron", "Nvidia", "NVIDIA", "Kioxia", "Western Digital",
+    "South Korea", "Korea", "China", "Taiwan", "Japan", "United States", "U.S.",
+    "Ukraine", "Israel", "Iran", "Russia", "Saudi Arabia",
+)
+
+
+def safe_korean_title(en_title: str) -> str:
+    """LLM 번역 실패 시 폴백. 고유명사(회사·국가)만 한국어로 치환하고 나머지는
+    깨끗한 영어로 유지한다. 동사/일반명사 부분치환이 만드는 깨진 문장을 방지."""
+    if re.search(r"[가-힣]", en_title):
+        return en_title
+    out = en_title
+    for k in sorted(SAFE_NOUN_KEYS, key=len, reverse=True):
+        out = re.sub(re.escape(k), KEYWORD_MAP[k], out)
+    return out
+
+
 # USER-REQUESTED EXTENSION (#17, 2026-06-04) — LLM 일괄 번역 (휴리스틱 한글화 보강)
 # korean_title() 의 사전 치환만으로는 매핑 안 된 영문이 남음 → LLM 으로 전체 문장 번역.
 # 일괄 1회 호출로 여러 텍스트를 번역 (한도 절약). LLM 실패 시 None 반환.
@@ -359,6 +380,29 @@ def llm_translate_batch(texts: list[str]) -> list[str] | None:
         if len(out) >= len(texts) * 0.7:  # 70% 이상 파싱되면 성공으로 간주
             return [out.get(i + 1, texts[i]) for i in range(len(texts))]
         return None
+
+    # 0. Anthropic Claude (가장 신뢰도 높음 — build_insight.py call_anthropic 과 동일 패턴)
+    akey = os.getenv("ANTHROPIC_API_KEY")
+    if akey:
+        try:
+            r = requests.post(
+                "https://api.anthropic.com/v1/messages",
+                headers={"x-api-key": akey, "anthropic-version": "2023-06-01",
+                         "content-type": "application/json"},
+                json={"model": "claude-haiku-4-5-20251001", "max_tokens": 4096,
+                      "messages": [{"role": "user", "content": prompt}]},
+                timeout=60,
+            )
+            if r.status_code == 200:
+                txt = r.json()["content"][0]["text"]
+                parsed = _parse(txt)
+                if parsed:
+                    print(f"  ✅ LLM 번역 성공 (Claude, {len(texts)}건)")
+                    return parsed
+            else:
+                print(f"  ⚠ Claude 번역 HTTP {r.status_code}")
+        except Exception as e:
+            print(f"  ⚠ Claude 번역 실패: {str(e)[:60]}")
 
     # 1. Gemini
     gkey = os.getenv("GEMINI_API_KEY")
@@ -1217,10 +1261,11 @@ def main():
             method_news = (method_news + " + LLM 한글화") if "휴리스틱" in method_news else method_news
             method_events = (method_events + " + LLM 한글화") if "휴리스틱" in method_events else method_events
         else:
-            # LLM 번역도 실패 (일일 한도 등) — korean_title 사전 치환 재적용 (최소한의 한글화)
-            print(f"  ⚠ LLM 번역 불가 (한도) — 사전 치환만 적용, 잔여 영문 일부 존재")
+            # LLM 3티어(Claude→Gemini→Groq) 모두 실패 — 고유명사만 안전 치환, 나머지는
+            # 깨끗한 영어 유지 (동사/일반명사 부분치환의 한·영 혼합 깨짐 방지)
+            print(f"  ⚠ LLM 번역 불가 — 고유명사만 치환, 나머지 영어 원문 유지 (깨짐 방지)")
             for (arr, idx, field), orig in zip(refs, to_translate):
-                arr[idx][field] = korean_title(orig)
+                arr[idx][field] = safe_korean_title(orig)
 
     print(f"[6/6] 저장")
     payload_news = {
