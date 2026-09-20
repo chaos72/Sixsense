@@ -2,12 +2,12 @@
   "collectedAt": "2026-09-20",
   "method": "키워드 휴리스틱",
   "lookbackDays": 30,
-  "rawCount": 735,
+  "rawCount": 738,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
       "date": "2026-09-04",
-      "title": "마이크론, SanDisk 급등 as AI 메모리 부족 Trumps Rate-Hike Fears",
+      "title": "마이크론, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
       "titleEn": "Micron, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
       "source": "finance.biggo.com",
       "score": 0.67,
@@ -34,7 +34,7 @@
     },
     {
       "date": "2026-08-28",
-      "title": "DDR5 가격 급등 Fivefold in a Year — 중국's HBM Obsession Creates a Legacy DR",
+      "title": "DDR5 Prices Surge Fivefold in a Year — 중국's HBM Obsession Creates a Le",
       "titleEn": "DDR5 Prices Surge Fivefold in a Year — China's HBM Obsession Creates a Legacy DRAM Shortage Paradox",
       "source": "finance.biggo.com",
       "score": 0.67,
@@ -61,7 +61,7 @@
     },
     {
       "date": "2026-09-16",
-      "title": "AI-induced 메모리 부족 is changing how devices are built, Fairphone says 메모",
+      "title": "AI-induced memory shortage is changing how devices are built, Fairphon",
       "titleEn": "AI-induced memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips - Tom's Hardware",
       "source": "RSS",
       "score": 0.5,
@@ -88,7 +88,7 @@
     },
     {
       "date": "2026-09-17",
-      "title": "AI 서버 stocks 강세 as hard전쟁e 수요 broad...",
+      "title": "AI server stocks rally as hardware demand broad...",
       "titleEn": "AI server stocks rally as hardware demand broad...",
       "source": "Pluang",
       "score": 0.5,
@@ -115,7 +115,7 @@
     },
     {
       "date": "2026-09-16",
-      "title": "삼성 shifts 메모리 제조 focus to전쟁d AI-driven high-bandwidth 메모리",
+      "title": "삼성 shifts memory manufacturing focus toward AI-driven high-bandwidth m",
       "titleEn": "Samsung shifts memory manufacturing focus toward AI-driven high-bandwidth memory",
       "source": "Global Sources",
       "score": -0.5,
@@ -142,7 +142,7 @@
     },
     {
       "date": "2026-09-16",
-      "title": "Intel CEO 경고 of Worsening 메모리 부족",
+      "title": "Intel CEO Warns of Worsening Memory Shortage",
       "titleEn": "Intel CEO Warns of Worsening Memory Shortage",
       "source": "ForkLog",
       "score": 0.5,
@@ -196,7 +196,7 @@
     },
     {
       "date": "2026-09-11",
-      "title": "엔비디아’s Export Ban Backfires as Chinese Competitors Raise 가격 50% - 24/7",
+      "title": "엔비디아’s Export Ban Backfires as Chinese Competitors Raise Prices 50% - ",
       "titleEn": "NVIDIA’s Export Ban Backfires as Chinese Competitors Raise Prices 50% - 24/7 Wall St.",
       "source": "RSS",
       "score": -0.5,
@@ -250,7 +250,7 @@
     },
     {
       "date": "2026-08-28",
-      "title": "New US export controls 보고edly target Chinese access to remote AI 서버s —",
+      "title": "New US export controls reportedly target Chinese access to remote AI s",
       "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September - Tom's Hardware",
       "source": "RSS",
       "score": 0.0,

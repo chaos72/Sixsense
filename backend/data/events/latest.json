@@ -1,7 +1,7 @@
 {
   "collectedAt": "2026-09-20",
   "method": "키워드 휴리스틱",
-  "rawCount": 1166,
+  "rawCount": 1167,
   "pool": "EVENTS (글로벌 이벤트 + 국내 반도체 이벤트성, 기상이변 제외)",
   "events": [
     {
@@ -9,7 +9,7 @@
       "type": "국내 반도체",
       "region": "한국",
       "risk": "high",
-      "title": "KOSPI Reclaims 6,700 Level, SK하이닉스 급등 4% as 파업 Crisis Resolved; SoftBank and 키오시",
+      "title": "KOSPI Reclaims 6,700 Level, SK하이닉스 Surges 4% as Strike Crisis Resolved; SoftBank",
       "impact": "공급↓",
       "date": "2026-09-16",
       "summary": "한국 메모리 산업 직접 이슈 — 노사 협상 결렬 등 파업 관련 보도. 메모리 공장 가동 중단 시 단기 공급 차질 가능, 가격 상승 압력. (LLM 비활성 — 휴리스틱 요약)",
@@ -59,15 +59,15 @@
     {
       "id": "ev-4",
       "type": "금융 위기",
-      "region": "글로벌",
+      "region": "미국",
       "risk": "mid",
-      "title": "10-year 국채금리 tops 4.9%, highest since 2023, as 유가 급등 raises 인플레이션 fears",
-      "impact": "가격?",
-      "date": "2026-09-10",
-      "summary": "국제 유가 변동 보도 (글로벌) — 에너지/물류비 변동으로 메모리 제조원가 + 운송비 영향. (LLM 비활성 — 휴리스틱 요약)",
+      "title": "Analysis: Hot inflation data sets up a Fed rate hike. What happens if Warsh wave",
+      "impact": "물류↑",
+      "date": "2026-09-11",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {
@@ -87,7 +87,7 @@
       "type": "기타",
       "region": "미국",
       "risk": "low",
-      "title": "Fed under 전쟁sh hands down unanimous September rate decision",
+      "title": "Fed under Warsh hands down unanimous September rate decision",
       "impact": "가격?",
       "date": "2026-09-16",
       "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
@@ -113,9 +113,9 @@
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "What a Fed 금리 인상 means for your bank accounts, loans, credit cards, and 투자",
+      "title": "Fed rate hike odds surge to 90% on monthly jump in core prices",
       "impact": "물류↑",
-      "date": "2026-09-16",
+      "date": "2026-09-11",
       "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
@@ -137,12 +137,12 @@
     {
       "id": "ev-7",
       "type": "기타",
-      "region": "글로벌",
+      "region": "미국",
       "risk": "low",
-      "title": "Commonwealth Bank 경고 as Aussie drivers face more pain as 유가s 급등",
+      "title": "AI warning: Federal cybersecurity agencies warn US adversaries could use artific",
       "impact": "가격?",
-      "date": "2026-09-15",
-      "summary": "글로벌 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
+      "date": "2026-09-18",
+      "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
           "tone": "neu",
@@ -165,8 +165,8 @@
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "10-year 국채금리 climbs back to 5% after Fed hikes rates, 전쟁sh highlights 인플레이션 risk",
-      "impact": "가격?",
+      "title": "What a Fed rate hike means for your bank accounts, loans, credit cards, and inve",
+      "impact": "물류↑",
       "date": "2026-09-16",
       "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
@@ -191,13 +191,13 @@
       "type": "기타",
       "region": "미국",
       "risk": "low",
-      "title": "AI 경고: Federal cybersecurity agencies 경고 US adversaries could use artificial int",
+      "title": "Three words from Kevin Warsh have Wall Street wondering how far the Fed will go ",
       "impact": "가격?",
       "date": "2026-09-18",
       "summary": "미국 기타 관련 보도 — 추가 분석 필요. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 영향 평가 (휴리스틱 · 기타)"
         },
         "mid": {
@@ -217,13 +217,13 @@
       "type": "금융 위기",
       "region": "미국",
       "risk": "mid",
-      "title": "Fed Raises Rates in First Major Step by 전쟁sh to Contain 인플레이션",
+      "title": "10-year Treasury yield climbs back to 5% after Fed hikes rates, Warsh highlights",
       "impact": "가격?",
       "date": "2026-09-16",
-      "summary": "Fed 금리 조정 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
+      "summary": "Fed 금리 인상 관련 보도 — 강달러/약달러 전환 → 한국 수출가격(USD 결제) 환변동 영향. DRAM CapEx 자금조달 비용 변화 가능. (LLM 비활성 — 휴리스틱 요약)",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 영향 평가 (휴리스틱 · 금융 위기)"
         },
         "mid": {

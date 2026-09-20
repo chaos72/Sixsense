@@ -1,7 +1,7 @@
 {
   "signalId": "B-1",
-  "source": "Google News 'Earnings Call sentiment' (180 entries, \ud0a4\uc6cc\ub4dc fallback, 22\uc8fc)",
-  "mode": "real-keyword",
+  "source": "Google News 'Earnings Call sentiment' (180 entries, LLM 9\ud68c \ud638\ucd9c, 22\uc8fc)",
+  "mode": "real",
   "collectedAt": "2026-09-20",
   "rangeStart": "2026-01-05",
   "rangeEnd": "2026-09-14",
@@ -9,11 +9,11 @@
   "data": [
     {
       "week": "2026-01-05",
-      "value": 1.0
+      "value": 0.9
     },
     {
       "week": "2026-03-16",
-      "value": 0.3333
+      "value": 1.0
     },
     {
       "week": "2026-03-30",
@@ -25,11 +25,11 @@
     },
     {
       "week": "2026-04-27",
-      "value": 1.0
+      "value": 0.95
     },
     {
       "week": "2026-05-11",
-      "value": -1.0
+      "value": 0.0
     },
     {
       "week": "2026-05-25",
@@ -41,7 +41,7 @@
     },
     {
       "week": "2026-06-08",
-      "value": -1.0
+      "value": 0.0
     },
     {
       "week": "2026-06-15",
@@ -49,7 +49,7 @@
     },
     {
       "week": "2026-06-22",
-      "value": 1.0
+      "value": 0.85
     },
     {
       "week": "2026-06-29",
