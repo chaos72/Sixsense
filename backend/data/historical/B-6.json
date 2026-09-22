@@ -1,15 +1,15 @@
 {
   "signalId": "B-6",
-  "source": "Google News 'HBM mix' (162 entries, LLM 2\ud68c \ud638\ucd9c, 40\uc8fc)",
+  "source": "Google News 'HBM mix' (164 entries, LLM 12\ud68c \ud638\ucd9c, 41\uc8fc)",
   "mode": "real",
-  "collectedAt": "2026-09-20",
+  "collectedAt": "2026-09-21",
   "rangeStart": "2025-09-08",
   "rangeEnd": "2026-09-14",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
       "week": "2025-09-08",
-      "value": 0.0
+      "value": 0.8
     },
     {
       "week": "2025-09-22",
@@ -17,7 +17,7 @@
     },
     {
       "week": "2025-10-06",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2025-10-13",
@@ -25,11 +25,11 @@
     },
     {
       "week": "2025-10-20",
-      "value": 0.0
+      "value": 1.0
     },
     {
       "week": "2025-10-27",
-      "value": 1.0
+      "value": 0.8
     },
     {
       "week": "2025-11-03",
@@ -53,7 +53,7 @@
     },
     {
       "week": "2026-01-19",
-      "value": 1.0
+      "value": 0.0
     },
     {
       "week": "2026-01-26",
@@ -65,11 +65,11 @@
     },
     {
       "week": "2026-02-09",
-      "value": 0.0
+      "value": -0.0
     },
     {
       "week": "2026-02-16",
-      "value": 0.0
+      "value": 0.5
     },
     {
       "week": "2026-03-02",
@@ -84,11 +84,11 @@
       "value": 1.0
     },
     {
-      "week": "2026-03-30",
+      "week": "2026-03-23",
       "value": 0.0
     },
     {
-      "week": "2026-04-06",
+      "week": "2026-03-30",
       "value": 0.0
     },
     {
@@ -129,15 +129,19 @@
     },
     {
       "week": "2026-06-29",
-      "value": 0.1
+      "value": 0.0
     },
     {
       "week": "2026-07-06",
-      "value": 1.0
+      "value": 0.0
     },
     {
       "week": "2026-07-13",
-      "value": -0.3333
+      "value": 0.0
+    },
+    {
+      "week": "2026-07-20",
+      "value": 1.0
     },
     {
       "week": "2026-07-27",
@@ -157,7 +161,7 @@
     },
     {
       "week": "2026-08-31",
-      "value": 0.3
+      "value": 1.0
     },
     {
       "week": "2026-09-07",

@@ -1,10 +1,37 @@
 {
-  "collectedAt": "2026-09-20",
+  "collectedAt": "2026-09-22",
   "method": "키워드 휴리스틱",
   "lookbackDays": 30,
-  "rawCount": 738,
+  "rawCount": 733,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
+    {
+      "date": "2026-09-21",
+      "title": "삼성 and SK하이닉스 Stocks Surge as AI Memory Shortage Deepens",
+      "titleEn": "Samsung and SK Hynix Stocks Surge as AI Memory Shortage Deepens",
+      "source": "Startup Fortune",
+      "score": 0.67,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "삼성 and SK하이닉스 Stocks Surge as AI Memory Shortage Deepens &nbsp;&nbsp; Startup Fortune",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOa3o2bTFqaWRsM1lMRm44YlBFMy1FTjl3Y1Z1azFWSkNmeXU1ZUZRZ2txcFIxNlBCTHJzNEx0bDY3djBhSXd4VzZaX1RPcG5kaHp0X3FRUG9mYWdSNzNUcHdOUGd1ZXpCTmtBb1F4VXNlc0lMTGdIcFZJa0l5Ykx4UEJ3TVI0ZWdKbnFVOUw0aG5GMUxiWmc?oc=5"
+    },
     {
       "date": "2026-09-04",
       "title": "마이크론, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
@@ -62,8 +89,8 @@
     {
       "date": "2026-09-16",
       "title": "AI-induced memory shortage is changing how devices are built, Fairphon",
-      "titleEn": "AI-induced memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips - Tom's Hardware",
-      "source": "RSS",
+      "titleEn": "AI-induced memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips",
+      "source": "tomshardware.com",
       "score": 0.5,
       "tone": "pos",
       "conf": 50,
@@ -85,6 +112,33 @@
       },
       "linked": [],
       "link": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxOS1dYNmpYUTBQd3djYlRQTEpzOXNxaWNSOElGbGd5NmptTklaUkNlNTMwR0xXa01FQWdwQ0tsVFZYR0NVcmdobkJJcW5RaG05QldZRU0yN0U4enJZOW5JSU1Mc3U2M3liOF9OdWpaQzlOUklCX1hxZG1iQV8xM0p6V3JWS1JTMmIzb1E4ZnVlV1ZITkJIUGx3U3VabWR1b3pXUXFfYVVEVTdrUGo5S3J2RzJ4aFhuVElsa25wcndnVlduQ1ZZWWw5WUg0RThvQTRaSHFqY0R1UEQtNHlnMThnLU56UWZhem43RDZUTzB0b3FPZ2N1Y2JkNlNqakFaUk9mN1l1R0VvQTdabnh0TEN4UXVJVVp0OXR6SllMMXNiT1JGTmczQjFzRjdBVTZDaFpYSjlNYUUxRUdveGxDd2RFZXk0aVRQRWhxNlpZenRlRkhaS2lwTDROd2lVYnJ4Wk1VYWF3dXhzUlB2RTA?oc=5"
+    },
+    {
+      "date": "2026-09-21",
+      "title": "MediaTek hits NT$5,000 milestone as 대만's TAIEX surges 538 points towar",
+      "titleEn": "MediaTek hits NT$5,000 milestone as Taiwan's TAIEX surges 538 points toward record high",
+      "source": "finance.biggo.com",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 50,
+      "hot": true,
+      "summary": "MediaTek hits NT$5,000 milestone as 대만's TAIEX surges 538 points toward record high &nbsp;&nbsp; finance.biggo.com",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFA0UDF5dmotWlVfU085c256MVZmd1lvQ3Rzbjk5VjRMaGRQUFkzWFJWWktTRlluZE9MVG0zUGkyVVN6dElFVDZuWTlsSzBwQnROVEdyTUIxNUZKUXJlbHhFY3U0RllNRnliQmZ6ZXByX1JrY2xUaHc?oc=5"
     },
     {
       "date": "2026-09-17",
@@ -112,87 +166,6 @@
       },
       "linked": [],
       "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOTWlyYWxYRnBseWE4RjJLZWhKOXVlbl9RNUo4RFlnV0hMWTJGWFJFclhrU1BZeWM4UW5kTWVicDdIdXVPMFJWaXJ1TzNTTmdMa2JKbU5XSWNUYWdSekFSYWliZTZVckk2aF9kR1MxUlBhb0JCbnB5Smp6blNuTFlFVjZLY3VGRmZzaHJqekx1eEJRM3lETERTeldQb21fU2RDLWx0aUJZR2lVMm1BdEIzTQ?oc=5"
-    },
-    {
-      "date": "2026-09-16",
-      "title": "삼성 shifts memory manufacturing focus toward AI-driven high-bandwidth m",
-      "titleEn": "Samsung shifts memory manufacturing focus toward AI-driven high-bandwidth memory",
-      "source": "Global Sources",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "삼성 shifts memory manufacturing focus toward AI-driven high-bandwidth memory &nbsp;&nbsp; Global Sources",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQb3JjVEVROUQ0TUJEcFh6OGdUYzdwRFFsNlh5RlJTSkJrYmRXdjd4Y0hBWWlSaXFtWmhOUjJWSVNLcE14dUFYU0RkMFJSTTh1VWFmeDlEbWZTclNsMjR6cEpFdzgxWU5seEdJQkhLSHJ0clpkSDFWMW5MTUJjRW10TTRvWlFDMENJSHV1MHZvTzlZdDVNOFlpdThtdGxVXzhOa3pfUlRkQzZydlZNYzFlVUVBSFFCeEdXVWNWWTYza2ZGOEtZOWc?oc=5"
-    },
-    {
-      "date": "2026-09-16",
-      "title": "Intel CEO Warns of Worsening Memory Shortage",
-      "titleEn": "Intel CEO Warns of Worsening Memory Shortage",
-      "source": "ForkLog",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 50,
-      "hot": true,
-      "summary": "Intel CEO Warns of Worsening Memory Shortage &nbsp;&nbsp; ForkLog",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5JSjNFVkdxXzJuUl9HempKX3ItQ2NTWHotQkQtdHVqbTl0SkllamFvMG00UzdPemlHUmY2eEJ2MDZpSlZ5d2UzN3VNTmJVM2UwRG5tVkpodmtsY3hIOUVzVVp1a1VmVDZ4WjZnRWNWNGxTcVJnMkFZ?oc=5"
-    },
-    {
-      "date": "2026-09-14",
-      "title": "Tungsten Export Bans From Zimbabwe to Washington Are Squeezing Chipmak",
-      "titleEn": "Tungsten Export Bans From Zimbabwe to Washington Are Squeezing Chipmakers",
-      "source": "Startup Fortune",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 50,
-      "hot": true,
-      "summary": "Tungsten Export Bans From Zimbabwe to Washington Are Squeezing Chipmakers &nbsp;&nbsp; Startup Fortune",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "LLM 비활성 — 휴리스틱 분류"
-        }
-      },
-      "linked": [],
-      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOb3dyWDc1Vlc1T3Mta1p1Z3IyNXotUU9vLVF2TmhhTGhlSm1kZWVzeXJoWXF5djVUMW1MNVdpeXBKelZ0VjBpVHdkNVFxbkhOc0pwcnVRNl9kUjdNX01COFpBdE1vMTQxREZsY1ItRWw5TUdLNHpWaHlISFEwcDMtQmFiU1JkYUgtYVBwVk9RbU5fYTBBSmdJSjhGMUx5QXlTUTFR?oc=5"
     },
     {
       "date": "2026-09-11",
@@ -224,13 +197,13 @@
     {
       "date": "2026-08-26",
       "title": "엔비디아 custom 'NVHBM' promises 30% higher bandwidth, 15% lower power tha",
-      "titleEn": "Nvidia custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners - Tom's Hardware",
-      "source": "RSS",
+      "titleEn": "Nvidia custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners",
+      "source": "tomshardware.com",
       "score": -0.5,
       "tone": "neg",
       "conf": 50,
       "hot": true,
-      "summary": "엔비디아 custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners &nbsp;&nbsp; Tom's H",
+      "summary": "엔비디아 custom 'NVHBM' promises 30% higher bandwidth, 15% lower power than commodity HBM4e — custom base die and PHY will be available to NVLink Fusion partners &nbsp;&nbsp; tomshar",
       "effects": {
         "short": {
           "tone": "neg",
@@ -249,10 +222,37 @@
       "link": "https://news.google.com/rss/articles/CBMivAJBVV95cUxNRUFaUUtqVEh6MWJLSnZ1bTF1aXdib181blNlbzlyZjRRV0k1UXZMOE4wRFFxdVBPMTlRZG81OTFreDdiMjlDQVFhMmlYaXBkOFFpRGNCdl9oOGkyMG4zTzV6LTliN0M0bHotdnpRV0Vsb3NtelRjSFVrN3dZOXFGaEcyMFBVSGg5U1lFb0QtN3hRcTQxS1FpX1BER21yYjFZeHhlMFQzS0ROMlBlXzN3N2tkZy1DNGc4ZUltNUtlSTBOS3B1Q2tMT2VuemgtWXM3cm1fb3RXellIaVRNc3hfRG9kcFRlLUFEb24tcl9fQnlrTWYtbXBPVzQ0N25DRGo4XzhkVkVCcUNfY1J3aDhOOXI1ZW1yZFBvQkhDYTRtOHJSclJ1NXU5WnZCNElUb1RwbW5KS05fa3A2NlFI?oc=5"
     },
     {
+      "date": "2026-09-21",
+      "title": "Acer CEO says memory makers are hyping 2030 shortage fears to protect ",
+      "titleEn": "Acer CEO says memory makers are hyping 2030 shortage fears to protect margins — PC prices set to decline by late 2027, cheaper Chinese capacity coming online delivers lower memory prices",
+      "source": "tomshardware.com",
+      "score": 0.0,
+      "tone": "neu",
+      "conf": 50,
+      "hot": false,
+      "summary": "Acer CEO says memory makers are hyping 2030 shortage fears to protect margins — PC prices set to decline by late 2027, cheaper Chinese capacity coming online delivers lower memory ",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "LLM 비활성 — 휴리스틱 분류"
+        }
+      },
+      "linked": [],
+      "link": "https://news.google.com/rss/articles/CBMi0AJBVV95cUxPbVZDTTFRWmRmbGhzMjBtd1NBQTlkZUZWZWtXUHpUcmJUcnFrLUo3OXA0cnl6Sk9aaC1FMUJpbVNPazUzWmk4NlVRMmtmVG5YTFhjYXZMdWlvaHpodWJLYUxHQTdzamdVQmNoNGU5ZEg1X3NadlFwQWlZM1FTb3BmTXFFNGNwaGt6ZEtjVDBqeEtwTHpLYUFDWkk5d2lLb3lNOGFSYnpUXzY4UHkzUE80cUJpVTlSTE41aC14OGZYbk1YVDVfcjl5dlE5UUNwNTZyQXFHMEpwUXJfc19kTWp1bWZOWjc3amdXQk1DbWd6cm1hN2hLUUZfNTJLazVuSllBLWhTOU41STdEZVVISzRzandyNFJ4QjZfRlMwVnJkV2FVNWtFY2VZZlRZYjMzdWVvSHFtcko5OVMxWlhfamw5ZVNaR2FHeFZxRXhJS28tcHk?oc=5"
+    },
+    {
       "date": "2026-08-28",
       "title": "New US export controls reportedly target Chinese access to remote AI s",
-      "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September - Tom's Hardware",
-      "source": "RSS",
+      "titleEn": "New US export controls reportedly target Chinese access to remote AI servers — Trump admin's cut-down AI diffusion rule could be shared with industry as soon as September",
+      "source": "tomshardware.com",
       "score": 0.0,
       "tone": "neu",
       "conf": 50,
