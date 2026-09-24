@@ -70,7 +70,7 @@ def build_prompt() -> tuple[str, dict]:
         sig = _load(sid); r = sig["data"]
         if sid in EXCLUDED_SIGNALS or not r:
             continue
-        stale = freshness(r, sig.get("collectedAt"), ref_date)["stale"]
+        stale = freshness(r, sig.get("collectedAt"), ref_date, sid)["stale"]
         v = r[-1]["value"]
         # 부호(+/-)는 감성 점수에만 — 가격·지수에 '+0.13'을 붙이면 LLM 이 '상승'으로 오독한다
         if meta["fmt"] == "sent":
@@ -88,7 +88,7 @@ def build_prompt() -> tuple[str, dict]:
     for mid, meta in MACRO_META.items():
         sig = _load(mid); r = sig["data"]
         if r:
-            stale = freshness(r, sig.get("collectedAt"), ref_date)["stale"]
+            stale = freshness(r, sig.get("collectedAt"), ref_date, mid)["stale"]
             macro_lines.append(f"  {meta['name']}: {r[-1]['value']:.2f} (기준 {r[-1]['week']}"
                                f"{', 갱신 중단 — 현재 상황 판단에 쓰지 말 것' if stale else ''})")
 

@@ -22,13 +22,27 @@ PROXY_NOTE = "실제 DRAM 계약가가 아닌 대용 지표입니다."
 # 수집 신선도 — 마지막 수집이 이 일수보다 오래되면 '갱신 중단'으로 표시
 STALE_DAYS = 14
 # 값 정체 — 수집은 되지만 같은 값이 이 주수 이상 이어지면 데이터가 멈춘 것으로 본다.
-# (월간 통계는 보통 4~5주마다 새 값. 예: A-3 관세청은 2026-03 값이 26주째 복사되고 있었음)
-FROZEN_WEEKS = 8
+# 기준은 신호의 원천 발표 주기에 맞춘다 (예: A-3 관세청은 2026-03 값이 26주째 복사되고 있었음).
+FROZEN_WEEKS = 8                                    # 주간·일간 시장 데이터
+MONTHLY_SIGNALS = {"A-3", "A-4", "B-4", "macro-pmi"}  # 월간 통계 — 발표 지연 포함 최대 약 3개월 같은 값 정상
+QUARTERLY_SIGNALS = {"A-2"}                         # 분기 실적
+NO_FROZEN_CHECK = {"macro-fed"}                     # 정책금리 — 회의 사이 동결이 정상 (수집일만 검사)
+
+
+def frozen_limit(sid: str) -> int | None:
+    """같은 값이 몇 주 이어지면 '갱신 중단'으로 볼지. None = 값 정체 검사 안 함."""
+    if sid in NO_FROZEN_CHECK:
+        return None
+    if sid in QUARTERLY_SIGNALS:
+        return 26
+    if sid in MONTHLY_SIGNALS:
+        return 13
+    return FROZEN_WEEKS
 
 # 설명은 실제 수집 방식 그대로 적는다(auto_collectors.py / backfill.py 의 source 와 일치).
 # 이전 설명 일부는 수집하지 않는 기관 데이터를 적어 과장했음(예: B-5 'DRAMeXchange', B-6 'TrendForce').
 SIGNAL_META = {
-    "A-1": {"name": "대만 파운드리 주가",  "desc": "TSMC 70%·UMC 30% 주가 (Yahoo Finance)",                "fmt": "pct"},
+    "A-1": {"name": "대만 파운드리 주가",  "desc": "TSMC 70%·UMC 30% 주가 (각각 2025-06-16=100 정규화, Yahoo Finance)", "fmt": "pct"},
     "A-2": {"name": "빅테크 CapEx",        "desc": "빅테크 4사 분기 CapEx (SEC EDGAR, 분기 4개 관측)",     "fmt": "usd_b"},
     "A-3": {"name": "관세청 메모리 수출",  "desc": "HS 854232 월간 수출액 USD (관세청 Open API)",          "fmt": "raw"},
     "A-4": {"name": "전자부품 재고지수",   "desc": "KOSIS 광공업동향 C26 재고지수, 2020=100, 월간",         "fmt": "raw"},
@@ -139,7 +153,7 @@ def fmt_signal(sid: str, rows: list[dict], ref_date: str) -> dict:
     sig = load_signal(sid)
     src_short = (sig.get("source") or "").split("(")[0].split(",")[0].strip()[:40] or "(미수집)"
     collected = sig.get("collectedAt")
-    fr = freshness(rows, collected, ref_date)
+    fr = freshness(rows, collected, ref_date, sid)
 
     return {
         "id": sid,
@@ -224,7 +238,7 @@ def build_macro(ref_date: str) -> list[dict]:
 
         history_vals = [round(r["value"], 2) for r in rows[-7:]]
         as_of = rows[-1]["week"]
-        fr = freshness(rows, load_signal(mid).get("collectedAt"), ref_date)
+        fr = freshness(rows, load_signal(mid).get("collectedAt"), ref_date, mid)
         out.append({
             "id": mid.replace("macro-", ""),
             "asOf": as_of,
@@ -248,8 +262,8 @@ def _days_between(d1: str, d2: str) -> int:
     return abs((datetime.fromisoformat(d2[:10]) - datetime.fromisoformat(d1[:10])).days)
 
 
-def freshness(rows: list[dict], collected: str | None, ref_date: str) -> dict:
-    """신선도 판정 — 수집 중단 또는 값 정체. 화면·인사이트가 같은 기준을 쓴다."""
+def freshness(rows: list[dict], collected: str | None, ref_date: str, sid: str) -> dict:
+    """신선도 판정 — 수집 중단 또는 값 정체(신호 주기별 기준). 화면·인사이트가 같은 기준을 쓴다."""
     if not rows or not collected:
         return {"stale": True, "reason": "수집된 데이터 없음", "dataSince": None, "frozenWeeks": 0}
     run = 1
@@ -258,7 +272,7 @@ def freshness(rows: list[dict], collected: str | None, ref_date: str) -> dict:
     since = rows[-run]["week"]
     if _days_between(collected, ref_date) > STALE_DAYS:
         reason = f"{collected} 이후 수집되지 않음"
-    elif run >= FROZEN_WEEKS:
+    elif (limit := frozen_limit(sid)) is not None and run >= limit:
         reason = f"수집은 되지만 값이 {since} 이후 {run}주째 같음 (원천 데이터 미갱신)"
     else:
         reason = None
@@ -271,7 +285,7 @@ def build_collection(group: str, ref_date: str) -> list[dict]:
     for sid in (f"{group}-{i}" for i in range(1, 8)):
         sig = load_signal(sid)
         collected = sig.get("collectedAt")
-        fr = freshness(sig.get("data", []), collected, ref_date)
+        fr = freshness(sig.get("data", []), collected, ref_date, sid)
         status = "fail" if not sig.get("data") else "stale" if fr["stale"] else "ok"
         rows.append({
             "id": sid,

@@ -844,31 +844,79 @@ def collect_B6_hbm_mix():
 # ──────────────────────────────────────────────────────────────────────────────
 # target-dram — DRAM 가격 proxy (메모리 3사 주가 블렌드, Yahoo Finance 무료)
 # ──────────────────────────────────────────────────────────────────────────────
+# 대상 지수(target-dram)의 기준일. 시장·거시 수집기도 여기서부터 모아 같은 기간을 덮는다
+# (검증 백테스트가 대상 지수와 같은 기간의 피처를 쓰도록).
+HISTORY_START = "2025-06-16"
+
+
+def _yf_weekly(ticker: str, start: str = HISTORY_START) -> dict:
+    """Yahoo Finance 주간 종가 → {월요일 날짜: 값}. NaN 제외."""
+    import yfinance as yf
+    df = yf.download(ticker, start=start, end=date.today().isoformat(),
+                     interval="1wk", progress=False, auto_adjust=False)
+    out = {}
+    for idx, row in df.iterrows():
+        try:
+            c = row["Close"]
+            v = float(c.iloc[0] if hasattr(c, "iloc") else c)
+            if v == v:  # NaN 제외
+                out[snap_to_monday(idx.date()).isoformat()] = v
+        except Exception:
+            pass
+    return out
+
+
+def _fred_rows(series_id: str, start: str = HISTORY_START) -> list[tuple[date, float]]:
+    """FRED 공개 CSV (API 키 불필요) → [(날짜, 값)]. 결측('.')은 제외."""
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}&cosd={start}&coed={date.today().isoformat()}"
+    r = requests.get(url, timeout=30)
+    r.raise_for_status()
+    rows = []
+    for ln in r.text.strip().split("\n")[1:]:
+        parts = ln.split(",")
+        if len(parts) != 2 or parts[1].strip() in ("", "."):
+            continue
+        rows.append((date.fromisoformat(parts[0].strip()), float(parts[1])))
+    if not rows:
+        raise RuntimeError(f"FRED {series_id} 데이터 없음")
+    return rows
+
+
+def _fred_weekly(series_id: str) -> list[dict]:
+    """FRED 일간 → 주간 평균 (월요일 표기)."""
+    weekly = defaultdict(list)
+    for d, v in _fred_rows(series_id):
+        weekly[snap_to_monday(d).isoformat()].append(v)
+    return [{"week": w, "value": round(sum(v) / len(v), 4)} for w, v in sorted(weekly.items())]
+
+
+def _ffill_monthly_to_weekly(monthly: list[tuple[date, float]], start: str = HISTORY_START) -> list[dict]:
+    """월간 관측 → 월요일 주간으로 forward-fill (관측 전 주는 제외)."""
+    monthly = sorted(monthly)
+    out, cur = [], -1
+    w, last = snap_to_monday(date.fromisoformat(start)), snap_to_monday(date.today())
+    while w <= last:
+        while cur + 1 < len(monthly) and monthly[cur + 1][0] <= w:
+            cur += 1
+        if cur >= 0:
+            out.append({"week": w.isoformat(), "value": round(monthly[cur][1], 4)})
+        w += timedelta(weeks=1)
+    return out
+
+
+def _as_series(d: dict) -> list[dict]:
+    return [{"week": w, "value": round(v, 4)} for w, v in sorted(d.items())]
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# target-dram — DRAM 가격 proxy (메모리 3사 주가 블렌드, Yahoo Finance 무료)
+# ──────────────────────────────────────────────────────────────────────────────
 def collect_target_dram():
     """DRAM 계약가는 유료(DRAMeXchange/TrendForce)라 무료 proxy 로 대체.
     메모리 3사 주가 가중 블렌드: MU(50%) + SK하이닉스 000660.KS(30%) + 삼성전자 005930.KS(20%).
-    각 종목을 고정 anchor(2025-06-16, 기존 히스토리 base=100) 대비 정규화해 가중합 → 연속성 유지.
+    각 종목을 고정 기준일(HISTORY_START, 기존 히스토리 base=100) 대비 정규화해 가중합 → 연속성 유지.
     통화(USD/KRW)는 각자 base 대비 비율로 상쇄되어 환율 변환 불필요."""
-    import yfinance as yf
-    ANCHOR = "2025-06-16"  # 기존 target-dram.json 첫 주 = base 100 (연속성 고정 기준)
-
-    def _weekly(ticker: str) -> dict:
-        df = yf.download(ticker, start=ANCHOR, end=date.today().isoformat(),
-                         interval="1wk", progress=False, auto_adjust=False)
-        out = {}
-        if len(df) == 0:
-            return out
-        for idx, row in df.iterrows():
-            try:
-                c = row["Close"]
-                v = float(c.iloc[0] if hasattr(c, "iloc") else c)
-                if v == v:  # NaN 제외
-                    out[idx.date().isoformat()] = v
-            except Exception:
-                pass
-        return out
-
-    mu, sk, ss = _weekly("MU"), _weekly("000660.KS"), _weekly("005930.KS")
+    mu, sk, ss = _yf_weekly("MU"), _yf_weekly("000660.KS"), _yf_weekly("005930.KS")
     if not (mu and sk and ss):
         raise RuntimeError("메모리 3사 주가 수집 실패 (yfinance 차단 가능성)")
     weeks = sorted(set(mu) & set(sk) & set(ss))
@@ -885,6 +933,60 @@ def collect_target_dram():
     return data, "real-proxy", source
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# A-1·A-7·거시 6종 — v2.3.1 복구. 이전엔 1회성 backfill.py 에만 있어 2026-07-12 이후 멈춰 있었음.
+# ──────────────────────────────────────────────────────────────────────────────
+def collect_A1_taiwan_foundry():
+    """TSMC 70% + UMC 30% — 각각 기준일=100 으로 정규화한 뒤 가중.
+    (backfill.py 는 원주가를 그대로 섞어 TSMC 가 약 98% 를 차지했음)"""
+    tsm, umc = _yf_weekly("TSM"), _yf_weekly("UMC")
+    weeks = sorted(set(tsm) & set(umc))
+    if len(weeks) < 10:
+        raise RuntimeError(f"TSM/UMC 공통 주 부족 ({len(weeks)}주)")
+    bt, bu = tsm[weeks[0]], umc[weeks[0]]
+    data = [{"week": w, "value": round((0.7 * tsm[w] / bt + 0.3 * umc[w] / bu) * 100, 4)} for w in weeks]
+    return data, "real", f"Yahoo Finance: TSM (70%) + UMC (30%), 각각 {HISTORY_START}=100 정규화"
+
+
+def collect_A7_copper():
+    data = _as_series(_yf_weekly("HG=F"))
+    if not data:
+        raise RuntimeError("HG=F 데이터 없음")
+    return data, "real", "Yahoo Finance HG=F (COMEX Copper Futures, LME 대체)"
+
+
+def collect_macro_cu():
+    return collect_A7_copper()  # A-7 과 같은 소스 (화면에 두 곳 표시)
+
+
+def collect_macro_dxy():
+    data = _as_series(_yf_weekly("DX-Y.NYB"))
+    if not data:
+        raise RuntimeError("DX-Y.NYB 데이터 없음")
+    return data, "real", "Yahoo Finance DX-Y.NYB (US Dollar Index)"
+
+
+def collect_macro_krw():
+    data = _as_series(_yf_weekly("KRW=X"))
+    if not data:
+        raise RuntimeError("KRW=X 데이터 없음")
+    return data, "real", "Yahoo Finance KRW=X (USD/KRW spot)"
+
+
+def collect_macro_fed():
+    return _fred_weekly("DFF"), "real", "FRED CSV DFF (Effective Federal Funds Rate)"
+
+
+def collect_macro_ust10():
+    return _fred_weekly("DGS10"), "real", "FRED CSV DGS10 (10-Year Treasury Constant Maturity Rate, %)"
+
+
+def collect_macro_pmi():
+    """ISM PMI 대체 — 산업생산지수(INDPRO, 월간)를 월요일 주간으로 forward-fill."""
+    data = _ffill_monthly_to_weekly(_fred_rows("INDPRO"))
+    return data, "real", "FRED CSV INDPRO (Industrial Production Index, monthly→forward-fill weekly, PMI 대체)"
+
+
 COLLECTORS = {
     "A-3": collect_A3_kcs,
     "A-4": collect_A4_kosis,
@@ -898,6 +1000,14 @@ COLLECTORS = {
     "B-6": collect_B6_hbm_mix,
     "B-7": collect_B7_bom_hn,
     "target-dram": collect_target_dram,
+    "A-1": collect_A1_taiwan_foundry,
+    "A-7": collect_A7_copper,
+    "macro-cu": collect_macro_cu,
+    "macro-dxy": collect_macro_dxy,
+    "macro-krw": collect_macro_krw,
+    "macro-fed": collect_macro_fed,
+    "macro-ust10": collect_macro_ust10,
+    "macro-pmi": collect_macro_pmi,
 }
 
 
