@@ -1,0 +1,186 @@
+{
+  "runAt": "2026-09-24",
+  "dataWeeks": 67,
+  "dataRange": [
+    "2025-06-16",
+    "2026-09-21"
+  ],
+  "target": "메모리 3사 주가지수 (MU 50% · SK하이닉스 30% · 삼성전자 20%, 2025-06-16 = 100)",
+  "baseline": "단순 기준선 — 지난주 값이 그대로 유지된다고 가정",
+  "passRule": "모델 평균 오차 < 기준선 평균 오차, 그리고 부호검정 p < 0.05",
+  "method": [
+    "과거 각 시점마다 그 시점까지 정답이 확정된 데이터로만 새로 학습해 1~7주 뒤를 예측",
+    "날짜를 월요일로 통일, 미래 값으로 과거를 채우지 않음",
+    "월간·분기 발표 통계는 발표 지연 6주 반영 (그 시점에 실제로 알 수 있던 값만)"
+  ],
+  "variants": [
+    {
+      "key": "level",
+      "name": "앱이 쓰던 방식 (가격 수준 예측)",
+      "byHorizon": [
+        {
+          "h": 1,
+          "n": 39,
+          "modelMape": 26.65,
+          "naiveMape": 7.41,
+          "winRate": 12.8,
+          "dirAcc": 35.9
+        },
+        {
+          "h": 2,
+          "n": 37,
+          "modelMape": 29.56,
+          "naiveMape": 11.32,
+          "winRate": 13.5,
+          "dirAcc": 35.1
+        },
+        {
+          "h": 3,
+          "n": 35,
+          "modelMape": 31.06,
+          "naiveMape": 13.32,
+          "winRate": 20.0,
+          "dirAcc": 34.3
+        },
+        {
+          "h": 4,
+          "n": 33,
+          "modelMape": 33.18,
+          "naiveMape": 16.42,
+          "winRate": 18.2,
+          "dirAcc": 27.3
+        },
+        {
+          "h": 5,
+          "n": 31,
+          "modelMape": 35.21,
+          "naiveMape": 19.64,
+          "winRate": 19.4,
+          "dirAcc": 32.3
+        },
+        {
+          "h": 6,
+          "n": 29,
+          "modelMape": 35.94,
+          "naiveMape": 21.71,
+          "winRate": 24.1,
+          "dirAcc": 44.8
+        },
+        {
+          "h": 7,
+          "n": 27,
+          "modelMape": 36.97,
+          "naiveMape": 24.67,
+          "winRate": 33.3,
+          "dirAcc": 44.4
+        }
+      ],
+      "overall": {
+        "n": 231,
+        "modelMape": 32.24,
+        "naiveMape": 15.67,
+        "winRate": 19.5,
+        "dirAcc": 35.9,
+        "alwaysUpDirAcc": 70.6,
+        "pValue": 1.0
+      },
+      "procurement": {
+        "n": 33,
+        "horizonWeeks": 4,
+        "alwaysNow": 528.03,
+        "model": 573.28,
+        "modelPct": 8.57,
+        "perfectPct": -4.9,
+        "waitRate": 93.9,
+        "waitCount": 31,
+        "waitCorrect": 7
+      },
+      "pass": false
+    },
+    {
+      "key": "return",
+      "name": "개선 시도 (변화율 예측)",
+      "byHorizon": [
+        {
+          "h": 1,
+          "n": 39,
+          "modelMape": 7.14,
+          "naiveMape": 7.41,
+          "winRate": 66.7,
+          "dirAcc": 71.8
+        },
+        {
+          "h": 2,
+          "n": 37,
+          "modelMape": 10.73,
+          "naiveMape": 11.32,
+          "winRate": 56.8,
+          "dirAcc": 64.9
+        },
+        {
+          "h": 3,
+          "n": 35,
+          "modelMape": 14.35,
+          "naiveMape": 13.32,
+          "winRate": 48.6,
+          "dirAcc": 57.1
+        },
+        {
+          "h": 4,
+          "n": 33,
+          "modelMape": 20.07,
+          "naiveMape": 16.42,
+          "winRate": 42.4,
+          "dirAcc": 72.7
+        },
+        {
+          "h": 5,
+          "n": 31,
+          "modelMape": 28.76,
+          "naiveMape": 19.64,
+          "winRate": 51.6,
+          "dirAcc": 71.0
+        },
+        {
+          "h": 6,
+          "n": 29,
+          "modelMape": 36.62,
+          "naiveMape": 21.71,
+          "winRate": 51.7,
+          "dirAcc": 65.5
+        },
+        {
+          "h": 7,
+          "n": 27,
+          "modelMape": 44.18,
+          "naiveMape": 24.67,
+          "winRate": 48.1,
+          "dirAcc": 70.4
+        }
+      ],
+      "overall": {
+        "n": 231,
+        "modelMape": 21.59,
+        "naiveMape": 15.67,
+        "winRate": 52.8,
+        "dirAcc": 67.5,
+        "alwaysUpDirAcc": 70.6,
+        "pValue": 0.215
+      },
+      "procurement": {
+        "n": 33,
+        "horizonWeeks": 4,
+        "alwaysNow": 528.03,
+        "model": 531.84,
+        "modelPct": 0.72,
+        "perfectPct": -4.9,
+        "waitRate": 6.1,
+        "waitCount": 2,
+        "waitCorrect": 0
+      },
+      "pass": false
+    }
+  ],
+  "pass": false,
+  "verdict": "불합격"
+}
