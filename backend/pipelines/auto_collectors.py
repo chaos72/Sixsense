@@ -25,6 +25,8 @@ from pathlib import Path
 
 import requests
 
+from gemini_client import BULK_MODELS, gemini_generate
+
 ROOT = Path(__file__).parent.parent
 HIST_DIR = ROOT / "data" / "historical"
 HIST_DIR.mkdir(parents=True, exist_ok=True)
@@ -719,104 +721,25 @@ MICRON_IR_URLS = ["https://investors.micron.com/financial-information/quarterly-
 
 
 def _llm_sentiment(text: str, prompt_topic: str) -> float:
-    """LLM 기반 sentiment (-1~+1). 우선순위: Anthropic → Gemini → Groq.
-    셋 다 키 없으면 EnvironmentError.
+    """LLM 기반 sentiment (-1~+1) — Gemini 무료 티어 단독 (gemini_client 참고).
+    실행당 수십 회 호출되는 대량 작업이라 lite 모델부터 써서 flash 한도를 아낀다.
+    모든 모델이 실패하면 EnvironmentError.
     """
     prompt = (
         f"다음 텍스트는 메모리 반도체 회사의 IR 자료다. {prompt_topic}에 대한 sentiment를 "
         f"-1 (매우 부정) ~ +1 (매우 긍정) 사이 한 개의 숫자로만 답변하라. 다른 설명 금지.\n\n"
         f"<text>\n{text[:8000]}\n</text>"
     )
-
-    # ── 1순위: Anthropic Claude (크레딧 있을 때) ──
-    anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
-    if anthropic_key:
-        try:
-            r = requests.post(
-                "https://api.anthropic.com/v1/messages",
-                headers={
-                    "x-api-key": anthropic_key,
-                    "anthropic-version": "2023-06-01",
-                    "content-type": "application/json",
-                },
-                json={
-                    "model": "claude-haiku-4-5-20251001",
-                    "max_tokens": 32,
-                    "messages": [{"role": "user", "content": prompt}],
-                },
-                timeout=60,
-            )
-            if r.status_code == 200:
-                txt = r.json()["content"][0]["text"].strip()
-                m = re.search(r"-?\d+\.?\d*", txt)
-                if m:
-                    return max(-1.0, min(1.0, float(m.group())))
-            elif r.status_code == 400 and "credit balance" in r.text.lower():
-                print(f"    Anthropic 크레딧 부족 → Gemini fallback")
-        except Exception as e:
-            print(f"    Anthropic 실패, fallback: {str(e)[:50]}")
-
-    # ── 2순위: Google Gemini (무료 1500 req/day) ──
-    gemini_key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
-    if gemini_key:
-        try:
-            # 모델 우선순위: 2.5-flash (안정) → 2.0-flash → 1.5-flash-8b (한도 다른 풀)
-            for model in ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash-lite"):
-                r = requests.post(
-                    f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
-                    headers={"Content-Type": "application/json"},
-                    json={
-                        "contents": [{"parts": [{"text": prompt}]}],
-                        "generationConfig": {"maxOutputTokens": 128, "temperature": 0.0},
-                    },
-                    timeout=60,
-                )
-                if r.status_code == 200:
-                    j = r.json()
-                    parts = j.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-                    if parts and "text" in parts[0]:
-                        txt = parts[0]["text"].strip()
-                        m = re.search(r"-?\d+\.?\d*", txt)
-                        if m:
-                            return max(-1.0, min(1.0, float(m.group())))
-                    break  # 200이지만 text 없으면 다음 시도 무의미
-                elif r.status_code == 429:
-                    continue  # 다른 모델 시도
-                else:
-                    print(f"    Gemini {model} HTTP {r.status_code}: {r.text[:120]}")
-                    break
-        except Exception as e:
-            print(f"    Gemini 실패, fallback: {str(e)[:50]}")
-
-    # ── 3순위: Groq (무료 14400 req/day) ──
-    groq_key = os.getenv("GROQ_API_KEY", "")
-    if groq_key:
-        try:
-            r = requests.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
-                json={
-                    "model": "llama-3.3-70b-versatile",
-                    "messages": [{"role": "user", "content": prompt}],
-                    "max_tokens": 32,
-                    "temperature": 0.0,
-                },
-                timeout=60,
-            )
-            if r.status_code == 200:
-                txt = r.json()["choices"][0]["message"]["content"].strip()
-                m = re.search(r"-?\d+\.?\d*", txt)
-                if m:
-                    return max(-1.0, min(1.0, float(m.group())))
-        except Exception as e:
-            print(f"    Groq 실패: {str(e)[:50]}")
-
+    # max_tokens 1024: flash 계열은 답 전에 '생각'에 토큰을 써서 작게 잡으면 빈 응답이 온다
+    txt, used = gemini_generate(prompt, BULK_MODELS, max_tokens=1024)
+    if txt:
+        m = re.search(r"-?\d+\.?\d*", txt)
+        if m:
+            return max(-1.0, min(1.0, float(m.group())))
+        raise RuntimeError(f"{used} 응답에서 숫자를 찾지 못함: {txt[:40]}")
     raise EnvironmentError(
-        "LLM sentiment API 키 미설정 또는 모두 실패.\n"
-        "다음 중 하나를 .env에 추가 (모두 무료):\n"
-        "  - GEMINI_API_KEY=... (https://ai.google.dev — 무료 1500 req/day, 권장)\n"
-        "  - GROQ_API_KEY=...   (https://console.groq.com — 무료 14400 req/day)\n"
-        "  - ANTHROPIC_API_KEY=... + Billing 크레딧 (https://console.anthropic.com)"
+        f"Gemini sentiment 실패 — {used}\n"
+        "GEMINI_API_KEY(https://ai.google.dev, 무료) 설정 또는 무료 한도 소진 여부를 확인."
     )
 
 

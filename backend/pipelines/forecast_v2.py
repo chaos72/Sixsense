@@ -10,6 +10,14 @@
 - backend/data/forecast/forecast_v2_2026-02-w1.json (모든 모델 결과)
 - backend/data/forecast/model_comparison.txt (사람 읽기용 비교)
 """
+import os
+
+# macOS 에서 XGBoost/LightGBM(libomp)과 PyTorch 의 OpenMP 런타임이 한 프로세스에서 충돌해
+# LSTM 단계가 CPU 0% 로 멈추는 현상이 반복됨(로컬 3회). 라이브러리 로드 전에 스레드를 1개로 제한.
+# 데이터가 작아(약 120주) 학습 시간 영향은 무시할 수준(실측: 트리 7초, LSTM 13초).
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+
 import json
 import sys
 import time

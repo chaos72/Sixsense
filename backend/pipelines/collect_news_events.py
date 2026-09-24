@@ -19,6 +19,8 @@ from datetime import date, datetime, timedelta
 
 import requests
 
+from gemini_client import QUALITY_MODELS, available, gemini_generate
+
 # 프로젝트 루트 .env 로드 (auto_collectors와 동일 패턴)
 ROOT = Path(__file__).resolve().parents[2]
 ENV = ROOT / ".env"
@@ -38,6 +40,7 @@ OUT_NEWS.parent.mkdir(parents=True, exist_ok=True)
 OUT_EVENTS.parent.mkdir(parents=True, exist_ok=True)
 
 LOOKBACK_DAYS = 30
+
 
 # USER-REQUESTED EXTENSION (2026-05-18 #10) — news 풀과 events 풀을 entry 단계부터 분리
 # news 풀: DRAM/반도체 산업 직접 뉴스 (가격·수요·공급·기술 트렌드)
@@ -358,7 +361,7 @@ def safe_korean_title(en_title: str) -> str:
 # korean_title() 의 사전 치환만으로는 매핑 안 된 영문이 남음 → LLM 으로 전체 문장 번역.
 # 일괄 1회 호출로 여러 텍스트를 번역 (한도 절약). LLM 실패 시 None 반환.
 def llm_translate_batch(texts: list[str]) -> list[str] | None:
-    """영문 텍스트 리스트를 한국어로 일괄 번역. Gemini → Groq fallback. 실패 시 None."""
+    """영문 텍스트 리스트를 한국어로 일괄 번역 (Gemini 무료 티어, 모델 순회). 실패 시 None."""
     if not texts:
         return []
     # 이미 충분히 한국어인 것은 그대로, 영문 잔여만 번역 대상
@@ -381,72 +384,16 @@ def llm_translate_batch(texts: list[str]) -> list[str] | None:
             return [out.get(i + 1, texts[i]) for i in range(len(texts))]
         return None
 
-    # 0. Anthropic Claude (가장 신뢰도 높음 — build_insight.py call_anthropic 과 동일 패턴)
-    akey = os.getenv("ANTHROPIC_API_KEY")
-    if akey:
-        try:
-            r = requests.post(
-                "https://api.anthropic.com/v1/messages",
-                headers={"x-api-key": akey, "anthropic-version": "2023-06-01",
-                         "content-type": "application/json"},
-                json={"model": "claude-haiku-4-5-20251001", "max_tokens": 4096,
-                      "messages": [{"role": "user", "content": prompt}]},
-                timeout=60,
-            )
-            if r.status_code == 200:
-                txt = r.json()["content"][0]["text"]
-                parsed = _parse(txt)
-                if parsed:
-                    print(f"  ✅ LLM 번역 성공 (Claude, {len(texts)}건)")
-                    return parsed
-            else:
-                print(f"  ⚠ Claude 번역 HTTP {r.status_code}")
-        except Exception as e:
-            print(f"  ⚠ Claude 번역 실패: {str(e)[:60]}")
-
-    # 1. Gemini
-    gkey = os.getenv("GEMINI_API_KEY")
-    if gkey:
-        for model in ("gemini-2.5-flash", "gemini-flash-latest"):
-            try:
-                r = requests.post(
-                    f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gkey}",
-                    json={"contents": [{"parts": [{"text": prompt}]}],
-                          "generationConfig": {"maxOutputTokens": 4096, "temperature": 0.0}},
-                    timeout=60,
-                )
-                if r.status_code == 200:
-                    txt = r.json()["candidates"][0]["content"]["parts"][0]["text"]
-                    parsed = _parse(txt)
-                    if parsed:
-                        print(f"  ✅ LLM 번역 성공 ({model}, {len(texts)}건)")
-                        return parsed
-                elif r.status_code == 429:
-                    continue  # 다음 모델 시도
-            except Exception as e:
-                print(f"  ⚠ Gemini 번역 실패: {str(e)[:60]}")
-
-    # 2. Groq
-    qkey = os.getenv("GROQ_API_KEY")
-    if qkey:
-        try:
-            r = requests.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={"Authorization": f"Bearer {qkey}"},
-                json={"model": "llama-3.3-70b-versatile",
-                      "messages": [{"role": "user", "content": prompt}],
-                      "max_tokens": 4096, "temperature": 0.0},
-                timeout=60,
-            )
-            if r.status_code == 200:
-                txt = r.json()["choices"][0]["message"]["content"]
-                parsed = _parse(txt)
-                if parsed:
-                    print(f"  ✅ LLM 번역 성공 (Groq, {len(texts)}건)")
-                    return parsed
-        except Exception as e:
-            print(f"  ⚠ Groq 번역 실패: {str(e)[:60]}")
-
+    # Gemini 무료 티어 단독 (gemini_client — 모델별 한도를 순회해 소진)
+    txt, used = gemini_generate(prompt, QUALITY_MODELS, max_tokens=8192)
+    if txt:
+        parsed = _parse(txt)
+        if parsed:
+            print(f"  ✅ LLM 번역 성공 ({used}, {len(texts)}건)")
+            return parsed
+        print(f"  ⚠ {used} 번역 응답 파싱 실패")
+    else:
+        print(f"  ⚠ Gemini 번역 실패 — {used}")
     return None
 
 
@@ -682,31 +629,13 @@ def llm_enrich(entries: list[dict]) -> list[dict] | None:
 {schema}
 """
 
-    for model in ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash-lite"):
-        try:
-            r = requests.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
-                headers={"Content-Type": "application/json"},
-                json={
-                    "contents": [{"parts": [{"text": prompt}]}],
-                    "generationConfig": {
-                        "maxOutputTokens": 16384,
-                        "temperature": 0.0,
-                        "responseMimeType": "application/json",
-                    },
-                },
-                timeout=90,
-            )
-        except Exception as exc:
-            print(f"  ⚠️  Gemini {model} 네트워크: {str(exc)[:80]}")
-            continue
-        if r.status_code != 200:
-            print(f"  ⚠️  Gemini {model} HTTP {r.status_code}: {r.text[:160]}")
+    # 모델별로 호출 → JSON 파싱, 파싱 실패 시 다음 모델 (gemini_client 가 한도 소진 모델은 건너뜀)
+    for model in available(QUALITY_MODELS):
+        txt, used = gemini_generate(prompt, (model,), max_tokens=16384, json_mode=True, timeout=90)
+        if not txt:
+            print(f"  ⚠️  {used}")
             continue
         try:
-            j = r.json()
-            txt = j["candidates"][0]["content"]["parts"][0]["text"].strip()
-            # 코드펜스 제거
             txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
             arr = _parse_or_recover_array(txt)
             if isinstance(arr, list) and arr:
@@ -714,7 +643,6 @@ def llm_enrich(entries: list[dict]) -> list[dict] | None:
                 return arr
         except Exception as exc:
             print(f"  ⚠️  Gemini {model} 파싱 실패: {str(exc)[:120]}")
-            continue
     return None
 
 
@@ -1005,30 +933,12 @@ def llm_enrich_split(news_pool: list[dict], events_pool: list[dict]) -> dict | N
 {schema}
 """
 
-    for model in ("gemini-2.5-flash", "gemini-flash-latest"):
-        try:
-            r = requests.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
-                headers={"Content-Type": "application/json"},
-                json={
-                    "contents": [{"parts": [{"text": prompt}]}],
-                    "generationConfig": {
-                        "maxOutputTokens": 32768,
-                        "temperature": 0.0,
-                        "responseMimeType": "application/json",
-                    },
-                },
-                timeout=90,
-            )
-        except Exception as exc:
-            print(f"  ⚠️  Gemini {model} 네트워크: {str(exc)[:80]}")
-            continue
-        if r.status_code != 200:
-            print(f"  ⚠️  Gemini {model} HTTP {r.status_code}: {r.text[:160]}")
+    for model in available(QUALITY_MODELS):
+        txt, used = gemini_generate(prompt, (model,), max_tokens=32768, json_mode=True, timeout=90)
+        if not txt:
+            print(f"  ⚠️  {used}")
             continue
         try:
-            j = r.json()
-            txt = j["candidates"][0]["content"]["parts"][0]["text"].strip()
             txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
             obj = json.loads(txt)
             if isinstance(obj, dict) and ("news" in obj or "events" in obj):
@@ -1036,7 +946,6 @@ def llm_enrich_split(news_pool: list[dict], events_pool: list[dict]) -> dict | N
                 return obj
         except Exception as exc:
             print(f"  ⚠️  Gemini {model} 파싱 실패: {str(exc)[:120]}")
-            continue
     return None
 
 
@@ -1261,7 +1170,7 @@ def main():
             method_news = (method_news + " + LLM 한글화") if "휴리스틱" in method_news else method_news
             method_events = (method_events + " + LLM 한글화") if "휴리스틱" in method_events else method_events
         else:
-            # LLM 3티어(Claude→Gemini→Groq) 모두 실패 — 고유명사만 안전 치환, 나머지는
+            # Gemini 모든 모델 실패 — 고유명사만 안전 치환, 나머지는
             # 깨끗한 영어 유지 (동사/일반명사 부분치환의 한·영 혼합 깨짐 방지)
             print(f"  ⚠ LLM 번역 불가 — 고유명사만 치환, 나머지 영어 원문 유지 (깨짐 방지)")
             for (arr, idx, field), orig in zip(refs, to_translate):

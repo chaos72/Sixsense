@@ -1,4 +1,4 @@
-"""build_insight.py — 현재 상태를 LLM(Claude 우선)에게 종합 분석시켜 인사이트 JSON 생성
+"""build_insight.py — 현재 상태를 LLM(Gemini)에게 종합 분석시켜 인사이트 JSON 생성
 
 매주 화요일 06:00 KST 자동 실행 대상 (auto_collectors → collect_news_events →
 forecast_v2 → **build_insight** → build_frontend_data 순서).
@@ -8,10 +8,10 @@ forecast_v2 → **build_insight** → build_frontend_data 순서).
   - backend/data/forecast/forecast_v2_*.json (Multi-model 예측)
   - backend/data/news/latest.json (Top 10 news headlines)
 
-LLM 우선순위:
-  1. Anthropic Claude (사용자가 KAIST CAIO 과제로 "100% Claude 관점" 요청)
-  2. Gemini 2.5 Flash (fallback)
-  3. 휴리스틱 (둘 다 실패 시)
+LLM 정책 (2026-09 변경):
+  GPT·Gemini·Claude 중 하나만, 무료로 — API 무료 사용분이 있는 Gemini 단독 (gemini_client).
+  중국·오픈소스 모델 미사용. Gemini 가 모두 실패하면 휴리스틱.
+  (이전 "Claude 우선"은 크레딧 소진으로 실제로는 동작하지 않고 있었음)
 
 출력:
   backend/data/insight/latest.json — meta.insight 로 frontend에 주입됨
@@ -24,6 +24,8 @@ from pathlib import Path
 from datetime import date, datetime
 
 import requests
+
+from gemini_client import QUALITY_MODELS, available, gemini_generate
 
 ROOT = Path(__file__).resolve().parents[2]
 ENV = ROOT / ".env"
@@ -83,9 +85,16 @@ def build_prompt() -> tuple[str, dict]:
             return m.group(1) if m else ""
         rows = [r for r in (re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
                             for line in _sec(r"📈 단기").split("\n")) if r]
+        # 우수 모델 열을 쓴다 — build_frontend_data 의 주 예측선(forecast7)과 같은 기준이어야
+        # 차트와 인사이트 카드의 7주 가격이 일치한다. (3열 우수면 3열, 아니면 4열)
+        col = 4
+        mh = re.search(r"Week\s+\S+\s+(\S+)\s+(\S+)\s+실측", txt)
+        mw = re.search(r"🏆\s*단기 우수 모델:\s*(\S+)", txt)
+        if mh and mw and mh.group(1).lower() == mw.group(1).strip().lower():
+            col = 3
         if rows:
-            gbr_first = float(rows[0].group(4))    # GBR 첫 주
-            pred7_idx = float(rows[-1].group(4))   # GBR 마지막 주
+            gbr_first = float(rows[0].group(col))    # 우수 모델 첫 주
+            pred7_idx = float(rows[-1].group(col))   # 우수 모델 마지막 주
         rows = [r for r in (re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)", line)
                             for line in _sec(r"📈 중장기").split("\n")) if r]
         if rows:
@@ -191,103 +200,20 @@ def build_prompt() -> tuple[str, dict]:
     return prompt, ctx
 
 
-def call_anthropic(prompt: str) -> tuple[dict | None, str]:
-    key = os.getenv("ANTHROPIC_API_KEY", "")
-    if not key:
-        return None, "Anthropic 키 없음"
-    try:
-        r = requests.post(
-            "https://api.anthropic.com/v1/messages",
-            headers={
-                "x-api-key": key,
-                "anthropic-version": "2023-06-01",
-                "content-type": "application/json",
-            },
-            json={
-                "model": "claude-haiku-4-5-20251001",
-                "max_tokens": 1024,
-                "messages": [{"role": "user", "content": prompt}],
-            },
-            timeout=60,
-        )
-    except Exception as e:
-        return None, f"Anthropic 네트워크 실패: {str(e)[:80]}"
-    if r.status_code != 200:
-        return None, f"Anthropic HTTP {r.status_code}: {r.text[:120]}"
-    try:
-        txt = r.json()["content"][0]["text"].strip()
-        txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
-        obj = json.loads(txt)
-        return obj, "Anthropic claude-haiku-4-5"
-    except Exception as e:
-        return None, f"Anthropic 파싱 실패: {str(e)[:80]}"
-
-
 def call_gemini(prompt: str) -> tuple[dict | None, str]:
-    key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
-    if not key:
-        return None, "Gemini 키 없음"
-    for model in ("gemini-2.5-flash", "gemini-flash-latest"):
-        try:
-            r = requests.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
-                headers={"Content-Type": "application/json"},
-                json={
-                    "contents": [{"parts": [{"text": prompt}]}],
-                    "generationConfig": {
-                        "maxOutputTokens": 8192,
-                        "temperature": 0.2,
-                        "responseMimeType": "application/json",
-                    },
-                },
-                timeout=60,
-            )
-        except Exception as e:
-            print(f"  Gemini {model} 네트워크: {str(e)[:60]}")
-            continue
-        if r.status_code != 200:
-            print(f"  Gemini {model} HTTP {r.status_code}")
+    """Gemini 무료 티어 — 모델별로 호출 → JSON 파싱, 파싱 실패 시 다음 모델."""
+    for model in available(QUALITY_MODELS):
+        txt, used = gemini_generate(prompt, (model,), max_tokens=8192,
+                                    temperature=0.2, json_mode=True)
+        if not txt:
+            print(f"  {used}")
             continue
         try:
-            txt = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
             txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
             return json.loads(txt), f"Gemini {model}"
         except Exception as e:
             print(f"  Gemini {model} 파싱 실패: {str(e)[:60]}")
     return None, "Gemini 모두 실패"
-
-
-# USER-REQUESTED EXTENSION (#18) — Groq fallback 추가 (Gemini 한도 소진 대비).
-# collect_news_events 와 동일하게 Groq llama-3.3 (무료 14400/day) 를 3순위로.
-def call_groq(prompt: str) -> tuple[dict | None, str]:
-    key = os.getenv("GROQ_API_KEY", "")
-    if not key:
-        return None, "Groq 키 없음"
-    try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {key}"},
-            json={
-                "model": "llama-3.3-70b-versatile",
-                "messages": [
-                    {"role": "system", "content": "너는 시장 분석가다. 반드시 순수 JSON 객체 하나만 출력하라. 마크다운 코드펜스나 설명 텍스트 없이 { 로 시작해 } 로 끝나는 JSON 만."},
-                    {"role": "user", "content": prompt},
-                ],
-                "max_tokens": 2048,
-                "temperature": 0.2,
-            },
-            timeout=60,
-        )
-    except Exception as e:
-        return None, f"Groq 네트워크: {str(e)[:50]}"
-    if r.status_code != 200:
-        return None, f"Groq HTTP {r.status_code}"
-    try:
-        txt = r.json()["choices"][0]["message"]["content"].strip()
-        txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
-        return json.loads(txt), "Groq llama-3.3"
-    except Exception as e:
-        return None, f"Groq 파싱 실패: {str(e)[:50]}"
 
 
 def heuristic(ctx: dict) -> dict:
@@ -379,14 +305,8 @@ def main():
     print(f"  현재 ${ctx['current_usd']:.2f} · 7w ${ctx['pred7']:.2f} ({ctx['pred7_pct']:+.1f}%) · 21w ${ctx['pred21']:.2f} ({ctx['pred21_pct']:+.1f}%)")
     print(f"  신호 {len(ctx['signals'])}개 · 거시 {len(ctx['macro'])}개 · 뉴스 {len(ctx['news'])}건")
 
-    print("[2/3] LLM 종합 분석 (Anthropic 우선)…")
-    obj, source = call_anthropic(prompt)
-    if not obj:
-        print(f"  ⚠️  {source} → Gemini fallback")
-        obj, source = call_gemini(prompt)
-    if not obj:
-        print(f"  ⚠️  {source} → Groq fallback")
-        obj, source = call_groq(prompt)
+    print("[2/3] LLM 종합 분석 (Gemini)…")
+    obj, source = call_gemini(prompt)
     if not obj:
         print(f"  ⚠️  {source} → 휴리스틱 fallback")
         obj = heuristic(ctx)
