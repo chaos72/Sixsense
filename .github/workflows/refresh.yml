@@ -37,7 +37,7 @@ jobs:
           pip install -r backend/requirements.txt \
             --extra-index-url https://download.pytorch.org/whl/cpu
 
-      - name: 파이프라인 5단계 실행
+      - name: 파이프라인 6단계 실행
         working-directory: backend
         env:
           # LLM (뉴스 분류 + 인사이트)
@@ -56,15 +56,17 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           set -e
-          echo "── 1/5 데이터 수집 (신호별 실패는 자체 격리) ──"
+          echo "── 1/6 데이터 수집 (신호별 실패는 자체 격리) ──"
           python pipelines/auto_collectors.py --all || echo "auto_collectors 경고 — 계속 진행"
-          echo "── 2/5 뉴스/이벤트 수집 ──"
+          echo "── 2/6 뉴스/이벤트 수집 ──"
           python pipelines/collect_news_events.py || echo "collect_news_events 경고 — 계속 진행"
-          echo "── 3/5 예측 모델 재학습 (실패 시 중단) ──"
-          python pipelines/forecast_v2.py
-          echo "── 4/5 인사이트 생성 ──"
+          echo "── 3/6 예측 검증 — 워크포워드 백테스트 (화면의 검증 결과 출처) ──"
+          python pipelines/honest_backtest.py || echo "honest_backtest 경고 — 이전 검증 결과 유지"
+          echo "── 4/6 예측 모델 학습 (참고용, 화면 미표시 — 검증 불합격) ──"
+          python pipelines/forecast_v2.py || echo "forecast_v2 경고 — 화면에 쓰지 않으므로 계속 진행"
+          echo "── 5/6 인사이트 생성 ──"
           python pipelines/build_insight.py
-          echo "── 5/5 프론트엔드 데이터 빌드 ──"
+          echo "── 6/6 프론트엔드 데이터 빌드 ──"
           python pipelines/build_frontend_data.py
 
       - name: 변경된 데이터 커밋 & 푸시 (Vercel 자동 재배포 트리거)

@@ -1,12 +1,12 @@
-"""build_insight.py — 현재 상태를 LLM(Gemini)에게 종합 분석시켜 인사이트 JSON 생성
+"""build_insight.py — 수집된 사실을 LLM(Gemini)으로 요약해 '시장 신호 요약' 카드 JSON 생성
 
-매주 화요일 06:00 KST 자동 실행 대상 (auto_collectors → collect_news_events →
-forecast_v2 → **build_insight** → build_frontend_data 순서).
+매주 화요일 06:00 KST 자동 실행 (auto_collectors → collect_news_events → honest_backtest →
+forecast_v2(참고) → **build_insight** → build_frontend_data).
 
-입력:
-  - backend/data/historical/{A-*, B-*, macro-*, target-dram}.json (최신값)
-  - backend/data/forecast/forecast_v2_*.json (Multi-model 예측)
-  - backend/data/news/latest.json (Top 10 news headlines)
+입력 (사실만 — 예측 수치는 넣지 않음. 예측 모델이 검증 불합격이기 때문):
+  - backend/data/historical/{A-*, B-*, macro-*, target-dram}.json (최신값·기준일)
+  - backend/data/validation/latest.json (예측 검증 결과)
+  - backend/data/news/latest.json (핵심 뉴스)
 
 LLM 정책 (2026-09 변경):
   GPT·Gemini·Claude 중 하나만, 무료로 — API 무료 사용분이 있는 Gemini 단독 (gemini_client).
@@ -40,162 +40,98 @@ if ENV.exists():
             os.environ[k] = v
 
 HIST = ROOT / "backend/data/historical"
-FORECAST = ROOT / "backend/data/forecast"
 NEWS = ROOT / "backend/data/news/latest.json"
+VALIDATION = ROOT / "backend/data/validation/latest.json"
 OUT = ROOT / "backend/data/insight/latest.json"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
-SIGNAL_NAMES = {
-    "A-1": "대만 공급망", "A-2": "빅테크 CapEx", "A-3": "관세청 수출",
-    "A-4": "재고/출하 지수", "A-5": "AWS Spot", "A-6": "Manifold 봉쇄확률",
-    "A-7": "구리 선물가",
-    "B-1": "Earnings Call 감성", "B-2": "대만 뉴스 감성", "B-3": "Reddit/HN",
-    "B-4": "지정학 리스크 (GPR)", "B-5": "LTA 비율",
-    "B-6": "HBM/D램 믹스", "B-7": "BOM 신호",
-}
+# 화면과 같은 신호 이름·제외 목록·신선도 기준을 쓴다 (한 곳에서만 정의)
+from build_frontend_data import (EXCLUDED_SIGNALS, MACRO_META, SIGNAL_META, UNIT_LABEL,
+                                 freshness)
 
 
-def latest(sid: str) -> float | None:
+def _load(sid: str) -> dict:
     p = HIST / f"{sid}.json"
-    if not p.exists():
-        return None
-    rows = json.loads(p.read_text()).get("data", [])
-    return rows[-1]["value"] if rows else None
+    return json.loads(p.read_text()) if p.exists() else {"data": []}
 
 
 def build_prompt() -> tuple[str, dict]:
-    """LLM 입력 프롬프트 + 원시 컨텍스트 빌드."""
-    target_rows = json.loads((HIST / "target-dram.json").read_text())["data"]
-    last_idx = target_rows[-1]["value"]  # base 100 index
-    prev_idx = target_rows[-2]["value"] if len(target_rows) > 1 else last_idx
-    wow = (last_idx - prev_idx) / prev_idx * 100 if prev_idx else 0
-    current_usd = round(last_idx * 0.01, 2)  # build_frontend_data.py 의 SCALE와 동일
+    """LLM 입력 — 수집된 사실과 예측 검증 결과만. 예측 수치는 넣지 않는다."""
+    target = json.loads((HIST / "target-dram.json").read_text())
+    rows = target["data"]
+    ref_date = target.get("collectedAt") or rows[-1]["week"]
+    vals = [r["value"] for r in rows]
 
-    # model_comparison.txt 우선 — build_frontend_data.py 와 동일 소스 사용 (인사이트/대시보드 가격 일치 보장)
-    # USER-REQUESTED EXTENSION (#18) — anchor 보정: 첫 예측값을 현재가에 맞춰 비율 유지.
-    # build_frontend_data.py 의 _anchor_scale 과 동일 로직 → 차트/인사이트 가격 일치.
-    pred7_idx = pred21_idx = None
-    gbr_first = lstm_first = None
-    cmp_file = FORECAST / "model_comparison.txt"
-    if cmp_file.exists():
-        txt = cmp_file.read_text()
-        # USER-REQUESTED EXTENSION (#19 fix) — 종료 마커 의존 제거, 날짜+숫자 행 직접 매칭
-        def _sec(header):
-            m = re.search(rf"{header}.*?\n(.*?)(?=\n📈|\n⏱|\n단기 MAPE|\nLSTM held|\n🏆|\n═|\Z)", txt, re.DOTALL)
-            return m.group(1) if m else ""
-        rows = [r for r in (re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)", line)
-                            for line in _sec(r"📈 단기").split("\n")) if r]
-        # 우수 모델 열을 쓴다 — build_frontend_data 의 주 예측선(forecast7)과 같은 기준이어야
-        # 차트와 인사이트 카드의 7주 가격이 일치한다. (3열 우수면 3열, 아니면 4열)
-        col = 4
-        mh = re.search(r"Week\s+\S+\s+(\S+)\s+(\S+)\s+실측", txt)
-        mw = re.search(r"🏆\s*단기 우수 모델:\s*(\S+)", txt)
-        if mh and mw and mh.group(1).lower() == mw.group(1).strip().lower():
-            col = 3
-        if rows:
-            gbr_first = float(rows[0].group(col))    # 우수 모델 첫 주
-            pred7_idx = float(rows[-1].group(col))   # 우수 모델 마지막 주
-        rows = [r for r in (re.match(r"\s*(\d{4}-\d{2}-\d{2})\s+([\d.]+)\s+([\d.]+)", line)
-                            for line in _sec(r"📈 중장기").split("\n")) if r]
-        if rows:
-            lstm_first = float(rows[0].group(3))   # LSTM 첫 주
-            pred21_idx = float(rows[-1].group(3))  # LSTM 마지막 주
+    def chg(n):
+        return round((vals[-1] / vals[-1 - n] - 1) * 100, 1) if len(vals) > n else None
 
-    # anchor 보정 — build_frontend_data.py 와 동일 로직 (차트/인사이트 가격 일치)
-    # 단기(GBR): 첫 예측을 현재가(last_idx)에 맞춤
-    gbr_last_anchored = pred7_idx
-    if gbr_first and pred7_idx and gbr_first != 0:
-        pred7_idx = pred7_idx * (last_idx / gbr_first)
-        gbr_last_anchored = pred7_idx  # GBR 끝점(= 단기 7주 예측, anchor 후)
-    # USER-REQUESTED EXTENSION (#19) — 중장기(LSTM): 단기 GBR 끝점에 이어붙임.
-    # LSTM 첫 예측을 GBR 마지막 값에 anchor → 차트 절벽 제거 + 인사이트 일관.
-    if lstm_first and pred21_idx and lstm_first != 0:
-        pred21_idx = pred21_idx * (gbr_last_anchored / lstm_first)
-
-    # Fallback: forecast JSON
-    if pred7_idx is None or pred21_idx is None:
-        forecast = json.loads((FORECAST / "forecast_v2_2026-02-w1.json").read_text())
-        models = forecast.get("models", {})
-        prophet = models.get("prophet", {}).get("predictions", [])
-        lstm = models.get("lstm_mid", {}).get("predictions", []) or models.get("lstm", {}).get("predictions", [])
-        if pred7_idx is None and prophet:
-            pred7_idx = prophet[6].get("yhat", last_idx) if len(prophet) >= 7 else last_idx
-        if pred21_idx is None:
-            mid_src = lstm if lstm else prophet
-            pred21_idx = mid_src[20].get("yhat", last_idx) if len(mid_src) >= 21 else (mid_src[-1].get("yhat", last_idx) if mid_src else last_idx)
-
-    pred7 = round(pred7_idx * 0.01, 2)
-    pred7_pct = (pred7 - current_usd) / current_usd * 100 if current_usd else 0
-    pred21 = round(pred21_idx * 0.01, 2)
-    pred21_pct = (pred21 - current_usd) / current_usd * 100 if current_usd else 0
-
-    # 신호 요약
-    sig_lines = []
-    for sid, name in SIGNAL_NAMES.items():
-        v = latest(sid)
-        if v is None:
+    sig_lines, allowed = [], []
+    for sid, meta in SIGNAL_META.items():
+        sig = _load(sid); r = sig["data"]
+        if sid in EXCLUDED_SIGNALS or not r:
             continue
-        if -10 < v < 10:
-            sig_lines.append(f"  {sid} {name}: {v:+.2f}")
+        stale = freshness(r, sig.get("collectedAt"), ref_date)["stale"]
+        v = r[-1]["value"]
+        # 부호(+/-)는 감성 점수에만 — 가격·지수에 '+0.13'을 붙이면 LLM 이 '상승'으로 오독한다
+        if meta["fmt"] == "sent":
+            v_txt = f"{v:+.2f} (감성 점수, -1~+1)"
         elif abs(v) >= 1e6:
-            sig_lines.append(f"  {sid} {name}: {v / 1e6:.2f}M")
-        elif abs(v) >= 1e3:
-            sig_lines.append(f"  {sid} {name}: {v / 1e3:.1f}K")
+            v_txt = f"{v:,.0f}"
         else:
-            sig_lines.append(f"  {sid} {name}: {v:.2f}")
+            v_txt = f"{v:.3f}".rstrip("0").rstrip(".")
+        sig_lines.append(f"  {sid} {meta['name']}: {v_txt} (기준 {r[-1]['week']}"
+                         f"{', 갱신 중단' if stale else ''}) — {meta['desc']}")
+        if not stale:
+            allowed.append(sid)
 
-    # 거시
     macro_lines = []
-    for mid, name in [("macro-fed", "Fed Rate"), ("macro-dxy", "DXY"),
-                       ("macro-pmi", "INDPRO/PMI"), ("macro-krw", "USD/KRW"),
-                       ("macro-cu", "Copper")]:
-        v = latest(mid)
-        if v is not None:
-            macro_lines.append(f"  {name}: {v:.2f}")
+    for mid, meta in MACRO_META.items():
+        sig = _load(mid); r = sig["data"]
+        if r:
+            stale = freshness(r, sig.get("collectedAt"), ref_date)["stale"]
+            macro_lines.append(f"  {meta['name']}: {r[-1]['value']:.2f} (기준 {r[-1]['week']}"
+                               f"{', 갱신 중단 — 현재 상황 판단에 쓰지 말 것' if stale else ''})")
 
-    # 뉴스 헤드라인 (top 5)
     news_lines = []
     if NEWS.exists():
-        news = json.loads(NEWS.read_text()).get("news", [])
-        for n in news[:5]:
-            tag = "📈" if n["tone"] == "pos" else "📉" if n["tone"] == "neg" else "▪"
-            news_lines.append(f"  {tag} [{n['date']}] {n['title']} (score {n['score']:+.2f}, conf {n['conf']}%)")
+        for n in json.loads(NEWS.read_text()).get("news", [])[:5]:
+            news_lines.append(f"  [{n['date']}] {n['title']} (감성 {n['score']:+.2f})")
 
-    ctx = {
-        "current_usd": current_usd,
-        "wow_pct": round(wow, 1),
-        "pred7": pred7, "pred7_pct": round(pred7_pct, 1),
-        "pred21": pred21, "pred21_pct": round(pred21_pct, 1),
-        "signals": sig_lines,
-        "macro": macro_lines,
-        "news": news_lines,
-    }
+    v = json.loads(VALIDATION.read_text()) if VALIDATION.exists() else {}
+    vo = (v.get("variants") or [{}])[0].get("overall", {})
+    verdict = v.get("verdict", "결과 없음")
 
-    prompt = f"""당신은 서버 DRAM 가격 의사결정을 돕는 시장 전략 애널리스트입니다.
-아래 실데이터를 종합하여 KAIST CAIO 6조 Sixsense 대시보드의 "예측분석 인사이트" 카드용 종합 판단을 작성하세요.
+    ctx = {"current": round(vals[-1], 2), "change1w": chg(1), "change4w": chg(4), "change13w": chg(13),
+           "verdict": verdict, "signals": sig_lines, "macro": macro_lines, "news": news_lines,
+           "allowed": allowed}
 
-【현재 가격】
-  현재가: ${current_usd:.2f} (지난주 대비 {wow:+.1f}%)
-  GBR 단기 예측 7주 후: ${pred7:.2f} ({pred7_pct:+.1f}%)
-  LSTM 중장기 예측 21주 후: ${pred21:.2f} ({pred21_pct:+.1f}%)
+    prompt = f"""당신은 메모리 반도체 시장 '모니터링 대시보드'의 요약 작성자입니다.
 
-【14개 프록시 신호 최신값】
+【중요한 제약】
+- 이 대시보드에는 검증을 통과한 가격 예측 모델이 없습니다. 예측 검증 결과: {verdict}
+  (워크포워드 백테스트에서 AI 모델 오차 {vo.get('modelMape', '-')}% > 단순 기준선 {vo.get('naiveMape', '-')}%)
+- 따라서 가격이 오르거나 내릴 것이라고 예측·전망하지 마세요. 확률·신뢰도·목표가를 만들지 마세요.
+- 아래 입력에 있는 사실과 숫자만 사용하세요. 입력에 없는 숫자나 사건을 만들지 마세요.
+- '갱신 중단' 표시된 값은 현재 상황의 근거로 쓰지 마세요.
+
+【{UNIT_LABEL} (실제 DRAM 계약가가 아닌 대용 지표, 2025-06-16 = 100)】
+  현재 {vals[-1]:.1f} pt · 1주 {chg(1):+.1f}% · 4주 {chg(4):+.1f}% · 13주 {chg(13):+.1f}%
+
+【수집 신호 최신값】
 {chr(10).join(sig_lines)}
 
 【거시경제】
 {chr(10).join(macro_lines)}
 
-【최근 30일 핵심 뉴스 (Top 5)】
-{chr(10).join(news_lines) if news_lines else "  (뉴스 데이터 없음)"}
+【최근 핵심 뉴스】
+{chr(10).join(news_lines) if news_lines else "  (없음)"}
 
-다음 JSON 스키마로만 답변하세요. 한국어로, 마크다운/설명 금지:
+다음 JSON 으로만 답하세요. 한국어, 마크다운·설명 금지:
 {{
-  "headline": "22자 이내 강조 메시지 (예: 'AI 수요 견인, 장기 상승 전환')",
-  "summary": "**280~360자** 사이 종합 분석 — 가격 방향, 핵심 근거 3개(신호+뉴스+거시), 단기와 중장기의 차이, 워치 포인트 1~2개를 자연스럽게 연결한 한 단락. ★ **반드시 마지막을 마침표(.)로 완결**할 것. '...' '…' '등' '강력한' 처럼 끊긴 어구로 끝내지 말 것 (잘림 금지). 모든 문장이 주어+서술어로 완결되어야 함. **중요한 단어·수치 3~5개**를 **이중 별표**로 감싸서 강조하라. 예: '**AI 수요**가 **+36%**의 **장기 상승**을 견인합니다.'",
-  "tone": "pos|neu|neg",
-  "confidence": 0~100,
-  "horizon_tilt": "short|mid|long — 어느 호라이즌이 가장 결정적인가",
-  "key_signals": ["A-2", "B-4"]
+  "headline": "22자 이내 — 지금 관찰되는 사실 (예측 표현 금지)",
+  "summary": "200~320자 한 단락 — 주가지수 흐름, 눈에 띄는 신호·뉴스·거시 사실 2~3개, 주시할 점. 마침표로 완결. 핵심 단어 2~4개를 **이중 별표**로 강조.",
+  "tone": "pos|neu|neg — 현재 수집된 신호·뉴스의 전반적 분위기",
+  "key_signals": ["입력 신호 중 갱신 중단이 아닌 것의 ID 1~3개: {', '.join(allowed)}"]
 }}"""
     return prompt, ctx
 
@@ -217,127 +153,45 @@ def call_gemini(prompt: str) -> tuple[dict | None, str]:
 
 
 def heuristic(ctx: dict) -> dict:
-    """LLM 실패 시 데이터 기반 250자 요약. 신호+뉴스+모순 해석까지 포함."""
-    short_pct = ctx["pred7_pct"]
-    mid_pct = ctx["pred21_pct"]
-    direction_short = "상승" if short_pct > 2 else "하락" if short_pct < -2 else "횡보"
-    direction_mid = "상승" if mid_pct > 5 else "하락" if mid_pct < -5 else "횡보"
-    # 모순 감지
-    contradiction = (short_pct < -2 and mid_pct > 5) or (short_pct > 2 and mid_pct < -5)
-    tone = "pos" if mid_pct > 0 else "neg" if mid_pct < 0 else "neu"
-    horizon = "long" if abs(mid_pct) > 20 else "short" if abs(short_pct) > abs(mid_pct) else "mid"
-
-    # 헤드라인 — 강조용 짧은 메시지
-    if contradiction and tone == "pos":
-        headline = f"단기 조정 후 중장기 강세 ({mid_pct:+.0f}%)"
-    elif contradiction and tone == "neg":
-        headline = f"단기 반등에도 중장기 약세 ({mid_pct:+.0f}%)"
-    elif tone == "pos":
-        headline = f"{direction_short}·{direction_mid} 동조, 상승 시그널"
-    elif tone == "neg":
-        headline = f"{direction_short}·{direction_mid} 동조, 하락 시그널"
-    else:
-        headline = "뚜렷한 방향성 없음 — 추가 신호 대기"
-
-    # 신호 코멘트
-    sig_text = ""
-    for line in ctx["signals"]:
-        if "A-4" in line:
-            # A-4 재고/출하 — 100 초과면 alert
-            m = re.search(r":\s*([\d.]+)", line)
-            if m and float(m.group(1)) > 100:
-                sig_text = f" A-4 재고지수가 {m.group(1)}(>100)로 공급과잉 경계 신호."
-                break
-            elif m and float(m.group(1)) < 95:
-                sig_text = f" A-4 재고지수 {m.group(1)}(<95)로 공급 타이트 신호."
-                break
-
-    # 거시 코멘트
-    macro_text = ""
-    for line in ctx["macro"]:
-        if "DXY" in line:
-            m = re.search(r":\s*([\d.]+)", line)
-            if m:
-                v = float(m.group(1))
-                macro_text = f" DXY {v:.1f}로 강달러 압력{'↑' if v > 100 else '↓'}."
-                break
-
-    # 뉴스 코멘트
-    news_text = ""
-    if ctx["news"]:
-        news_text = f" 최근 30일 핵심 뉴스 {len(ctx['news'])}건이 동반."
-
-    # USER-REQUESTED EXTENSION (#12) — 280~360자 분량, 완결 문장으로 마무리
+    """LLM 실패 시 — 입력 사실만으로 만든 문장 (고정 전망 문구 없음)."""
+    c1, c4, c13 = ctx["change1w"], ctx["change4w"], ctx["change13w"]
+    news_n = len(ctx["news"])
     summary = (
-        f"단기 **GBR** 모델은 7주 후 **${ctx['pred7']:.2f}** (**{short_pct:+.1f}%**)를, "
-        f"중장기 **LSTM** 모델은 21주 후 **${ctx['pred21']:.2f}** (**{mid_pct:+.1f}%**)를 가리킵니다. "
-        f"{'단기와 중장기의 방향이 **상반**되므로 호라이즌별 의사결정이 필요합니다. ' if contradiction else ''}"
-        f"{sig_text.strip()}{macro_text.strip()}{news_text.strip()} "
-        f"종합적으로 향후 **AI 서버 수요** 증가세와 **HBM 캡 증설** 속도, **지정학 리스크** 변화를 "
-        f"주간 단위로 모니터링하며 호라이즌별로 차별화된 대응이 필요합니다."
-    ).strip()
-    # 270자 cap 보정
-    if len(summary) > 270:
-        summary = summary[:250].rsplit(" ", 1)[0] + "…"
-
-    # 키 신호 — 변화 큰 것 자동 선택
-    key_signals = []
-    if abs(short_pct) > 3 or abs(mid_pct) > 10:
-        key_signals.append("A-2")  # CapEx
-    if news_text:
-        key_signals.append("B-4")  # 지정학
-    if not key_signals:
-        key_signals = ["A-2", "B-1"]
-
-    return {
-        "headline": headline,
-        "summary": summary,
-        "tone": tone,
-        "confidence": 55,
-        "horizon_tilt": horizon,
-        "key_signals": key_signals[:3],
-    }
+        f"**{UNIT_LABEL}**는 {ctx['current']:.1f} pt로 지난주 대비 {c1:+.1f}%, "
+        f"4주 {c4:+.1f}%, 13주 {c13:+.1f}% 변했습니다. "
+        f"최근 핵심 뉴스 {news_n}건과 수집 신호를 함께 확인하세요. "
+        f"가격 예측 모델은 검증 결과 **{ctx['verdict']}**이어서 방향 전망은 제공하지 않습니다."
+    )
+    tone = "pos" if c4 is not None and c4 > 3 else "neg" if c4 is not None and c4 < -3 else "neu"
+    return {"headline": f"주가지수 4주 {c4:+.1f}%", "summary": summary, "tone": tone,
+            "key_signals": ctx["allowed"][:2]}
 
 
 def main():
     print("[1/3] 컨텍스트 빌드…")
     prompt, ctx = build_prompt()
-    print(f"  현재 ${ctx['current_usd']:.2f} · 7w ${ctx['pred7']:.2f} ({ctx['pred7_pct']:+.1f}%) · 21w ${ctx['pred21']:.2f} ({ctx['pred21_pct']:+.1f}%)")
+    print(f"  {UNIT_LABEL} {ctx['current']} pt · 4주 {ctx['change4w']:+.1f}% · 예측 검증 {ctx['verdict']}")
     print(f"  신호 {len(ctx['signals'])}개 · 거시 {len(ctx['macro'])}개 · 뉴스 {len(ctx['news'])}건")
 
-    print("[2/3] LLM 종합 분석 (Gemini)…")
+    print("[2/3] LLM 요약 (Gemini)…")
     obj, source = call_gemini(prompt)
     if not obj:
         print(f"  ⚠️  {source} → 휴리스틱 fallback")
-        obj = heuristic(ctx)
-        source = "휴리스틱 (LLM 모두 실패)"
+        obj, source = heuristic(ctx), "휴리스틱 (LLM 모두 실패)"
 
-    # 정규화
     headline = (obj.get("headline") or "").strip()[:50]
     summary = (obj.get("summary") or "").strip()
-    # USER-REQUESTED EXTENSION (#12) — 완결 문장 보장
-    # 1) 미완성 표기 검출 ("…", "...", "등", "강력한", "포함한") → 마지막 마침표까지만 사용
-    truncation_markers = ("…", "...", "등 강력한", "강력한 등", "강력한.", "등.")
-    if any(summary.endswith(m) for m in truncation_markers) or summary.endswith("…"):
-        last_period = max(summary.rfind("."), summary.rfind("다."), summary.rfind("요."), summary.rfind("니다."))
-        if last_period > len(summary) * 0.4:
-            summary = summary[:last_period + 1].strip()
-    # 2) 마침표 없이 끝나면 자동 추가
+    # 완결 문장 보장 — 마침표 없이 끝나면 추가, 과도하게 길면 마지막 마침표까지
     if summary and not summary.rstrip().endswith((".", "!", "?", "다", "요")):
-        summary = summary.rstrip(" ,;:·") + "."
-    # 3) 최대 400자 cap (안전 장치, 그 이상은 마지막 마침표까지 절단)
+        summary = summary.rstrip(" ,;:·…") + "."
     if len(summary) > 400:
-        cutoff = summary[:400].rfind(".")
-        summary = summary[:cutoff + 1] if cutoff > 200 else summary[:380] + "…"
+        cut = summary[:400].rfind(".")
+        summary = summary[:cut + 1] if cut > 200 else summary[:380]
     tone = (obj.get("tone") or "neu").lower()
     if tone not in {"pos", "neu", "neg"}:
         tone = "neu"
-    conf = int(obj.get("confidence") or 50)
-    conf = max(0, min(100, conf))
-    horizon = (obj.get("horizon_tilt") or "mid").lower()
-    if horizon not in {"short", "mid", "long"}:
-        horizon = "mid"
-    key_signals = [s for s in (obj.get("key_signals") or []) if isinstance(s, str)][:4]
+    # 입력에 있던(갱신 중단이 아닌) 신호 ID 만 허용 — LLM 이 화면에 없는 신호를 대는 것 방지
+    key_signals = [s for s in (obj.get("key_signals") or []) if s in ctx["allowed"]][:3]
 
     payload = {
         "generatedAt": datetime.now().isoformat(timespec="seconds"),
@@ -345,24 +199,15 @@ def main():
         "headline": headline,
         "summary": summary,
         "tone": tone,
-        "confidence": conf,
-        "horizon": horizon,
         "keySignals": key_signals,
-        "context": {
-            "current": ctx["current_usd"],
-            "wow": ctx["wow_pct"],
-            "pred7": ctx["pred7"], "pred7_pct": ctx["pred7_pct"],
-            "pred21": ctx["pred21"], "pred21_pct": ctx["pred21_pct"],
-        },
+        "context": {k: ctx[k] for k in ("current", "change1w", "change4w", "change13w", "verdict")},
     }
-
     print("[3/3] 저장")
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"  ✅ {OUT.relative_to(ROOT)}")
-    print(f"     모델: {source}")
+    print(f"  ✅ {OUT.relative_to(ROOT)} · 모델: {source}")
     print(f"     headline: {headline}")
-    print(f"     summary ({len(summary)}자): {summary[:80]}…")
-    print(f"     tone={tone} · conf={conf}% · horizon={horizon} · keySignals={key_signals}")
+    print(f"     summary ({len(summary)}자): {summary}")
+    print(f"     tone={tone} · keySignals={key_signals}")
 
 
 if __name__ == "__main__":
