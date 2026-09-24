@@ -3,8 +3,8 @@ marp: true
 theme: default
 size: 16:9
 paginate: true
-header: 'Sixsense · Server DRAM Price Intelligence Dashboard'
-footer: 'KAIST CAIO 10기 6조 · v2.2 · 2026-07-17'
+header: 'Sixsense · 메모리 반도체 시장 신호 모니터링'
+footer: 'KAIST CAIO 10기 6조 · v2.3 · 2026-09-24'
 style: |
   section {
     font-family: 'Pretendard Variable', 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif;
@@ -45,15 +45,15 @@ style: |
 
 # Sixsense
 
-## Server DRAM Price Intelligence Dashboard
+## 메모리 반도체 시장 신호 모니터링 대시보드
 
 <br>
 
-**서버급 DDR5 DRAM 가격을 21개 실데이터 신호와 Multi-Model 앙상블로 매주 자동 예측하는 B2B 의사결정 대시보드**
+**21개 공개 신호를 매주 자동 수집·요약하고, AI 가격 예측은 정직하게 검증해 통과할 때만 보여주는 대시보드**
 
 <br><br>
 
-<span class="small">KAIST CAIO 10기 6조 · v2.2 (2026-07-17 수동 갱신 버튼 아이폰 실작동 — GitHub Actions 무료 파이프라인)</span>
+<span class="small">KAIST CAIO 10기 6조 · v2.3 (2026-09-24 — 예측 검증 도입 + 화면 정직화)</span>
 
 ---
 
@@ -63,15 +63,15 @@ style: |
 |---|---|---|
 | 1 | **Executive Summary** — 한눈에 요약 | 3분 |
 | 2 | **Why & What** — 페르소나·핵심가치 | 3분 |
-| 3 | **UI Hand-off Identity** — 14화면 SSOT | 3분 |
+| 3 | **화면 구성** — v2.3 정직화 | 3분 |
 | 4 | **Architecture & Pipeline** — 데이터 흐름 6단계 | 3분 |
-| 5 | **Multi-Model 검증** — GBR 4.54% · LSTM 9.19% | 2분 |
-| 6 | **라이브 데모** — http://localhost:5173 | 4분 |
-| 7 | **발전 방향** — Production 로드맵 | 2분 |
+| 5 | **예측 검증** — 우리가 발견한 것 | 4분 |
+| 6 | **라이브 데모** — https://sixsense-eta.vercel.app | 3분 |
+| 7 | **발전 방향** — 신뢰할 수 있는 예측으로 가는 길 | 2분 |
 
 <br>
 
-<span class="small">총 **20분** + Q&A</span>
+<span class="small">총 **21분** + Q&A</span>
 
 ---
 
@@ -81,16 +81,16 @@ style: |
 
 ## 한 줄 정의
 
-> 서버급 DDR5 DRAM 가격을 **21개 실데이터 신호** + **Multi-Model 앙상블 예측** + **LLM 종합 인사이트** + **글로벌 이벤트 모니터링**으로 매주 자동 갱신하는 **B2B 의사결정 대시보드**
+> 메모리 반도체 시장의 **공개 신호 21종**(주가·수출·재고·스팟가·뉴스 감성·지정학·거시)을 매주 자동 수집하고, **Gemini 가 사실만 요약**하며, **AI 가격 예측은 워크포워드 백테스트로 검증**해 기준을 넘을 때만 보여주는 모니터링 대시보드
 
-## 4대 핵심 성과
+## 4대 핵심 결과
 
-| 영역 | 성과 |
+| 영역 | 결과 |
 |---|---|
-| 🎯 **자동 수집** | <span class="pos">21/21 신호 (100%)</span> — 정형 7 + 비정형 7 + 거시 6 + 타겟 1 |
-| 📊 **단기 예측** | **XGBoost** <span class="pos">MAPE 11.05%</span> (LightGBM 17.86% 대비 우수 모델 자동 선정) |
-| 📈 **중장기 예측** | PyTorch LSTM <span class="pos">held-out MAPE 9.19%</span> — 단기 예측 끝점에 anchor하여 차트 연결성 확보 |
-| 🤖 **AI 인사이트** | Claude → Gemini → **Groq** → 휴리스틱 4-tier fallback (v1.1 신규) |
+| 🎯 **자동 수집** | 매주 화 06:00 무료 자동 실행 (GitHub Actions) · 이번 주 14개 신호 중 **정상 8 · 갱신 중단 6** (화면에 사유 표시) |
+| 🔍 **예측 검증** | AI 모델 오차 <span class="neg">32.2%</span> vs 단순 기준선(지난주 값 유지) <span class="pos">15.7%</span> → **불합격, 예측 미표시** |
+| 🤖 **AI 요약** | Gemini 무료 티어 · 예측·신뢰도 없이 **수집된 사실만** 요약 · 모델별 무료 한도 순회 |
+| 📱 **iOS 앱 + 원격 갱신** | PWA 홈 화면 설치 · 앱 버튼 → GitHub Actions → 자동 재배포 (약 5분, 서버·비용 0원) |
 
 ---
 
@@ -98,44 +98,38 @@ style: |
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│  매주 화요일 06:00 KST  (또는 §09 풋바 "🔄 수동 갱신" 버튼 1클릭)        │
+│  매주 화요일 06:00 KST  (또는 앱의 "🔄 수동 갱신" 버튼)                  │
 │                                                                          │
-│  ① auto_collectors.py    →  21 신호 (Yahoo/SEC/FRED/KOSIS/관세청/AWS/   │
+│  ① auto_collectors.py    →  신호 수집 (Yahoo/SEC/FRED/KOSIS/관세청/AWS/ │
 │                              Manifold/HN/GPR/RSS)                        │
-│  ② collect_news_events   →  RSS 45 쿼리 → Gemini 분류 →                 │
-│                              news 10건 + events 10건 (5 카테고리 분리)   │
-│  ③ forecast_v2.py        →  Prophet + GBR + LSTM 재학습 (~12초)         │
-│  ④ build_insight.py      →  LLM 종합 분석 400자 (한국어 완결 문장)      │
-│  ⑤ build_frontend_data   →  frontend/src/mocks/data.js (50 KB)          │
-│                                              ↓ Vite HMR 자동 반영        │
-│                              http://localhost:5173 (14화면 hand-off)    │
+│  ② collect_news_events   →  RSS → Gemini 분류 → 뉴스 10 + 이벤트 10     │
+│  ③ honest_backtest.py    →  예측 검증 (워크포워드, 모델 vs 기준선)       │
+│  ④ forecast_v2.py        →  예측 모델 학습 (참고용 · 화면 미표시)       │
+│  ⑤ build_insight.py      →  Gemini 사실 요약 (예측·신뢰도 없음)         │
+│  ⑥ build_frontend_data   →  frontend/src/mocks/data.js                 │
+│                                              ↓ 봇 커밋 → Vercel 재배포   │
+│                              https://sixsense-eta.vercel.app             │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-**프론트엔드** Vite :5173 (React 19 + TS) · **백엔드** FastAPI :8000 (15+3 endpoint) · **DB** Supabase Postgres (선택)
+**프론트엔드** React + Vite (정적 배포, Vercel) · **파이프라인** Python (GitHub Actions) · **LLM** Gemini 무료 티어
 
 ---
 
-# 1. Executive Summary — 산출물 (PDCA)
+# 1. Executive Summary — 버전 이력
 
-| 단계 | 산출물 | 분량 |
+| 버전 | 날짜 | 핵심 |
 |---|---|---|
-| PM (PRD) | [prd.md](../../prd.md) — Hand-off SSOT Edition 18 섹션 | 447줄 |
-| Plan | [docs/01-plan/features/sixsense.plan.md](../01-plan/features/sixsense.plan.md) | 353줄 |
-| Design | [docs/02-design/features/sixsense.design.md](../02-design/features/sixsense.design.md) | 1,155줄 |
-| Do | [docs/03-do/features/sixsense.do.md](../03-do/features/sixsense.do.md) — 사용자 확장 12 매트릭스 | 291줄 |
-| Analysis | [docs/03-analysis/sixsense.analysis.md](../03-analysis/sixsense.analysis.md) | 374줄 |
-| QA | [docs/05-qa/sixsense.qa-report.md](../05-qa/sixsense.qa-report.md) — L1/L2/L3 67/67 통과 | 221줄 |
-| Report | [docs/04-report/sixsense.report.md](../04-report/sixsense.report.md) | 396줄 |
-| Modeling | [docs/10-modeling/modeling-architecture.md](../10-modeling/modeling-architecture.md) — Phase 6 | 177줄 |
+| v1.0 | 2026-06-11 | Phase 7 최초 완성 (14화면 hand-off 포팅) |
+| v2.0 / v2.1 | 2026-07-12 | iOS 전용앱(PWA) 전환 · 모바일 UX |
+| v2.2 | 2026-07-17 | 수동 갱신 버튼 아이폰 실작동 (GitHub Actions 무료 파이프라인) |
+| **v2.3** | **2026-09-24** | **예측 검증 도입 · 가짜 표시 제거 · 신선도 감시 · LLM Gemini 단독** |
 
 <br>
 
-**Git history**: 73+ commits, Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 iOS 전환·모바일 개선 + v2.2 원격 갱신 파이프라인 누적
+**Git history**: 101 commits · 문서: [prd.md](../../prd.md) · [plan](../01-plan/features/sixsense.plan.md) · [design](../02-design/features/sixsense.design.md) · [CHANGELOG](../../CHANGELOG.md)
 
-**v2.0/v2.1 하이라이트**: iOS 전용앱(PWA) 전환(홈 화면 설치·오프라인 지원) · 하단 탭바 모바일 UX · 예측 영향도 0%인 신호 4개 정리(14→10개) · 기상이변/Graph RAG 섹션 제거 · 모바일 카드·표 레이아웃 전면 재정비(가운데 정렬·가로 통합·구분선 표 형태)
-
-**v2.2 하이라이트**: 수동 갱신 버튼 아이폰 실작동 — 버튼 → Vercel 함수 → GitHub Actions(무료) 5단계 파이프라인 → 봇 커밋 → 자동 재배포·새로고침 (약 5분, 서버·비용 0원) · 매주 화 06:00 KST 자동 갱신 겸용
+<span class="small">※ plan·design·QA 등 PDCA 문서는 v2.2 이전에 작성되어 예측 성능 서술이 v2.3 검증 결과와 다릅니다. 최신 사실은 CHANGELOG v2.3 기준.</span>
 
 ---
 
@@ -143,17 +137,16 @@ style: |
 
 # 2. Why — 왜 이 문제인가
 
-## 서버 DRAM 가격 예측의 어려움
+## 서버 DRAM 가격을 읽기 어려운 이유
 
-- **단일 신호로 불가**: 가격은 공급(팹 가동·재고)·수요(AI CapEx·하이퍼스케일러)·거시(환율·금리)·지정학(대만·중국·우크라이나) **다중 요인 결합** 결과
-- **시장 데이터 비공개**: DRAMeXchange/TrendForce 등 contract price는 유료 (월 수천 달러)
-- **언어 장벽**: 핵심 정보가 대만(중문)·한국(한글)·미국(영문)에 분산 → 통합 모니터링 부재
-- **기간 미스매치**: 분기 IR 공시(3개월) ↔ 주간 의사결정 ↔ 일간 거시 → 주기 통합 필요
-- **AI 폭증 변동성**: 2024~2026 HBM/AI 서버 수요로 기존 cyclical 패턴 붕괴
+- **단일 신호로 불가**: 공급(팹·재고)·수요(AI CapEx)·거시(환율·금리)·지정학(대만·중국)이 **동시에** 작용
+- **시장 데이터 비공개**: DRAMeXchange/TrendForce 계약가는 유료 → 우리는 **메모리 3사 주가지수를 대용 지표**로 사용
+- **언어 장벽**: 핵심 정보가 대만(중문)·한국(한글)·미국(영문)에 분산
+- **주기 미스매치**: 분기 IR ↔ 월간 통계 ↔ 주간 의사결정 ↔ 일간 거시
 
 ## Sixsense의 해법
 
-**14 프록시 신호 + 5 거시 + 1 타겟 + AI 종합 → 매주 화요일 06:00 자동 갱신, 단일 화면 5분 의사결정**
+**흩어진 공개 신호를 한 화면에 · 매주 자동으로 · 출처와 기준일을 붙여서 — 그리고 예측은 검증된 만큼만**
 
 ---
 
@@ -161,78 +154,54 @@ style: |
 
 | 페르소나 | 핵심 니즈 | 사용 흐름 |
 |---|---|---|
-| **P1 메모리 기획팀장** | 주간 회의 "다음 7주 / 21주 가격이 어디로?" | S-001 메인 → 5분 안에 결론 + 근거 + 트랙레코드 |
-| **P2 시장정보 애널리스트** | 모델이 왜 그렇게 판단했는지 검증 | S-001 → S-002 contribution → HITL로 임계치 조정 |
-| **P3 영업/조달 담당** | 거시 환경과 글로벌 이벤트 영향 | S-008 거시지표 + S-010 이벤트 + S-007 뉴스 상세 |
+| **P1 메모리 기획팀장** | 주간 회의용 시장 상황 파악 | S-001 메인 → 지표 스냅샷 + 신호 요약 + 이벤트 |
+| **P2 시장정보 애널리스트** | 신호의 원자료·출처·신선도 확인 | S-003/S-004 신호 상세 (실측 26주) → S-014 수집 현황 |
+| **P3 영업/조달 담당** | 거시 환경과 글로벌 이벤트 | S-008 거시지표 + S-010 이벤트 + S-007 뉴스 원문 |
 
-## 5대 핵심 가치 명제
+## 5대 핵심 가치
 
-1. **자동 수집 100%** — 매주 화요일 06:00 KST, 21 신호 무인 갱신
-2. **Multi-Model 앙상블** — 단기 XGBoost (11.05%) + 중장기 LSTM (9.19%) + Prophet baseline
-3. **설명 가능한 AI** — 14 신호 contribution bars + AI 종합 코멘터리
-4. **HITL** — 사용자가 긍정/중립/부정 임계치 조정 → 재학습 트리거
-5. **정확도 트랙레코드 공개** — 매 예측의 실제 오차 누적 (S-012)
-
----
-
-<!-- ────────────────────── 3. UI Hand-off Identity ────────────────────── -->
-
-# 3. UI Hand-off Identity — 단일 진실원 (SSOT)
-
-## 원칙 0 — Pixel Identity
-
-> 모든 UI는 `design_handoff_sixsense_dram_dashboard/` (Claude Design 14화면 hifi)을 **1px도 변경하지 않고** 사용. 새 UI 디자인 금지. 외부 차트/UI 라이브러리(Plotly/Recharts/D3/MUI) 추가 금지.
-
-## 디자인 토큰 (hand-off 그대로)
-
-- 색상: warm white `#fafaf8` 배경 · monochrome accent (light `#1a1a1a` / dark `#f4f3ef`)
-- Signal tones: <span class="pos">pos</span> #16a34a · <span class="neu">neu</span> #ca8a04 · <span class="neg">neg</span> #dc2626 · alert #b91c1c · <span class="info">info</span> #2563eb
-- Forecast: 단기 <span class="info">--sig-info</span> blue · 중장기 <span class="pos">--forecast-mid</span> pastel green
-- 폰트: Pretendard Variable (한글) + JetBrains Mono `.num` (tabular-nums)
-- 간격: comfortable / compact 토글 (`data-density`)
-
-## 14화면 + 7가지 사용자 명시 확장
-
-12회의 사용자 직접 요청으로 hand-off를 **확장만**, 변경은 0회 (모든 확장은 hand-off 토큰 재사용)
+1. **자동 수집** — 매주 화 06:00 KST 무인 갱신, 비용 0원
+2. **정직한 검증** — 예측은 워크포워드 백테스트로 단순 기준선과 비교, 통과해야 표시
+3. **출처·기준일 표시** — 모든 수치에 수집 출처와 데이터 날짜
+4. **신선도 감시** — 수집이 멈추거나 같은 값이 8주 이상 이어지면 "갱신 중단" 자동 표시
+5. **사실 기반 AI 요약** — 입력된 수치만 사용, 예측·신뢰도 생성 금지
 
 ---
 
-# 3. 14 화면 맵 (S-001 ~ S-014)
+<!-- ────────────────────── 3. 화면 구성 ────────────────────── -->
+
+# 3. v2.3 화면 정직화 — 무엇을 없앴나
+
+> 원칙: **측정·수집된 값만 표시. 모든 숫자는 출처와 기준일이 있어야 한다. 고정 숫자·예시 문장 금지.**
+
+| 이전 표시 | 실제 | v2.3 |
+|---|---|---|
+| "현재 계약가 · DDR5 8Gb · $7.47/GB" | 메모리 3사 주가지수 ÷ 100 | **메모리 3사 주가지수 746.9 pt** + 대용 지표 고지 |
+| "1~7주 AI 예측가" | 이미 지난 7주의 복기값 | 삭제 → 실측 4주 변화 |
+| "8~21주 예측가 · 신뢰 81%/74%" | LSTM 실제 예측은 약 -60%, 신뢰도는 코드에 고정 | 삭제 → 예측 검증 결과 |
+| "CLAUDE 종합 판단 · 신뢰 90%" | 실제는 Gemini, 신뢰도는 LLM이 적은 숫자 | "AI 요약 · Gemini · 검증되지 않은 해석" |
+| 신호 상세 "원본 데이터" 표 | `Math.random()` 무작위 숫자 | 실측 26주 이력 |
+| "오차 원인 분석: 재학습 완료, 6.0%→3.5%" | 한 적 없는 작업 (고정 문장) | 삭제 |
+| "수집 안정성 최근 8주 100% 성공" | 고정 문장 | 실제 상태: 정상 8 · 갱신 중단 6 |
+
+---
+
+# 3. 화면 맵 (v2.3)
 
 | ID | 형태 | 이름 |
 |---|---|---|
-| S-001 | Full | **메인 대시보드** — 모든 위젯 집합 |
-| S-002 | Modal | AI 예측 근거 (14 신호 contribution + CI band + HITL) |
-| S-003 | Modal | 정형 데이터 Group A 상세 (7 tab) |
-| S-004 | Modal | 비정형 데이터 Group B 상세 (7 tab) |
-| S-005 | Modal | Graph RAG — 구리 ↔ DRAM 상관관계 |
-| S-006 | Full | AI 뉴스 분석 전체 목록 |
-| S-007 | Modal | 뉴스 원문 & AI 분석 상세 |
-| S-008 | Full | 거시경제 5탭 (Fed/DXY/PMI/USD-KRW/Copper) |
-| S-009 | Modal | 주별 신호 스냅샷 (then vs now) |
-| S-010 | Full | 글로벌 이벤트 전체 목록 |
-| S-011 | Modal | 글로벌 이벤트 상세 |
-| S-012 | Full | AI 예측 정확도 전체 이력 |
-| S-013 | Modal | 당시 신호 vs 현재 신호 비교 |
-| S-014 | Full | 데이터 수집 현황 상세 |
+| S-001 | Full | **메인 대시보드** — 지표 스냅샷 · 신호 요약 · 추이 · 신호 · 뉴스 · 거시 · 이벤트 · 검증 · 수집 |
+| S-003 | Modal | 정형 신호 상세 (실측 26주 이력 · 출처 · 신선도) |
+| S-004 | Modal | 비정형 신호 상세 (뉴스 감성 · 해커뉴스 지표) |
+| S-006 | Full | AI 뉴스 전체 목록 |
+| S-007 | Modal | 뉴스 원문 링크 & AI 요약 |
+| S-008 | Full | 거시경제 6탭 (실제 출처 · 기준일) |
+| S-009 | Modal | 8주 전 vs 지금 (실측 비교) |
+| S-010 / S-011 | Full / Modal | 글로벌 이벤트 목록 / 상세 |
+| S-012 | Full | **AI 가격 예측 검증** (워크포워드 백테스트 상세) |
+| S-014 | Full | 데이터 수집 현황 (수집일 · 갱신 중단 사유) |
 
----
-
-# 3. 사용자 명시 확장 12회 (Phase 7)
-
-| # | 영역 | 변경 |
-|---|---|---|
-| 1~3 | §01 가격 스냅샷 + 인사이트 카드 | 그리드 3→7분화 (가격:인사이트 3:4), Claude 종합 판단 강조 |
-| 4 | §02 DRAM 차트 + Multi-Model | Prophet + HistGBR + **GBR★** + **LSTM★** 4모델 동시 표시 |
-| 5 | §01 가격 카드 제목 통일 | 12px + text-mid + weight 600 |
-| 6 | 차트 색상 + 토글 | Prophet 황색 dotted · HistGBR 보라 long-dash · 다크 모드 토글 강화 |
-| 7 | §09 풋바 수동 갱신 | 🔄 버튼 → 5단계 백그라운드 + 진행률 + 자동 새로고침 |
-| 8~10 | §07 글로벌 이벤트 + §06 macro | 5 카테고리 (국내반도체/물리적충돌/기상이변/금융위기/기타) + UST10 |
-| 11~12 | 인사이트 모달 + 완결 문장 | 카드 클릭 → Modal 팝업 (400자 완결 분석) |
-
-<br>
-
-<span class="small">모든 확장은 `frontend/src/` 만 수정. `design_handoff_*/` 원본은 **불변**.</span>
+<span class="small">삭제: S-002 예측 근거(고정 기여도) · S-005 Graph RAG(고정 상관계수 +0.72) · S-013 당시 신호(고정 사후분석)</span>
 
 ---
 
@@ -242,113 +211,110 @@ style: |
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         Browser (http://localhost:5173)          │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │  React 19 / Vite — hand-off 직접 포팅 (14 화면)             │  │
-│  │  • src/screens/{app, dashboard, modals, pages}.jsx         │  │
-│  │  • src/components/components.jsx (Sig, MetricCard, ...)    │  │
-│  │  • src/mocks/data.js  ← AUTO-GENERATED (실데이터)           │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                              ▲                                   │
-│                              │ ESM import (Vite HMR)             │
-└──────────────────────────────┼───────────────────────────────────┘
-                               │
-┌──────────────────────────────┼───────────────────────────────────┐
-│  Backend FastAPI :8000 (uvicorn --reload, 18 endpoint)           │
-│  ┌───────────────────────────┴───────────────────────────────┐  │
-│  │  pipelines/  (cron 매주 화요일 06:00 KST)                  │  │
-│  │    ① auto_collectors.py     → data/historical/*.json       │  │
-│  │    ② collect_news_events.py → data/news/+events/latest.json│  │
-│  │    ③ forecast_v2.py         → data/forecast/forecast_v2.json│  │
-│  │    ④ build_insight.py       → data/insight/latest.json     │  │
-│  │    ⑤ build_frontend_data.py → frontend/src/mocks/data.js  │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                  │
-│  External: Yahoo·SEC EDGAR·FRED·KOSIS·관세청·AWS·Manifold·      │
-│            HN Algolia·GPR·RSS · LLM: Anthropic/Gemini/Groq      │
-└──────────────────────────────────────────────────────────────────┘
+│  iPhone (PWA) / Browser — https://sixsense-eta.vercel.app        │
+│  React 19 + Vite · src/mocks/data.js ← AUTO-GENERATED            │
+│         │ "🔄 수동 갱신"                                          │
+│         ▼                                                         │
+│  Vercel 서버리스 함수 /api/refresh → GitHub workflow_dispatch     │
+└─────────┼─────────────────────────────────────────────────────────┘
+          ▼
+┌───────────────────────────────────────────────────────────────────┐
+│  GitHub Actions (매주 화 06:00 KST · 무료)                          │
+│    ① auto_collectors      → data/historical/*.json                 │
+│    ② collect_news_events  → data/news + events                     │
+│    ③ honest_backtest      → data/validation/latest.json            │
+│    ④ forecast_v2 (참고)   → data/forecast/                         │
+│    ⑤ build_insight        → data/insight/latest.json               │
+│    ⑥ build_frontend_data  → frontend/src/mocks/data.js            │
+│    → 봇 커밋 → Vercel 자동 재배포                                   │
+│  External: Yahoo·SEC·FRED·KOSIS·관세청·AWS·Manifold·HN·GPR·RSS    │
+│  LLM: Gemini 무료 티어 (모델별 한도 순회)                           │
+└───────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-# 4. 21 신호 매핑 (정형 7 + 비정형 7 + 거시 6 + 타겟 1)
+# 4. 신호 매핑 (실제 수집 방식 그대로)
 
-| Group | ID | 이름 | 소스 |
+| Group | ID | 이름 | 실제 소스 |
 |---|---|---|---|
-| **정형 A** | A-1 | 대만 공급망 | Yahoo TSM+UMC |
-| | A-2 | 빅테크 CapEx | SEC EDGAR XBRL 4사 |
-| | A-3 | 관세청 수출 | data.go.kr Itemtrade (HS 854232) |
-| | A-4 | 재고/출하 지수 | KOSIS Open API |
-| | A-5 | AWS Spot | AWS EC2 Pricing |
-| | A-6 | 봉쇄확률 | Manifold Markets |
+| **정형 A** | A-1 | 대만 파운드리 주가 | Yahoo TSMC 70% + UMC 30% |
+| | A-3 | 관세청 메모리 수출 | data.go.kr HS 854232 월간 |
+| | A-4 | 전자부품 재고지수 | KOSIS C26, 2020=100 |
+| | A-5 | AWS 스팟 가격 | EC2 m6i.xlarge 스팟 (최근 90일) |
+| | A-6 | 대만 침공 예측시장 | Manifold Markets |
 | | A-7 | 구리 선물가 | Yahoo HG=F |
-| **비정형 B** | B-1~B-7 | 감성/지정학/LTA/HBM/BOM | Google News + LLM 4-tier fallback |
-| **거시** | macro-fed/dxy/pmi/krw/cu/**ust10** | 금리/DXY/PMI/USD-KRW/구리/**10년물** | FRED + Yahoo Finance |
-| **타겟** | target-dram | DRAM 가격 프록시 | Yahoo: MU 50% + SK Hynix 30% + Samsung 20% (base 100 정규화) |
+| **비정형 B** | B-1 · B-5 · B-6 | 실적발표 · LTA · HBM 뉴스 감성 | 구글 뉴스 헤드라인 → Gemini 감성 점수 |
+| | B-7 | HN 메모리 화제도 | Hacker News 게시글 점수 |
+| **거시** | 6종 | 10년물·기준금리·DXY·산업생산·USD/KRW·구리 | FRED + Yahoo |
+| **대상** | target | 메모리 3사 주가지수 | MU 50% + SK하이닉스 30% + 삼성 20%, 2025-06-16=100 |
 
-<br>
-
-**LLM 4-tier chain**: Anthropic Claude → Gemini 2.5 Flash → Groq → 휴리스틱
-
----
-
-# 4. 데이터 흐름 (5단계 + UI)
-
-| 단계 | 입력 | 출력 | 소요 |
-|---|---|---|---|
-| ① **데이터 수집** | 외부 API/RSS (21 신호) | `data/historical/*.json` | ~30초 |
-| ② **뉴스/이벤트** | RSS 45 쿼리 (NEWS 14 + EVENTS 31) | `data/news/latest.json` + `data/events/latest.json` | ~20초 |
-| ③ **모델 재학습** | historical (108주 × 21열) | `data/forecast/forecast_v2.json` + `model_comparison.txt` | ~12초 |
-| ④ **AI 인사이트** | meta + 신호 + 뉴스 → LLM | `data/insight/latest.json` (400자 완결) | ~5초 |
-| ⑤ **프론트엔드 빌드** | 모든 산출물 → SIXSENSE_DATA | `frontend/src/mocks/data.js` (50 KB) | <1초 |
-
-<br>
-
-**총 ~70초** · 풋바 "🔄 수동 갱신" 버튼 1클릭으로 모든 단계 백그라운드 실행 + 자동 새로고침
+<span class="small">화면 미표시(수집·검증에는 사용): A-2 빅테크 CapEx · B-2 대만 뉴스 · B-3 HN · B-4 지정학(GPR)</span>
 
 ---
 
-<!-- ────────────────────── 5. Multi-Model 검증 ────────────────────── -->
+# 4. 신선도 — 수집이 된다고 데이터가 새것은 아니다
 
-# 5. Multi-Model 검증 — 단기 (1~7주)
-
-## 모델 비교 (model_comparison.txt 실측, v1.1 기준)
-
-| 모델 | MAPE | 평가 |
+| 신호 | 상태 | 사유 (자동 판정) |
 |---|---|---|
-| **XGBoost ⭐** | <span class="pos">**11.05%**</span> | 우수 모델 자동 선정 |
-| LightGBM | 17.86% | 대안 |
-
-## 환경 처리 (v1.1 업데이트)
-
-- `libomp` 설치 완료 → **XGBoost/LightGBM 정식 활성화** (v1.0 당시 sklearn GBR/HistGBR fallback에서 전환)
-- 우수 모델은 매 학습 시점마다 MAPE 비교로 자동 재선정 (하드코딩 없음)
-- LSTM은 **PyTorch** (libomp 무관, 즉시 작동)
-
----
-
-# 5. Multi-Model 검증 — 중장기 (8~21주)
-
-## LSTM (PyTorch 2-layer, hidden=64)
-
-| 모델 | held-out MAPE |
-|---|---|
-| Prophet | (baseline) |
-| **LSTM ⭐** | <span class="pos">**9.19%**</span> |
-
-## 학습 시간 (전체 파이프라인)
-
-| Stage | 소요 |
-|---|---|
-| Prophet | 0.64s |
-| Tree (단기) | 4.22s |
-| LSTM (중장기) | 6.52s |
-| **합계** | **~11.4초** |
+| A-3 관세청 수출 | ⚠ 갱신 중단 | 수집은 되지만 **2026-03 값이 26주째 같음** (원천 미갱신) |
+| A-4 전자부품 재고지수 | ⚠ 갱신 중단 | 값이 13주째 같음 |
+| A-1 · A-7 · 거시 6종 | ⚠ 갱신 중단 | 2026-07-12 이후 수집기 없음 |
+| A-5 · A-6 · B-1 · B-5 · B-6 · B-7 · 대상 지수 | ✅ 정상 | 매주 새 값 |
 
 <br>
 
-**차트에 4개 모델 동시 표시** (S-001 §02):
-Prophet 황색 dotted · HistGBR 보라 long-dash · **GBR★** 청색 · **LSTM★** 초록
+- 판정 규칙: **수집 14일 이상 없음** 또는 **같은 값 8주 이상** → "갱신 중단" + 사유
+- 한국 정부 API(A-3·A-4)는 GitHub 서버(미국 IP)에서 간헐·상시 차단 → 한국에서 로컬 수집으로 보충
+- AI 요약은 갱신 중단 신호를 근거로 쓰지 않음
+
+---
+
+<!-- ────────────────────── 5. 예측 검증 ────────────────────── -->
+
+# 5. 예측 검증 — 방법 (워크포워드 백테스트)
+
+> "그 시점에 실제로 알 수 있던 정보만으로, 매번 새로 학습해서 맞혔는가?"
+
+- **대상**: 메모리 3사 주가지수 · 67주 (2025-06-16 ~ 2026-09-21)
+- **방법**: 과거 27~39개 시점(예측 기간별)마다 그 시점까지 정답이 확정된 데이터로만 **새로 학습** → 1~7주 뒤 예측 (총 231회)
+- **데이터 교정**: 날짜를 월요일로 통일 · 미래 값으로 과거를 채우지 않음 · 월간 통계는 **발표 지연 6주** 반영
+- **비교 기준**: **단순 기준선** = "지난주 값이 그대로 유지된다"
+- **합격 기준**: 모델 평균 오차 < 기준선 평균 오차 **그리고** 부호검정 p < 0.05
+- 매주 자동 재실행 → 화면 §07 · S-012 에 표시
+
+---
+
+# 5. 예측 검증 — 결과: 불합격
+
+| | 앱이 쓰던 방식 (가격 수준) | 개선 시도 (변화율) | 단순 기준선 |
+|---|---|---|---|
+| 평균 오차 (MAPE) | <span class="neg">32.2%</span> | 21.6% | <span class="pos">15.7%</span> |
+| 기준선을 이긴 비율 | 19.5% | 52.8% (p = 0.215, 우연과 구분 안 됨) | — |
+| 오르내림 적중률 | 35.9% | 67.5% | "항상 오른다" 찍기 70.6% |
+| 4주 대기 여부를 모델대로 정했을 때 구매 단가 | <span class="neg">+8.57%</span> | +0.72% | 0% (미래를 안다면 -4.9%) |
+
+<br>
+
+- 앱 방식은 상승장에서 **33번 중 31번 "기다려라"** → 실제로 옳았던 건 7번
+- 원인: 트리 모델은 학습 때 본 최고값 위를 예측하지 못함 (지수가 67주에 7.5배 상승)
+- 근본 한계: **데이터 67주 · 실제 DRAM 가격이 아닌 주가 대용 지표**
+
+---
+
+# 5. 이전 발표 수치는 왜 틀렸나
+
+| 이전 주장 | 실제 원인 |
+|---|---|
+| 단기 MAPE **11.05%** (XGBoost ⭐) | 검증 구간 정답이 학습에 섞임 (**데이터 누수**) — 누수 제거 시 한때 0.03%까지 떨어져 드러남 |
+| 중장기 MAPE **9.19%** (LSTM ⭐) | 실측값을 읽지 못하면 **코드에 박아둔 기본값**을 표시 |
+| 단기 4.54% / 6.86% / Prophet 7.54% | 모델 이름 불일치로 파싱 실패 → **하드코딩 기본값** |
+| "7주 예측" 차트 | 이미 지난 7주의 복기값을 오늘 가격에 이어 붙임 |
+| 데이터 125행 | 요일 불일치로 **한 주가 두 줄로 분할** → "7칸 뒤"가 실제로는 약 3.5주 |
+
+<br>
+
+**교훈**: 검증 없는 정확도 수치는 발표하지 않는다. 합격 기준을 먼저 정하고, 통과할 때만 보여준다.
 
 ---
 
@@ -358,50 +324,50 @@ Prophet 황색 dotted · HistGBR 보라 long-dash · **GBR★** 청색 · **LSTM
 
 # 6. 라이브 데모
 
-## http://localhost:5173
+## https://sixsense-eta.vercel.app (iPhone 홈 화면 앱)
 
 <br>
 
 | Step | 화면 | 강조 포인트 |
 |---|---|---|
-| 1 | **S-001 §01 가격 스냅샷** | 7분화 그리드 · 현재가 $7.46 · 1~7w $9.25 (+24.0%) · 8~21w $8.67 (+16.2%) · 예측분석 인사이트 |
-| 2 | **인사이트 카드 클릭** → Modal | 400자 한국어 완결 분석 (LLM 4-tier fallback, 실패 시 휴리스틱도 완결 분석 보장) |
-| 3 | **§02 DRAM 차트** | 4 모델 동시 표시 + MAPE 비교 표 (XGBoost★ 11.05% · LSTM★ 9.19%) · 단기→중장기 절벽 없이 자연 연결(anchor 보정) |
-| 4 | **§07 글로벌 이벤트** | 5 카테고리 다양성 (국내반도체·물리적충돌·기상이변·금융위기·기타) |
-| 5 | **§09 풋바 "🔄 수동 갱신"** | 5단계 백그라운드 + 진행률 바 + 자동 새로고침 |
-| 6 | **다크 모드 토글** | topbar 우측 "☾ 다크 모드" → 즉시 전환 |
+| 1 | **S-001 §01 지표 스냅샷** | 주가지수 746.9 pt · 대용 지표 고지 · 실측 4주 +13.7% · 예측 검증 "불합격" |
+| 2 | **시장 신호 요약 카드** | Gemini 가 수집 사실만 요약 · "검증되지 않은 해석" 라벨 |
+| 3 | **신호 카드 → S-003 A-3** | 실측 26주 · "값이 26주째 같음 — 원천 미갱신" 자동 경고 |
+| 4 | **§07 → S-012 예측 검증** | 기간별 오차 · 기준선 비교 · 구매 시뮬레이션 |
+| 5 | **S-014 수집 현황** | 정상 8 · 갱신 중단 6 · 사유 |
+| 6 | **"🔄 수동 갱신"** | GitHub Actions 무료 파이프라인 → 약 5분 후 자동 재배포 |
 
 ---
 
 <!-- _class: demo -->
 
-# 6. 데모 시나리오 — 예상 Q&A
+# 6. 예상 Q&A
 
-**Q1. 가격이 $-단위인데 어떻게 산출했나요?**
-→ target-dram은 메모리 4사 주가 블렌드를 100 정규화한 인덱스. UI 표시는 `index × 0.01 = $ 단위` 환산.
+**Q1. 왜 예측을 보여주지 않나요?**
+→ 워크포워드 백테스트에서 "지난주 값 그대로"보다 부정확했습니다. 틀린 예측을 보여주는 것보다 보여주지 않는 게 의사결정에 안전합니다. 검증은 매주 자동 재실행되며, 합격하면 다시 표시할 수 있습니다.
 
-**Q2. LLM이 휴리스틱으로 떨어진 경우는?**
-→ 4-tier fallback (Anthropic→Gemini→Groq→휴리스틱). 휴리스틱도 데이터 기반 400자 완결 분석 보장. UI에 모델명 표시.
+**Q2. 가격 단위는?**
+→ 실제 DRAM 계약가는 유료라, 메모리 3사 주가를 2025-06-16=100 으로 정규화한 **지수(pt)** 입니다. 계약가가 아님을 화면에 명시합니다.
 
-**Q3. news와 events가 중복되지 않나요?**
-→ NEWS_QUERIES (DRAM 산업 14) vs EVENTS_QUERIES (글로벌+국내 반도체 이벤트성 31)로 **entry 단계부터 분리**. EVENTS는 news와 title 중복 자동 제거.
+**Q3. AI 요약은 믿을 수 있나요?**
+→ Gemini 에 입력한 수치만 쓰도록 제한하고, 갱신 중단 신호는 근거에서 제외합니다. 그래도 LLM 문장이므로 "검증되지 않은 해석"으로 표시합니다.
 
-**Q4. 매주 화요일 자동화는?**
-→ 현재 데모는 수동 갱신 버튼. 운영 시 cron / GitHub Actions로 매주 화 06:00 KST 자동 실행.
+**Q4. 자동화는?**
+→ GitHub Actions 로 매주 화 06:00 KST 운영 중이며 비용 0원입니다. 앱 버튼으로도 실행됩니다.
 
 ---
 
-<!-- ────────────────────── 7. Production 로드맵 ────────────────────── -->
+<!-- ────────────────────── 7. 로드맵 ────────────────────── -->
 
-# 7. Production 배포 — P0 Blocker (배포 전 필수)
+# 7. 신뢰할 수 있는 예측으로 가는 길 — P0
 
 | # | 항목 | 현재 | 필요 |
 |---|---|---|---|
-| <span class="pill pill-p0">P0</span> | **시크릿 관리** | `.env` 파일 | AWS Secrets Manager / Vault, 환경별 분리 |
-| <span class="pill pill-p0">P0</span> | **LLM 비용/한도** | Gemini 무료 1,500/day | Anthropic 충전 + Gemini 유료 + Groq 키 (3중 안전망) |
-| <span class="pill pill-p0">P0</span> | **인증/권한** | 없음 (CORS only) | Supabase Auth + RLS 강화 |
-| <span class="pill pill-p0">P0</span> | **DB 영속화** | JSON 파일 | Supabase 스키마 적용 + sync_supabase.py cron |
-| <span class="pill pill-p0">P0</span> | **수동 갱신 보호** | 누구나 호출 가능 | 인증 토큰 + rate limit + audit log |
+| <span class="pill pill-p0">P0</span> | **예측 대상** | 메모리 3사 주가지수 (대용) | 실제 DRAM 계약가 데이터 (유료 또는 TrendForce 공개 분기 변동률) |
+| <span class="pill pill-p0">P0</span> | **데이터 길이** | 67주 | 여러 가격 사이클을 포함한 5년 이상 |
+| <span class="pill pill-p0">P0</span> | **멈춘 수집** | 갱신 중단 6개 (거시 6종 · A-1 · A-7 · A-3/A-4 원천 정체) | 수집기 복구 · 원천 갱신 주기 확인 |
+| <span class="pill pill-p0">P0</span> | **검증 관문** | 결과 표시만 | 합격 시에만 예측 표시하는 자동 게이트 |
+| <span class="pill pill-p0">P0</span> | **수동 갱신 보호** | 누구나 호출 가능 | 인증 토큰 + rate limit |
 
 ---
 
@@ -409,37 +375,16 @@ Prophet 황색 dotted · HistGBR 보라 long-dash · **GBR★** 청색 · **LSTM
 
 ## <span class="pill pill-p1">P1</span> High Priority
 
-- **호스팅**: Vercel(frontend) + Railway/Fly.io(backend) + GitHub Actions cron
-- **관측성**: Sentry (errors) + Datadog (metrics) + Slack 알림
-- **CI/CD**: PR typecheck + lint + 단위테스트 + L1 API 테스트
-- **데이터 품질 SLO**: 수집률 ≥95% · MAPE 유지 · LLM 성공률 ≥90%
+- **LLM 한도**: Gemini 무료 한도가 작아 실패 시 키워드 방식으로 떨어짐 → 유료 전환 검토 (정책: GPT·Gemini·Claude 중 1개)
+- **AI 요약 검증**: 요약 속 숫자를 원본과 자동 대조하는 장치
+- **테스트**: 화면 코드(.jsx)가 린트·테스트 대상에서 빠져 있음 → 브라우저 자동 검사를 CI에 편입
+- **관측성**: 수집 실패·갱신 중단 발생 시 알림
 
 ## <span class="pill pill-p2">P2</span> 차후
 
 - **법무**: RSS 저작권 약관 점검, 뉴스 출처 명시 강화
-- **성능**: data.js 50KB → API lazy load 전환
-- **사용성**: 멀티유저, 주간 Email/Slack 리포트, 모바일 반응형, i18n
-- **AI 강화**: 백테스팅 자동화, SHAP explainability, foundation model (Chronos)
-
----
-
-# 7. 30/60/90일 로드맵
-
-| 기간 | Sprint | 산출물 |
-|---|---|---|
-| **Day 0~7** | 배포 직전 | 시크릿 매니저 · Supabase 활성 · LLM 유료 · 인증 · Vercel+Railway 배포 · GitHub Actions cron |
-| **Day 8~30** | 안정화 | Sentry/Datadog · CI/CD 게이트 · SLO 대시보드 · HITL 권한 분리 |
-| **Day 31~90** | 확장 | 주간 리포트 · 백테스팅 자동화 · 모바일 · 워크스페이스 (멀티 유저) |
-
-<br>
-
-## 즉시 데모 vs 운영 격차
-
-| 영역 | 데모 | 운영 격차 |
-|---|---|---|
-| UI + 21 신호 + Multi-Model + LLM 인사이트 + 수동 갱신 | ✅ 작동 | — |
-| Supabase 동기화 + cron 자동 | 코드 준비 | 활성화 필요 |
-| 인증 + 모니터링 | ❌ | 도입 필요 |
+- **사용성**: 주간 리포트, 멀티유저, i18n
+- **모델**: 검증 합격 이후 — 변화율·분포 예측, 설명 가능성
 
 ---
 
@@ -455,15 +400,14 @@ Prophet 황색 dotted · HistGBR 보라 long-dash · **GBR★** 청색 · **LSTM
 
 | | |
 |---|---|
-| GitHub commits | **73+개** (Phase 1~7 + v1.1 데이터 최신화 + v2.0/v2.1 모바일 전환 + v2.2 원격 갱신 누적) |
-| 자동 수집 신호 | **21개 수집 · 화면 표시 10개** (예측 영향도 0% 신호 4개 정리) |
-| 단기 MAPE | **11.05%** (XGBoost ⭐) |
-| 중장기 MAPE | **9.19%** (LSTM ⭐) |
-| AI 인사이트 | Claude→Gemini→Groq→휴리스틱 4-tier · 400자 완결 |
-| iOS 전용앱 | PWA 홈 화면 설치 + 오프라인 지원 + 하단 탭바 |
-| 원격 데이터 갱신 | 앱 버튼 → GitHub Actions(무료) → 자동 재배포 (약 5분) + 매주 화 06:00 자동 |
-| 현재 버전 | **v2.2** (2026-07-17) |
+| 현재 지표 | 메모리 3사 주가지수 **746.9 pt** (2026-09-21 · 4주 +13.7%) |
+| 예측 검증 | **불합격** — 모델 32.2% vs 단순 기준선 15.7% (231회 워크포워드) |
+| 수집 현황 | 14개 신호 중 정상 8 · 갱신 중단 6 · 거시 6종 갱신 중단 |
+| AI 요약 | Gemini 무료 티어 · 사실만 · "검증되지 않은 해석" 표시 |
+| 자동화 | GitHub Actions 매주 화 06:00 KST + 앱 버튼 (비용 0원) |
+| GitHub commits | **101개** |
+| 현재 버전 | **v2.3** (2026-09-24) |
 
 <br>
 
-<span class="small">배포: https://sixsense-eta.vercel.app · 데모(로컬): http://localhost:5173</span>
+<span class="small">배포: https://sixsense-eta.vercel.app</span>
