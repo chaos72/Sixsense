@@ -21,15 +21,15 @@
         {
           "h": 1,
           "n": 39,
-          "modelMape": 26.7,
+          "modelMape": 26.91,
           "naiveMape": 7.41,
-          "winRate": 12.8,
-          "dirAcc": 35.9
+          "winRate": 15.4,
+          "dirAcc": 38.5
         },
         {
           "h": 2,
           "n": 37,
-          "modelMape": 30.13,
+          "modelMape": 30.44,
           "naiveMape": 11.32,
           "winRate": 8.1,
           "dirAcc": 29.7
@@ -37,7 +37,7 @@
         {
           "h": 3,
           "n": 35,
-          "modelMape": 31.52,
+          "modelMape": 31.69,
           "naiveMape": 13.32,
           "winRate": 20.0,
           "dirAcc": 34.3
@@ -45,7 +45,7 @@
         {
           "h": 4,
           "n": 33,
-          "modelMape": 34.7,
+          "modelMape": 35.05,
           "naiveMape": 16.42,
           "winRate": 12.1,
           "dirAcc": 21.2
@@ -53,7 +53,7 @@
         {
           "h": 5,
           "n": 31,
-          "modelMape": 36.67,
+          "modelMape": 36.73,
           "naiveMape": 19.64,
           "winRate": 16.1,
           "dirAcc": 29.0
@@ -69,7 +69,7 @@
         {
           "h": 7,
           "n": 27,
-          "modelMape": 38.21,
+          "modelMape": 38.19,
           "naiveMape": 24.67,
           "winRate": 22.2,
           "dirAcc": 33.3
@@ -77,10 +77,10 @@
       ],
       "overall": {
         "n": 231,
-        "modelMape": 33.17,
+        "modelMape": 33.33,
         "naiveMape": 15.67,
-        "winRate": 15.2,
-        "dirAcc": 31.6,
+        "winRate": 15.6,
+        "dirAcc": 32.0,
         "alwaysUpDirAcc": 70.6,
         "pValue": 1.0
       },
@@ -104,15 +104,15 @@
         {
           "h": 1,
           "n": 39,
-          "modelMape": 7.22,
+          "modelMape": 7.26,
           "naiveMape": 7.41,
-          "winRate": 59.0,
-          "dirAcc": 64.1
+          "winRate": 56.4,
+          "dirAcc": 61.5
         },
         {
           "h": 2,
           "n": 37,
-          "modelMape": 11.01,
+          "modelMape": 10.69,
           "naiveMape": 11.32,
           "winRate": 54.1,
           "dirAcc": 64.9
@@ -120,39 +120,39 @@
         {
           "h": 3,
           "n": 35,
-          "modelMape": 14.55,
+          "modelMape": 14.25,
           "naiveMape": 13.32,
-          "winRate": 48.6,
-          "dirAcc": 60.0
+          "winRate": 54.3,
+          "dirAcc": 62.9
         },
         {
           "h": 4,
           "n": 33,
-          "modelMape": 20.58,
+          "modelMape": 19.6,
           "naiveMape": 16.42,
-          "winRate": 42.4,
-          "dirAcc": 72.7
+          "winRate": 48.5,
+          "dirAcc": 78.8
         },
         {
           "h": 5,
           "n": 31,
-          "modelMape": 28.3,
+          "modelMape": 27.83,
           "naiveMape": 19.64,
-          "winRate": 45.2,
+          "winRate": 48.4,
           "dirAcc": 64.5
         },
         {
           "h": 6,
           "n": 29,
-          "modelMape": 36.41,
+          "modelMape": 36.0,
           "naiveMape": 21.71,
-          "winRate": 48.3,
-          "dirAcc": 62.1
+          "winRate": 51.7,
+          "dirAcc": 65.5
         },
         {
           "h": 7,
           "n": 27,
-          "modelMape": 43.58,
+          "modelMape": 43.53,
           "naiveMape": 24.67,
           "winRate": 48.1,
           "dirAcc": 70.4
@@ -160,22 +160,22 @@
       ],
       "overall": {
         "n": 231,
-        "modelMape": 21.59,
+        "modelMape": 21.24,
         "naiveMape": 15.67,
-        "winRate": 49.8,
-        "dirAcc": 65.4,
+        "winRate": 51.9,
+        "dirAcc": 66.7,
         "alwaysUpDirAcc": 70.6,
-        "pValue": 0.552
+        "pValue": 0.299
       },
       "procurement": {
         "n": 33,
         "horizonWeeks": 4,
         "alwaysNow": 528.03,
-        "model": 531.84,
-        "modelPct": 0.72,
+        "model": 528.03,
+        "modelPct": 0.0,
         "perfectPct": -4.9,
-        "waitRate": 6.1,
-        "waitCount": 2,
+        "waitRate": 0.0,
+        "waitCount": 0,
         "waitCorrect": 0
       },
       "pass": false

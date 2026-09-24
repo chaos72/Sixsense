@@ -1,6 +1,6 @@
 {
   "signalId": "B-2",
-  "source": "TechNews.tw + Digitimes + Google News RSS (1028 entries, \ud0a4\uc6cc\ub4dc sentiment, 26\uc8fc)",
+  "source": "TechNews.tw + Digitimes + Google News RSS (1027 entries, \ud0a4\uc6cc\ub4dc sentiment, 26\uc8fc)",
   "mode": "real",
   "collectedAt": "2026-09-24",
   "rangeStart": "2026-02-09",
@@ -29,7 +29,7 @@
     },
     {
       "week": "2026-04-27",
-      "value": 1.0
+      "value": 0.5
     },
     {
       "week": "2026-05-11",
@@ -37,7 +37,7 @@
     },
     {
       "week": "2026-05-18",
-      "value": 0.5
+      "value": 0.0
     },
     {
       "week": "2026-05-25",
@@ -61,11 +61,11 @@
     },
     {
       "week": "2026-06-29",
-      "value": 0.0541
+      "value": 0.0789
     },
     {
       "week": "2026-07-06",
-      "value": -0.0857
+      "value": -0.0938
     },
     {
       "week": "2026-07-13",
@@ -77,11 +77,11 @@
     },
     {
       "week": "2026-07-27",
-      "value": 0.1087
+      "value": 0.0889
     },
     {
       "week": "2026-08-03",
-      "value": 0.1228
+      "value": 0.125
     },
     {
       "week": "2026-08-10",
@@ -93,23 +93,23 @@
     },
     {
       "week": "2026-08-24",
-      "value": 0.0508
+      "value": 0.0517
     },
     {
       "week": "2026-08-31",
-      "value": 0.1176
+      "value": 0.1159
     },
     {
       "week": "2026-09-07",
-      "value": 0.1636
+      "value": 0.1607
     },
     {
       "week": "2026-09-14",
-      "value": 0.1087
+      "value": 0.0889
     },
     {
       "week": "2026-09-21",
-      "value": 0.1108
+      "value": 0.1173
     }
   ]
 }
