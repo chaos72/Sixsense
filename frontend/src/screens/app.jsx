@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { Sig } from '../components/components.jsx'
-import { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend } from './dashboard.jsx'
-import { S002, S003, S004, S007, S009, S011, S013, ConfidenceBar, SignalDetail } from './modals.jsx'
+import { Dashboard, SignalCard } from './dashboard.jsx'
+import { S003, S004, S007, S009, S011 } from './modals.jsx'
 import { PageHead, S006, S008, S010, S012, S014 } from './pages.jsx'
 import { TweaksPanel, TweakSection, TweakRadio, useTweaks } from './tweaks-panel.jsx'
 import { SIXSENSE_DATA } from '../mocks/data.js'
 // USER-REQUESTED EXTENSION (#16) — topbar 마지막 갱신 동적 계산
-import { lastTuesday06KST, formatDateTimeKST } from '../utils/dates.js'
 
 // Main app — routing, tweaks, layout shell
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -32,14 +31,13 @@ function App() {
   })();
   
   const FULL_PAGES = ["S-001", "S-006", "S-008", "S-010", "S-012", "S-014"];
-  const MODAL_IDS = ["S-002", "S-003", "S-004", "S-007", "S-009", "S-011", "S-013"];
+  const MODAL_IDS = ["S-003", "S-004", "S-007", "S-009", "S-011"];
   
   const expand = (id, p) => {
     const D = SIXSENSE_DATA;
     const out = { ...p };
     if (p.newsIdx !== undefined) out.news = D.news[p.newsIdx];
     if (p.eventIdx !== undefined) out.event = D.events[p.eventIdx];
-    if (p.rowIdx !== undefined) out.row = D.accuracy[p.rowIdx];
     return out;
   };
   
@@ -61,7 +59,7 @@ function App() {
 
   const onNav = (id, params = {}) => {
     // Modal screens
-    const MODAL_IDS = ["S-002", "S-003", "S-004", "S-007", "S-009", "S-011", "S-013"];
+    const MODAL_IDS = ["S-003", "S-004", "S-007", "S-009", "S-011"];
     if (MODAL_IDS.includes(id)) {
       setModalStack(s => [...s, { id, params }]);
     } else {
@@ -82,7 +80,7 @@ function App() {
       "S-006": "AI 뉴스 분석 전체 목록",
       "S-008": "거시경제 지표 통합 상세",
       "S-010": "글로벌 이벤트 모니터링",
-      "S-012": "AI 예측 정확도 전체 이력",
+      "S-012": "AI 가격 예측 검증",
       "S-014": "데이터 수집 현황 상세",
     };
     return m[route.page];
@@ -106,13 +104,11 @@ function App() {
         const params = m.params || {};
         return (
           <Fragment key={i}>
-            {m.id === "S-002" && <S002 horizon={params.horizon} onClose={onCloseModal} onNav={onNav} />}
             {m.id === "S-003" && <S003 tab={params.tab} onClose={onCloseModal} onNav={onNav} />}
             {m.id === "S-004" && <S004 tab={params.tab} onClose={onCloseModal} onNav={onNav} />}
             {m.id === "S-007" && <S007 news={params.news} onClose={onCloseModal} onNav={onNav} />}
-            {m.id === "S-009" && <S009 week={params.week} onClose={onCloseModal} />}
+            {m.id === "S-009" && <S009 onClose={onCloseModal} />}
             {m.id === "S-011" && <S011 event={params.event} onClose={onCloseModal} onNav={onNav} />}
-            {m.id === "S-013" && <S013 row={params.row} onClose={onCloseModal} />}
           </Fragment>
         );
       })}
@@ -125,17 +121,15 @@ function App() {
         <TweakSection title="화면 바로가기">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
             <button className="btn sm" onClick={goMain}>S-001 대시보드</button>
-            <button className="btn sm" onClick={() => onNav("S-002", { horizon: 7 })}>S-002 예측 근거</button>
             <button className="btn sm" onClick={() => onNav("S-003", { tab: "A-4" })}>S-003 정형 (A-4)</button>
             <button className="btn sm" onClick={() => onNav("S-004", { tab: "B-1" })}>S-004 비정형 (B-1)</button>
             <button className="btn sm" onClick={() => onNav("S-006")}>S-006 뉴스 목록</button>
             <button className="btn sm" onClick={() => onNav("S-007", { news: SIXSENSE_DATA.news[0] })}>S-007 뉴스 상세</button>
             <button className="btn sm" onClick={() => onNav("S-008", { tab: "fed" })}>S-008 거시경제</button>
-            <button className="btn sm" onClick={() => onNav("S-009", { week: -3 })}>S-009 주별 스냅샷</button>
+            <button className="btn sm" onClick={() => onNav("S-009")}>S-009 8주 전 비교</button>
             <button className="btn sm" onClick={() => onNav("S-010")}>S-010 이벤트 목록</button>
             <button className="btn sm" onClick={() => onNav("S-011", { event: SIXSENSE_DATA.events[0] })}>S-011 이벤트 상세</button>
-            <button className="btn sm" onClick={() => onNav("S-012")}>S-012 예측 정확도</button>
-            <button className="btn sm" onClick={() => onNav("S-013", { row: SIXSENSE_DATA.accuracy[5] })}>S-013 당시 신호</button>
+            <button className="btn sm" onClick={() => onNav("S-012")}>S-012 예측 검증</button>
             <button className="btn sm" onClick={() => onNav("S-014")}>S-014 수집 현황</button>
           </div>
         </TweakSection>
@@ -160,7 +154,7 @@ function MobileTabBar({ current, onNav, onHome }) {
     { id: "S-006", label: "뉴스", icon: "M4 5h16v14H4zM8 9h8M8 13h8M8 17h5" },
     { id: "S-008", label: "거시", icon: "M4 19V5M4 19h16M8 15l3-4 3 3 4-6" },
     { id: "S-010", label: "이벤트", icon: "M12 3l9 16H3zM12 10v4M12 17h.01" },
-    { id: "S-012", label: "정확도", icon: "M20 6L9 17l-5-5" },
+    { id: "S-012", label: "검증", icon: "M20 6L9 17l-5-5" },
   ];
   return (
     <nav className="mobile-tabbar" role="navigation" aria-label="주요 화면">
@@ -205,7 +199,7 @@ function Topbar({ pageLabel, pageId, onHome, t, setTweak }) {
       </div>
       <div className="meta">
         <span><span className="dot"></span>매주 화요일 06:00 자동 수집</span>
-        <span className="mono">마지막 갱신 · {formatDateTimeKST(lastTuesday06KST())}</span>
+        <span className="mono">데이터 기준 · {SIXSENSE_DATA.meta.updated}</span>
         {/* USER-REQUESTED EXTENSION (2026-05-18 #6) — hand-off의 테마 토글 가시성 강화 (.theme-toggle 클래스) */}
         <button
           className="theme-toggle"

@@ -1,149 +1,38 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
+import React, { useState } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
-import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead } from '../components/components.jsx'
-// USER-REQUESTED EXTENSION (#16) — 생성일 동적
-import { lastTuesday06KST, formatTuesdayShort } from '../utils/dates.js'
+import { Sig, Modal, Tabs, AiNote, LineChart } from '../components/components.jsx'
 
-// Modal-based detail screens: S-002, S-003, S-004, S-005, S-007, S-009, S-011, S-013
+// Modal-based detail screens: S-003, S-004, S-007, S-009, S-011
+// 원칙: 수집·측정된 값만 표시. 고정 숫자·예시 문장·동작하지 않는 버튼을 두지 않는다.
+// (v2.3 에서 S-002 예측 근거·S-005 Graph RAG·S-013 당시 신호 — 고정 가짜 내용 — 삭제)
 const D2 = SIXSENSE_DATA;
 
-// ==== S-002 AI 예측 근거 ====
-function S002({ horizon: initialHorizon, onClose, onNav }) {
-  const [tab, setTab] = useState(initialHorizon === 21 ? "21" : "7");
-  const isH7 = tab === "7";
-  const data = isH7 ? D2.forecast7 : D2.forecast21;
-  const finalVal = data[data.length - 1];
-  
-  // 실측 피처 중요도(XGBoost) 순서로 기여도 표기 — 제거된 신호(A-2/B-2/B-3/B-4) 제외
-  const contributions = isH7 ? [
-    { rank: 1, code: "A-5", label: "AWS Spot 가격 상승", pct: 34, tone: "pos" },
-    { rank: 2, code: "A-1", label: "대만 공급망 강세", pct: 20, tone: "pos" },
-    { rank: 3, code: "A-3", label: "관세청 수출 증가", pct: 14, tone: "pos" },
-    { rank: 4, code: "B-1", label: "Earnings Call 긍정", pct: 11, tone: "pos" },
-    { rank: 5, code: "A-7", label: "구리가격 선행 상승", pct: 8, tone: "pos" },
-    { rank: 6, code: "A-4", label: "재고지수 Red Alert", pct: -9, tone: "neg" },
-    { rank: 7, code: "—", label: "기타 4개 신호", pct: 4, tone: "neu" },
-  ] : [
-    { rank: 1, code: "A-1", label: "대만 공급망 (장기)", pct: 30, tone: "pos" },
-    { rank: 2, code: "A-5", label: "AWS Spot 가격 누적", pct: 22, tone: "pos" },
-    { rank: 3, code: "B-5", label: "LTA 비율 상승", pct: 18, tone: "pos" },
-    { rank: 4, code: "B-1", label: "Earnings Call 가이던스", pct: 14, tone: "pos" },
-    { rank: 5, code: "A-4", label: "공급과잉 압력", pct: -9, tone: "neg" },
-    { rank: 6, code: "B-6", label: "HBM/D램 믹스 개선", pct: 7, tone: "pos" },
-    { rank: 7, code: "—", label: "기타 4개 신호", pct: 6, tone: "neu" },
-  ];
-
-  return (
-    <Modal title="AI 예측 근거 상세" badge="S-002" size="lg" onClose={onClose}>
-      <div className="modal-body">
-        <Tabs
-          active={tab}
-          onChange={setTab}
-          tabs={[
-            { id: "7", code: "1~7주", label: "단기 예측" },
-            { id: "21", code: "8~21주", label: "중장기 예측" },
-          ]}
-        />
-        
-        {/* Top summary */}
-        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
-          <div>
-            <div className="dlabel">예측값</div>
-            <div className="num" style={{ fontSize: 28, fontWeight: 600 }}>${finalVal.value.toFixed(2)}</div>
-            <div className="muted" style={{ fontSize: 11, marginTop: 4 }}>+{isH7 ? "7" : "21"}주 시점 기준</div>
-          </div>
-          <div>
-            <div className="dlabel">신뢰 구간</div>
-            <div className="num" style={{ fontSize: 14, fontWeight: 600, marginTop: 4 }}>${finalVal.lower.toFixed(2)} ─ ${finalVal.upper.toFixed(2)}</div>
-            <ConfidenceBar lower={finalVal.lower} value={finalVal.value} upper={finalVal.upper} />
-          </div>
-          <div>
-            <div className="dlabel">생성일 · 모델</div>
-            <div style={{ fontSize: 13, fontWeight: 500, marginTop: 4 }}>{formatTuesdayShort(lastTuesday06KST())}</div>
-            <div className="mono muted" style={{ fontSize: 11 }}>prophet_v2.1</div>
-          </div>
-          <div>
-            <div className="dlabel">신뢰도</div>
-            <div className="num" style={{ fontSize: 28, fontWeight: 600, color: "var(--sig-pos)" }}>{isH7 ? 81 : 74}%</div>
-          </div>
-        </div>
-
-        {/* Contribution bars */}
-        <div className="dlabel" style={{ marginBottom: 8 }}>신호별 예측 기여도 (순위순)</div>
-        <div className="card" style={{ padding: "12px 18px" }}>
-          {contributions.map(c => <BarRow key={c.rank} {...c} />)}
-        </div>
-
-        {/* Weekly table */}
-        <div className="dlabel" style={{ margin: "22px 0 8px" }}>주별 예측값 테이블</div>
-        <table className="tbl">
-          <thead>
-            <tr>
-              <th>주차</th>
-              <th className="num">예측값</th>
-              <th className="num">신뢰구간 하단</th>
-              <th className="num">신뢰구간 상단</th>
-              <th>구간 폭</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(d => (
-              <tr key={d.week}>
-                <td>+{d.week}주</td>
-                <td className="num" style={{ fontWeight: 600 }}>${d.value.toFixed(2)}</td>
-                <td className="num muted">${d.lower.toFixed(2)}</td>
-                <td className="num muted">${d.upper.toFixed(2)}</td>
-                <td className="muted mono" style={{ fontSize: 11 }}>±{((d.upper - d.lower) / 2).toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* AI judgment */}
-        <div style={{ marginTop: 22 }}>
-          <AiNote>
-            {isH7 ?
-              `"수요 측 신호(CapEx·실적콜)가 강하게 긍정적. 구리 선행지표도 6주 연속 상승세로 후행 효과 본격 반영 예상. 재고과잉 경고(A-4 Red Alert)가 하방 리스크이나 전반적 상승 압력 우세. 단, 지정학 리스크(B-4) 악화 모니터링 필요."` :
-              `"중장기는 구리 선행효과의 풀(full) 반영과 빅테크 CapEx 실행이 본격화되는 구간. LTA 비율 상승이 확인되며 메모리 4사 가이던스도 동조. 단, 지정학 리스크의 누적 효과와 중국 자급화 진척이 변수. 신뢰도 74%로 단기 대비 다소 낮음."`
-            }
-          </AiNote>
-        </div>
-
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
-        </div>
-      </div>
-    </Modal>
-  );
+// 원값 표시 — 신호마다 단위·자릿수가 달라 크기에 따라 줄여 쓴다
+function fmtRaw(v) {
+  if (v === null || v === undefined) return "—";
+  const a = Math.abs(v);
+  if (a >= 1e9) return `${(v / 1e9).toFixed(2)}B`;
+  if (a >= 1e6) return `${(v / 1e6).toFixed(2)}M`;
+  if (a >= 1e3) return v.toLocaleString(undefined, { maximumFractionDigits: 1 });
+  if (a >= 10) return v.toFixed(1);
+  return v.toFixed(3);
 }
 
-function ConfidenceBar({ lower, value, upper }) {
-  const min = lower * 0.98, max = upper * 1.02;
-  const pos = (v) => ((v - min) / (max - min)) * 100;
-  return (
-    <div style={{ marginTop: 8, height: 6, background: "var(--surface-2)", borderRadius: 3, position: "relative" }}>
-      <div style={{ position: "absolute", left: `${pos(lower)}%`, width: `${pos(upper) - pos(lower)}%`, height: "100%", background: "var(--sig-info-bg)", borderRadius: 3 }}></div>
-      <div style={{ position: "absolute", left: `${pos(value)}%`, top: -3, width: 2, height: 12, background: "var(--accent)", transform: "translateX(-50%)" }}></div>
-    </div>
-  );
+function changeText(now, then) {
+  if (then === 0 || then === null || then === undefined) return "—";
+  const c = (now / then - 1) * 100;
+  return `${c > 0 ? "+" : ""}${c.toFixed(1)}%`;
 }
 
 // ==== S-003 Group A 정형 ====
 function S003({ tab: initialTab, onClose, onNav }) {
-  const [tab, setTab] = useState(initialTab || "A-1");
-  const s = D2.signalsA.find(x => x.id === tab);
-  
+  const [tab, setTab] = useState(initialTab || D2.signalsA[0].id);
+  const s = D2.signalsA.find(x => x.id === tab) || D2.signalsA[0];
   return (
-    <Modal title="정형 데이터 (Group A) 통합 상세" badge="S-003" size="lg" onClose={onClose}>
+    <Modal title="정형 데이터 (Group A) 상세" badge="S-003" size="lg" onClose={onClose}>
       <div className="modal-body">
-        <Tabs
-          active={tab} onChange={setTab}
-          tabs={D2.signalsA.map(s => ({ id: s.id, code: s.id, label: s.name }))}
-        />
+        <Tabs active={s.id} onChange={setTab} tabs={D2.signalsA.map(x => ({ id: x.id, code: x.id, label: x.name }))} />
         <SignalDetail s={s} groupType="A" onNav={onNav} />
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
-        </div>
       </div>
     </Modal>
   );
@@ -151,249 +40,140 @@ function S003({ tab: initialTab, onClose, onNav }) {
 
 // ==== S-004 Group B 비정형 ====
 function S004({ tab: initialTab, onClose, onNav }) {
-  const [tab, setTab] = useState(initialTab || "B-1");
-  const s = D2.signalsB.find(x => x.id === tab);
-  
+  const [tab, setTab] = useState(initialTab || D2.signalsB[0].id);
+  const s = D2.signalsB.find(x => x.id === tab) || D2.signalsB[0];
   return (
-    <Modal title="비정형 데이터 (Group B) 통합 상세" badge="S-004" size="lg" onClose={onClose}>
+    <Modal title="비정형 데이터 (Group B) 상세" badge="S-004" size="lg" onClose={onClose}>
       <div className="modal-body">
-        <Tabs
-          active={tab} onChange={setTab}
-          tabs={D2.signalsB.map(s => ({ id: s.id, code: s.id, label: s.name }))}
-        />
+        <Tabs active={s.id} onChange={setTab} tabs={D2.signalsB.map(x => ({ id: x.id, code: x.id, label: x.name }))} />
         <SignalDetail s={s} groupType="B" onNav={onNav} />
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
-        </div>
       </div>
     </Modal>
   );
 }
 
+// 신호 상세 — 실측 이력(s.recent, 최근 26주 원값)만 사용
 function SignalDetail({ s, groupType, onNav }) {
-  // Generate 28-week trend
-  const trend = useMemo(() => {
-    const base = s.spark;
-    const out = [];
-    for (let i = 0; i < 28; i++) {
-      const idx = (i / 27) * (base.length - 1);
-      const a = base[Math.floor(idx)], b = base[Math.ceil(idx)];
-      const v = a + (b - a) * (idx - Math.floor(idx));
-      out.push({ x: i - 27, value: v + (Math.sin(i * 2.3) * 0.02) });
-    }
-    return out;
-  }, [s.id]);
-
-  const isAlert = s.tone === "alert";
-  
-  // News samples for group B
-  const sampleNews = D2.news.slice(0, 3);
+  const rows = s.recent || [];
+  const n = rows.length;
+  const series = [{ data: rows.map((r, i) => ({ x: i - (n - 1), value: r.value })), color: s.stale ? "var(--sig-neu)" : "var(--text)", dots: n <= 12 }];
+  const back8 = n > 8 ? rows[n - 9] : null;
+  const last = n ? rows[n - 1] : null;
+  const recentNews = D2.news.slice(0, 3);
 
   return (
     <div>
-      <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 0.8fr 0.8fr", gap: 16, marginBottom: 18, alignItems: "flex-end" }}>
-        <div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 18, alignItems: "flex-end" }}>
+        <div style={{ flex: "2 1 220px" }}>
           <div className="dlabel">신호명</div>
           <div style={{ fontSize: 18, fontWeight: 600 }}>{s.name}</div>
           <div className="muted" style={{ fontSize: 11, marginTop: 4 }}>{s.desc}</div>
         </div>
-        <div>
-          <div className="dlabel">현재값</div>
+        <div style={{ flex: "1 1 120px" }}>
+          <div className="dlabel">최신값</div>
           <div className="num" style={{ fontSize: 26, fontWeight: 600 }}>{s.value}</div>
         </div>
-        <div>
-          <div className="dlabel">판정</div>
-          <Sig tone={s.tone} size="lg">
-            {s.tone === "alert" ? "🚨 Red Alert" : s.tone === "pos" ? "긍정" : s.tone === "neg" ? "부정" : "중립"}
-          </Sig>
-          {isAlert && <div style={{ fontSize: 11, color: "var(--sig-alert)", marginTop: 4 }}>100 초과 = 공급과잉</div>}
+        <div style={{ flex: "0 1 auto" }}>
+          <div className="dlabel">상태</div>
+          {s.stale
+            ? <Sig tone="alert" size="lg">갱신 중단</Sig>
+            : <Sig tone={s.tone} size="lg">{s.tone === "pos" ? "긍정" : s.tone === "neg" ? "부정" : "중립"}</Sig>}
         </div>
-        <div>
+        <div style={{ flex: "1 1 200px" }}>
           <div className="dlabel">수집</div>
           <div style={{ fontSize: 12, fontWeight: 500 }}>{s.source}</div>
-          <div className="muted mono" style={{ fontSize: 10, marginTop: 2 }}>갱신: {groupType === "A" ? "주 1회" : "일 1회 (집계 주 1회)"}</div>
+          <div className="muted mono" style={{ fontSize: 10, marginTop: 2 }}>마지막 수집 {s.collectedAt || "—"} · 데이터 {s.asOf || "—"}</div>
         </div>
       </div>
 
-      {isAlert && (
+      {s.stale && (
         <div className="banner">
-          🚨 Red Alert — 재고/출하 비율이 임계치(100)를 초과했습니다. 단기 가격 하방 압력 예상.
+          갱신 중단 — {s.staleReason}. 아래 값은 {s.dataSince} 이후 새로 바뀌지 않았으니 현재 상황 판단에 쓰지 마세요.
         </div>
       )}
 
-      <div className="dlabel" style={{ marginBottom: 8 }}>{groupType === "A" ? "28주 추이" : "8주 감성 점수 추이"}</div>
+      <div className="dlabel" style={{ marginBottom: 8 }}>최근 {n}주 실측 추이</div>
       <div className="card">
-        <LineChart
-          width={1000} height={220}
-          series={[{ data: trend.slice(groupType === "A" ? 0 : 20), color: s.tone === "alert" || s.tone === "neg" ? "var(--sig-neg)" : s.tone === "pos" ? "var(--sig-pos)" : "var(--sig-neu)", dots: groupType !== "A" }]}
-          refLines={isAlert ? [{ value: 100, label: "경고선 100", color: "var(--sig-alert)" }] : []}
-          xLabels={groupType === "A" ?
-            [{ x: -27, label: "28주전" }, { x: -14, label: "14주전" }, { x: 0, label: "현재" }] :
-            [{ x: -7, label: "8주전" }, { x: -3, label: "4주전" }, { x: 0, label: "현재" }]
-          }
-        />
+        {n > 1 ? (
+          <LineChart
+            width={1000} height={220}
+            series={series}
+            xLabels={[{ x: -(n - 1), label: rows[0].week }, { x: 0, label: rows[n - 1].week }]}
+          />
+        ) : <div className="muted" style={{ fontSize: 12 }}>표시할 이력이 없습니다.</div>}
       </div>
 
-      {/* Original data or news list */}
-      {groupType === "A" ? (
-        <div style={{ marginTop: 18 }}>
-          <div className="dlabel" style={{ marginBottom: 8 }}>원본 데이터 (최근 4개월)</div>
-          <table className="tbl">
-            <thead>
-              <tr>
-                <th>월</th>
-                <th className="num">{s.id === "A-4" ? "재고지수" : "값"}</th>
-                {s.id === "A-4" && <><th className="num">출하지수</th><th className="num">비율</th></>}
-                <th>판정</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[{m:"2026-04",a:108.2,b:105.7,r:102.4,tone:"alert"},{m:"2026-03",a:104.5,b:103.8,r:100.7,tone:"neu"},{m:"2026-02",a:98.3,b:101.2,r:97.1,tone:"pos"},{m:"2026-01",a:94.1,b:99.8,r:94.3,tone:"pos"}].map(row => (
-                <tr key={row.m}>
-                  <td className="mono">{row.m}</td>
-                  <td className="num">{s.id === "A-4" ? row.a.toFixed(1) : (Math.random() * 100).toFixed(2)}</td>
-                  {s.id === "A-4" && <><td className="num">{row.b.toFixed(1)}</td><td className="num" style={{ fontWeight: 600 }}>{row.r.toFixed(1)}</td></>}
-                  <td><Sig tone={row.tone}>{row.tone === "alert" ? "🚨 Red Alert" : row.tone === "pos" ? "정상" : "주의"}</Sig></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {last && (
+        <div className="muted" style={{ fontSize: 12, marginTop: 10 }}>
+          {last.week} 기준 {fmtRaw(last.value)}
+          {back8 && <> · 8주 전({back8.week}) {fmtRaw(back8.value)} 대비 <strong>{changeText(last.value, back8.value)}</strong></>}
         </div>
-      ) : (
+      )}
+
+      <div className="dlabel" style={{ margin: "18px 0 8px" }}>최근 관측값 (최신 8개)</div>
+      <table className="tbl">
+        <thead><tr><th>주</th><th className="num">값</th><th className="num">전주 대비</th></tr></thead>
+        <tbody>
+          {rows.slice(-8).reverse().map((r, i, arr) => {
+            const prev = arr[i + 1];
+            return (
+              <tr key={r.week}>
+                <td className="mono">{r.week}</td>
+                <td className="num" style={{ fontWeight: 600 }}>{fmtRaw(r.value)}</td>
+                <td className="num muted">{prev ? changeText(r.value, prev.value) : "—"}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      {groupType === "B" && (
         <div style={{ marginTop: 18 }}>
-          <div className="dlabel" style={{ marginBottom: 8 }}>이번 주 주요 탐지 뉴스 · 점수 상위</div>
+          <div className="dlabel" style={{ marginBottom: 8 }}>참고: 최근 핵심 뉴스 (이 신호 계산에 쓰인 기사 목록은 아님)</div>
           <div className="card" style={{ padding: 0 }}>
-            {sampleNews.map((n, i) => (
-              <div key={i} className="tappable" onClick={() => onNav("S-007", { news: n })}
-                style={{ padding: "12px 16px", borderBottom: i < sampleNews.length - 1 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto 1fr auto auto", gap: 12, alignItems: "center", fontSize: 12.5, cursor: "pointer" }}>
-                <Sig tone={n.tone}>{n.tone === "pos" ? "긍정" : n.tone === "neg" ? "부정" : "중립"}</Sig>
-                <div>
-                  <div style={{ fontWeight: 500 }}>{n.title}</div>
-                  <div className="muted mono" style={{ fontSize: 10, marginTop: 2 }}>{n.titleEn}</div>
-                </div>
-                <span className="muted mono" style={{ fontSize: 11 }}>{n.source} · {n.date}</span>
-                <span className="num" style={{ fontWeight: 600, color: n.tone === "pos" ? "var(--sig-pos)" : "var(--sig-neg)" }}>{n.score > 0 ? "+" : ""}{n.score.toFixed(2)}</span>
+            {recentNews.map((nw, i) => (
+              <div key={i} className="tappable" onClick={() => onNav("S-007", { news: nw })}
+                style={{ padding: "12px 16px", borderBottom: i < recentNews.length - 1 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 12, alignItems: "center", fontSize: 12.5, cursor: "pointer" }}>
+                <Sig tone={nw.tone}>{nw.tone === "pos" ? "긍정" : nw.tone === "neg" ? "부정" : "중립"}</Sig>
+                <div style={{ fontWeight: 500 }}>{nw.title}</div>
+                <span className="muted mono" style={{ fontSize: 11 }}>{nw.source} · {nw.date}</span>
               </div>
             ))}
           </div>
-        </div>
-      )}
-
-      <div style={{ marginTop: 18 }}>
-        <AiNote label="AI 해석">
-          {s.id === "A-4" ? `"재고가 출하를 초과하며 비율이 ${s.value}로 상승. 단기 가격 하방 압력 예상. 3개월 내 조정 가능성 주시 필요. 다만 A-2 CapEx·B-1 실적콜의 강한 긍정 신호와 결합 시 일시적 조정 후 재상승 시나리오 우세."` :
-            `"${s.name} 신호 ${s.tone === "pos" ? "긍정 강세" : s.tone === "neg" ? "부정 압력" : "중립적 흐름"}. 8주 전 대비 ${Math.abs((s.spark[s.spark.length-1] - s.spark[0]) * 100).toFixed(0)}p 변화. 다른 14개 신호와의 정합성 검토 필요."`}
-        </AiNote>
-      </div>
-
-      {s.id === "A-7" && (
-        <div style={{ marginTop: 14, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn primary" onClick={() => onNav("S-005")}>
-            🔍 Graph RAG 구리↔DRAM 전체 분석 →
-          </button>
         </div>
       )}
     </div>
   );
 }
 
-// ==== S-005 Graph RAG ====
-function S005({ onClose }) {
+// ==== S-007 News detail ====
+function EffectsGrid({ effects }) {
+  if (!effects) return null;
+  const cols = [{ k: "short", l: "단기" }, { k: "mid", l: "중기" }, { k: "long", l: "장기" }].filter(p => effects[p.k]);
+  if (!cols.length) return null;
   return (
-    <Modal title="Graph RAG — 구리 vs 서버 DRAM 상관관계" badge="S-005" size="lg" onClose={onClose}>
-      <div className="modal-body">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
-          <div>
-            <div className="dlabel">분석 기간</div>
-            <div className="num" style={{ fontSize: 22, fontWeight: 600 }}>52주</div>
-          </div>
-          <div>
-            <div className="dlabel">상관계수</div>
-            <div className="num" style={{ fontSize: 22, fontWeight: 600, color: "var(--sig-pos)" }}>+0.72</div>
-          </div>
-          <div>
-            <div className="dlabel">최적 선행 시차</div>
-            <div className="num" style={{ fontSize: 22, fontWeight: 600 }}>10주</div>
-          </div>
-        </div>
-
-        <div className="dlabel" style={{ marginBottom: 8 }}>구리(파란) vs DRAM(검정) — 104주 오버레이</div>
-        <div className="card">
-          <LineChart
-            width={1200} height={240}
-            series={[
-              { data: Array.from({length: 26}, (_,i) => ({ x: i, value: 0.3 + Math.sin(i*0.3)*0.15 + i*0.018 })), color: "var(--sig-info)", endLabel: "구리 (선행 10주)" },
-              { data: Array.from({length: 26}, (_,i) => ({ x: i, value: 0.2 + Math.sin((i-5)*0.3)*0.12 + i*0.013 })), color: "var(--text)", endLabel: "DRAM" },
-            ]}
-            xLabels={[
-              { x: 0, label: "104주전" }, { x: 13, label: "52주전" }, { x: 20, label: "26주전" }, { x: 25, label: "현재" }
-            ]}
-          />
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 22, marginTop: 22 }}>
-          <div>
-            <div className="dlabel" style={{ marginBottom: 8 }}>선행 시차별 상관계수</div>
-            <div className="card" style={{ padding: "12px 18px" }}>
-              {[{l:"4주",v:0.51},{l:"6주",v:0.64},{l:"8주",v:0.69},{l:"10주",v:0.72,best:true},{l:"12주",v:0.68},{l:"16주",v:0.55}].map(r => (
-                <div key={r.l} style={{ display: "grid", gridTemplateColumns: "50px 1fr 60px", gap: 10, alignItems: "center", padding: "6px 0", fontSize: 12 }}>
-                  <span className="mono">{r.l}</span>
-                  <div className="bar-track" style={{ height: 12 }}>
-                    <div className={r.best ? "pos" : "neu"} style={{ width: `${r.v * 100}%`, opacity: r.best ? 1 : 0.55 }}></div>
-                  </div>
-                  <span className="num" style={{ textAlign: "right", fontWeight: r.best ? 700 : 500, color: r.best ? "var(--sig-pos)" : "var(--text)" }}>
-                    +{r.v.toFixed(2)}{r.best ? " ◀" : ""}
-                  </span>
-                </div>
-              ))}
+    <div style={{ marginTop: 22 }}>
+      <div className="dlabel" style={{ marginBottom: 8 }}>AI 추정 영향 — 검증되지 않은 해석</div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+        {cols.map(p => {
+          const e = effects[p.k];
+          return (
+            <div key={p.k} className="card" style={{ flex: "1 1 150px", minWidth: 0 }}>
+              <div className="dlabel">{p.l}</div>
+              <div style={{ marginTop: 6, marginBottom: 8 }}><Sig tone={e.tone} size="lg">{e.tone === "pos" ? "긍정" : e.tone === "neg" ? "부정" : "중립"}</Sig></div>
+              <div style={{ fontSize: 12, color: "var(--text-mid)" }}>{e.text}</div>
             </div>
-          </div>
-          <div>
-            <div className="dlabel" style={{ marginBottom: 8 }}>인과관계 경로</div>
-            <div className="card">
-              <div className="path">
-                <div className="path-node" style={{ background: "var(--sig-info-bg)", borderColor: "var(--sig-info)", color: "var(--sig-info)", fontWeight: 600 }}>
-                  <span>구리 가격 상승 (LME)</span>
-                  <span className="mono">+8.3%</span>
-                </div>
-                <div className="path-branch">
-                  <div className="path-node" style={{ marginTop: 8 }}>
-                    <span>① PCB 기판 원가 상승</span>
-                    <span className="mono muted">4~6주 · 기여도 42%</span>
-                  </div>
-                  <div className="path-node" style={{ marginTop: 6 }}>
-                    <span>② 반도체 패키징 비용 상승</span>
-                    <span className="mono muted">6~8주 · 기여도 31%</span>
-                  </div>
-                  <div className="path-node" style={{ marginTop: 6 }}>
-                    <span>③ 데이터센터 투자 비용 증가</span>
-                    <span className="mono muted">8~12주 · 기여도 27%</span>
-                  </div>
-                </div>
-                <div className="path-node" style={{ marginTop: 8, background: "var(--surface-2)", fontWeight: 600 }}>
-                  <span>↓ DRAM 가격 변동</span>
-                  <span className="mono" style={{ color: "var(--sig-pos)" }}>+6~8% (10주 후)</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ marginTop: 22 }}>
-          <AiNote label="현재 시사점" source="Claude · Graph RAG">
-            "구리 $4.82 (+8.3%, 6주 연속 상승). PCB·패키징·DC 투자 3중 경로로 약 10주 후 DRAM 가격에 6~8% 상승 압력 전달 예상. 신뢰도 74%. 단, 동일 기간 빅테크 CapEx·실적콜 강세와 중첩되어 실측 영향은 더 클 수 있음."
-          </AiNote>
-        </div>
+          );
+        })}
       </div>
-    </Modal>
+    </div>
   );
 }
 
-// ==== S-007 News detail ====
-function S007({ news, onClose, onNav }) {
+function S007({ news, onClose }) {
   const n = news;
   return (
-    <Modal title="뉴스 원문 & AI 분석 상세" badge="S-007" size="lg" onClose={onClose}>
+    <Modal title="뉴스 원문 & AI 요약" badge="S-007" size="lg" onClose={onClose}>
       <div className="modal-body">
         <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 6 }}>
           <Sig tone={n.tone} size="lg">{n.tone === "pos" ? "긍정" : n.tone === "neg" ? "부정" : "중립"}</Sig>
@@ -402,36 +182,19 @@ function S007({ news, onClose, onNav }) {
             <div className="muted mono" style={{ fontSize: 11, marginTop: 4 }}>{n.titleEn}</div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 16, fontSize: 11, color: "var(--text-dim)", marginBottom: 18 }}>
+        <div style={{ display: "flex", gap: 16, fontSize: 11, color: "var(--text-dim)", marginBottom: 18, flexWrap: "wrap" }}>
           <span><span className="muted">출처</span> <strong className="mono" style={{ color: "var(--text)" }}>{n.source}</strong></span>
           <span><span className="muted">발행</span> <span className="mono">{n.date}</span></span>
-          <span><span className="muted">감성 점수</span> <span className="num" style={{ color: n.tone === "pos" ? "var(--sig-pos)" : "var(--sig-neg)", fontWeight: 600 }}>{n.score > 0 ? "+" : ""}{n.score.toFixed(2)}</span></span>
-          <span><span className="muted">신뢰도</span> <span className="num">{n.conf}%</span></span>
+          <span><span className="muted">AI 감성 점수</span> <span className="num" style={{ color: n.tone === "pos" ? "var(--sig-pos)" : n.tone === "neg" ? "var(--sig-neg)" : "var(--text)", fontWeight: 600 }}>{n.score > 0 ? "+" : ""}{n.score.toFixed(2)}</span></span>
+          {n.conf !== undefined && <span><span className="muted">AI 확신도(자가평가)</span> <span className="num">{n.conf}%</span></span>}
         </div>
 
-        <AiNote label="AI 요약 · Claude 자동 생성">{n.summary || "—"}</AiNote>
+        <AiNote label="AI 요약">{n.summary || "—"}</AiNote>
+        <EffectsGrid effects={n.effects} />
 
-        {n.effects && (
+        {n.linked && n.linked.length > 0 && (
           <div style={{ marginTop: 22 }}>
-            <div className="dlabel" style={{ marginBottom: 8 }}>DRAM 가격 영향 분석</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-              {[{k:"short",l:"단기 (1~7주)"},{k:"mid",l:"중장기 (8~21주)"},{k:"long",l:"장기 (22주~)"}].map(p => {
-                const e = n.effects[p.k];
-                return (
-                  <div key={p.k} className="card">
-                    <div className="dlabel">{p.l}</div>
-                    <div style={{ marginTop: 6, marginBottom: 8 }}><Sig tone={e.tone} size="lg">{e.tone === "pos" ? "긍정" : e.tone === "neg" ? "부정" : "중립"}</Sig></div>
-                    <div style={{ fontSize: 12, color: "var(--text-mid)" }}>{e.text}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {n.linked && (
-          <div style={{ marginTop: 22 }}>
-            <div className="dlabel" style={{ marginBottom: 8 }}>연결된 신호</div>
+            <div className="dlabel" style={{ marginBottom: 8 }}>AI 가 연결한 신호</div>
             <div className="card" style={{ padding: "10px 14px" }}>
               {n.linked.map((l, i) => (
                 <div key={i} style={{ padding: "4px 0", fontSize: 12.5 }}>· {l}</div>
@@ -440,91 +203,60 @@ function S007({ news, onClose, onNav }) {
           </div>
         )}
 
-        <div style={{ marginTop: 22, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn primary">
-            🌐 원문 기사 열기 →
-          </button>
-        </div>
-
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
-        </div>
+        {n.link && (
+          <div style={{ marginTop: 22, display: "flex", justifyContent: "flex-end" }}>
+            <a className="btn primary" href={n.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+              🌐 원문 기사 열기 →
+            </a>
+          </div>
+        )}
       </div>
     </Modal>
   );
 }
 
-// ==== S-009 Weekly snapshot ====
-function S009({ week, onClose }) {
+// ==== S-009 8주 전 vs 지금 ====
+function S009({ onClose }) {
   const sp = D2.snapshotPast;
-  const isFuture = week > 0;
-  
-  if (isFuture) {
-    // Future week — show prediction breakdown
-    const isF7 = week <= 7;
-    const data = isF7 ? D2.forecast7.find(d => d.week === week) : D2.forecast21.find(d => d.week === week);
-    if (!data) return null;
+  if (!sp || !sp.date) {
     return (
-      <Modal title={`주별 신호 스냅샷 · +${week}주 예측`} badge="S-009" onClose={onClose}>
-        <div className="modal-body">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
-            <div><div className="dlabel">예측가</div><div className="num" style={{ fontSize: 26, fontWeight: 600 }}>${data.value.toFixed(2)}</div></div>
-            <div><div className="dlabel">신뢰구간</div><div className="num" style={{ fontSize: 14, fontWeight: 500, marginTop: 6 }}>${data.lower.toFixed(2)} ─ ${data.upper.toFixed(2)}</div></div>
-            <div><div className="dlabel">기여도 상위</div><div style={{ marginTop: 6, display: "flex", gap: 6 }}><Sig tone="pos">A-5 AWS Spot</Sig><Sig tone="pos">A-1 대만</Sig><Sig tone="pos">B-1 실적콜</Sig></div></div>
-          </div>
-          <AiNote>
-            +{week}주 시점 예측은 CapEx 확장의 후행 효과와 구리 선행지표의 누적 반영이 주된 상승 동력. 단, 지정학 변수에 따라 신뢰구간이 넓어질 수 있음.
-          </AiNote>
-        </div>
+      <Modal title="8주 전과 비교" badge="S-009" onClose={onClose}>
+        <div className="modal-body muted" style={{ fontSize: 12 }}>비교할 데이터가 부족합니다.</div>
       </Modal>
     );
   }
-  
-  // Past week — show signal snapshot
+  const unit = D2.meta.unitShort;
+  const tone = sp.changePct > 0 ? "pos" : sp.changePct < 0 ? "neg" : "neu";
   return (
-    <Modal title={`주별 신호 스냅샷 — ${sp.date} (화)`} badge="S-009" size="lg" onClose={onClose}>
+    <Modal title={`8주 전(${sp.date}) vs 지금`} badge="S-009" size="lg" onClose={onClose}>
       <div className="modal-body">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
-          <div><div className="dlabel">실제가</div><div className="num" style={{ fontSize: 22, fontWeight: 600 }}>${sp.actual.toFixed(2)}</div></div>
-          <div><div className="dlabel">당시 예측값</div><div className="num" style={{ fontSize: 22, fontWeight: 600 }}>${sp.predicted.toFixed(2)}</div></div>
-          <div><div className="dlabel">오차</div><div className="num" style={{ fontSize: 22, fontWeight: 600, color: "var(--sig-neu)" }}>+{sp.error.toFixed(1)}%</div></div>
-          <div><div className="dlabel">판정</div><div style={{ marginTop: 6 }}><Sig tone="neu" size="lg">중립 — 허용 오차 내</Sig></div></div>
-        </div>
-        
-        <div className="dlabel" style={{ marginBottom: 8 }}>해당 시점 14개 신호 상태</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
-          <div>
-            <div className="muted" style={{ fontSize: 11, fontWeight: 600, marginBottom: 6 }}>Group A · 정형 (7종)</div>
-            {sp.signals.filter(x => x.id.startsWith("A")).map(s => (
-              <div key={s.id} style={{ display: "grid", gridTemplateColumns: "60px 1fr auto auto", gap: 10, padding: "6px 0", fontSize: 12, borderBottom: "1px solid var(--border)", alignItems: "center" }}>
-                <span className="mono muted">{s.id}</span>
-                <span style={{ fontWeight: 500 }}>{s.name}</span>
-                <span className="num">{s.then}</span>
-                <Sig tone={s.thenTone}>{s.thenTone === "alert" ? "🚨" : s.thenTone === "pos" ? "긍정" : s.thenTone === "neg" ? "부정" : "중립"}</Sig>
-              </div>
-            ))}
-          </div>
-          <div>
-            <div className="muted" style={{ fontSize: 11, fontWeight: 600, marginBottom: 6 }}>Group B · 비정형 (7종)</div>
-            {sp.signals.filter(x => x.id.startsWith("B")).map(s => (
-              <div key={s.id} style={{ display: "grid", gridTemplateColumns: "60px 1fr auto auto", gap: 10, padding: "6px 0", fontSize: 12, borderBottom: "1px solid var(--border)", alignItems: "center" }}>
-                <span className="mono muted">{s.id}</span>
-                <span style={{ fontWeight: 500 }}>{s.name}</span>
-                <span className="num">{s.then}</span>
-                <Sig tone={s.thenTone}>{s.thenTone === "pos" ? "긍정" : s.thenTone === "neg" ? "부정" : "중립"}</Sig>
-              </div>
-            ))}
-          </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 22 }}>
+          <div style={{ flex: "1 1 150px" }}><div className="dlabel">8주 전 {D2.meta.unitLabel}</div><div className="num" style={{ fontSize: 22, fontWeight: 600 }}>{sp.then.toFixed(1)} {unit}</div></div>
+          <div style={{ flex: "1 1 150px" }}><div className="dlabel">지금</div><div className="num" style={{ fontSize: 22, fontWeight: 600 }}>{sp.now.toFixed(1)} {unit}</div></div>
+          <div style={{ flex: "1 1 150px" }}><div className="dlabel">변화 (실측)</div><div style={{ marginTop: 6 }}><Sig tone={tone} size="lg">{sp.changePct > 0 ? "+" : ""}{sp.changePct.toFixed(1)}%</Sig></div></div>
         </div>
 
-        <div style={{ marginTop: 22 }}>
-          <AiNote label="오차 원인 AI 분석">
-            "당시 AI 서버 수요가 예측보다 빠르게 증가. A-2 CapEx·A-1 대만 신호가 현재보다 약했음. → 모델에 AI 서버 수요 가중치 상향 반영 완료. 동일 시점 재학습 시 오차 3.5%로 개선 확인."
-          </AiNote>
-        </div>
-
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
+        <div className="dlabel" style={{ marginBottom: 8 }}>신호별 8주 전 → 지금 (수집값)</div>
+        <table className="tbl">
+          <thead><tr><th style={{ width: 60 }}>신호</th><th>이름</th><th className="num">8주 전</th><th className="num">지금</th><th>방향</th></tr></thead>
+          <tbody>
+            {sp.signals.map(x => (
+              <tr key={x.id}>
+                <td className="mono muted">{x.id}</td>
+                <td>{x.name}</td>
+                <td className="num">{x.then}</td>
+                <td className="num">{x.now}</td>
+                <td>
+                  <span className={`arr ${x.direction === "up" ? "up" : x.direction === "down" ? "dn" : "flat"}`}>
+                    {x.direction === "up" ? "↑" : x.direction === "down" ? "↓" : "↔"}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="muted" style={{ fontSize: 11, marginTop: 10 }}>
+          수집값을 그대로 비교한 것이며, 신호 변화와 가격 변화 사이의 인과관계를 뜻하지 않습니다.
         </div>
       </div>
     </Modal>
@@ -543,31 +275,17 @@ function S011({ event, onClose, onNav }) {
           </Sig>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.01em" }}>{e.title}</div>
-            <div style={{ display: "flex", gap: 12, marginTop: 6, fontSize: 11, color: "var(--text-dim)" }}>
+            <div style={{ display: "flex", gap: 12, marginTop: 6, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
               <span><span className="muted">유형</span> <strong style={{ color: "var(--text)" }}>{e.type}</strong></span>
               <span><span className="muted">지역</span> <strong style={{ color: "var(--text)" }}>{e.region}</strong></span>
               <span><span className="muted">발생일</span> <span className="mono">{e.date}</span></span>
+              <span><span className="muted">위험도</span> AI 분류</span>
             </div>
           </div>
         </div>
 
         <AiNote label="AI 이벤트 요약">{e.summary}</AiNote>
-
-        <div style={{ marginTop: 22 }}>
-          <div className="dlabel" style={{ marginBottom: 8 }}>DRAM 가격 영향 분석</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-            {[{k:"short",l:"단기 (1~7주)"},{k:"mid",l:"중장기 (8~21주)"},{k:"long",l:"장기 (22주~)"}].map(p => {
-              const eff = e.effects[p.k];
-              return (
-                <div key={p.k} className="card">
-                  <div className="dlabel">{p.l}</div>
-                  <div style={{ marginTop: 6, marginBottom: 8 }}><Sig tone={eff.tone} size="lg">{eff.tone === "pos" ? "긍정" : eff.tone === "neg" ? "부정" : "중립"}</Sig></div>
-                  <div style={{ fontSize: 12, color: "var(--text-mid)" }}>{eff.text}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <EffectsGrid effects={e.effects} />
 
         {e.links && e.links.length > 0 && (
           <div style={{ marginTop: 22 }}>
@@ -579,7 +297,7 @@ function S011({ event, onClose, onNav }) {
                 return (
                   <div key={idx} className="tappable" onClick={() => onNav("S-007", { news: n })}
                     style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 12.5 }}>
-                    <Sig tone={n.tone}>{n.tone === "pos" ? "긍정" : "부정"}</Sig>
+                    <Sig tone={n.tone}>{n.tone === "pos" ? "긍정" : n.tone === "neg" ? "부정" : "중립"}</Sig>
                     <span style={{ flex: 1 }}>{n.title}</span>
                     <span className="mono muted" style={{ fontSize: 11 }}>{n.source}</span>
                   </div>
@@ -591,7 +309,7 @@ function S011({ event, onClose, onNav }) {
 
         {e.affects && e.affects.length > 0 && (
           <div style={{ marginTop: 22 }}>
-            <div className="dlabel" style={{ marginBottom: 8 }}>영향 받는 신호</div>
+            <div className="dlabel" style={{ marginBottom: 8 }}>AI 가 연결한 신호</div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {e.affects.map(sid => {
                 const sig = [...D2.signalsA, ...D2.signalsB].find(x => x.id === sid);
@@ -600,83 +318,17 @@ function S011({ event, onClose, onNav }) {
                   <button key={sid} className="chip" onClick={() => onNav(sid.startsWith("A") ? "S-003" : "S-004", { tab: sid })}>
                     <span className="mono">{sid}</span>
                     <span>{sig.name}</span>
-                    <Sig tone={sig.tone}>{sig.tone === "pos" ? "긍정" : sig.tone === "neg" ? "부정" : sig.tone === "alert" ? "ALERT" : "중립"}</Sig>
                   </button>
                 );
               })}
             </div>
           </div>
         )}
-
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
-        </div>
       </div>
     </Modal>
   );
 }
 
-// ==== S-013 Past signal vs current ====
-function S013({ row, onClose }) {
-  const sp = D2.snapshotPast;
-  return (
-    <Modal title="당시 신호 vs 현재 신호 비교" badge="S-013" size="lg" onClose={onClose}>
-      <div className="modal-body">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
-          <div><div className="dlabel">예측일</div><div className="num" style={{ fontSize: 18, fontWeight: 600 }}>{row?.predDate || sp.date}</div></div>
-          <div><div className="dlabel">예측값 → 실제값</div><div className="num" style={{ fontSize: 18, fontWeight: 600 }}>${(row?.pred || sp.predicted).toFixed(2)} → ${(row?.actual || sp.actual).toFixed(2)}</div></div>
-          <div><div className="dlabel">오차</div><div className="num" style={{ fontSize: 18, fontWeight: 600, color: "var(--sig-neu)" }}>{(row?.error || sp.error).toFixed(1)}%</div></div>
-          <div><div className="dlabel">판정</div><div style={{ marginTop: 6 }}><Sig tone={row?.tone || "neu"} size="lg">{(row?.tone || "neu") === "pos" ? "양호" : (row?.tone || "neu") === "neg" ? "부정확" : "허용범위"}</Sig></div></div>
-        </div>
+Object.assign(window, { S003, S004, S007, S009, S011 });
 
-        <div className="dlabel" style={{ marginBottom: 8 }}>14개 신호 — 당시 vs 현재 비교</div>
-        <table className="tbl">
-          <thead>
-            <tr>
-              <th style={{ width: 60 }}>신호</th>
-              <th>이름</th>
-              <th className="num">당시값</th>
-              <th>당시판정</th>
-              <th className="num">현재값</th>
-              <th>현재판정</th>
-              <th>변화</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sp.signals.map(s => (
-              <tr key={s.id}>
-                <td className="mono muted">{s.id}</td>
-                <td>{s.name}</td>
-                <td className="num">{s.then}</td>
-                <td><Sig tone={s.thenTone}>{s.thenTone === "alert" ? "🚨" : s.thenTone === "pos" ? "긍정" : s.thenTone === "neg" ? "부정" : "중립"}</Sig></td>
-                <td className="num">{s.now}</td>
-                <td><Sig tone={s.nowTone}>{s.nowTone === "alert" ? "🚨" : s.nowTone === "pos" ? "긍정" : s.nowTone === "neg" ? "부정" : "중립"}</Sig></td>
-                <td>
-                  <span className={`arr ${s.direction === "up" ? "up" : s.direction === "down" ? "dn" : "flat"}`}>
-                    {s.direction === "up" ? "↑" : s.direction === "down" ? "↓" : "↔"}
-                  </span>
-                  <span style={{ marginLeft: 8, fontSize: 11 }} className="muted">{s.change}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <div style={{ marginTop: 22 }}>
-          <AiNote label="오차 원인 AI 분석">
-            "당시 A-1·A-2·B-2 신호가 현재보다 크게 약했음. AI 서버 수요 급증을 모델이 과소평가. 다음 학습에 CapEx·대만 공급망 가중치 상향 반영 완료. 동일 시점 재학습 시 오차 6.0% → 3.5% 개선 검증."
-          </AiNote>
-        </div>
-
-        <div style={{ marginTop: 22 }}>
-          <HITL rules={HITL_DEFAULT_RULES} />
-        </div>
-      </div>
-    </Modal>
-  );
-}
-
-Object.assign(window, { S002, S003, S004, S005, S007, S009, S011, S013 });
-
-
-export { S002, S003, S004, S005, S007, S009, S011, S013, ConfidenceBar, SignalDetail }
+export { S003, S004, S007, S009, S011, SignalDetail }

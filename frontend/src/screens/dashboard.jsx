@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
-import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard } from '../components/components.jsx'
+import { Sig, Sparkline, MetricCard, LineChart, SectionHead, InsightCard } from '../components/components.jsx'
 // USER-REQUESTED EXTENSION (#16) — 다음 수집/잔여 시간 동적 계산
-import { nextTuesday06KST, lastTuesday06KST, formatTimeUntil } from '../utils/dates.js'
+import { nextTuesday06KST, formatTimeUntil } from '../utils/dates.js'
 
 // S-001 Main Dashboard
 const D = SIXSENSE_DATA;
@@ -54,7 +54,7 @@ function RefreshPanel() {
             setMsg(`공용 주방 실행 실패 (${j.conclusion || "unknown"})`);
           }
         } else if (j.status === "in_progress" && isOurs) {
-          setMsg("공용 주방에서 데이터 수집·모델 재학습 중… (약 5분 소요)");
+          setMsg("공용 주방에서 데이터 수집·예측 검증 중… (약 5분 소요)");
         } else if (j.status === "queued" || !isOurs) {
           setMsg("대기열 등록됨 — 곧 시작합니다…");
         }
@@ -101,13 +101,13 @@ function RefreshPanel() {
           className={`btn refresh-btn ${isRunning ? "running" : ""}`}
           onClick={trigger}
           disabled={isRunning}
-          title="GitHub Actions(무료)에서 전체 데이터 수집 + 모델 재학습 후 자동 배포 (약 5분)"
+          title="GitHub Actions(무료)에서 전체 데이터 수집 + 예측 검증 + AI 요약 후 자동 배포 (약 5분)"
         >
           <span className={`refresh-ic ${isRunning ? "spin" : ""}`}>🔄</span>
           <span>{isRunning ? "갱신 중…" : phase === "done" ? "✅ 갱신 완료" : phase === "failed" ? "⚠ 다시 시도" : "수동 갱신 실행"}</span>
         </button>
         <div className="refresh-hint">
-          클릭하면 전체 신호 수집 + 모델 재학습 + 인사이트 + 자동 배포 (약 5분, 무료·서버 불필요)
+          클릭하면 전체 신호 수집 + 예측 검증 + AI 요약 + 자동 배포 (약 5분, 무료·서버 불필요)
         </div>
       </div>
 
@@ -136,57 +136,41 @@ function RefreshPanel() {
 }
 
 
-// USER-REQUESTED EXTENSION (2026-05-18 #3, #4) — §02 Multi-Model 검증 표 (헤드라인/아키텍처/환경처리는 #4에서 삭제)
-function ModelValidationPanel({ mv }) {
-  if (!mv) return null;
-  return (
-    <div className="model-validation">
-      <div className="grid-2">
-        <div className="card">
-          <div className="dlabel" style={{ marginBottom: 8 }}>단기 (1~7주) — 우수 모델 자동 선정</div>
-          <table className="model-table">
-            <thead>
-              <tr><th>모델</th><th>MAPE</th><th>평가</th></tr>
-            </thead>
-            <tbody>
-              {mv.shortRows.map((r) => (
-                <tr key={r.model} className={r.winner ? "winner" : ""}>
-                  <td>{r.model}</td>
-                  <td className="num-cell">{typeof r.mape === "number" ? `${r.mape.toFixed(2)}%` : "미측정"}</td>
-                  <td>{r.eval}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {mv.shortCaution && <div className="mid-caution">⚠ {mv.shortCaution}</div>}
-        </div>
+const pct = (v) => (v === null || v === undefined ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(1)}%`);
+const toneOf = (v) => (v > 0 ? "pos" : v < 0 ? "neg" : "neu");
 
-        <div className="card">
-          <div className="dlabel" style={{ marginBottom: 8 }}>중장기 (8~21주)</div>
-          <table className="model-table">
-            <thead>
-              <tr><th>모델</th><th>held-out MAPE</th></tr>
-            </thead>
-            <tbody>
-              {mv.midRows.map((r) => (
-                <tr key={r.model}>
-                  <td>{r.model}</td>
-                  <td className="num-cell">{typeof r.mape === "number" ? `${r.mape.toFixed(2)}%` : "미측정"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {mv.midCaution && <div className="mid-caution">⚠ {mv.midCaution}</div>}
-          <div className="model-train-time">
-            ⏱ 학습 시간 (전체 파이프라인): <span className="num">~{mv.trainTotal}초</span>{" "}
-            ({mv.trainTimes.map((t, i) => (
-              <Fragment key={t.name}>
-                {i > 0 && " + "}
-                {t.name} <span className="num">{t.sec}s</span>
-              </Fragment>
-            ))})
-          </div>
-        </div>
+// §07 예측 검증 요약 — honest_backtest.py 결과 (워크포워드 백테스트, 모델 vs 단순 기준선)
+function ValidationSummary({ v, onNav }) {
+  if (!v) return <div className="card muted" style={{ fontSize: 12 }}>예측 검증 결과가 아직 없습니다.</div>;
+  const level = v.variants[0];
+  const pr = level.procurement;
+  return (
+    <div className="card">
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+        <Sig tone={v.pass ? "pos" : "neg"} size="lg">{v.pass ? "✅ 합격" : "❌ 불합격"}</Sig>
+        <span style={{ fontSize: 12.5, fontWeight: 500 }}>
+          {v.pass ? "AI 모델이 단순 기준선보다 정확했습니다." : "AI 모델이 '지난주 값 그대로'보다 부정확했습니다."}
+        </span>
+      </div>
+      <table className="model-table">
+        <thead><tr><th>방식</th><th>모델 오차</th><th>기준선 오차</th><th>판정</th></tr></thead>
+        <tbody>
+          {v.variants.map((x) => (
+            <tr key={x.key}>
+              <td>{x.name}</td>
+              <td className="num-cell">{x.overall.modelMape.toFixed(1)}%</td>
+              <td className="num-cell">{x.overall.naiveMape.toFixed(1)}%</td>
+              <td>{x.pass ? "합격" : "불합격"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="muted" style={{ fontSize: 11.5, marginTop: 10, lineHeight: 1.6 }}>
+        앱이 쓰던 방식대로 {pr.horizonWeeks}주 대기 여부를 정했다면 평균 구매 단가 <strong>{pct(pr.modelPct)}</strong>
+        (미래를 안다면 최대 {pct(pr.perfectPct)}). {v.dataWeeks}주 데이터 · {v.runAt} 검증 · 오차는 평균 절대 백분율 오차(MAPE).
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
+        <button className="btn sm" onClick={() => onNav("S-012")}>검증 방법·상세 →</button>
       </div>
     </div>
   );
@@ -194,62 +178,57 @@ function ModelValidationPanel({ mv }) {
 
 function Dashboard({ onNav }) {
   const m = D.meta;
-  const [chartRange, setChartRange] = useState("all");
-  
+  const tr = D.trend;
+  const v = D.validation;
+
   return (
     <div className="content">
-      {/* Top 3 cards */}
+      {/* Top 3 cards — 측정값만 (예측 수치 없음: 검증 불합격) */}
       <div className="section">
-        <SectionHead num="01" icon="◉" title="가격 스냅샷" sub={`${m.updated || "최신"} 기준 — 매주 화요일 06:00 자동 갱신`} />
+        <SectionHead num="01" icon="◉" title="시장 지표 스냅샷" sub={`${m.updated || "최신"} 기준 · ${m.proxyNote}`} />
         <div className="grid-snapshot">
-          {/* USER-REQUESTED CHANGE (v2.1) — 모바일에서 세 가격 카드를 한 카드로 합침 (price-combo, 데스크톱은 영향 없음) */}
+          {/* USER-REQUESTED CHANGE (v2.1) — 모바일에서 세 카드를 한 카드로 합침 (price-combo, 데스크톱은 영향 없음) */}
           <div className="price-combo">
             <MetricCard
-              label="현재 계약가"
-              code="SPOT · DDR5 8Gb"
-              value={`$${m.current.toFixed(2)}`}
-              unit="/ GB"
+              label={m.unitLabel}
+              code={m.unitDesc}
+              value={m.current.toFixed(1)}
+              unit={m.unitShort}
               change={`${m.currentChange} 전주 대비`}
-              changeTone="pos"
+              changeTone={toneOf(parseFloat(m.currentChange))}
             />
             <MetricCard
-              label="1~7주 AI 예측가"
-              code={`GBR · 신뢰 ${m.confidence ?? 81}%`}
-              value={`$${m.pred7.toFixed(2)}`}
-              unit="/ GB"
-              change={`${m.pred7Change} 예상`}
-              changeTone="pos"
-              sub="🔍 클릭하여 근거 보기"
-              onClick={() => onNav("S-002", { horizon: 7 })}
+              label="최근 4주 변화 (실측)"
+              code={`13주 ${pct(tr.change13w)} · 52주 고점 ${tr.high52.value.toFixed(1)} (${tr.high52.date})`}
+              value={pct(tr.change4w)}
+              change={`주간 변동폭 ±${tr.weeklyVol13w}% (최근 13주)`}
+              changeTone="neu"
             />
             <MetricCard
-              label="8~21주 AI 예측가"
-              code={`LSTM · 신뢰 ${(m.confidence ?? 81) - 7}%`}
-              value={`$${m.pred21.toFixed(2)}`}
-              unit="/ GB"
-              change={`${m.pred21Change} 예상`}
-              changeTone="pos"
-              sub="🔍 클릭하여 근거 보기"
-              onClick={() => onNav("S-002", { horizon: 21 })}
+              label="AI 가격 예측 검증"
+              code={v ? `모델 오차 ${v.variants[0].overall.modelMape.toFixed(1)}% vs 단순 기준선 ${v.variants[0].overall.naiveMape.toFixed(1)}%` : "검증 결과 없음"}
+              value={v ? (v.pass ? "합격" : "불합격") : "—"}
+              change={v && !v.pass ? "예측 수치를 표시하지 않습니다" : "검증 통과"}
+              changeTone={v && v.pass ? "pos" : "neg"}
+              onClick={() => onNav("S-012")}
             />
           </div>
           <InsightCard insight={m.insight} />
         </div>
       </div>
 
-      {/* DRAM Chart */}
+      {/* 주가지수 추이 — 실측만 */}
       <div className="section">
-        <SectionHead num="02" icon="◢" title="DRAM 52주 히스토리 + AI 예측" sub="차트의 특정 주 클릭 → 주별 스냅샷" actions={<ChartRangeSeg value={chartRange} onChange={setChartRange} />} />
+        <SectionHead num="02" icon="◢" title={`${m.unitLabel} 52주 추이`} sub="실측값 · 예측선 없음 (검증 불합격)"
+          actions={<button className="btn sm" onClick={() => onNav("S-009")}>8주 전과 비교 →</button>} />
         <div className="card dram-chart-card">
-          <DramChart range={chartRange} onPointClick={(d) => onNav("S-009", { week: d.x })} />
-          <ChartLegend range={chartRange} />
+          <IndexChart />
         </div>
-        <ModelValidationPanel mv={m.modelValidation} />
       </div>
 
       {/* 14 signals */}
       <div className="section">
-        <SectionHead num="03" icon="◧" title="10개 프록시 신호 통합 현황" sub="각 카드 클릭 → 상세" />
+        <SectionHead num="03" icon="◧" title="수집 신호 10종" sub="각 카드 클릭 → 실측 이력" />
         
         <div style={{ marginBottom: 18 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
@@ -310,7 +289,10 @@ function Dashboard({ onNav }) {
                   {/* USER-REQUESTED CHANGE (v2.1) — 값/긍부정을 한 컬럼에 위·아래로 배치 */}
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
                     <span className="num" style={{ fontSize: 13, fontWeight: 600 }}>{mi.value}</span>
-                    <Sig tone={mi.tone}>{mi.change}</Sig>
+                    {mi.stale
+                      ? <Sig tone="alert">갱신 중단</Sig>
+                      : <Sig tone={mi.tone}>{mi.change}</Sig>}
+                    <span className="muted mono" style={{ fontSize: 10 }}>{mi.asOf} 기준</span>
                   </div>
                   {/* USER-REQUESTED CHANGE (v2.1) — 설명 글자색을 지표명과 동일하게 */}
                   <span style={{ fontSize: 11, fontWeight: 500 }}>{mi.desc}</span>
@@ -344,21 +326,9 @@ function Dashboard({ onNav }) {
             </div>
           </div>
           <div>
-            <SectionHead num="07" icon="▤" title="AI 예측 정확도 트래킹" actions={<button className="btn sm" onClick={() => onNav("S-012")}>전체 이력 →</button>} />
-            <div className="card" style={{ padding: 0 }}>
-              {D.accuracy.filter(a => a.actual !== null).slice(0, 3).map((a, i) => (
-                <div key={i} className="acc-row" style={{ padding: "12px 16px", borderBottom: i < 2 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto auto auto 1fr auto", alignItems: "center", gap: 14, fontSize: 12 }}>
-                  <span className="muted mono">{Math.round((lastTuesday06KST().getTime() - Date.parse(a.predDate)) / (1000 * 60 * 60 * 24 * 7))}주전</span>
-                  <span>예측 <span className="num" style={{ fontWeight: 600 }}>${a.pred.toFixed(2)}</span></span>
-                  <span className="muted mono">→</span>
-                  <span>실제 <span className="num" style={{ fontWeight: 600 }}>${a.actual.toFixed(2)}</span></span>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <Sig tone={a.tone}>오차 {a.error.toFixed(1)}%</Sig>
-                    <button className="btn ghost sm" onClick={() => onNav("S-013", { row: a })}>당시 신호 →</button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <SectionHead num="07" icon="▤" title="AI 가격 예측 검증" sub="워크포워드 백테스트"
+              actions={<button className="btn sm" onClick={() => onNav("S-012")}>상세 →</button>} />
+            <ValidationSummary v={v} onNav={onNav} />
           </div>
         </div>
       </div>
@@ -367,11 +337,11 @@ function Dashboard({ onNav }) {
       <div className="section">
         <SectionHead num="08" icon="▤" title="이번 주 새 수집 데이터 현황" actions={<button className="btn sm" onClick={() => onNav("S-014")}>수집 현황 →</button>} />
         <div className="foot-bar">
-          <div><span className="label">정형</span><span className="num">{D.collection.groupA.reduce((s, x) => s + x.newItems, 0)}건</span><span className="muted"> 수집완료 ✓</span></div>
+          <div><span className="label">정상</span><span className="num">{D.collection.summary.success}개</span></div>
           <div className="sep"></div>
-          <div><span className="label">비정형</span><span className="num">{D.collection.groupB.reduce((s, x) => s + x.newItems, 0)}건</span><span className="muted"> 수집완료 ✓</span></div>
+          <div><span className="label">갱신 중단</span><span className="num">{D.collection.summary.stale}개</span><span className="muted"> (수집 중단 또는 값 정체)</span></div>
           <div className="sep"></div>
-          <div><span className="label">수집실패</span><span className="num">{D.collection.summary.fail}건</span></div>
+          <div><span className="label">수집 실패</span><span className="num">{D.collection.summary.fail}개</span><span className="muted"> / 전체 {D.collection.summary.total}개</span></div>
           <div className="sep"></div>
           <div><span className="label">사이클</span><span className="num">매주 화요일 06:00 KST</span></div>
           <div style={{ marginLeft: "auto" }}>
@@ -389,187 +359,45 @@ function Dashboard({ onNav }) {
 // ==== Signal Card ====
 function SignalCard({ s, onClick }) {
   return (
-    <div className="card tappable" onClick={onClick}>
+    <div className="card tappable" onClick={onClick} title={s.staleReason || undefined}>
       <div className="card-h">
         <span className="code">{s.id}</span>
-        <Sig tone={s.tone}>
-          {s.tone === "alert" ? "ALERT" : s.tone === "pos" ? "긍정" : s.tone === "neg" ? "부정" : "중립"}
-        </Sig>
+        {s.stale
+          ? <Sig tone="alert">갱신 중단</Sig>
+          : <Sig tone={s.tone}>{s.tone === "pos" ? "긍정" : s.tone === "neg" ? "부정" : "중립"}</Sig>}
       </div>
       <div className="card-label">{s.name}</div>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
         <span className="num" style={{ fontSize: 17, fontWeight: 600 }}>{s.value}</span>
       </div>
-      <Sparkline data={s.spark} tone={s.tone} height={28} />
+      <Sparkline data={s.spark} tone={s.stale ? "neu" : s.tone} height={28} />
+      <div className="muted mono" style={{ fontSize: 10, marginTop: 4 }}>{s.asOf} 기준</div>
     </div>
   );
 }
 
-// ==== Chart range segmented control ====
-function ChartRangeSeg({ value, onChange }) {
+// ==== 주가지수 52주 실측 차트 (예측선 없음) ====
+function IndexChart() {
+  const series = [{ data: D.history.map((d) => ({ x: d.week, value: d.value })), color: "var(--text)" }];
+  const at = (w) => (D.history.find((d) => d.week === w) || {}).date || "";
   return (
-    <Seg
-      value={value}
-      onChange={onChange}
-      options={[
-        { value: "short", label: "단기 1~7주" },
-        { value: "mid", label: "중장기 8~21주" },
-        { value: "all", label: "전체" },
+    <LineChart
+      width={1200}
+      height={300}
+      series={series}
+      refLines={[{ value: D.meta.current, label: `현재 ${D.meta.current.toFixed(1)} ${D.meta.unitShort}`, color: "var(--text-faint)" }]}
+      xLabels={[
+        { x: -51, label: at(-51) },
+        { x: -26, label: at(-26) },
+        { x: -13, label: at(-13) },
+        { x: 0, label: `${at(0)} (최신)` },
       ]}
+      preserveAspectRatio="none"
     />
-  );
-}
-
-// ==== DRAM Chart with bands ====
-function DramChart({ range = "all", onPointClick }) {
-  const last = D.history[D.history.length - 1];
-  const lastF7 = D.forecast7[D.forecast7.length - 1];
-  
-  // Slice history based on range
-  let histStart = -52;
-  let xMax = 21;
-  let xLabels = [
-    { x: -52, label: "52주전" },
-    { x: -26, label: "26주전" },
-    { x: 0, label: "현재" },
-    { x: 7, label: "+7주" },
-    { x: 14, label: "+14주" },
-    { x: 21, label: "+21주" },
-  ];
-  
-  if (range === "short") {
-    histStart = -26;
-    xMax = 7;
-    xLabels = [
-      { x: -26, label: "26주전" },
-      { x: -13, label: "13주전" },
-      { x: 0, label: "현재" },
-      { x: 3, label: "+3주" },
-      { x: 7, label: "+7주" },
-    ];
-  } else if (range === "mid") {
-    histStart = -13;
-    xMax = 21;
-    xLabels = [
-      { x: -13, label: "13주전" },
-      { x: 0, label: "현재" },
-      { x: 7, label: "+7주" },
-      { x: 14, label: "+14주" },
-      { x: 21, label: "+21주" },
-    ];
-  }
-  
-  const histSeries = D.history.filter(d => d.week >= histStart).map(d => ({ x: d.week, value: d.value }));
-  const f7Data = D.forecast7.filter(d => d.week <= xMax);
-  const f21Data = D.forecast21.filter(d => d.week <= xMax);
-  
-  const series = [];
-  const bands = [];
-  
-  // Always show history up to current
-  series.push({ data: histSeries, color: "var(--text)" });
-
-  // USER-REQUESTED EXTENSION (2026-05-18 #4 → #6) — 4개 모델 동시 표시. #6: Prophet 황색 dotted / HistGBR 보라 dashed-long으로 명확 구분
-  // Prophet baseline (1~21w 전 구간) — 황색 dotted (촘촘한 점)
-  if (D.forecast_prophet && D.forecast_prophet.length) {
-    const prophetData = [{ x: 0, value: last.value }, ...D.forecast_prophet.filter(d => d.week <= xMax).map(d => ({ x: d.week, value: d.value }))];
-    series.push({ data: prophetData, color: "var(--chart-baseline)", strokeWidth: 1.6, dashed: "2 4" });
-  }
-  // HistGBR (1~7w, 단기 보조 모델) — 보라 long-dash
-  if (D.forecast_histgbr && D.forecast_histgbr.length && range !== "mid") {
-    const histgbrData = [{ x: 0, value: last.value }, ...D.forecast_histgbr.filter(d => d.week <= xMax).map(d => ({ x: d.week, value: d.value }))];
-    series.push({ data: histgbrData, color: "var(--chart-secondary)", strokeWidth: 1.8, dashed: "7 3" });
-  }
-
-  // Short range: only 1-7 forecast (blue)
-  if (range === "short") {
-    const f7 = [{ x: 0, value: last.value }, ...f7Data.map(d => ({ x: d.week, value: d.value }))];
-    const f7Band = [{ x: 0, lower: last.value, upper: last.value }, ...f7Data.map(d => ({ x: d.week, lower: d.lower, upper: d.upper }))];
-    bands.push({ data: f7Band, color: "var(--sig-info)" });
-    series.push({ data: f7, color: "var(--sig-info)", dashed: true, dots: true, onDotClick: onPointClick, endLabel: `1~7주 $${lastF7.value.toFixed(2)}` });
-  }
-  
-  // Mid range: show 1~7 in blue (context) + 8~21 in pastel green (emphasis)
-  if (range === "mid") {
-    // 1~7 segment — same blue style as short
-    const f7Full = [{ x: 0, value: last.value }, ...D.forecast7.map(d => ({ x: d.week, value: d.value }))];
-    const f7Band = [{ x: 0, lower: last.value, upper: last.value }, ...D.forecast7.map(d => ({ x: d.week, lower: d.lower, upper: d.upper }))];
-    bands.push({ data: f7Band, color: "var(--sig-info)" });
-    series.push({ data: f7Full, color: "var(--sig-info)", dashed: true, dots: true, onDotClick: onPointClick });
-    
-    // 8~21 segment — pastel green emphasis (same color as 전체 mode)
-    const f21Seg = [{ x: 7, value: lastF7.value }, ...D.forecast21.map(d => ({ x: d.week, value: d.value }))];
-    const f21Band = [{ x: 7, lower: lastF7.lower, upper: lastF7.upper }, ...D.forecast21.map(d => ({ x: d.week, lower: d.lower, upper: d.upper }))];
-    bands.push({ data: f21Band, color: "var(--forecast-mid)" });
-    series.push({ data: f21Seg, color: "var(--forecast-mid)", strokeWidth: 2.6, dashed: false, dots: true, dotR: 3.5, onDotClick: onPointClick, endLabel: `8~21주 $${D.forecast21[D.forecast21.length-1].value.toFixed(2)}` });
-  }
-  
-  // All: 1~7 blue + 8~21 pastel green
-  if (range === "all") {
-    const f7 = [{ x: 0, value: last.value }, ...f7Data.map(d => ({ x: d.week, value: d.value }))];
-    const f7Band = [{ x: 0, lower: last.value, upper: last.value }, ...f7Data.map(d => ({ x: d.week, lower: d.lower, upper: d.upper }))];
-    bands.push({ data: f7Band, color: "var(--sig-info)" });
-    series.push({ data: f7, color: "var(--sig-info)", dashed: true, dots: true, onDotClick: onPointClick, endLabel: `$${lastF7.value.toFixed(2)}` });
-    
-    const f21 = [{ x: 7, value: lastF7.value }, ...f21Data.map(d => ({ x: d.week, value: d.value }))];
-    const f21Band = [{ x: 7, lower: lastF7.lower, upper: lastF7.upper }, ...f21Data.map(d => ({ x: d.week, lower: d.lower, upper: d.upper }))];
-    bands.push({ data: f21Band, color: "var(--forecast-mid)" });
-    series.push({ data: f21, color: "var(--forecast-mid)", dashed: true, dots: true, onDotClick: onPointClick, endLabel: `$${D.forecast21[D.forecast21.length-1].value.toFixed(2)}` });
-  }
-  
-  return (
-    <div style={{ position: "relative" }}>
-      <LineChart
-        width={1200}
-        height={300}
-        bands={bands}
-        refLines={[
-          { value: D.meta.current, label: `현재 $${D.meta.current.toFixed(2)}`, color: "var(--text-faint)" },
-        ]}
-        series={series}
-        xLabels={xLabels}
-        preserveAspectRatio="none"
-      />
-    </div>
-  );
-}
-
-function ChartLegend({ range }) {
-  // USER-REQUESTED EXTENSION (2026-05-18 #4) — Prophet baseline + HistGBR 범례 추가
-  return (
-    <div className="chart-legend-wrap" style={{ display: "flex", gap: 18, marginTop: 12, paddingLeft: 44, fontSize: 11, color: "var(--text-dim)", flexWrap: "wrap" }}>
-      <span className="chart-legend-item leg-actual">
-        <svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="var(--text)" strokeWidth="1.75"/></svg> 실측 ({range === "short" ? "26주" : range === "mid" ? "13주" : "52주"})
-      </span>
-      <span className="chart-legend-item leg-prophet">
-        <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--chart-baseline)" strokeWidth="1.6" strokeDasharray="2 4"/></svg>
-        <span style={{ color: "var(--chart-baseline)", fontWeight: 600 }}>Prophet baseline</span> (1~21w)
-      </span>
-      {range !== "mid" && (
-        <span className="chart-legend-item leg-histgbr">
-          <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--chart-secondary)" strokeWidth="1.8" strokeDasharray="7 3"/></svg>
-          <span style={{ color: "var(--chart-secondary)", fontWeight: 600 }}>HistGBR</span> (1~7w · 6.86%)
-        </span>
-      )}
-      {(range === "short" || range === "mid" || range === "all") && (
-        <span className="chart-legend-item leg-gbr">
-          <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="var(--sig-info)" strokeWidth="1.75" strokeDasharray="4 3"/></svg>
-          <strong style={{ color: "var(--sig-info)" }}>GBR ★</strong> (1~7w · 4.54%) · 신뢰구간
-        </span>
-      )}
-      {(range === "mid" || range === "all") && (
-        <span className="chart-legend-item leg-lstm">
-          <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="var(--forecast-mid)" strokeWidth={range === "mid" ? "2.4" : "1.75"} strokeDasharray={range === "mid" ? null : "4 3"}/></svg>
-          <strong style={{ color: "var(--forecast-mid)" }}>LSTM ★</strong> (8~21w · 9.19%) {range === "mid" && <span style={{ color: "var(--forecast-mid)", fontWeight: 600, marginLeft: 4 }}>(중점)</span>}
-        </span>
-      )}
-      {/* USER-REQUESTED CHANGE (v2.1) — 모바일에서 CSS order로 순서 재배치(실측→힌트→Prophet→HistGBR→GBR→LSTM), 데스크톱은 marginLeft:auto 로 기존처럼 오른쪽 끝 고정 */}
-      <span className="muted leg-hint" style={{ marginLeft: "auto", whiteSpace: "nowrap" }}>예측 데이터 포인트 클릭 → S-009</span>
-    </div>
   );
 }
 
 Object.assign(window, { Dashboard, SignalCard });
 
 
-export { Dashboard, SignalCard, ChartRangeSeg, DramChart, ChartLegend }
+export { Dashboard, SignalCard, IndexChart }

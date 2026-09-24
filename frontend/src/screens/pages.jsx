@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
-import { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead } from '../components/components.jsx'
+import { Sig, Tabs, LineChart } from '../components/components.jsx'
 // USER-REQUESTED EXTENSION (#16) — 다음 수집 일정 동적 계산
-import { nextTuesday06KST, lastTuesday06KST, formatTuesdayKST } from '../utils/dates.js'
+import { nextTuesday06KST, formatTuesdayKST } from '../utils/dates.js'
 
 // Full-page detail screens: S-006, S-008, S-010, S-012, S-014
 const D3 = SIXSENSE_DATA;
@@ -67,7 +67,7 @@ function S006({ onClose, onNav }) {
         </select>
         <select value={sort} onChange={(e) => setSort(e.target.value)}>
           <option value="impact">정렬: 영향도순</option>
-          <option value="conf">정렬: 신뢰도순</option>
+          <option value="conf">정렬: AI 확신도순</option>
           <option value="date">정렬: 발행일순</option>
         </select>
         <span className="count">{items.length}건 표시</span>
@@ -80,9 +80,9 @@ function S006({ onClose, onNav }) {
               <th style={{ width: 90 }}>발행일</th>
               <th>제목 (한국어 / 원문)</th>
               <th style={{ width: 120 }}>출처</th>
-              <th className="num" style={{ width: 80 }}>점수</th>
+              <th className="num" style={{ width: 80 }}>AI 감성</th>
               <th style={{ width: 80 }}>판정</th>
-              <th className="num" style={{ width: 80 }}>신뢰도</th>
+              <th className="num" style={{ width: 96 }}>AI 확신도</th>
               <th style={{ width: 40 }}></th>
             </tr>
           </thead>
@@ -107,88 +107,77 @@ function S006({ onClose, onNav }) {
         </table>
       </div>
 
-      <div style={{ marginTop: 22 }}>
-        <HITL rules={HITL_DEFAULT_RULES} />
-      </div>
     </div>
   );
 }
 
 // ==== S-008 Macro indicators ====
-function S008({ tab: initialTab, onClose }) {
-  const [tab, setTab] = useState(initialTab || "fed");
-  const m = D3.macro.find(x => x.id === tab);
+// 출처·날짜·이력은 모두 수집 파일에서 온 값. 고정 해설 문장(이전: '구리 +8.3%, 10주 후 DRAM 6~8% 상승' 등) 삭제.
+function fmtMacro(v, unit) {
+  if (unit === "원") return v.toLocaleString(undefined, { maximumFractionDigits: 0 });
+  if (unit === "%") return `${v.toFixed(2)}%`;
+  if (unit === "$") return `$${v.toFixed(2)}`;
+  return v.toFixed(2);
+}
 
-  const explanations = {
-    fed: `"금리 인하 → 데이터센터 투자 증가 → DRAM 수요 상승. 동결 지속으로 중립 신호. 인하 전환 시 수요 강한 긍정 전환 예상. Polymarket 금리 인하 확률 42%."`,
-    dxy: `"달러 강세 = 한국 수출 메모리 수출가 부담. 신흥국 데이터센터 투자 위축 가능. DXY 105 돌파 시 추가 부정 압력."`,
-    pmi: `"50 초과 = 확장 국면. 글로벌 제조업 회복은 산업용·자동차용 DRAM 수요 지지. 현재 52.3 → 확장세 6개월 지속."`,
-    krw: `"원화 약세 = 한국 메모리 4사 수출 채산성 개선이나, 수입 원자재(웨이퍼·기판) 원가 부담. 순효과는 분기 시차로 반영."`,
-    cu: `"구리 선행 시차 10주. 현재 +8.3%, 6주 연속 상승. 10주 후 DRAM 6~8% 상승 가능."`
-  };
+function S008({ tab: initialTab, onClose }) {
+  const [tab, setTab] = useState(initialTab || D3.macro[0].id);
+  const m = D3.macro.find(x => x.id === tab) || D3.macro[0];
+  const rows = m.recent || [];
+  const n = rows.length;
 
   return (
     <div className="content">
-      <PageHead num="S-008" icon="◔" title="거시경제 지표 통합 상세" onBack={onClose} />
+      <PageHead num="S-008" icon="◔" title="거시경제 지표 상세" sub="수집된 값 그대로 — 해석 문장 없음" onBack={onClose} />
 
-      <Tabs
-        active={tab} onChange={setTab}
-        tabs={D3.macro.map(m => ({ id: m.id, label: m.name }))}
-      />
+      <Tabs active={m.id} onChange={setTab} tabs={D3.macro.map(x => ({ id: x.id, label: x.name }))} />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginBottom: 22 }}>
-        <div>
-          <div className="dlabel">현재값</div>
+      {m.stale && (
+        <div className="banner">갱신 중단 — {m.staleReason}. 현재 상황 판단에 쓰지 마세요.</div>
+      )}
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 22 }}>
+        <div style={{ flex: "1 1 140px" }}>
+          <div className="dlabel">최신값 ({m.asOf})</div>
           <div className="num" style={{ fontSize: 28, fontWeight: 600 }}>{m.value}</div>
         </div>
-        <div>
-          <div className="dlabel">변화 신호</div>
-          <div style={{ marginTop: 6 }}><Sig tone={m.tone} size="lg">{m.change}</Sig></div>
+        <div style={{ flex: "1 1 180px" }}>
+          <div className="dlabel">4주 변화 (규칙 기반 표시)</div>
+          <div style={{ marginTop: 6 }}>{m.stale ? <Sig tone="alert" size="lg">갱신 중단</Sig> : <Sig tone={m.tone} size="lg">{m.change}</Sig>}</div>
         </div>
-        <div>
+        <div style={{ flex: "1 1 180px" }}>
           <div className="dlabel">설명</div>
           <div style={{ marginTop: 4, fontSize: 12 }}>{m.desc}</div>
         </div>
-        <div>
+        <div style={{ flex: "1 1 180px" }}>
           <div className="dlabel">수집 출처</div>
-          <div className="mono" style={{ marginTop: 4, fontSize: 12 }}>{m.id === "fed" ? "FRED API" : m.id === "dxy" ? "ICE" : m.id === "pmi" ? "S&P Global" : m.id === "krw" ? "BOK API" : "LME Public"}</div>
+          <div className="mono" style={{ marginTop: 4, fontSize: 12 }}>{m.source || "—"}</div>
         </div>
       </div>
 
-      <div className="dlabel" style={{ marginBottom: 8 }}>52주 추이</div>
+      <div className="dlabel" style={{ marginBottom: 8 }}>최근 {n}주 추이 (주간)</div>
       <div className="card">
-        <LineChart
-          width={1200} height={240}
-          series={[{ data: m.history.map((v, i) => ({ x: i, value: v })), color: m.tone === "pos" ? "var(--sig-pos)" : m.tone === "neg" ? "var(--sig-neg)" : "var(--text)", dots: true }]}
-          refLines={m.id === "pmi" ? [{ value: 50, label: "확장/수축 경계 50", color: "var(--sig-info)" }] : []}
-          xLabels={[{ x: 0, label: "52주전" }, { x: 3, label: "26주전" }, { x: 6, label: "현재" }]}
-        />
+        {n > 1 ? (
+          <LineChart
+            width={1200} height={240}
+            series={[{ data: rows.map((r, i) => ({ x: i - (n - 1), value: r.value })), color: "var(--text)" }]}
+            xLabels={[{ x: -(n - 1), label: rows[0].week }, { x: 0, label: rows[n - 1].week }]}
+          />
+        ) : <div className="muted" style={{ fontSize: 12 }}>표시할 이력이 없습니다.</div>}
       </div>
 
-      <div className="dlabel" style={{ margin: "22px 0 8px" }}>월별 원본 데이터 (최근 7개월)</div>
+      <div className="dlabel" style={{ margin: "22px 0 8px" }}>최근 관측값 (최신 8주)</div>
       <table className="tbl">
-        <thead><tr><th>월</th><th className="num">{m.name}</th><th>판정</th><th>비고</th></tr></thead>
+        <thead><tr><th>주</th><th className="num">{m.name}</th></tr></thead>
         <tbody>
-          {m.history.slice().reverse().map((v, i) => (
-            <tr key={i}>
-              <td className="mono">{`2026-${String(4 - i).padStart(2, "0")}`}</td>
-              <td className="num" style={{ fontWeight: 600 }}>{typeof v === "number" ? v.toFixed(m.id === "krw" ? 0 : 2) : v}{m.id === "fed" ? "%" : ""}</td>
-              <td><Sig tone={i === 0 ? m.tone : "neu"}>{i === 0 ? (m.tone === "pos" ? "긍정" : m.tone === "neg" ? "부정" : "중립") : "—"}</Sig></td>
-              <td className="muted" style={{ fontSize: 11 }}>{i === 0 ? "최신 발표" : ""}</td>
+          {rows.slice(-8).reverse().map(r => (
+            <tr key={r.week}>
+              <td className="mono">{r.week}</td>
+              <td className="num" style={{ fontWeight: 600 }}>{fmtMacro(r.value, m.unit)}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <div style={{ marginTop: 22 }}>
-        <AiNote label="DRAM 연관 설명 · AI 해석">
-          {explanations[tab]}
-        </AiNote>
-      </div>
-
-      <div style={{ marginTop: 22 }}>
-        <HITL rules={HITL_DEFAULT_RULES} />
-      </div>
     </div>
   );
 }
@@ -257,89 +246,77 @@ function S010({ onClose, onNav }) {
         </table>
       </div>
 
-      <div style={{ marginTop: 22 }}>
-        <HITL rules={HITL_DEFAULT_RULES} />
-      </div>
     </div>
   );
 }
 
-// ==== S-012 Accuracy history ====
-function S012({ onClose, onNav }) {
-  const [filter, setFilter] = useState("all");
-  let items = D3.accuracy;
-  if (filter === "7") items = items.filter(a => a.horizon === "7주");
-  if (filter === "21") items = items.filter(a => a.horizon === "21주");
-
-  const completed = D3.accuracy.filter(a => a.error !== null);
-  const avgAll = (completed.reduce((s, a) => s + a.error, 0) / completed.length).toFixed(1);
-  const avg7 = (() => { const c = completed.filter(a => a.horizon === "7주"); return c.length ? (c.reduce((s, a) => s + a.error, 0) / c.length).toFixed(1) : "—"; })();
-  const avg21 = (() => { const c = completed.filter(a => a.horizon === "21주"); return c.length ? (c.reduce((s, a) => s + a.error, 0) / c.length).toFixed(1) : "—"; })();
-
-  // Error trend (chronological completed predictions)
-  const trend = completed.slice().reverse();
-
+// ==== S-012 AI 가격 예측 검증 상세 (honest_backtest.py) ====
+function S012({ onClose }) {
+  const v = D3.validation;
+  if (!v) {
+    return (
+      <div className="content">
+        <PageHead num="S-012" icon="▤" title="AI 가격 예측 검증" onBack={onClose} />
+        <div className="card muted" style={{ fontSize: 12 }}>검증 결과가 아직 없습니다.</div>
+      </div>
+    );
+  }
   return (
     <div className="content">
-      <PageHead num="S-012" icon="▤" title="AI 예측 정확도 전체 이력" sub="MAPE 기준 평균 오차" onBack={onClose}
-        summary={
-          <div style={{ display: "flex", gap: 20, fontFamily: "var(--font-mono)" }}>
-            <div><div className="dlabel">전체 MAPE</div><div className="num" style={{ fontSize: 22, fontWeight: 600 }}>{avgAll}%</div></div>
-            <div><div className="dlabel">7주 평균</div><div className="num" style={{ fontSize: 22, fontWeight: 600, color: "var(--sig-pos)" }}>{avg7}%</div></div>
-            <div><div className="dlabel">21주 평균</div><div className="num" style={{ fontSize: 22, fontWeight: 600, color: "var(--sig-neu)" }}>{avg21}%</div></div>
-          </div>
-        }
+      <PageHead num="S-012" icon="▤" title="AI 가격 예측 검증" sub={`워크포워드 백테스트 · ${v.runAt} 실행 · ${v.dataRange[0]} ~ ${v.dataRange[1]} (${v.dataWeeks}주)`} onBack={onClose}
+        summary={<Sig tone={v.pass ? "pos" : "neg"} size="lg">{v.pass ? "✅ 합격" : "❌ 불합격"}</Sig>}
       />
 
-      <div className="dlabel" style={{ marginBottom: 8 }}>누적 오차율 추이</div>
-      <div className="card" style={{ marginBottom: 22 }}>
-        <LineChart
-          width={1200} height={200}
-          series={[{ data: trend.map((a, i) => ({ x: i, value: a.error })), color: "var(--text)", dots: true, onDotClick: () => {} }]}
-          refLines={[{ value: 5.8, label: "현재 평균 5.8%", color: "var(--sig-info)" }]}
-          xLabels={trend.length ? [{ x: 0, label: trend[0].predDate }, { x: trend.length - 1, label: trend[trend.length - 1].predDate }] : []}
-        />
+      <div className="card" style={{ marginBottom: 18, fontSize: 12.5, lineHeight: 1.7 }}>
+        <div><strong>예측 대상</strong> · {v.target}</div>
+        <div><strong>비교 기준</strong> · {v.baseline}</div>
+        <div><strong>합격 기준</strong> · {v.passRule}</div>
+        <div style={{ marginTop: 8 }}><strong>방법</strong></div>
+        <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
+          {v.method.map((t, i) => <li key={i}>{t}</li>)}
+        </ul>
       </div>
 
-      <div className="filterbar">
-        <button className={`chip ${filter === "all" ? "on" : ""}`} onClick={() => setFilter("all")}>전체</button>
-        <button className={`chip ${filter === "7" ? "on" : ""}`} onClick={() => setFilter("7")}>7주 예측</button>
-        <button className={`chip ${filter === "21" ? "on" : ""}`} onClick={() => setFilter("21")}>21주 예측</button>
-        <span className="count">{items.length}건</span>
-      </div>
-
-      <div className="card" style={{ padding: 0 }}>
-        <table className="tbl">
-          <thead>
-            <tr>
-              <th>예측일</th>
-              <th>구분</th>
-              <th className="num">예측값</th>
-              <th className="num">실제값</th>
-              <th className="num">오차율</th>
-              <th>판정</th>
-              <th style={{ width: 130 }}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((a, i) => (
-              <tr key={i}>
-                <td className="mono">{a.predDate}</td>
-                <td>{a.horizon}</td>
-                <td className="num" style={{ fontWeight: 600 }}>${a.pred.toFixed(2)}</td>
-                <td className="num" style={{ fontWeight: 600 }}>{a.actual !== null ? `$${a.actual.toFixed(2)}` : <span className="muted">(대기중)</span>}</td>
-                <td className="num">{a.error !== null ? `${a.error.toFixed(1)}%` : <span className="muted">—</span>}</td>
-                <td>{a.tone ? <Sig tone={a.tone}>{a.tone === "pos" ? "양호" : a.tone === "neg" ? "부정확" : "허용범위"}</Sig> : <span className="muted" style={{ fontSize: 11 }}>관측중</span>}</td>
-                <td>{a.actual !== null && <button className="btn ghost sm" onClick={() => onNav("S-013", { row: a })}>당시 신호 →</button>}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div style={{ marginTop: 22 }}>
-        <HITL rules={HITL_DEFAULT_RULES} />
-      </div>
+      {v.variants.map(x => {
+        const o = x.overall, pr = x.procurement;
+        return (
+          <div key={x.key} style={{ marginBottom: 22 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+              <div className="dlabel" style={{ margin: 0 }}>{x.name}</div>
+              <Sig tone={x.pass ? "pos" : "neg"}>{x.pass ? "합격" : "불합격"}</Sig>
+            </div>
+            <div className="card" style={{ padding: 0 }}>
+              <table className="tbl">
+                <thead>
+                  <tr><th>예측 기간</th><th className="num">예측 수</th><th className="num">모델 오차</th><th className="num">기준선 오차</th><th className="num">기준선을 이긴 비율</th><th className="num">방향 적중률</th></tr>
+                </thead>
+                <tbody>
+                  {x.byHorizon.map(h => (
+                    <tr key={h.h}>
+                      <td>{h.h}주 뒤</td>
+                      <td className="num">{h.n}</td>
+                      <td className="num" style={{ fontWeight: 600 }}>{h.modelMape.toFixed(2)}%</td>
+                      <td className="num">{h.naiveMape.toFixed(2)}%</td>
+                      <td className="num">{h.winRate.toFixed(0)}%</td>
+                      <td className="num">{h.dirAcc.toFixed(0)}%</td>
+                    </tr>
+                  ))}
+                  <tr style={{ fontWeight: 600 }}>
+                    <td>전체</td><td className="num">{o.n}</td>
+                    <td className="num">{o.modelMape.toFixed(2)}%</td><td className="num">{o.naiveMape.toFixed(2)}%</td>
+                    <td className="num">{o.winRate.toFixed(0)}%</td><td className="num">{o.dirAcc.toFixed(0)}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="muted" style={{ fontSize: 11.5, marginTop: 8, lineHeight: 1.7 }}>
+              우연히 이 정도로 이길 확률 p = {o.pValue} · '항상 오른다'고 찍었을 때 방향 적중률 {o.alwaysUpDirAcc.toFixed(0)}% ·
+              {" "}{pr.horizonWeeks}주 대기 여부를 모델대로 정했을 때 평균 구매 단가 {pr.modelPct > 0 ? "+" : ""}{pr.modelPct.toFixed(2)}%
+              (대기 신호 {pr.waitCount}회 중 실제로 옳았던 경우 {pr.waitCorrect}회, 미래를 안다면 {pr.perfectPct.toFixed(2)}%)
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -349,15 +326,17 @@ function S014({ onClose }) {
   const [tab, setTab] = useState("A");
   const c = D3.collection;
   const items = tab === "A" ? c.groupA : c.groupB;
-  
+  const stale = [...c.groupA, ...c.groupB].filter(r => r.status !== "ok");
+  const label = (st) => (st === "ok" ? "✓ 정상" : st === "stale" ? "⚠ 갱신 중단" : "✕ 실패");
+
   return (
     <div className="content">
-      <PageHead num="S-014" icon="▤" title="데이터 수집 현황 상세" sub={`수집 사이클: ${c.week} 06:00 KST`} onBack={onClose}
+      <PageHead num="S-014" icon="▤" title="데이터 수집 현황" sub={`기준일 ${c.week} · ${c.staleDays}일 넘게 수집이 없거나, 같은 값이 8주 이상 이어지면 '갱신 중단'`} onBack={onClose}
         summary={
           <div className="chips">
-            <span className="chip">총 신호 <span className="n">14</span></span>
-            <span className="chip" style={{ background: "var(--sig-pos-bg)", borderColor: "var(--sig-pos-bg)", color: "var(--sig-pos)" }}>성공 <span className="n">{c.summary.success}</span></span>
-            <span className="chip">신규 데이터 <span className="n">{c.summary.newCount.toLocaleString()}</span></span>
+            <span className="chip">전체 <span className="n">{c.summary.total}</span></span>
+            <span className="chip" style={{ background: "var(--sig-pos-bg)", borderColor: "var(--sig-pos-bg)", color: "var(--sig-pos)" }}>정상 <span className="n">{c.summary.success}</span></span>
+            <span className="chip">갱신 중단 <span className="n">{c.summary.stale}</span></span>
             <span className="chip">실패 <span className="n">{c.summary.fail}</span></span>
           </div>
         }
@@ -366,23 +345,15 @@ function S014({ onClose }) {
       <Tabs
         active={tab} onChange={setTab}
         tabs={[
-          { id: "A", code: "Group A", label: "정형 (7종)" },
-          { id: "B", code: "Group B", label: "비정형 (7종)" },
+          { id: "A", code: "Group A", label: `정형 (${c.groupA.length}종)` },
+          { id: "B", code: "Group B", label: `비정형 (${c.groupB.length}종)` },
         ]}
       />
 
       <div className="card" style={{ padding: 0 }}>
         <table className="tbl">
           <thead>
-            <tr>
-              <th style={{ width: 60 }}>ID</th>
-              <th>신호명</th>
-              <th>수집 출처</th>
-              <th>수집 일시</th>
-              <th className="num">신규 건수</th>
-              <th className="num">전주 대비</th>
-              <th>상태</th>
-            </tr>
+            <tr><th style={{ width: 60 }}>ID</th><th>신호명</th><th>수집 출처</th><th>마지막 수집일</th><th className="num">데이터(주)</th><th>상태</th></tr>
           </thead>
           <tbody>
             {items.map(r => (
@@ -391,32 +362,32 @@ function S014({ onClose }) {
                 <td style={{ fontWeight: 500 }}>{r.name}</td>
                 <td className="muted">{r.source}</td>
                 <td className="mono muted" style={{ fontSize: 11 }}>{r.time}</td>
-                <td className="num" style={{ fontWeight: 600 }}>{r.newItems.toLocaleString()}</td>
-                <td className="num">
-                  <span className={`arr ${r.newItems > r.prev ? "up" : r.newItems < r.prev ? "dn" : "flat"}`}>
-                    {r.newItems > r.prev ? "↑" : r.newItems < r.prev ? "↓" : "↔"}
-                  </span>
-                  <span style={{ marginLeft: 6 }}>{r.newItems === r.prev ? "0" : `${r.newItems > r.prev ? "+" : ""}${r.newItems - r.prev}`}</span>
+                <td className="num" style={{ fontWeight: 600 }}>{r.weeks}</td>
+                <td>
+                  <span className={`status-pill ${r.status === "ok" ? "ok" : r.status === "fail" ? "fail" : "warn"}`}>{label(r.status)}</span>
+                  {r.reason && <div className="muted" style={{ fontSize: 10.5, marginTop: 4 }}>{r.reason}</div>}
                 </td>
-                <td><span className={`status-pill ${r.status === "ok" ? "ok" : r.status === "fail" ? "fail" : "warn"}`}>
-                  {r.status === "ok" ? "✓ 성공" : r.status === "fail" ? "✕ 실패" : "⚠ 부분"}
-                </span></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div style={{ marginTop: 22, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-        <div className="card">
-          <div className="dlabel">다음 수집 일정</div>
+      <div style={{ marginTop: 22, display: "flex", flexWrap: "wrap", gap: 16 }}>
+        <div className="card" style={{ flex: "1 1 240px" }}>
+          <div className="dlabel">다음 자동 수집</div>
           <div className="num" style={{ fontSize: 18, fontWeight: 600, marginTop: 4 }}>{formatTuesdayKST(nextTuesday06KST())}</div>
-          <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>매주 화요일 새벽 6시 자동 실행. 14개 신호 일제 갱신 + 모델 재학습 트리거.</div>
+          <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>매주 화요일 06:00 — 신호 수집 · 예측 검증 · AI 요약 · 배포.</div>
         </div>
-        <div className="card">
-          <div className="dlabel">수집 안정성</div>
-          <div className="num" style={{ fontSize: 18, fontWeight: 600, marginTop: 4, color: "var(--sig-pos)" }}>최근 8주 100% 성공</div>
-          <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>외부 API 장애 시 자동 재시도 3회, 부분 실패 시 직전 주 값으로 보간.</div>
+        <div className="card" style={{ flex: "1 1 240px" }}>
+          <div className="dlabel">수집이 멈춘 신호</div>
+          <div className="num" style={{ fontSize: 18, fontWeight: 600, marginTop: 4, color: stale.length ? "var(--sig-alert)" : "var(--sig-pos)" }}>
+            {stale.length ? `${stale.length}개` : "없음"}
+          </div>
+          <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>
+            {stale.length ? stale.map(r => `${r.id} ${r.name}`).join(" · ") : "모든 신호가 최신입니다."}
+            {" "}수집에 실패하면 자동 재시도 없이 직전 값을 유지합니다.
+          </div>
         </div>
       </div>
     </div>

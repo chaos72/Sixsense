@@ -112,66 +112,12 @@ function Seg({ options, value, onChange }) {
   );
 }
 
-// ==== HITL Panel ====
-function HITL({ rules }) {
-  const [vals, setVals] = useState(() => Object.fromEntries(rules.map(r => [r.id, r.value])));
-  return (
-    <div className="hitl">
-      <div className="hitl-h">
-        <div className="t">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 10v6M4.22 4.22l4.24 4.24m7.07 7.07l4.24 4.24M1 12h6m10 0h6M4.22 19.78l4.24-4.24m7.07-7.07l4.24-4.24" /></svg>
-          AI 판단 근거 기준 조정 — HITL
-        </div>
-        <span className="sub">임계치(Threshold) / 가중치(Weight) 수정</span>
-      </div>
-      {rules.map(r => (
-        <div key={r.id} className="hitl-row">
-          <Sig tone={r.tone}>{r.label}</Sig>
-          <span className="desc">{r.desc}</span>
-          <input type="number" step={r.step || 0.01} value={vals[r.id]} onChange={(e) => setVals({...vals, [r.id]: e.target.value})} />
-          <span className="unit">{r.unit}</span>
-        </div>
-      ))}
-      <div style={{ display: "flex", gap: 8, marginTop: 12, justifyContent: "flex-end" }}>
-        <button className="btn sm">초기화</button>
-        <button className="btn sm primary">저장 & 재학습</button>
-      </div>
-    </div>
-  );
-}
-
-const HITL_DEFAULT_RULES = [
-  { id: "pos", label: "긍정", tone: "pos", desc: "감성 점수 기준선", value: 0.30, step: 0.05, unit: "≥" },
-  { id: "neu", label: "중립", tone: "neu", desc: "긍정/부정 사이 영역", value: 0.15, step: 0.05, unit: "±" },
-  { id: "neg", label: "부정", tone: "neg", desc: "감성 점수 기준선", value: -0.30, step: 0.05, unit: "≤" },
-];
-
 // ==== AI Note block ====
-function AiNote({ children, label = "AI 종합 판단", source = "Claude 자동 생성" }) {
+function AiNote({ children, label = "AI 생성 문장", source = "검증되지 않은 해석" }) {
   return (
     <div className="ai-note">
       <div className="label">{label} · {source}</div>
       <div>{children}</div>
-    </div>
-  );
-}
-
-// ==== Bar row (contribution) ====
-function BarRow({ rank, code, label, value, pct, tone }) {
-  const isNeg = pct < 0;
-  const abs = Math.abs(pct);
-  const width = Math.min(100, abs * 2.5);
-  return (
-    <div className="bar-row">
-      <div className="label">
-        <span className="code">{rank}위 · {code}</span>
-        {label}
-      </div>
-      <div className="bar-track">
-        <div className={tone === "neg" ? "neg" : tone === "neu" ? "neu" : "pos"} style={{ width: `${width}%` }}></div>
-      </div>
-      <div className={`pct ${isNeg ? "n" : "p"}`}>{isNeg ? "" : "+"}{pct}%</div>
-      <div><Sig tone={tone}>{tone === "pos" ? "긍정" : tone === "neg" ? "부정" : "중립"}</Sig></div>
     </div>
   );
 }
@@ -186,13 +132,13 @@ function LineChart({ width = 800, height = 280, series, xLabels, yDomain, refLin
   if (!yDomain) {
     series.forEach(s => s.data.forEach(d => { if (d.value < ymin) ymin = d.value; if (d.value > ymax) ymax = d.value; }));
     if (bands) bands.forEach(b => b.data.forEach(d => { if (d.lower < ymin) ymin = d.lower; if (d.upper > ymax) ymax = d.upper; }));
-    const pad = (ymax - ymin) * 0.1; ymin -= pad; ymax += pad;
+    const pad = (ymax - ymin) * 0.1 || Math.abs(ymax) * 0.05 || 1; ymin -= pad; ymax += pad;
   }
   
   const allX = series.flatMap(s => s.data.map(d => d.x));
   const xmin = Math.min(...allX), xmax = Math.max(...allX);
   
-  const xs = (x) => padding.l + ((x - xmin) / (xmax - xmin)) * cw;
+  const xs = (x) => padding.l + (xmax === xmin ? cw / 2 : ((x - xmin) / (xmax - xmin)) * cw);
   const ys = (y) => padding.t + ch - ((y - ymin) / (ymax - ymin)) * ch;
   
   // Y grid
@@ -288,23 +234,29 @@ function renderInsightEmphasis(text) {
   });
 }
 
-// ==== Insight Card (USER-REQUESTED EXTENSION, not in original hand-off) ====
-// 사용자 요청 (2026-05-18): "가격 스냅샷 영역 오른쪽에 예측분석 인사이트 추가, 100% Claude 관점 강조"
-// hand-off 디자인 토큰만 사용 — card / dlabel / num / ai-note 클래스 그대로 활용.
-// USER-REQUESTED EXTENSION (#11): 카드 본문 잘림 → 카드 전체 클릭 시 hand-off Modal 로 전체 내용 팝업
+// ==== 시장 신호 요약 카드 ====
+// 수집된 사실(주가지수·신호·뉴스·거시)을 Gemini 가 요약한 문장. 가격 예측·신뢰도는 없다
+// (예측 모델이 검증 불합격 — honest_backtest.py). 카드 클릭 시 전체 문장을 모달로 표시.
 function InsightCard({ insight }) {
   const [open, setOpen] = useState(false);
   if (!insight) {
     return (
       <div className="card insight-card" style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-dim)", fontSize: 12 }}>
-        예측분석 인사이트 — 데이터 준비 중
+        시장 신호 요약 — 데이터 준비 중
       </div>
     );
   }
   const toneClass = insight.tone === "pos" ? "pos" : insight.tone === "neg" ? "neg" : "neu";
-  const horizonLabel = insight.horizon === "short" ? "단기 (1~7주) 결정적"
-                     : insight.horizon === "long"  ? "장기 (21주+) 결정적"
-                     : "중장기 (8~21주) 결정적";
+  const sourceLabel = `AI 요약 · ${insight.model || "AI"} · 검증되지 않은 해석`;
+  const KeySignals = () => (
+    <div className="insight-keysig">
+      <span className="insight-keysig-label">언급 신호</span>
+      {(insight.keySignals || []).map((s) => (
+        <span key={s} className="num insight-sig-chip">{s}</span>
+      ))}
+      {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
+    </div>
+  );
   return (
     <>
       <div
@@ -313,15 +265,14 @@ function InsightCard({ insight }) {
         role="button"
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setOpen(true); } }}
-        title="클릭하여 전체 분석 보기"
+        title="클릭하여 전체 요약 보기"
       >
         <div className="insight-h">
           <div className="insight-title">
             <span className="insight-glyph">◆</span>
-            <span>예측분석 인사이트</span>
+            <span>시장 신호 요약</span>
           </div>
           <div className="insight-meta">
-            <span className="num">{insight.model || "AI"}</span>
             <span className="insight-expand">🔍 클릭</span>
           </div>
         </div>
@@ -332,44 +283,30 @@ function InsightCard({ insight }) {
           </div>
 
           <div className="ai-note insight-claude">
-            <div className="label">CLAUDE 종합 판단 · 신뢰 <span className="num">{insight.confidence ?? 0}%</span> · {horizonLabel}</div>
-            <div className="insight-headline">{insight.headline || "분석 중"}</div>
-            <div className="insight-keysig">
-              <span className="insight-keysig-label">핵심 신호</span>
-              {(insight.keySignals || []).map((s) => (
-                <span key={s} className="num insight-sig-chip">{s}</span>
-              ))}
-              {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
-            </div>
+            <div className="label">{sourceLabel}</div>
+            <div className="insight-headline">{insight.headline || "요약 중"}</div>
+            <KeySignals />
           </div>
         </div>
       </div>
 
       {open && (
-        <Modal title="예측분석 인사이트 — 전체 분석" badge={insight.model || "AI"} onClose={() => setOpen(false)} size="md">
+        <Modal title="시장 신호 요약 — 전체" badge={insight.model || "AI"} onClose={() => setOpen(false)} size="md">
           <div className={`insight-modal-body insight-tone-${toneClass}`}>
             <div className="ai-note insight-claude" style={{ marginBottom: 18 }}>
-              <div className="label">CLAUDE 종합 판단 · 신뢰 <span className="num">{insight.confidence ?? 0}%</span> · {horizonLabel}</div>
-              <div className="insight-headline" style={{ fontSize: 19, margin: "10px 0 8px" }}>{insight.headline || "분석 중"}</div>
-              <div className="insight-keysig">
-                <span className="insight-keysig-label">핵심 신호</span>
-                {(insight.keySignals || []).map((s) => (
-                  <span key={s} className="num insight-sig-chip">{s}</span>
-                ))}
-                {(!insight.keySignals || insight.keySignals.length === 0) && <span style={{ color: "var(--text-dim)" }}>—</span>}
-              </div>
+              <div className="label">{sourceLabel}</div>
+              <div className="insight-headline" style={{ fontSize: 19, margin: "10px 0 8px" }}>{insight.headline || "요약 중"}</div>
+              <KeySignals />
             </div>
 
-            <div className="dlabel" style={{ marginBottom: 8 }}>종합 분석 ({(insight.summary || "").length}자)</div>
             <div className="insight-modal-summary">
               {renderInsightEmphasis(insight.summary || "(요약 없음)")}
             </div>
 
-            {insight.generatedAt && (
-              <div style={{ marginTop: 16, fontSize: 11, color: "var(--text-dim)", textAlign: "right" }}>
-                생성 시각: <span className="num">{insight.generatedAt}</span>
-              </div>
-            )}
+            <div style={{ marginTop: 16, fontSize: 11, color: "var(--text-dim)", lineHeight: 1.6 }}>
+              수집된 데이터를 AI 가 요약한 문장으로, 가격 예측이 아닙니다. 숫자는 원본 데이터로 확인하세요.
+              {insight.generatedAt && <> · 생성 <span className="num">{insight.generatedAt}</span></>}
+            </div>
           </div>
         </Modal>
       )}
@@ -378,9 +315,9 @@ function InsightCard({ insight }) {
 }
 
 Object.assign(window, {
-  Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES,
-  AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard
+  Sig, Sparkline, Modal, MetricCard, Tabs, Seg,
+  AiNote, LineChart, FilterSelect, SectionHead, InsightCard
 });
 
 
-export { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, HITL, HITL_DEFAULT_RULES, AiNote, BarRow, LineChart, FilterSelect, SectionHead, InsightCard }
+export { Sig, Sparkline, Modal, MetricCard, Tabs, Seg, AiNote, LineChart, FilterSelect, SectionHead, InsightCard }
