@@ -2,14 +2,14 @@
   "signalId": "A-5",
   "source": "AWS EC2 m6i.xlarge spot (us-east-1a, \ucd5c\ub300 90\uc77c)",
   "mode": "real",
-  "collectedAt": "2026-09-21",
+  "collectedAt": "2026-09-24",
   "rangeStart": "2026-06-22",
   "rangeEnd": "2026-09-21",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
       "week": "2026-06-22",
-      "value": 0.107205
+      "value": 0.10392
     },
     {
       "week": "2026-06-29",
@@ -61,7 +61,7 @@
     },
     {
       "week": "2026-09-21",
-      "value": 0.131283
+      "value": 0.131273
     }
   ]
 }
