@@ -133,10 +133,11 @@ function SignalDetail({ s, groupType, onNav }) {
           <div className="card" style={{ padding: 0 }}>
             {recentNews.map((nw, i) => (
               <div key={i} className="tappable" onClick={() => onNav("S-007", { news: nw })}
-                style={{ padding: "12px 16px", borderBottom: i < recentNews.length - 1 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 12, alignItems: "center", fontSize: 12.5, cursor: "pointer" }}>
+                style={{ padding: "12px 16px", borderBottom: i < recentNews.length - 1 ? "1px solid var(--border)" : "none", display: "grid", gridTemplateColumns: "auto minmax(0, 1fr) auto", gap: 12, alignItems: "center", fontSize: 12.5, cursor: "pointer" }}>
                 <Sig tone={nw.tone}>{nw.tone === "pos" ? "긍정" : nw.tone === "neg" ? "부정" : "중립"}</Sig>
-                <div style={{ fontWeight: 500 }}>{nw.title}</div>
-                <span className="muted mono" style={{ fontSize: 11 }}>{nw.source} · {nw.date}</span>
+                <div style={{ fontWeight: 500, overflowWrap: "anywhere" }}>{nw.title}</div>
+                {/* 긴 출처명(예: finance.biggo.com)이 모바일 폭을 넘지 않도록 줄바꿈 허용 */}
+                <span className="muted mono" style={{ fontSize: 11, maxWidth: 110, overflowWrap: "anywhere", textAlign: "right" }}>{nw.source} · {nw.date}</span>
               </div>
             ))}
           </div>
