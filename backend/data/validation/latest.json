@@ -21,7 +21,7 @@
         {
           "h": 1,
           "n": 39,
-          "modelMape": 26.65,
+          "modelMape": 26.7,
           "naiveMape": 7.41,
           "winRate": 12.8,
           "dirAcc": 35.9
@@ -29,15 +29,15 @@
         {
           "h": 2,
           "n": 37,
-          "modelMape": 29.56,
+          "modelMape": 30.13,
           "naiveMape": 11.32,
-          "winRate": 13.5,
-          "dirAcc": 35.1
+          "winRate": 8.1,
+          "dirAcc": 29.7
         },
         {
           "h": 3,
           "n": 35,
-          "modelMape": 31.06,
+          "modelMape": 31.52,
           "naiveMape": 13.32,
           "winRate": 20.0,
           "dirAcc": 34.3
@@ -45,42 +45,42 @@
         {
           "h": 4,
           "n": 33,
-          "modelMape": 33.18,
+          "modelMape": 34.7,
           "naiveMape": 16.42,
-          "winRate": 18.2,
-          "dirAcc": 27.3
+          "winRate": 12.1,
+          "dirAcc": 21.2
         },
         {
           "h": 5,
           "n": 31,
-          "modelMape": 35.21,
+          "modelMape": 36.67,
           "naiveMape": 19.64,
-          "winRate": 19.4,
-          "dirAcc": 32.3
+          "winRate": 16.1,
+          "dirAcc": 29.0
         },
         {
           "h": 6,
           "n": 29,
-          "modelMape": 35.94,
+          "modelMape": 37.53,
           "naiveMape": 21.71,
-          "winRate": 24.1,
-          "dirAcc": 44.8
+          "winRate": 17.2,
+          "dirAcc": 37.9
         },
         {
           "h": 7,
           "n": 27,
-          "modelMape": 36.97,
+          "modelMape": 38.21,
           "naiveMape": 24.67,
-          "winRate": 33.3,
-          "dirAcc": 44.4
+          "winRate": 22.2,
+          "dirAcc": 33.3
         }
       ],
       "overall": {
         "n": 231,
-        "modelMape": 32.24,
+        "modelMape": 33.17,
         "naiveMape": 15.67,
-        "winRate": 19.5,
-        "dirAcc": 35.9,
+        "winRate": 15.2,
+        "dirAcc": 31.6,
         "alwaysUpDirAcc": 70.6,
         "pValue": 1.0
       },
@@ -88,11 +88,11 @@
         "n": 33,
         "horizonWeeks": 4,
         "alwaysNow": 528.03,
-        "model": 573.28,
-        "modelPct": 8.57,
+        "model": 577.09,
+        "modelPct": 9.29,
         "perfectPct": -4.9,
-        "waitRate": 93.9,
-        "waitCount": 31,
+        "waitRate": 100.0,
+        "waitCount": 33,
         "waitCorrect": 7
       },
       "pass": false
@@ -104,31 +104,31 @@
         {
           "h": 1,
           "n": 39,
-          "modelMape": 7.14,
+          "modelMape": 7.22,
           "naiveMape": 7.41,
-          "winRate": 66.7,
-          "dirAcc": 71.8
+          "winRate": 59.0,
+          "dirAcc": 64.1
         },
         {
           "h": 2,
           "n": 37,
-          "modelMape": 10.73,
+          "modelMape": 11.01,
           "naiveMape": 11.32,
-          "winRate": 56.8,
+          "winRate": 54.1,
           "dirAcc": 64.9
         },
         {
           "h": 3,
           "n": 35,
-          "modelMape": 14.35,
+          "modelMape": 14.55,
           "naiveMape": 13.32,
           "winRate": 48.6,
-          "dirAcc": 57.1
+          "dirAcc": 60.0
         },
         {
           "h": 4,
           "n": 33,
-          "modelMape": 20.07,
+          "modelMape": 20.58,
           "naiveMape": 16.42,
           "winRate": 42.4,
           "dirAcc": 72.7
@@ -136,23 +136,23 @@
         {
           "h": 5,
           "n": 31,
-          "modelMape": 28.76,
+          "modelMape": 28.3,
           "naiveMape": 19.64,
-          "winRate": 51.6,
-          "dirAcc": 71.0
+          "winRate": 45.2,
+          "dirAcc": 64.5
         },
         {
           "h": 6,
           "n": 29,
-          "modelMape": 36.62,
+          "modelMape": 36.41,
           "naiveMape": 21.71,
-          "winRate": 51.7,
-          "dirAcc": 65.5
+          "winRate": 48.3,
+          "dirAcc": 62.1
         },
         {
           "h": 7,
           "n": 27,
-          "modelMape": 44.18,
+          "modelMape": 43.58,
           "naiveMape": 24.67,
           "winRate": 48.1,
           "dirAcc": 70.4
@@ -162,10 +162,10 @@
         "n": 231,
         "modelMape": 21.59,
         "naiveMape": 15.67,
-        "winRate": 52.8,
-        "dirAcc": 67.5,
+        "winRate": 49.8,
+        "dirAcc": 65.4,
         "alwaysUpDirAcc": 70.6,
-        "pValue": 0.215
+        "pValue": 0.552
       },
       "procurement": {
         "n": 33,

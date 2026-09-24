@@ -2,15 +2,11 @@
   "signalId": "macro-fed",
   "source": "FRED CSV DFF (Effective Federal Funds Rate)",
   "mode": "real",
-  "collectedAt": "2026-07-12",
-  "rangeStart": "2025-06-15",
-  "rangeEnd": "2026-07-12",
-  "note": "",
+  "collectedAt": "2026-09-24",
+  "rangeStart": "2025-06-16",
+  "rangeEnd": "2026-09-21",
+  "note": "Auto-collected via auto_collectors.py",
   "data": [
-    {
-      "week": "2025-06-09",
-      "value": 4.33
-    },
     {
       "week": "2025-06-16",
       "value": 4.33
@@ -233,7 +229,51 @@
     },
     {
       "week": "2026-07-06",
-      "value": 3.625
+      "value": 3.6229
+    },
+    {
+      "week": "2026-07-13",
+      "value": 3.6286
+    },
+    {
+      "week": "2026-07-20",
+      "value": 3.63
+    },
+    {
+      "week": "2026-07-27",
+      "value": 3.63
+    },
+    {
+      "week": "2026-08-03",
+      "value": 3.63
+    },
+    {
+      "week": "2026-08-10",
+      "value": 3.63
+    },
+    {
+      "week": "2026-08-17",
+      "value": 3.63
+    },
+    {
+      "week": "2026-08-24",
+      "value": 3.63
+    },
+    {
+      "week": "2026-08-31",
+      "value": 3.63
+    },
+    {
+      "week": "2026-09-07",
+      "value": 3.63
+    },
+    {
+      "week": "2026-09-14",
+      "value": 3.7729
+    },
+    {
+      "week": "2026-09-21",
+      "value": 3.88
     }
   ]
 }

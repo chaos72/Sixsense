@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/validation/latest.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-24T09:52:32.233834Z
+// 생성 시각: 2026-09-24T10:21:02.827845Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-24) · events 9건 (기상이변 제외)
 
 export const SIXSENSE_DATA = {
@@ -15,16 +15,16 @@ export const SIXSENSE_DATA = {
     "proxyNote": "실제 DRAM 계약가가 아닌 대용 지표입니다.",
     "updated": "2026-09-24 06:00 KST",
     "insight": {
-      "headline": "메모리 3사 주가지수 상승세, AI 메모리 부족 부각",
-      "summary": "메모리 3사 주가지수는 현재 746.9pt로, 최근 1주간 +4.4%, 4주간 +13.7% 상승했습니다. HBM 및 LTA 관련 뉴스 감성은 각각 +0.90, +0.80으로 긍정적이며, 실적발표 뉴스 감성도 +0.30을 기록했습니다. Hacker News 메모리 화제도는 310입니다. 최근 뉴스에서는 **AI 메모리** 부족 심화와 램 시장의 심각한 부족 사태가 언급되었으며, 메모리 칩이 컴퓨트 칩보다 고가라는 내용도 있었습니다. 앤스로픽은 2027년까지 400억 개의 D램 수요를 예상했습니다. **메모리 부족** 현상과 **수요 증가** 관련 소식들이 지속적으로 관찰됩니다.",
+      "headline": "메모리 주가지수 상승, AI 수요",
+      "summary": "메모리 3사 주가지수는 현재 746.9pt로, 1주간 4.4%, 4주간 13.7% 상승하며 단기적인 강세를 보였습니다. 다만 13주 기준으로는 15.5% 하락했습니다. HBM 뉴스 감성이 +0.90, LTA 뉴스 감성이 +0.80으로 매우 긍정적이며, Hacker News 메모리 화제도는 310을 기록했습니다. 최근 뉴스에서는 **AI 메모리** 부족 심화와 높은 **수요**가 지속적으로 강조되며, 앤스로픽은 2027년까지 D램 400억개 수요를 예상했습니다. 메모리 칩이 컴퓨트 칩보다 고가라는 소식도 전해졌습니다.",
       "tone": "pos",
       "keySignals": [
+        "A-1",
         "B-6",
-        "B-5",
         "B-7"
       ],
       "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-09-24T18:37:48"
+      "generatedAt": "2026-09-24T19:21:02"
     }
   },
   "history": [
@@ -378,7 +378,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "n": 39,
-            "modelMape": 26.65,
+            "modelMape": 26.7,
             "naiveMape": 7.41,
             "winRate": 12.8,
             "dirAcc": 35.9
@@ -386,15 +386,15 @@ export const SIXSENSE_DATA = {
           {
             "h": 2,
             "n": 37,
-            "modelMape": 29.56,
+            "modelMape": 30.13,
             "naiveMape": 11.32,
-            "winRate": 13.5,
-            "dirAcc": 35.1
+            "winRate": 8.1,
+            "dirAcc": 29.7
           },
           {
             "h": 3,
             "n": 35,
-            "modelMape": 31.06,
+            "modelMape": 31.52,
             "naiveMape": 13.32,
             "winRate": 20.0,
             "dirAcc": 34.3
@@ -402,42 +402,42 @@ export const SIXSENSE_DATA = {
           {
             "h": 4,
             "n": 33,
-            "modelMape": 33.18,
+            "modelMape": 34.7,
             "naiveMape": 16.42,
-            "winRate": 18.2,
-            "dirAcc": 27.3
+            "winRate": 12.1,
+            "dirAcc": 21.2
           },
           {
             "h": 5,
             "n": 31,
-            "modelMape": 35.21,
+            "modelMape": 36.67,
             "naiveMape": 19.64,
-            "winRate": 19.4,
-            "dirAcc": 32.3
+            "winRate": 16.1,
+            "dirAcc": 29.0
           },
           {
             "h": 6,
             "n": 29,
-            "modelMape": 35.94,
+            "modelMape": 37.53,
             "naiveMape": 21.71,
-            "winRate": 24.1,
-            "dirAcc": 44.8
+            "winRate": 17.2,
+            "dirAcc": 37.9
           },
           {
             "h": 7,
             "n": 27,
-            "modelMape": 36.97,
+            "modelMape": 38.21,
             "naiveMape": 24.67,
-            "winRate": 33.3,
-            "dirAcc": 44.4
+            "winRate": 22.2,
+            "dirAcc": 33.3
           }
         ],
         "overall": {
           "n": 231,
-          "modelMape": 32.24,
+          "modelMape": 33.17,
           "naiveMape": 15.67,
-          "winRate": 19.5,
-          "dirAcc": 35.9,
+          "winRate": 15.2,
+          "dirAcc": 31.6,
           "alwaysUpDirAcc": 70.6,
           "pValue": 1.0
         },
@@ -445,11 +445,11 @@ export const SIXSENSE_DATA = {
           "n": 33,
           "horizonWeeks": 4,
           "alwaysNow": 528.03,
-          "model": 573.28,
-          "modelPct": 8.57,
+          "model": 577.09,
+          "modelPct": 9.29,
           "perfectPct": -4.9,
-          "waitRate": 93.9,
-          "waitCount": 31,
+          "waitRate": 100.0,
+          "waitCount": 33,
           "waitCorrect": 7
         },
         "pass": false
@@ -461,31 +461,31 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "n": 39,
-            "modelMape": 7.14,
+            "modelMape": 7.22,
             "naiveMape": 7.41,
-            "winRate": 66.7,
-            "dirAcc": 71.8
+            "winRate": 59.0,
+            "dirAcc": 64.1
           },
           {
             "h": 2,
             "n": 37,
-            "modelMape": 10.73,
+            "modelMape": 11.01,
             "naiveMape": 11.32,
-            "winRate": 56.8,
+            "winRate": 54.1,
             "dirAcc": 64.9
           },
           {
             "h": 3,
             "n": 35,
-            "modelMape": 14.35,
+            "modelMape": 14.55,
             "naiveMape": 13.32,
             "winRate": 48.6,
-            "dirAcc": 57.1
+            "dirAcc": 60.0
           },
           {
             "h": 4,
             "n": 33,
-            "modelMape": 20.07,
+            "modelMape": 20.58,
             "naiveMape": 16.42,
             "winRate": 42.4,
             "dirAcc": 72.7
@@ -493,23 +493,23 @@ export const SIXSENSE_DATA = {
           {
             "h": 5,
             "n": 31,
-            "modelMape": 28.76,
+            "modelMape": 28.3,
             "naiveMape": 19.64,
-            "winRate": 51.6,
-            "dirAcc": 71.0
+            "winRate": 45.2,
+            "dirAcc": 64.5
           },
           {
             "h": 6,
             "n": 29,
-            "modelMape": 36.62,
+            "modelMape": 36.41,
             "naiveMape": 21.71,
-            "winRate": 51.7,
-            "dirAcc": 65.5
+            "winRate": 48.3,
+            "dirAcc": 62.1
           },
           {
             "h": 7,
             "n": 27,
-            "modelMape": 44.18,
+            "modelMape": 43.58,
             "naiveMape": 24.67,
             "winRate": 48.1,
             "dirAcc": 70.4
@@ -519,10 +519,10 @@ export const SIXSENSE_DATA = {
           "n": 231,
           "modelMape": 21.59,
           "naiveMape": 15.67,
-          "winRate": 52.8,
-          "dirAcc": 67.5,
+          "winRate": 49.8,
+          "dirAcc": 65.4,
           "alwaysUpDirAcc": 70.6,
-          "pValue": 0.215
+          "pValue": 0.552
         },
         "procurement": {
           "n": 33,
@@ -546,131 +546,131 @@ export const SIXSENSE_DATA = {
       "id": "A-1",
       "name": "대만 파운드리 주가",
       "source": "Yahoo Finance: TSM",
-      "value": "+2.6%",
-      "num": 0.0262,
-      "tone": "neu",
-      "desc": "TSMC 70%·UMC 30% 주가 (Yahoo Finance)",
+      "value": "+13.0%",
+      "num": 0.1303,
+      "tone": "pos",
+      "desc": "TSMC 70%·UMC 30% 주가 (각각 2025-06-16=100 정규화, Yahoo Finance)",
       "spark": [
+        0.054,
+        0.168,
         0.0,
-        0.26,
-        0.188,
-        0.347,
-        1.0,
-        0.515,
-        0.538,
-        0.536
+        0.149,
+        0.377,
+        0.633,
+        0.87,
+        1.0
       ],
       "recent": [
         {
-          "week": "2026-01-12",
-          "value": 242.47
-        },
-        {
-          "week": "2026-01-19",
-          "value": 237.571
-        },
-        {
-          "week": "2026-01-26",
-          "value": 234.446
-        },
-        {
-          "week": "2026-02-02",
-          "value": 247.213
-        },
-        {
-          "week": "2026-02-09",
-          "value": 259.578
-        },
-        {
-          "week": "2026-02-16",
-          "value": 262.498
-        },
-        {
-          "week": "2026-02-23",
-          "value": 265.338
-        },
-        {
-          "week": "2026-03-02",
-          "value": 240.103
-        },
-        {
-          "week": "2026-03-09",
-          "value": 239.598
-        },
-        {
-          "week": "2026-03-16",
-          "value": 233.204
-        },
-        {
-          "week": "2026-03-23",
-          "value": 231.379
-        },
-        {
           "week": "2026-03-30",
-          "value": 239.929
+          "value": 145.0747
         },
         {
           "week": "2026-04-06",
-          "value": 262.342
+          "value": 159.5435
         },
         {
           "week": "2026-04-13",
-          "value": 262.848
+          "value": 166.5517
         },
         {
           "week": "2026-04-20",
-          "value": 285.406
+          "value": 179.5038
         },
         {
           "week": "2026-04-27",
-          "value": 282.284
+          "value": 180.7273
         },
         {
           "week": "2026-05-04",
-          "value": 292.802
+          "value": 194.1002
         },
         {
           "week": "2026-05-11",
-          "value": 288.205
+          "value": 198.1793
         },
         {
           "week": "2026-05-18",
-          "value": 288.63
+          "value": 201.9769
         },
         {
           "week": "2026-05-25",
-          "value": 299.569
+          "value": 221.1543
         },
         {
           "week": "2026-06-01",
-          "value": 296.529
+          "value": 210.9631
         },
         {
           "week": "2026-06-08",
-          "value": 303.24
+          "value": 220.9681
         },
         {
           "week": "2026-06-15",
-          "value": 330.708
+          "value": 242.7132
         },
         {
           "week": "2026-06-22",
-          "value": 310.319
+          "value": 238.2679
         },
         {
           "week": "2026-06-29",
-          "value": 311.274
+          "value": 235.0585
         },
         {
           "week": "2026-07-06",
-          "value": 311.179
+          "value": 234.3083
+        },
+        {
+          "week": "2026-07-13",
+          "value": 211.0346
+        },
+        {
+          "week": "2026-07-20",
+          "value": 206.227
+        },
+        {
+          "week": "2026-07-27",
+          "value": 204.8573
+        },
+        {
+          "week": "2026-08-03",
+          "value": 208.9961
+        },
+        {
+          "week": "2026-08-10",
+          "value": 212.6813
+        },
+        {
+          "week": "2026-08-17",
+          "value": 207.2382
+        },
+        {
+          "week": "2026-08-24",
+          "value": 212.0783
+        },
+        {
+          "week": "2026-08-31",
+          "value": 219.478
+        },
+        {
+          "week": "2026-09-07",
+          "value": 227.7829
+        },
+        {
+          "week": "2026-09-14",
+          "value": 235.4856
+        },
+        {
+          "week": "2026-09-21",
+          "value": 239.7183
         }
       ],
-      "asOf": "2026-07-06",
-      "collectedAt": "2026-07-12",
-      "dataSince": "2026-07-06",
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음"
+      "asOf": "2026-09-21",
+      "collectedAt": "2026-09-24",
+      "dataSince": "2026-09-21",
+      "stale": false,
+      "staleReason": null
     },
     {
       "id": "A-3",
@@ -1148,65 +1148,21 @@ export const SIXSENSE_DATA = {
       "id": "A-7",
       "name": "구리 선물가",
       "source": "Yahoo Finance HG=F",
-      "value": "$6.28",
-      "num": 6.282,
+      "value": "$6.68",
+      "num": 6.678,
       "tone": "neu",
       "desc": "COMEX 구리 선물 HG=F (Yahoo Finance)",
       "spark": [
-        0.694,
-        0.754,
-        0.422,
-        1.0,
-        0.735,
+        0.484,
+        0.624,
+        0.528,
+        0.444,
+        0.612,
         0.0,
-        0.104,
-        0.486
+        0.698,
+        1.0
       ],
       "recent": [
-        {
-          "week": "2026-01-12",
-          "value": 5.7885
-        },
-        {
-          "week": "2026-01-19",
-          "value": 5.911
-        },
-        {
-          "week": "2026-01-26",
-          "value": 5.897
-        },
-        {
-          "week": "2026-02-02",
-          "value": 5.8635
-        },
-        {
-          "week": "2026-02-09",
-          "value": 5.7925
-        },
-        {
-          "week": "2026-02-16",
-          "value": 5.831
-        },
-        {
-          "week": "2026-02-23",
-          "value": 6.0045
-        },
-        {
-          "week": "2026-03-02",
-          "value": 5.757
-        },
-        {
-          "week": "2026-03-09",
-          "value": 5.7145
-        },
-        {
-          "week": "2026-03-16",
-          "value": 5.3425
-        },
-        {
-          "week": "2026-03-23",
-          "value": 5.467
-        },
         {
           "week": "2026-03-30",
           "value": 5.563
@@ -1265,14 +1221,58 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-07-06",
-          "value": 6.282
+          "value": 6.2335
+        },
+        {
+          "week": "2026-07-13",
+          "value": 6.22
+        },
+        {
+          "week": "2026-07-20",
+          "value": 6.32
+        },
+        {
+          "week": "2026-07-27",
+          "value": 6.436
+        },
+        {
+          "week": "2026-08-03",
+          "value": 6.5705
+        },
+        {
+          "week": "2026-08-10",
+          "value": 6.5995
+        },
+        {
+          "week": "2026-08-17",
+          "value": 6.5795
+        },
+        {
+          "week": "2026-08-24",
+          "value": 6.562
+        },
+        {
+          "week": "2026-08-31",
+          "value": 6.597
+        },
+        {
+          "week": "2026-09-07",
+          "value": 6.4695
+        },
+        {
+          "week": "2026-09-14",
+          "value": 6.615
+        },
+        {
+          "week": "2026-09-21",
+          "value": 6.678
         }
       ],
-      "asOf": "2026-07-06",
-      "collectedAt": "2026-07-12",
-      "dataSince": "2026-07-06",
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음"
+      "asOf": "2026-09-21",
+      "collectedAt": "2026-09-24",
+      "dataSince": "2026-09-21",
+      "stale": false,
+      "staleReason": null
     }
   ],
   "signalsB": [
@@ -2061,54 +2061,10 @@ export const SIXSENSE_DATA = {
   "macro": [
     {
       "id": "ust10",
-      "asOf": "2026-07-06",
+      "asOf": "2026-09-21",
       "source": "FRED CSV DGS10",
       "unit": "%",
       "recent": [
-        {
-          "week": "2026-01-12",
-          "value": 4.186
-        },
-        {
-          "week": "2026-01-19",
-          "value": 4.265
-        },
-        {
-          "week": "2026-01-26",
-          "value": 4.244
-        },
-        {
-          "week": "2026-02-02",
-          "value": 4.258
-        },
-        {
-          "week": "2026-02-09",
-          "value": 4.138
-        },
-        {
-          "week": "2026-02-16",
-          "value": 4.075
-        },
-        {
-          "week": "2026-02-23",
-          "value": 4.022
-        },
-        {
-          "week": "2026-03-02",
-          "value": 4.096
-        },
-        {
-          "week": "2026-03-09",
-          "value": 4.206
-        },
-        {
-          "week": "2026-03-16",
-          "value": 4.266
-        },
-        {
-          "week": "2026-03-23",
-          "value": 4.384
-        },
         {
           "week": "2026-03-30",
           "value": 4.328
@@ -2167,77 +2123,77 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-07-06",
-          "value": 4.5325
+          "value": 4.538
+        },
+        {
+          "week": "2026-07-13",
+          "value": 4.574
+        },
+        {
+          "week": "2026-07-20",
+          "value": 4.66
+        },
+        {
+          "week": "2026-07-27",
+          "value": 4.672
+        },
+        {
+          "week": "2026-08-03",
+          "value": 4.66
+        },
+        {
+          "week": "2026-08-10",
+          "value": 4.682
+        },
+        {
+          "week": "2026-08-17",
+          "value": 4.702
+        },
+        {
+          "week": "2026-08-24",
+          "value": 4.68
+        },
+        {
+          "week": "2026-08-31",
+          "value": 4.776
+        },
+        {
+          "week": "2026-09-07",
+          "value": 4.885
+        },
+        {
+          "week": "2026-09-14",
+          "value": 4.986
+        },
+        {
+          "week": "2026-09-21",
+          "value": 4.96
         }
       ],
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음",
-      "dataSince": "2026-07-06",
+      "stale": false,
+      "staleReason": null,
+      "dataSince": "2026-09-21",
       "name": "미국 10년물 국채금리",
-      "value": "4.53%",
+      "value": "4.96%",
       "change": "↑ 부정",
       "tone": "neg",
       "desc": "FRED DGS10 (10-Year Treasury Yield, 위험자산 선호도 지표)",
       "history": [
-        4.47,
-        4.49,
-        4.51,
-        4.46,
-        4.44,
-        4.45,
-        4.53
+        4.68,
+        4.7,
+        4.68,
+        4.78,
+        4.88,
+        4.99,
+        4.96
       ]
     },
     {
       "id": "fed",
-      "asOf": "2026-07-06",
+      "asOf": "2026-09-21",
       "source": "FRED CSV DFF",
       "unit": "%",
       "recent": [
-        {
-          "week": "2026-01-12",
-          "value": 3.64
-        },
-        {
-          "week": "2026-01-19",
-          "value": 3.64
-        },
-        {
-          "week": "2026-01-26",
-          "value": 3.64
-        },
-        {
-          "week": "2026-02-02",
-          "value": 3.64
-        },
-        {
-          "week": "2026-02-09",
-          "value": 3.64
-        },
-        {
-          "week": "2026-02-16",
-          "value": 3.64
-        },
-        {
-          "week": "2026-02-23",
-          "value": 3.64
-        },
-        {
-          "week": "2026-03-02",
-          "value": 3.64
-        },
-        {
-          "week": "2026-03-09",
-          "value": 3.64
-        },
-        {
-          "week": "2026-03-16",
-          "value": 3.64
-        },
-        {
-          "week": "2026-03-23",
-          "value": 3.64
-        },
         {
           "week": "2026-03-30",
           "value": 3.64
@@ -2296,77 +2252,77 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-07-06",
-          "value": 3.625
+          "value": 3.6229
+        },
+        {
+          "week": "2026-07-13",
+          "value": 3.6286
+        },
+        {
+          "week": "2026-07-20",
+          "value": 3.63
+        },
+        {
+          "week": "2026-07-27",
+          "value": 3.63
+        },
+        {
+          "week": "2026-08-03",
+          "value": 3.63
+        },
+        {
+          "week": "2026-08-10",
+          "value": 3.63
+        },
+        {
+          "week": "2026-08-17",
+          "value": 3.63
+        },
+        {
+          "week": "2026-08-24",
+          "value": 3.63
+        },
+        {
+          "week": "2026-08-31",
+          "value": 3.63
+        },
+        {
+          "week": "2026-09-07",
+          "value": 3.63
+        },
+        {
+          "week": "2026-09-14",
+          "value": 3.7729
+        },
+        {
+          "week": "2026-09-21",
+          "value": 3.88
         }
       ],
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음",
-      "dataSince": "2026-07-06",
+      "stale": false,
+      "staleReason": null,
+      "dataSince": "2026-09-21",
       "name": "미국 금리",
-      "value": "3.62%",
+      "value": "3.88%",
       "change": "↑ 긍정",
       "tone": "neu",
       "desc": "Effective Federal Funds Rate (FRED DFF)",
       "history": [
-        3.62,
-        3.62,
-        3.62,
         3.63,
         3.63,
         3.63,
-        3.62
+        3.63,
+        3.63,
+        3.77,
+        3.88
       ]
     },
     {
       "id": "dxy",
-      "asOf": "2026-07-06",
+      "asOf": "2026-09-21",
       "source": "Yahoo Finance DX-Y.NYB",
       "unit": "",
       "recent": [
-        {
-          "week": "2026-01-12",
-          "value": 99.39
-        },
-        {
-          "week": "2026-01-19",
-          "value": 97.6
-        },
-        {
-          "week": "2026-01-26",
-          "value": 96.99
-        },
-        {
-          "week": "2026-02-02",
-          "value": 97.63
-        },
-        {
-          "week": "2026-02-09",
-          "value": 96.88
-        },
-        {
-          "week": "2026-02-16",
-          "value": 97.8
-        },
-        {
-          "week": "2026-02-23",
-          "value": 97.61
-        },
-        {
-          "week": "2026-03-02",
-          "value": 98.99
-        },
-        {
-          "week": "2026-03-09",
-          "value": 100.36
-        },
-        {
-          "week": "2026-03-16",
-          "value": 99.65
-        },
-        {
-          "week": "2026-03-23",
-          "value": 100.15
-        },
         {
           "week": "2026-03-30",
           "value": 100.03
@@ -2425,206 +2381,206 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-07-06",
-          "value": 100.965
+          "value": 100.97
+        },
+        {
+          "week": "2026-07-13",
+          "value": 100.75
+        },
+        {
+          "week": "2026-07-20",
+          "value": 101.47
+        },
+        {
+          "week": "2026-07-27",
+          "value": 99.8
+        },
+        {
+          "week": "2026-08-03",
+          "value": 99.6
+        },
+        {
+          "week": "2026-08-10",
+          "value": 99.67
+        },
+        {
+          "week": "2026-08-17",
+          "value": 98.8
+        },
+        {
+          "week": "2026-08-24",
+          "value": 99.7
+        },
+        {
+          "week": "2026-08-31",
+          "value": 99.16
+        },
+        {
+          "week": "2026-09-07",
+          "value": 99.12
+        },
+        {
+          "week": "2026-09-14",
+          "value": 100.22
+        },
+        {
+          "week": "2026-09-21",
+          "value": 101.1
         }
       ],
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음",
-      "dataSince": "2026-07-06",
+      "stale": false,
+      "staleReason": null,
+      "dataSince": "2026-09-21",
       "name": "달러 인덱스 (DXY)",
-      "value": "101.0",
+      "value": "101.1",
       "change": "↑ 부정",
       "tone": "neg",
       "desc": "강달러 = DRAM 수출 부정 (DX-Y.NYB)",
       "history": [
-        98.91,
-        100.07,
-        99.75,
-        100.85,
-        101.36,
-        100.86,
-        100.97
+        99.67,
+        98.8,
+        99.7,
+        99.16,
+        99.12,
+        100.22,
+        101.1
       ]
     },
     {
       "id": "pmi",
-      "asOf": "2026-07-12",
+      "asOf": "2026-09-21",
       "source": "FRED CSV INDPRO",
       "unit": "",
       "recent": [
         {
-          "week": "2026-01-18",
-          "value": 101.1235
+          "week": "2026-03-30",
+          "value": 101.7336
         },
         {
-          "week": "2026-01-25",
-          "value": 101.1235
+          "week": "2026-04-06",
+          "value": 102.5783
         },
         {
-          "week": "2026-02-01",
-          "value": 101.9493
+          "week": "2026-04-13",
+          "value": 102.5783
         },
         {
-          "week": "2026-02-08",
-          "value": 101.9493
+          "week": "2026-04-20",
+          "value": 102.5783
         },
         {
-          "week": "2026-02-15",
-          "value": 101.9493
+          "week": "2026-04-27",
+          "value": 102.5783
         },
         {
-          "week": "2026-02-22",
-          "value": 101.9493
+          "week": "2026-05-04",
+          "value": 102.6396
         },
         {
-          "week": "2026-03-01",
-          "value": 101.6273
+          "week": "2026-05-11",
+          "value": 102.6396
         },
         {
-          "week": "2026-03-08",
-          "value": 101.6273
+          "week": "2026-05-18",
+          "value": 102.6396
         },
         {
-          "week": "2026-03-15",
-          "value": 101.6273
+          "week": "2026-05-25",
+          "value": 102.6396
         },
         {
-          "week": "2026-03-22",
-          "value": 101.6273
+          "week": "2026-06-01",
+          "value": 102.842
         },
         {
-          "week": "2026-03-29",
-          "value": 101.6273
+          "week": "2026-06-08",
+          "value": 102.842
         },
         {
-          "week": "2026-04-05",
-          "value": 102.509
+          "week": "2026-06-15",
+          "value": 102.842
         },
         {
-          "week": "2026-04-12",
-          "value": 102.509
+          "week": "2026-06-22",
+          "value": 102.842
         },
         {
-          "week": "2026-04-19",
-          "value": 102.509
+          "week": "2026-06-29",
+          "value": 102.842
         },
         {
-          "week": "2026-04-26",
-          "value": 102.509
+          "week": "2026-07-06",
+          "value": 103.0454
         },
         {
-          "week": "2026-05-03",
-          "value": 102.6475
+          "week": "2026-07-13",
+          "value": 103.0454
         },
         {
-          "week": "2026-05-10",
-          "value": 102.6475
+          "week": "2026-07-20",
+          "value": 103.0454
         },
         {
-          "week": "2026-05-17",
-          "value": 102.6475
+          "week": "2026-07-27",
+          "value": 103.0454
         },
         {
-          "week": "2026-05-24",
-          "value": 102.6475
+          "week": "2026-08-03",
+          "value": 103.0682
         },
         {
-          "week": "2026-05-31",
-          "value": 102.6475
+          "week": "2026-08-10",
+          "value": 103.0682
         },
         {
-          "week": "2026-06-07",
-          "value": 102.6475
+          "week": "2026-08-17",
+          "value": 103.0682
         },
         {
-          "week": "2026-06-14",
-          "value": 102.6475
+          "week": "2026-08-24",
+          "value": 103.0682
         },
         {
-          "week": "2026-06-21",
-          "value": 102.6475
+          "week": "2026-08-31",
+          "value": 103.0682
         },
         {
-          "week": "2026-06-28",
-          "value": 102.6475
+          "week": "2026-09-07",
+          "value": 103.0682
         },
         {
-          "week": "2026-07-05",
-          "value": 102.6475
+          "week": "2026-09-14",
+          "value": 103.0682
         },
         {
-          "week": "2026-07-12",
-          "value": 102.6475
+          "week": "2026-09-21",
+          "value": 103.0682
         }
       ],
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음",
-      "dataSince": "2026-05-03",
+      "stale": false,
+      "staleReason": null,
+      "dataSince": "2026-08-03",
       "name": "산업생산지수",
-      "value": "102.6",
+      "value": "103.1",
       "change": "동결",
       "tone": "neu",
       "desc": "FRED INDPRO (PMI 대체)",
       "history": [
-        102.65,
-        102.65,
-        102.65,
-        102.65,
-        102.65,
-        102.65,
-        102.65
+        103.07,
+        103.07,
+        103.07,
+        103.07,
+        103.07,
+        103.07,
+        103.07
       ]
     },
     {
       "id": "krw",
-      "asOf": "2026-07-06",
+      "asOf": "2026-09-21",
       "source": "Yahoo Finance KRW=X",
       "unit": "원",
       "recent": [
-        {
-          "week": "2026-01-12",
-          "value": 1472.0699
-        },
-        {
-          "week": "2026-01-19",
-          "value": 1444.8101
-        },
-        {
-          "week": "2026-01-26",
-          "value": 1449.7
-        },
-        {
-          "week": "2026-02-02",
-          "value": 1462.4
-        },
-        {
-          "week": "2026-02-09",
-          "value": 1439.52
-        },
-        {
-          "week": "2026-02-16",
-          "value": 1443.4399
-        },
-        {
-          "week": "2026-02-23",
-          "value": 1437.8
-        },
-        {
-          "week": "2026-03-02",
-          "value": 1483.89
-        },
-        {
-          "week": "2026-03-09",
-          "value": 1501.75
-        },
-        {
-          "week": "2026-03-16",
-          "value": 1504.21
-        },
-        {
-          "week": "2026-03-23",
-          "value": 1506.41
-        },
         {
           "week": "2026-03-30",
           "value": 1510.26
@@ -2683,77 +2639,77 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-07-06",
-          "value": 1498.87
+          "value": 1497.15
+        },
+        {
+          "week": "2026-07-13",
+          "value": 1485.9301
+        },
+        {
+          "week": "2026-07-20",
+          "value": 1458.01
+        },
+        {
+          "week": "2026-07-27",
+          "value": 1441.46
+        },
+        {
+          "week": "2026-08-03",
+          "value": 1405.86
+        },
+        {
+          "week": "2026-08-10",
+          "value": 1414.97
+        },
+        {
+          "week": "2026-08-17",
+          "value": 1384.0
+        },
+        {
+          "week": "2026-08-24",
+          "value": 1375.3199
+        },
+        {
+          "week": "2026-08-31",
+          "value": 1344.61
+        },
+        {
+          "week": "2026-09-07",
+          "value": 1339.97
+        },
+        {
+          "week": "2026-09-14",
+          "value": 1384.54
+        },
+        {
+          "week": "2026-09-21",
+          "value": 1350.36
         }
       ],
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음",
-      "dataSince": "2026-07-06",
+      "stale": false,
+      "staleReason": null,
+      "dataSince": "2026-09-21",
       "name": "USD/KRW",
-      "value": "1,499",
+      "value": "1,350",
       "change": "↓ 부정",
       "tone": "pos",
       "desc": "원화 약세 = 수입 원가↑ (Yahoo KRW=X)",
       "history": [
-        1505.96,
-        1557.47,
-        1516.23,
-        1526.01,
-        1533.12,
-        1527.3,
-        1498.87
+        1414.97,
+        1384.0,
+        1375.32,
+        1344.61,
+        1339.97,
+        1384.54,
+        1350.36
       ]
     },
     {
       "id": "cu",
-      "asOf": "2026-07-06",
+      "asOf": "2026-09-21",
       "source": "Yahoo Finance HG=F",
       "unit": "$",
       "recent": [
-        {
-          "week": "2026-01-12",
-          "value": 5.7885
-        },
-        {
-          "week": "2026-01-19",
-          "value": 5.911
-        },
-        {
-          "week": "2026-01-26",
-          "value": 5.897
-        },
-        {
-          "week": "2026-02-02",
-          "value": 5.8635
-        },
-        {
-          "week": "2026-02-09",
-          "value": 5.7925
-        },
-        {
-          "week": "2026-02-16",
-          "value": 5.831
-        },
-        {
-          "week": "2026-02-23",
-          "value": 6.0045
-        },
-        {
-          "week": "2026-03-02",
-          "value": 5.757
-        },
-        {
-          "week": "2026-03-09",
-          "value": 5.7145
-        },
-        {
-          "week": "2026-03-16",
-          "value": 5.3425
-        },
-        {
-          "week": "2026-03-23",
-          "value": 5.467
-        },
         {
           "week": "2026-03-30",
           "value": 5.563
@@ -2812,25 +2768,69 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-07-06",
-          "value": 6.282
+          "value": 6.2335
+        },
+        {
+          "week": "2026-07-13",
+          "value": 6.22
+        },
+        {
+          "week": "2026-07-20",
+          "value": 6.32
+        },
+        {
+          "week": "2026-07-27",
+          "value": 6.436
+        },
+        {
+          "week": "2026-08-03",
+          "value": 6.5705
+        },
+        {
+          "week": "2026-08-10",
+          "value": 6.5995
+        },
+        {
+          "week": "2026-08-17",
+          "value": 6.5795
+        },
+        {
+          "week": "2026-08-24",
+          "value": 6.562
+        },
+        {
+          "week": "2026-08-31",
+          "value": 6.597
+        },
+        {
+          "week": "2026-09-07",
+          "value": 6.4695
+        },
+        {
+          "week": "2026-09-14",
+          "value": 6.615
+        },
+        {
+          "week": "2026-09-21",
+          "value": 6.678
         }
       ],
-      "stale": true,
-      "staleReason": "2026-07-12 이후 수집되지 않음",
-      "dataSince": "2026-07-06",
+      "stale": false,
+      "staleReason": null,
+      "dataSince": "2026-09-21",
       "name": "구리 가격",
-      "value": "$6.28",
-      "change": "↓ 긍정",
-      "tone": "neg",
+      "value": "$6.68",
+      "change": "↑ 긍정",
+      "tone": "pos",
       "desc": "LME 대체 (COMEX HG=F)",
       "history": [
-        6.36,
-        6.26,
-        6.43,
-        6.35,
-        6.14,
-        6.17,
-        6.28
+        6.6,
+        6.58,
+        6.56,
+        6.6,
+        6.47,
+        6.62,
+        6.68
       ]
     }
   ],
@@ -3102,8 +3102,8 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-1",
         "name": "대만 파운드리 주가",
-        "then": "288.2",
-        "now": "311.2",
+        "then": "204.9",
+        "now": "239.7",
         "direction": "up"
       },
       {
@@ -3144,8 +3144,8 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-7",
         "name": "구리 선물가",
-        "then": "+6.25",
-        "now": "+6.28",
+        "then": "+6.44",
+        "now": "+6.68",
         "direction": "up"
       },
       {
@@ -3202,10 +3202,10 @@ export const SIXSENSE_DATA = {
   "collection": {
     "summary": {
       "total": 14,
-      "success": 8,
-      "stale": 6,
+      "success": 11,
+      "stale": 3,
       "fail": 0,
-      "newCount": 634
+      "newCount": 656
     },
     "week": "2026-09-24",
     "staleDays": 14,
@@ -3213,12 +3213,12 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-1",
         "name": "대만 파운드리 주가",
-        "source": "Yahoo Finance: TSM (70%) + UMC (30%)",
-        "time": "2026-07-12",
-        "weeks": 56,
-        "dataSince": "2026-07-06",
-        "reason": "2026-07-12 이후 수집되지 않음",
-        "status": "stale"
+        "source": "Yahoo Finance: TSM (70%) + UMC (30%), 각각 2025-06-1",
+        "time": "2026-09-24",
+        "weeks": 67,
+        "dataSince": "2026-09-21",
+        "reason": null,
+        "status": "ok"
       },
       {
         "id": "A-2",
@@ -3274,11 +3274,11 @@ export const SIXSENSE_DATA = {
         "id": "A-7",
         "name": "구리 선물가",
         "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME 대체)",
-        "time": "2026-07-12",
-        "weeks": 56,
-        "dataSince": "2026-07-06",
-        "reason": "2026-07-12 이후 수집되지 않음",
-        "status": "stale"
+        "time": "2026-09-24",
+        "weeks": 67,
+        "dataSince": "2026-09-21",
+        "reason": null,
+        "status": "ok"
       }
     ],
     "groupB": [
@@ -3319,8 +3319,8 @@ export const SIXSENSE_DATA = {
         "time": "2026-09-24",
         "weeks": 57,
         "dataSince": "2026-08-03",
-        "reason": "수집은 되지만 값이 2026-08-03 이후 8주째 같음 (원천 데이터 미갱신)",
-        "status": "stale"
+        "reason": null,
+        "status": "ok"
       },
       {
         "id": "B-5",
