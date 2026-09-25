@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/validation/latest.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-25T08:20:19.727589Z
+// 생성 시각: 2026-09-25T09:15:12.855771Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-25) · events 9건 (기상이변 제외)
 
 export const SIXSENSE_DATA = {
@@ -15,16 +15,16 @@ export const SIXSENSE_DATA = {
     "proxyNote": "실제 DRAM 계약가가 아닌 대용 지표입니다.",
     "updated": "2026-09-25 06:00 KST",
     "insight": {
-      "headline": "메모리 3사 주가 상승, AI 수요 부각",
-      "summary": "메모리 3사 주가지수는 현재 750.4pt를 기록하며 1주간 4.9%, 4주간 14.3% 상승했습니다. 다만 13주간은 15.1% 하락한 상태입니다. 최근 '실적발표', 'LTA', 'HBM' 관련 뉴스 감성이 모두 긍정적이며, 특히 **AI 수요** 증가로 인한 **메모리 칩** 부족과 가격 상승에 대한 뉴스가 연이어 보도되고 있습니다. 관세청 메모리 수출액은 157억 달러를 넘어섰습니다. 미국 10년물 국채금리는 5.01%를 기록 중입니다. 전반적으로 AI 관련 긍정적 소식이 **주가 상승**에 영향을 미치고 있습니다.",
+      "headline": "AI 수요로 메모리 주가 및 감성 지표 긍정적",
+      "summary": "메모리 3사 주가지수는 현재 750.4pt로, 지난 1주간 4.9%, 4주간 14.3% 상승했으나, 13주 기준으로는 15.1% 하락했습니다. 최근 핵심 뉴스에서는 **AI 수요**로 인한 메모리 칩 가격 상승 및 부족 심화, 그리고 앤스로픽의 대규모 DRAM 칩 수요 발표 등 긍정적인 내용이 주를 이룹니다. 실적발표, LTA, HBM 관련 뉴스 감성 점수도 모두 +0.70 이상으로 높게 나타나 **긍정적 감성**이 관찰됩니다. 관세청 메모리 수출액은 157억 달러를 기록했으며, 대만 파운드리 주가도 239.121을 기록했습니다. 이러한 AI 관련 수요 증가는 메모리 시장의 주요 동향으로 관찰되며, **주가지수 상승**에 영향을 미치고 있습니다.",
       "tone": "pos",
       "keySignals": [
         "A-3",
-        "B-6",
-        "B-1"
+        "B-1",
+        "B-6"
       ],
       "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-09-25T08:20:19"
+      "generatedAt": "2026-09-25T18:14:58"
     }
   },
   "history": [
@@ -370,6 +370,10 @@ export const SIXSENSE_DATA = {
       "날짜를 월요일로 통일, 미래 값으로 과거를 채우지 않음",
       "월간·분기 발표 통계는 발표 지연 6주 반영 (그 시점에 실제로 알 수 있던 값만)"
     ],
+    "current": {
+      "week": "2026-09-21",
+      "value": 750.43
+    },
     "variants": [
       {
         "key": "level",
@@ -439,6 +443,7 @@ export const SIXSENSE_DATA = {
           "winRate": 15.6,
           "dirAcc": 32.9,
           "alwaysUpDirAcc": 70.6,
+          "underRate": 93.1,
           "pValue": 1.0
         },
         "procurement": {
@@ -452,7 +457,51 @@ export const SIXSENSE_DATA = {
           "waitCount": 33,
           "waitCorrect": 7
         },
-        "pass": false
+        "pass": false,
+        "forecast": [
+          {
+            "h": 1,
+            "week": "2026-09-28",
+            "value": 728.59,
+            "changePct": -2.91
+          },
+          {
+            "h": 2,
+            "week": "2026-10-05",
+            "value": 691.53,
+            "changePct": -7.85
+          },
+          {
+            "h": 3,
+            "week": "2026-10-12",
+            "value": 741.48,
+            "changePct": -1.19
+          },
+          {
+            "h": 4,
+            "week": "2026-10-19",
+            "value": 751.1,
+            "changePct": 0.09
+          },
+          {
+            "h": 5,
+            "week": "2026-10-26",
+            "value": 726.8,
+            "changePct": -3.15
+          },
+          {
+            "h": 6,
+            "week": "2026-11-02",
+            "value": 688.02,
+            "changePct": -8.32
+          },
+          {
+            "h": 7,
+            "week": "2026-11-09",
+            "value": 715.27,
+            "changePct": -4.68
+          }
+        ]
       },
       {
         "key": "return",
@@ -522,6 +571,7 @@ export const SIXSENSE_DATA = {
           "winRate": 53.7,
           "dirAcc": 69.7,
           "alwaysUpDirAcc": 70.6,
+          "underRate": 41.6,
           "pValue": 0.146
         },
         "procurement": {
@@ -535,11 +585,61 @@ export const SIXSENSE_DATA = {
           "waitCount": 0,
           "waitCorrect": 0
         },
-        "pass": false
+        "pass": false,
+        "forecast": [
+          {
+            "h": 1,
+            "week": "2026-09-28",
+            "value": 792.36,
+            "changePct": 5.59
+          },
+          {
+            "h": 2,
+            "week": "2026-10-05",
+            "value": 839.23,
+            "changePct": 11.83
+          },
+          {
+            "h": 3,
+            "week": "2026-10-12",
+            "value": 862.46,
+            "changePct": 14.93
+          },
+          {
+            "h": 4,
+            "week": "2026-10-19",
+            "value": 856.16,
+            "changePct": 14.09
+          },
+          {
+            "h": 5,
+            "week": "2026-10-26",
+            "value": 808.68,
+            "changePct": 7.76
+          },
+          {
+            "h": 6,
+            "week": "2026-11-02",
+            "value": 910.38,
+            "changePct": 21.31
+          },
+          {
+            "h": 7,
+            "week": "2026-11-09",
+            "value": 874.03,
+            "changePct": 16.47
+          }
+        ]
       }
     ],
     "pass": false,
-    "verdict": "불합격"
+    "verdict": "불합격",
+    "explanation": {
+      "status": "ok",
+      "text": "메모리 3사 주가지수 예측 모델은 불합격 판정을 받았습니다. 합격 기준은 모델의 평균 오차가 기준선보다 낮고, p값이 0.05 미만이어야 하는데, 두 방식 모두 이 기준을 충족하지 못했습니다. 특히 '앱이 쓰던 방식 (가격 수준 예측)'은 모델 평균 오차가 32.9%로 기준선 평균 오차 15.7%보다 높았고, p값은 1.0이었습니다. 이 모델은 예측이 실제보다 낮았던 비율이 93.1%에 달해 지속적으로 실제보다 낮은 값을 예측했으며, 오르내림 적중률 32.9%는 항상 오른다고 찍는 적중률 70.6%보다 훨씬 낮았습니다. '개선 시도 (변화율 예측)' 방식 또한 모델 평균 오차가 22.9%로 기준선 평균 오차 15.7%보다 높았고, p값은 0.146으로 합격 기준인 0.05를 넘었습니다. 이 방식의 오르내림 적중률 69.7%는 항상 오른다고 찍는 적중률 70.6%와 비슷했지만, 여전히 기준선을 넘어서지 못했습니다. 이러한 결과는 67주치의 데이터만을 사용했고, 예측 대상이 실제 DRAM 가격이 아닌 주가 대용 지표라는 점도 고려해야 합니다. 현재 '앱이 쓰던 방식 (가격 수준 예측)'은 4주 뒤 지수를 751.1 pt로 예측하는 반면, '개선 시도 (변화율 예측)'은 856.16 pt로 예측하여 두 방식의 예측값이 크게 다릅니다.",
+      "model": "Gemini gemini-2.5-flash",
+      "reason": null
+    }
   },
   "signalsA": [
     {
