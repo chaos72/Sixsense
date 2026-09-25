@@ -83,9 +83,13 @@ def load_clean_frame() -> tuple[pd.DataFrame, pd.Series]:
     return X, y
 
 
-def run_variant(X: pd.DataFrame, y: pd.Series, kind: str) -> pd.DataFrame:
+def _model():
     import lightgbm as lgb
+    return lgb.LGBMRegressor(n_estimators=200, max_depth=4, learning_rate=0.05,
+                             random_state=42, verbose=-1, n_jobs=1)
 
+
+def run_variant(X: pd.DataFrame, y: pd.Series, kind: str) -> pd.DataFrame:
     rows = []
     n = len(y)
     for h in range(1, H_MAX + 1):
@@ -95,8 +99,7 @@ def run_variant(X: pd.DataFrame, y: pd.Series, kind: str) -> pd.DataFrame:
             train_idx = [j for j in range(i - h + 1) if not np.isnan(target.iloc[j])]
             if len(train_idx) < MIN_TRAIN:
                 continue
-            model = lgb.LGBMRegressor(n_estimators=200, max_depth=4, learning_rate=0.05,
-                                      random_state=42, verbose=-1, n_jobs=1)
+            model = _model()
             model.fit(X.iloc[train_idx], target.iloc[train_idx])
             p = float(model.predict(X.iloc[[i]])[0])
             now = float(y.iloc[i])
@@ -108,6 +111,25 @@ def run_variant(X: pd.DataFrame, y: pd.Series, kind: str) -> pd.DataFrame:
     r["win"] = r.e_model < r.e_naive
     r["dir_ok"] = np.sign(r.model - r.now) == np.sign(r.actual - r.now)
     return r
+
+
+def current_forecast(X: pd.DataFrame, y: pd.Series, kind: str) -> list[dict]:
+    """최신 주에서 1~H_MAX 주 뒤 예측. 검증(run_variant)과 같은 모델·같은 피처를 쓴다.
+    검증 불합격이어도 화면에 '참고용'으로 보여주기 위한 값 (v2.4)."""
+    n, now = len(y), float(y.iloc[-1])
+    last_week = y.index[-1]
+    out = []
+    for h in range(1, H_MAX + 1):
+        future = y.shift(-h)
+        target = future / y - 1 if kind == "return" else future
+        train_idx = [j for j in range(n) if not np.isnan(target.iloc[j])]
+        model = _model()
+        model.fit(X.iloc[train_idx], target.iloc[train_idx])
+        p = float(model.predict(X.iloc[[n - 1]])[0])
+        value = now * (1 + p) if kind == "return" else p
+        out.append({"h": h, "week": (last_week + pd.Timedelta(weeks=h)).date().isoformat(),
+                    "value": round(value, 2), "changePct": round((value / now - 1) * 100, 2)})
+    return out
 
 
 def sign_test_p(wins: int, n: int) -> float:
@@ -129,6 +151,7 @@ def summarize(r: pd.DataFrame) -> dict:
         "modelMape": round(r.e_model.mean(), 2), "naiveMape": round(r.e_naive.mean(), 2),
         "winRate": round(wins / n * 100, 1), "dirAcc": round(r.dir_ok.mean() * 100, 1),
         "alwaysUpDirAcc": round((r.actual > r.now).mean() * 100, 1),
+        "underRate": round((r.model < r.actual).mean() * 100, 1),
         "pValue": round(p, 3),
     }
 
@@ -157,6 +180,7 @@ def main():
     variants = []
     for key, name in VARIANTS.items():
         s = summarize(run_variant(X, y, key))
+        s["forecast"] = current_forecast(X, y, key)
         o = s["overall"]
         print(f"  [{name}] 모델 {o['modelMape']}% vs 기준선 {o['naiveMape']}% · 우세 {o['winRate']}% · "
               f"p={o['pValue']} · 구매 {s['procurement']['modelPct']:+.2f}% → {'합격' if s['pass'] else '불합격'}")
@@ -175,6 +199,7 @@ def main():
             "날짜를 월요일로 통일, 미래 값으로 과거를 채우지 않음",
             f"월간·분기 발표 통계는 발표 지연 {PUB_LAG_WEEKS}주 반영 (그 시점에 실제로 알 수 있던 값만)",
         ],
+        "current": {"week": y.index[-1].date().isoformat(), "value": round(float(y.iloc[-1]), 2)},
         "variants": variants,
         "pass": passed,
         "verdict": "합격" if passed else "불합격",

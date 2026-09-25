@@ -3,7 +3,7 @@
 매주 화요일 06:00 KST 자동 실행 (auto_collectors → collect_news_events → honest_backtest →
 forecast_v2(참고) → **build_insight** → build_frontend_data).
 
-입력 (사실만 — 예측 수치는 넣지 않음. 예측 모델이 검증 불합격이기 때문):
+입력 (사실만 — 요약에는 예측 수치를 넣지 않음. 예측은 별도 "왜 불합격인가" 설명에서만 다룸):
   - backend/data/historical/{A-*, B-*, macro-*, target-dram}.json (최신값·기준일)
   - backend/data/validation/latest.json (예측 검증 결과)
   - backend/data/news/latest.json (핵심 뉴스)
@@ -167,6 +167,94 @@ def heuristic(ctx: dict) -> dict:
             "key_signals": ctx["allowed"][:2]}
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# v2.4 — "왜 불합격인가" 설명 (Gemini) + 숫자 안전장치
+# 불합격 예측도 화면에 보여주되, 이유를 쉬운 말로 붙인다. LLM 이 숫자를 잘못 옮기면
+# 거짓 설명이 되므로, 설명 속 숫자가 입력 수치에 없으면 설명 전체를 버린다.
+# ──────────────────────────────────────────────────────────────────────────────
+def validation_facts(v: dict) -> dict:
+    """설명에 쓸 검증 수치만 추린다 (이 밖의 숫자는 설명에 쓸 수 없음)."""
+    facts = {"데이터_주수": v["dataWeeks"], "현재_지수_pt": v.get("current", {}).get("value"),
+             "합격기준_p": 0.05}
+    for x in v["variants"]:
+        o, pr = x["overall"], x["procurement"]
+        f4 = next((f for f in x.get("forecast", []) if f["h"] == 4), None)
+        facts[x["name"]] = {
+            "과거_예측_횟수": o["n"], "모델_평균오차_pct": o["modelMape"], "기준선_평균오차_pct": o["naiveMape"],
+            "기준선을_이긴_비율_pct": o["winRate"], "p값": o["pValue"],
+            "오르내림_적중률_pct": o["dirAcc"], "항상_오른다_찍기_적중률_pct": o["alwaysUpDirAcc"],
+            "예측이_실제보다_낮았던_비율_pct": o.get("underRate"),
+            "모델대로_4주_대기시_구매단가_변화_pct": pr["modelPct"], "대기_신호_횟수": pr["waitCount"],
+            "대기가_옳았던_횟수": pr["waitCorrect"],
+            "지금_4주뒤_예측_pt": f4 and f4["value"], "지금_4주뒤_예측_변화_pct": f4 and f4["changePct"],
+        }
+    return facts
+
+
+def _fact_numbers(obj) -> set[float]:
+    out = set()
+    if isinstance(obj, dict):
+        for v in obj.values():
+            out |= _fact_numbers(v)
+    elif isinstance(obj, (int, float)) and obj is not None:
+        out.add(abs(float(obj)))
+    return out
+
+
+def unknown_numbers(text: str, facts: dict) -> list[str]:
+    """설명 속 숫자 중 입력 수치(반올림 허용)나 예측 기간(1~7주)으로 설명되지 않는 것."""
+    allowed = _fact_numbers(facts) | {float(h) for h in range(1, 8)}
+    bad = []
+    for tok in re.findall(r"\d+(?:[.,]\d+)*", text):
+        x = float(tok.replace(",", ""))
+        # 1 이상인 값만 반올림 허용 — p 값처럼 작은 수는 줄여 쓰면 뜻이 달라진다 (0.146 → 0.1 금지)
+        if not any(abs(x - a) < 1e-9 or (a >= 1 and (abs(x - round(a, 1)) < 1e-9 or abs(x - round(a)) < 1e-9))
+                   for a in allowed):
+            bad.append(tok)
+    return bad
+
+
+def explain_validation() -> dict:
+    if not VALIDATION.exists():
+        return {"status": "failed", "text": "", "model": "", "reason": "검증 결과 없음"}
+    v = json.loads(VALIDATION.read_text())
+    facts = validation_facts(v)
+    prompt = f"""너는 데이터 분석 결과를 비전문가에게 설명하는 사람이다.
+아래는 메모리 3사 주가지수(실제 DRAM 가격이 아닌 대용 지표)를 예측하는 AI 모델의 검증 결과다.
+판정: {v['verdict']} (합격 기준: {v['passRule']}). 기준선 = "{v['baseline']}".
+
+검증 수치(JSON):
+{json.dumps(facts, ensure_ascii=False, indent=1)}
+
+용어 (반드시 이 뜻으로 써라):
+- p값 = 모델과 기준선의 실력이 같다고 가정할 때, 모델이 이만큼 이길 확률. 작을수록 '우연이 아니라 진짜 낫다'는 뜻이며
+  0.05 미만이어야 합격. p값을 '우연이 아닐 확률'이나 '맞을 확률'로 설명하지 마라.
+- 평균오차 = 예측이 실제와 평균 몇 % 어긋났는지. 작을수록 좋다.
+
+규칙:
+- 이 예측이 왜 {v['verdict']}인지 쉬운 한국어 4~5문장으로 설명하라. 다음 순서를 지켜라:
+  ① 판정과 기준 (평균오차 비교, p값)
+  ② 원인 — '예측이_실제보다_낮았던_비율'과 '오르내림_적중률'을 '항상_오른다_찍기_적중률'과 비교해,
+     모델이 어떤 식으로 틀렸는지(예: 오르는 시장을 계속 낮게 봄) 설명
+  ③ 데이터 한계 — 데이터가 '데이터_주수'주뿐이고, 예측 대상이 실제 DRAM 가격이 아닌 주가 대용 지표라는 점
+  ④ 두 방식의 지금 4주 뒤 예측이 서로 다르면 그 사실
+- 숫자는 위 JSON 에 있는 값만 써라. 1 이상은 소수 첫째 자리 반올림 가능, p 값 등 1 미만 값은 그대로 써라. 새 숫자를 계산하거나 만들지 마라.
+- 두 방식의 지금 예측이 서로 다르면 그 사실도 짚어라.
+- 방식 이름은 JSON 의 이름('앱이 쓰던 방식 (가격 수준 예측)', '개선 시도 (변화율 예측)')대로 써라. '현재 앱이 쓰는 방식' 같은 표현 금지.
+- 매수·매도·구매 시점 권유 금지. 과장 금지.
+JSON 으로만 답하라: {{"explanation": "..."}}"""
+    obj, source = call_gemini(prompt)
+    text = ((obj or {}).get("explanation") or "").strip()
+    if not text:
+        return {"status": "failed", "text": "", "model": source, "reason": "Gemini 응답 없음"}
+    bad = unknown_numbers(text, facts)
+    if bad:
+        # 입력에 없는 숫자가 하나라도 있으면 거짓 설명일 수 있으므로 쓰지 않는다
+        return {"status": "rejected", "text": "", "model": source,
+                "reason": f"입력에 없는 숫자 {bad[:5]} — 설명을 표시하지 않음"}
+    return {"status": "ok", "text": text, "model": source, "reason": None}
+
+
 def main():
     print("[1/3] 컨텍스트 빌드…")
     prompt, ctx = build_prompt()
@@ -201,6 +289,7 @@ def main():
         "tone": tone,
         "keySignals": key_signals,
         "context": {k: ctx[k] for k in ("current", "change1w", "change4w", "change13w", "verdict")},
+        "validationExplanation": explain_validation(),
     }
     print("[3/3] 저장")
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -208,6 +297,11 @@ def main():
     print(f"     headline: {headline}")
     print(f"     summary ({len(summary)}자): {summary}")
     print(f"     tone={tone} · keySignals={key_signals}")
+    ve = payload["validationExplanation"]
+    print(f"  {'✅' if ve['status'] == 'ok' else '⚠️ '} 불합격 이유 설명: {ve['status']} · {ve['model']}"
+          f"{' · ' + ve['reason'] if ve['reason'] else ''}")
+    if ve["text"]:
+        print(f"     {ve['text']}")
 
 
 if __name__ == "__main__":

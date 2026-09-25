@@ -369,8 +369,15 @@ def load_news_events() -> tuple[list[dict], list[dict], str]:
 
 
 def load_validation() -> dict | None:
-    """honest_backtest.py 결과 — 화면의 '예측 검증 결과' 유일한 출처."""
-    return json.loads(VALIDATION.read_text()) if VALIDATION.exists() else None
+    """honest_backtest.py 결과 — 화면의 '예측 검증 결과' 유일한 출처.
+    build_insight.py 가 만든 '왜 불합격인가' 설명(숫자 대조 통과분만)을 함께 붙인다."""
+    if not VALIDATION.exists():
+        return None
+    v = json.loads(VALIDATION.read_text())
+    ins = json.loads(INSIGHT_FILE.read_text()) if INSIGHT_FILE.exists() else {}
+    v["explanation"] = ins.get("validationExplanation") or {"status": "failed", "text": "", "model": "",
+                                                             "reason": "설명 없음"}
+    return v
 
 
 def main():

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
-import { Sig, Tabs, LineChart } from '../components/components.jsx'
+import { Sig, Tabs, LineChart, AiNote } from '../components/components.jsx'
 // USER-REQUESTED EXTENSION (#16) — 다음 수집 일정 동적 계산
 import { nextTuesday06KST, formatTuesdayKST } from '../utils/dates.js'
 
@@ -277,6 +277,12 @@ function S012({ onClose }) {
         </ul>
       </div>
 
+      <div style={{ marginBottom: 18 }}>
+        {v.explanation && v.explanation.status === "ok"
+          ? <AiNote label={`왜 ${v.verdict}인가 · AI 작성 (${v.explanation.model})`}>{v.explanation.text}</AiNote>
+          : <div className="card muted" style={{ fontSize: 12 }}>불합격 이유 설명을 만들지 못했습니다{v.explanation && v.explanation.reason ? ` (${v.explanation.reason})` : ""} — 아래 수치를 참고하세요.</div>}
+      </div>
+
       {v.variants.map(x => {
         const o = x.overall, pr = x.procurement;
         return (
@@ -313,7 +319,37 @@ function S012({ onClose }) {
               우연히 이 정도로 이길 확률 p = {o.pValue} · '항상 오른다'고 찍었을 때 방향 적중률 {o.alwaysUpDirAcc.toFixed(0)}% ·
               {" "}{pr.horizonWeeks}주 대기 여부를 모델대로 정했을 때 평균 구매 단가 {pr.modelPct > 0 ? "+" : ""}{pr.modelPct.toFixed(2)}%
               (대기 신호 {pr.waitCount}회 중 실제로 옳았던 경우 {pr.waitCorrect}회, 미래를 안다면 {pr.perfectPct.toFixed(2)}%)
+              {o.underRate !== undefined && <> · 과거 예측이 실제보다 낮았던 비율 {o.underRate.toFixed(1)}%</>}
             </div>
+            {x.forecast && x.forecast.length > 0 && (
+              <>
+                <div className="dlabel" style={{ margin: "14px 0 8px" }}>
+                  지금 이 방식이 내놓은 예측 ({v.current ? `${v.current.week} 주 ${v.current.value.toFixed(1)} pt 기준` : "최신 주 기준"}) · {x.pass ? "✅ 합격" : "❌ 불합격 — 참고용"}
+                </div>
+                <div className="card" style={{ padding: 0 }}>
+                  <table className="tbl">
+                    <thead>
+                      <tr><th>예측 기간</th><th>대상 주</th><th className="num">AI 예측값</th><th className="num">현재 대비</th><th className="num">기준선 (지난주 값 그대로)</th><th className="num">이 기간 과거 오차 (모델 / 기준선)</th></tr>
+                    </thead>
+                    <tbody>
+                      {x.forecast.map(f => {
+                        const hz = x.byHorizon.find(b => b.h === f.h);
+                        return (
+                          <tr key={f.h}>
+                            <td>{f.h}주 뒤</td>
+                            <td>{f.week}</td>
+                            <td className="num" style={{ fontWeight: 600 }}>{f.value.toFixed(1)}</td>
+                            <td className="num">{f.changePct > 0 ? "+" : ""}{f.changePct.toFixed(1)}%</td>
+                            <td className="num">{v.current ? v.current.value.toFixed(1) : "—"}</td>
+                            <td className="num">{hz ? `${hz.modelMape.toFixed(1)}% / ${hz.naiveMape.toFixed(1)}%` : "—"}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
           </div>
         );
       })}

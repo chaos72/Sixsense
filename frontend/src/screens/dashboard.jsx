@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, Fragment } from 'react'
 import { SIXSENSE_DATA } from '../mocks/data.js'
-import { Sig, Sparkline, MetricCard, LineChart, SectionHead, InsightCard } from '../components/components.jsx'
+import { Sig, Sparkline, MetricCard, LineChart, SectionHead, InsightCard, AiNote } from '../components/components.jsx'
 // USER-REQUESTED EXTENSION (#16) — 다음 수집/잔여 시간 동적 계산
 import { nextTuesday06KST, formatTimeUntil } from '../utils/dates.js'
 
@@ -137,6 +137,18 @@ function RefreshPanel() {
 
 
 const pct = (v) => (v === null || v === undefined ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(1)}%`);
+
+// v2.4 — 검증 불합격이어도 예측 수치를 '참고용'으로 보여준다. 차트·카드는 오차가 더 작은 개선 시도(변화율) 방식.
+const chartVariant = (v) => v && (v.variants.find((x) => x.key === "return") || v.variants[0]);
+
+// "왜 불합격인가" — Gemini 작성, 숫자 대조(build_insight.unknown_numbers) 통과분만 표시
+function ValidationExplanation({ v }) {
+  const e = v && v.explanation;
+  if (!e || e.status !== "ok") {
+    return <div className="muted" style={{ fontSize: 11.5 }}>불합격 이유 설명을 만들지 못했습니다 — 아래 수치를 참고하세요.</div>;
+  }
+  return <AiNote label={`왜 ${v.verdict}인가 · AI 작성 (${e.model})`}>{e.text}</AiNote>;
+}
 const toneOf = (v) => (v > 0 ? "pos" : v < 0 ? "neg" : "neu");
 
 // §07 예측 검증 요약 — honest_backtest.py 결과 (워크포워드 백테스트, 모델 vs 단순 기준선)
@@ -152,14 +164,16 @@ function ValidationSummary({ v, onNav }) {
           {v.pass ? "AI 모델이 단순 기준선보다 정확했습니다." : "AI 모델이 '지난주 값 그대로'보다 부정확했습니다."}
         </span>
       </div>
+      <div style={{ marginBottom: 12 }}><ValidationExplanation v={v} /></div>
       <table className="model-table">
-        <thead><tr><th>방식</th><th>모델 오차</th><th>기준선 오차</th><th>판정</th></tr></thead>
+        <thead><tr><th>방식</th><th>모델 오차</th><th>기준선 오차</th><th>지금 4주 뒤 예측</th><th>판정</th></tr></thead>
         <tbody>
           {v.variants.map((x) => (
             <tr key={x.key}>
               <td>{x.name}</td>
               <td className="num-cell">{x.overall.modelMape.toFixed(1)}%</td>
               <td className="num-cell">{x.overall.naiveMape.toFixed(1)}%</td>
+              <td className="num-cell">{(() => { const f = (x.forecast || []).find((q) => q.h === 4); return f ? `${f.value.toFixed(1)} (${pct(f.changePct)})` : "—"; })()}</td>
               <td>{x.pass ? "합격" : "불합격"}</td>
             </tr>
           ))}
@@ -183,7 +197,7 @@ function Dashboard({ onNav }) {
 
   return (
     <div className="content">
-      {/* Top 3 cards — 측정값만 (예측 수치 없음: 검증 불합격) */}
+      {/* Top 3 cards — 측정값 2개 + AI 예측(검증 판정과 함께, 불합격이면 참고용) */}
       <div className="section">
         <SectionHead num="01" icon="◉" title="시장 지표 스냅샷" sub={`${m.updated || "최신"} 기준 · ${m.proxyNote}`} />
         <div className="grid-snapshot">
@@ -204,14 +218,21 @@ function Dashboard({ onNav }) {
               change={`주간 변동폭 ±${tr.weeklyVol13w}% (최근 13주)`}
               changeTone="neu"
             />
-            <MetricCard
-              label="AI 가격 예측 검증"
-              code={v ? `모델 오차 ${v.variants[0].overall.modelMape.toFixed(1)}% vs 단순 기준선 ${v.variants[0].overall.naiveMape.toFixed(1)}%` : "검증 결과 없음"}
-              value={v ? (v.pass ? "합격" : "불합격") : "—"}
-              change={v && !v.pass ? "예측 수치를 표시하지 않습니다" : "검증 통과"}
-              changeTone={v && v.pass ? "pos" : "neg"}
-              onClick={() => onNav("S-012")}
-            />
+            {(() => {
+              const cv = chartVariant(v);
+              const f4 = cv && cv.forecast && cv.forecast.find((f) => f.h === 4);
+              return (
+                <MetricCard
+                  label={`AI 4주 뒤 예측 · ${v && v.pass ? "✅ 검증 합격" : "❌ 검증 불합격 · 참고용"}`}
+                  code={cv ? `과거 평균 오차 ${cv.overall.modelMape.toFixed(1)}% vs 단순 기준선 ${cv.overall.naiveMape.toFixed(1)}% (${cv.name})` : "검증 결과 없음"}
+                  value={f4 ? f4.value.toFixed(1) : "—"}
+                  unit={f4 ? m.unitShort : null}
+                  change={f4 ? `현재 대비 ${pct(f4.changePct)} · ${f4.week} 주` : "예측 없음"}
+                  changeTone="neu" /* 상승·하락 화살표를 붙이지 않음 — 불합격 예측에 방향 강조 금지 */
+                  onClick={() => onNav("S-012")}
+                />
+              );
+            })()}
           </div>
           <InsightCard insight={m.insight} />
         </div>
@@ -219,7 +240,7 @@ function Dashboard({ onNav }) {
 
       {/* 주가지수 추이 — 실측만 */}
       <div className="section">
-        <SectionHead num="02" icon="◢" title={`${m.unitLabel} 52주 추이`} sub="실측값 · 예측선 없음 (검증 불합격)"
+        <SectionHead num="02" icon="◢" title={`${m.unitLabel} 52주 추이`} sub={v && v.pass ? "실선 실측 · 점선 앞으로 7주 예측" : "실선 = 실측 · 점선 = 앞으로 7주 AI 예측(❌ 검증 불합격, 참고용)과 기준선(지난주 값 그대로)"}
           actions={<button className="btn sm" onClick={() => onNav("S-009")}>8주 전과 비교 →</button>} />
         <div className="card dram-chart-card">
           <IndexChart />
@@ -376,21 +397,38 @@ function SignalCard({ s, onClick }) {
   );
 }
 
-// ==== 주가지수 52주 실측 차트 (예측선 없음) ====
+// ==== 주가지수 52주 실측 + 앞으로 7주 예측(점선, 검증 결과 표시) ====
 function IndexChart() {
   const series = [{ data: D.history.map((d) => ({ x: d.week, value: d.value })), color: "var(--text)" }];
   const at = (w) => (D.history.find((d) => d.week === w) || {}).date || "";
+  const v = D.validation, cv = chartVariant(v);
+  const fc = (cv && cv.forecast) || [];
+  const now = D.meta.current;
+  if (fc.length) {
+    const last = fc[fc.length - 1];
+    series.push({
+      data: [{ x: 0, value: now }, ...fc.map((f) => ({ x: f.h, value: f.value }))],
+      color: "var(--forecast-mid)", dashed: true,
+      endLabel: `AI 예측 ${last.value.toFixed(1)}${v.pass ? "" : " (불합격)"}`,
+    });
+    series.push({
+      data: [{ x: 0, value: now }, { x: last.h, value: now }],
+      color: "var(--chart-baseline)", dashed: "2 4",
+      endLabel: `기준선 ${now.toFixed(1)}`,
+    });
+  }
   return (
     <LineChart
       width={1200}
       height={300}
       series={series}
-      refLines={[{ value: D.meta.current, label: `현재 ${D.meta.current.toFixed(1)} ${D.meta.unitShort}`, color: "var(--text-faint)" }]}
+      padding={{ l: 44, r: 150, t: 16, b: 28 }}
       xLabels={[
         { x: -51, label: at(-51) },
         { x: -26, label: at(-26) },
         { x: -13, label: at(-13) },
         { x: 0, label: `${at(0)} (최신)` },
+        ...(fc.length ? [{ x: fc[fc.length - 1].h, label: fc[fc.length - 1].week }] : []),
       ]}
       preserveAspectRatio="none"
     />
