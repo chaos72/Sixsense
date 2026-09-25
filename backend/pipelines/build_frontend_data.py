@@ -60,6 +60,11 @@ SIGNAL_META = {
 # USER-REQUESTED CHANGE (v1.2) — 화면에서 제외한 4개 신호.
 # (제외 근거였던 '예측 영향도 0%' 수치는 누수가 있던 파이프라인 결과라 신뢰할 수 없음 — 표시만 제외 유지)
 EXCLUDED_SIGNALS = {"A-2", "B-2", "B-3", "B-4"}
+# 수집은 되지만 값이 그 신호가 아님이 확인된 것 — 화면·AI 요약·예측 검증에서 모두 뺀다 (한 곳에서만 정의).
+INVALID_SIGNALS = {
+    "A-4": ("KOSIS 조회 주소가 다른 표(품목별 광공업 생산·출하·재고·내수·수출량, 반도체 품목 없음)를 가리켜 "
+            "값이 전자부품 재고지수가 아님 — 올바른 주소 등록 전까지 화면·예측에서 제외"),
+}
 
 MACRO_META = {
     # USER-REQUESTED EXTENSION (2026-05-19 #15) — 10년물 국채금리를 §06 거시경제 카드 첫번째로 배치
@@ -286,7 +291,8 @@ def build_collection(group: str, ref_date: str) -> list[dict]:
         sig = load_signal(sid)
         collected = sig.get("collectedAt")
         fr = freshness(sig.get("data", []), collected, ref_date, sid)
-        status = "fail" if not sig.get("data") else "stale" if fr["stale"] else "ok"
+        status = ("invalid" if sid in INVALID_SIGNALS else "fail" if not sig.get("data")
+                  else "stale" if fr["stale"] else "ok")
         rows.append({
             "id": sid,
             "name": SIGNAL_META.get(sid, {"name": sid})["name"],
@@ -294,7 +300,7 @@ def build_collection(group: str, ref_date: str) -> list[dict]:
             "time": collected or "-",
             "weeks": len(sig.get("data", [])),
             "dataSince": fr["dataSince"],
-            "reason": fr["reason"],
+            "reason": INVALID_SIGNALS.get(sid) or fr["reason"],
             "status": status,
         })
     return rows
@@ -388,9 +394,9 @@ def main():
     ref_date = target.get("collectedAt") or target_rows[-1]["week"]
 
     signalsA = [fmt_signal(f"A-{i}", load_signal(f"A-{i}")["data"], ref_date)
-                for i in range(1, 8) if f"A-{i}" not in EXCLUDED_SIGNALS]
+                for i in range(1, 8) if f"A-{i}" not in EXCLUDED_SIGNALS | INVALID_SIGNALS.keys()]
     signalsB = [fmt_signal(f"B-{i}", load_signal(f"B-{i}")["data"], ref_date)
-                for i in range(1, 8) if f"B-{i}" not in EXCLUDED_SIGNALS]
+                for i in range(1, 8) if f"B-{i}" not in EXCLUDED_SIGNALS | INVALID_SIGNALS.keys()]
     macro = build_macro(ref_date)
 
     real_news, real_events, news_label = load_news_events()
@@ -402,6 +408,7 @@ def main():
             "success": sum(r["status"] == "ok" for r in rows),
             "stale": sum(r["status"] == "stale" for r in rows),
             "fail": sum(r["status"] == "fail" for r in rows),
+            "invalid": sum(r["status"] == "invalid" for r in rows),
             "newCount": sum(r["weeks"] for r in rows),
         },
         "week": ref_date,
@@ -448,7 +455,7 @@ export const SIXSENSE_DATA = {json.dumps(payload, ensure_ascii=False, indent=2)}
     print(f"   - {UNIT_LABEL}: {current:.2f} pt  (지난주 대비 {payload['meta']['currentChange']})")
     print(f"   - 예측 검증: {v.get('verdict', '결과 없음')} ({v.get('runAt', '-')})")
     print(f"   - 수집: 정상 {collection['summary']['success']} · 갱신중단 {collection['summary']['stale']} · "
-          f"실패 {collection['summary']['fail']} / {collection['summary']['total']}")
+          f"제외 {collection['summary']['invalid']} · 실패 {collection['summary']['fail']} / {collection['summary']['total']}")
     print(f"   - history: {len(history)}주, signalsA: {len(signalsA)}, signalsB: {len(signalsB)}, macro: {len(macro)}")
 
 

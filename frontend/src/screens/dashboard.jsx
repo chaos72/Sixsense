@@ -249,7 +249,7 @@ function Dashboard({ onNav }) {
 
       {/* 14 signals */}
       <div className="section">
-        <SectionHead num="03" icon="◧" title="수집 신호 10종" sub="각 카드 클릭 → 실측 이력" />
+        <SectionHead num="03" icon="◧" title={`수집 신호 ${D.signalsA.length + D.signalsB.length}종`} sub="각 카드 클릭 → 실측 이력" />
         
         <div style={{ marginBottom: 18 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
@@ -362,6 +362,7 @@ function Dashboard({ onNav }) {
           <div className="sep"></div>
           <div><span className="label">갱신 중단</span><span className="num">{D.collection.summary.stale}개</span><span className="muted"> (수집 중단 또는 값 정체)</span></div>
           <div className="sep"></div>
+          {D.collection.summary.invalid > 0 && <div><span className="label">제외</span><span className="num">{D.collection.summary.invalid}개</span><span className="muted"> (값이 그 신호가 아님 — 수집 현황에 사유)</span></div>}
           <div><span className="label">수집 실패</span><span className="num">{D.collection.summary.fail}개</span><span className="muted"> / 전체 {D.collection.summary.total}개</span></div>
           <div className="sep"></div>
           <div><span className="label">사이클</span><span className="num">매주 화요일 06:00 KST</span></div>

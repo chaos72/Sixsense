@@ -121,7 +121,7 @@ function App() {
         <TweakSection title="화면 바로가기">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
             <button className="btn sm" onClick={goMain}>S-001 대시보드</button>
-            <button className="btn sm" onClick={() => onNav("S-003", { tab: "A-4" })}>S-003 정형 (A-4)</button>
+            <button className="btn sm" onClick={() => onNav("S-003", { tab: "A-3" })}>S-003 정형 (A-3)</button>
             <button className="btn sm" onClick={() => onNav("S-004", { tab: "B-1" })}>S-004 비정형 (B-1)</button>
             <button className="btn sm" onClick={() => onNav("S-006")}>S-006 뉴스 목록</button>
             <button className="btn sm" onClick={() => onNav("S-007", { news: SIXSENSE_DATA.news[0] })}>S-007 뉴스 상세</button>

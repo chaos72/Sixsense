@@ -46,7 +46,7 @@ OUT = ROOT / "backend/data/insight/latest.json"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 # 화면과 같은 신호 이름·제외 목록·신선도 기준을 쓴다 (한 곳에서만 정의)
-from build_frontend_data import (EXCLUDED_SIGNALS, MACRO_META, SIGNAL_META, UNIT_LABEL,
+from build_frontend_data import (EXCLUDED_SIGNALS, INVALID_SIGNALS, MACRO_META, SIGNAL_META, UNIT_LABEL,
                                  freshness)
 
 
@@ -68,7 +68,7 @@ def build_prompt() -> tuple[str, dict]:
     sig_lines, allowed = [], []
     for sid, meta in SIGNAL_META.items():
         sig = _load(sid); r = sig["data"]
-        if sid in EXCLUDED_SIGNALS or not r:
+        if sid in EXCLUDED_SIGNALS or sid in INVALID_SIGNALS or not r:
             continue
         stale = freshness(r, sig.get("collectedAt"), ref_date, sid)["stale"]
         v = r[-1]["value"]
@@ -206,10 +206,13 @@ def unknown_numbers(text: str, facts: dict) -> list[str]:
     allowed = _fact_numbers(facts) | {float(h) for h in range(1, 8)}
     bad = []
     for tok in re.findall(r"\d+(?:[.,]\d+)*", text):
-        x = float(tok.replace(",", ""))
-        # 1 이상인 값만 반올림 허용 — p 값처럼 작은 수는 줄여 쓰면 뜻이 달라진다 (0.146 → 0.1 금지)
-        if not any(abs(x - a) < 1e-9 or (a >= 1 and (abs(x - round(a, 1)) < 1e-9 or abs(x - round(a)) < 1e-9))
-                   for a in allowed):
+        num = tok.replace(",", "")
+        x = float(num)
+        # 쓴 자릿수만큼의 반올림 오차 허용 (749.25 → 749.3 은 통과; 파이썬 round 의 749.2 와 비교하면 오판).
+        # 소수 둘째 자리보다 거칠게 줄이는 것은 1 이상인 값만 — p 값처럼 작은 수는 그대로 (0.146 → 0.1 금지)
+        decimals = len(num.split(".")[1]) if "." in num else 0
+        tol = 0.5 * 10 ** -decimals + 1e-9
+        if not any(abs(x - a) < 1e-9 or (a >= 1 and abs(x - a) <= tol) for a in allowed):
             bad.append(tok)
     return bad
 

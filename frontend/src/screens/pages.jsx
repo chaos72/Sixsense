@@ -363,7 +363,7 @@ function S014({ onClose }) {
   const c = D3.collection;
   const items = tab === "A" ? c.groupA : c.groupB;
   const stale = [...c.groupA, ...c.groupB].filter(r => r.status !== "ok");
-  const label = (st) => (st === "ok" ? "✓ 정상" : st === "stale" ? "⚠ 갱신 중단" : "✕ 실패");
+  const label = (st) => (st === "ok" ? "✓ 정상" : st === "stale" ? "⚠ 갱신 중단" : st === "invalid" ? "⛔ 제외 (데이터 오류)" : "✕ 실패");
 
   return (
     <div className="content">
@@ -373,6 +373,7 @@ function S014({ onClose }) {
             <span className="chip">전체 <span className="n">{c.summary.total}</span></span>
             <span className="chip" style={{ background: "var(--sig-pos-bg)", borderColor: "var(--sig-pos-bg)", color: "var(--sig-pos)" }}>정상 <span className="n">{c.summary.success}</span></span>
             <span className="chip">갱신 중단 <span className="n">{c.summary.stale}</span></span>
+            {c.summary.invalid > 0 && <span className="chip">제외 <span className="n">{c.summary.invalid}</span></span>}
             <span className="chip">실패 <span className="n">{c.summary.fail}</span></span>
           </div>
         }
@@ -400,7 +401,7 @@ function S014({ onClose }) {
                 <td className="mono muted" style={{ fontSize: 11 }}>{r.time}</td>
                 <td className="num" style={{ fontWeight: 600 }}>{r.weeks}</td>
                 <td>
-                  <span className={`status-pill ${r.status === "ok" ? "ok" : r.status === "fail" ? "fail" : "warn"}`}>{label(r.status)}</span>
+                  <span className={`status-pill ${r.status === "ok" ? "ok" : r.status === "fail" || r.status === "invalid" ? "fail" : "warn"}`}>{label(r.status)}</span>
                   {r.reason && <div className="muted" style={{ fontSize: 10.5, marginTop: 4 }}>{r.reason}</div>}
                 </td>
               </tr>

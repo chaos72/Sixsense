@@ -36,6 +36,8 @@ HIST = ROOT / "data" / "historical"
 OUT = ROOT / "data" / "validation" / "latest.json"
 
 TARGET = "target-dram"
+# 값이 그 신호가 아님이 확인된 것은 피처에서 뺀다 (정의는 화면과 같은 곳 — build_frontend_data)
+from build_frontend_data import INVALID_SIGNALS
 PUB_LAG_WEEKS = 6
 LAGGED = {"A-2", "A-3", "A-4", "B-4", "macro-pmi"}   # 월간·분기 발표 통계
 SENTIMENT = {"B-1", "B-2", "B-3", "B-5", "B-6", "B-7"}
@@ -53,7 +55,7 @@ def load_clean_frame() -> tuple[pd.DataFrame, pd.Series]:
     series = {}
     for f in sorted(glob.glob(str(HIST / "*.json"))):
         sid = Path(f).stem
-        if sid.startswith("_"):
+        if sid.startswith("_") or sid in INVALID_SIGNALS:
             continue
         rows = json.loads(Path(f).read_text()).get("data", [])
         if not rows:
