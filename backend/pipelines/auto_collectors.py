@@ -12,6 +12,8 @@
 
 저장 위치: backend/data/historical/<signal_id>.json (backfill.py와 동일)
 """
+from __future__ import annotations
+
 import argparse
 import json
 import os
@@ -19,7 +21,7 @@ import re
 import sys
 import time
 from collections import defaultdict
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from io import StringIO
 from pathlib import Path
 
@@ -76,7 +78,8 @@ def snap_to_monday(d: date) -> date:
     return d - timedelta(days=d.weekday())
 
 
-def write_signal(sid: str, data: list[dict], source: str, mode: str = "real") -> dict:
+def write_signal(sid: str, data: list[dict], source: str, mode: str = "real",
+                 frozen: dict | None = None) -> dict:
     payload = {
         "signalId": sid,
         "source": source,
@@ -85,11 +88,63 @@ def write_signal(sid: str, data: list[dict], source: str, mode: str = "real") ->
         "rangeStart": data[0]["week"] if data else "-",
         "rangeEnd": data[-1]["week"] if data else "-",
         "note": f"Auto-collected via {Path(__file__).name}",
+        **(frozen or {}),
         "data": data,
     }
     out = HIST_DIR / f"{sid}.json"
     out.write_text(json.dumps(payload, indent=2, default=str))
     return {"weeks": len(data), "out": str(out)}
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 주 단위 고정 (v2.3.2) — 다시 가져오면 과거 값이 달라지는 원천(뉴스 검색·LLM 채점·
+# 예측시장·HN 추천수)은 끝난 주를 한 번 마감하면 다시 고치지 않는다.
+# 가계부처럼: 지난 주 칸은 마감, 진행 중인 주 칸만 계속 적는다.
+# Yahoo·FRED·공식 통계는 기관의 수정 발표를 반영해야 하므로 대상이 아니다.
+# ──────────────────────────────────────────────────────────────────────────────
+FREEZE_SIGNALS = {"A-5", "A-6", "B-1", "B-2", "B-3", "B-5", "B-6", "B-7"}
+
+
+def _last_completed_week() -> str:
+    """실행일 기준 이미 끝난 마지막 주(월요일). 예: 2026-09-24(목) → 2026-09-14."""
+    return (snap_to_monday(END_D) - timedelta(weeks=1)).isoformat()
+
+
+def _load_existing(sid: str) -> dict | None:
+    f = HIST_DIR / f"{sid}.json"
+    return json.loads(f.read_text()) if f.exists() else None
+
+
+def _final_through(sid: str) -> str | None:
+    """이 신호에서 이미 마감된 마지막 주. 기존 파일이 있는데 마감선이 없으면(첫 적용)
+    지금 파일의 끝난 주들을 그대로 마감한다."""
+    old = _load_existing(sid)
+    if not old or not old.get("data"):
+        return None
+    return old.get("finalThrough") or _last_completed_week()
+
+
+def _merge_frozen(sid: str, new_data: list[dict]) -> tuple[list[dict], dict]:
+    """마감된 주(≤ finalThrough)는 기존 값 그대로 — 새로 계산된 값이 있어도, 원래 없던 주여도 무시.
+    그 이후 주만 새 값을 쓰고, 마감선을 '끝난 마지막 주'까지 올린다."""
+    old = _load_existing(sid) or {}
+    ft = _final_through(sid)
+    kept = [r for r in old.get("data", []) if ft and r["week"] <= ft]
+    fresh = [r for r in new_data if not ft or r["week"] > ft]
+    merged = sorted(kept + fresh, key=lambda r: r["week"])
+    new_ft = max(ft or "", _last_completed_week())
+    since = old.get("frozenSince") or new_ft
+    return merged, {
+        "finalThrough": new_ft,
+        "frozenSince": since,
+        "freezeNote": (f"{since} 까지의 값은 고정 도입 전 사후 일괄 계산값. "
+                       "이후 주는 그 주가 끝난 직후 한 번 계산해 고정."),
+    }
+
+
+def _utc_ts(iso: str) -> int:
+    """날짜 문자열 → UTC 기준 초. 컴퓨터 현지 시간(한국 KST)에 따라 주 경계가 어긋나지 않게."""
+    return int(datetime.fromisoformat(iso).replace(tzinfo=timezone.utc).timestamp())
 
 
 def monthly_to_weekly(monthly: list[tuple[date, float]]) -> list[dict]:
@@ -201,7 +256,7 @@ def collect_B7_bom_hn():
         params = {
             "query": q,
             "tags": "story",
-            "numericFilters": f"created_at_i>{int(datetime.fromisoformat(START).timestamp())},created_at_i<{int(datetime.fromisoformat(END).timestamp())}",
+            "numericFilters": f"created_at_i>{_utc_ts(START)},created_at_i<{_utc_ts(END)}",
             "hitsPerPage": 200,
         }
         r = requests.get(url, params=params, timeout=30)
@@ -263,7 +318,7 @@ def collect_A6_manifold():
         t_ms = b.get("createdTime", 0)
         if not t_ms:
             continue
-        d = datetime.fromtimestamp(t_ms / 1000).date()
+        d = datetime.fromtimestamp(t_ms / 1000, tz=timezone.utc).date()
         if not (START_D <= d <= END_D):
             continue
         wk = snap_to_monday(d).isoformat()
@@ -338,7 +393,7 @@ def collect_B3_reddit():
             weekly = defaultdict(int)
             for sub in ["hardware", "buildapc", "memorymarket"]:
                 for post in reddit.subreddit(sub).search("memory price", sort="new", time_filter="year", limit=500):
-                    created = datetime.fromtimestamp(post.created_utc).date()
+                    created = datetime.fromtimestamp(post.created_utc, tz=timezone.utc).date()
                     if not (START_D <= created <= END_D):
                         continue
                     wk = snap_to_monday(created).isoformat()
@@ -361,7 +416,7 @@ def collect_B3_reddit():
     params = {
         "query": "memory chip price",
         "tags": "story",
-        "numericFilters": f"created_at_i>{int(datetime.fromisoformat(START).timestamp())},created_at_i<{int(datetime.fromisoformat(END).timestamp())}",
+        "numericFilters": f"created_at_i>{_utc_ts(START)},created_at_i<{_utc_ts(END)}",
         "hitsPerPage": 500,
     }
     r = requests.get(url, params=params, timeout=30)
@@ -747,7 +802,7 @@ def _llm_sentiment(text: str, prompt_topic: str) -> float:
 _claude_sentiment = _llm_sentiment
 
 
-def _collect_ir_news_sentiment(prompt_topic: str, source_label: str) -> tuple[list[dict], str, str]:
+def _collect_ir_news_sentiment(sid: str, prompt_topic: str, source_label: str) -> tuple[list[dict], str, str]:
     """B-1/B-5/B-6 공통 파이프라인: Google News에서 메모리社 IR/실적 헤드라인 → LLM sentiment.
     PDF 다운로드 + 추출은 회사별 IR 페이지 구조가 자주 바뀌어 불안정 → 뉴스 헤드라인으로 우회.
     """
@@ -787,36 +842,36 @@ def _collect_ir_news_sentiment(prompt_topic: str, source_label: str) -> tuple[li
         wk = snap_to_monday(ent["date"]).isoformat()
         weekly_text[wk].append(ent["text"])
 
+    # 이미 마감된 주는 채점하지 않는다 (값은 run_one 에서 기존 것을 그대로 씀 → Gemini 호출도 절약)
+    ft = _final_through(sid)
+    open_weeks = [wk for wk in sorted(weekly_text) if not ft or wk > ft]
+
     weekly_score = []
-    n_llm_calls = 0
-    for wk in sorted(weekly_text):
-        texts = weekly_text[wk]
+    n_llm_calls, n_failed = 0, 0
+    for wk in open_weeks:
         # 주별 헤드라인 5개 합쳐서 1회 호출
-        combined = "\n---\n".join(texts[:5])
+        combined = "\n---\n".join(weekly_text[wk][:5])
         try:
             score = _llm_sentiment(combined, prompt_topic)
             n_llm_calls += 1
             weekly_score.append({"week": wk, "value": round(score, 4)})
-        except EnvironmentError:
-            # 키 전혀 없으면 keyword fallback
-            POS = ["growth", "surge", "boost", "demand", "expand", "increase", "strong", "record"]
-            NEG = ["decline", "drop", "weak", "fall", "cut", "decrease", "loss", "miss"]
-            low = combined.lower()
-            pos = sum(1 for k in POS if k in low)
-            neg = sum(1 for k in NEG if k in low)
-            score = 0.0 if pos+neg==0 else (pos-neg)/(pos+neg)
-            weekly_score.append({"week": wk, "value": round(score, 4)})
+        except (EnvironmentError, RuntimeError) as e:
+            # 키워드 점수로 대신 채우지 않는다 — 척도가 달라 섞이면 안 되고, 마감되면 영구히 남기 때문.
+            # 빈칸으로 두면 그 주가 마감되기 전 다음 실행에서 다시 시도한다.
+            n_failed += 1
+            print(f"  ⚠️ {sid} {wk} 채점 실패, 다음 실행에서 재시도: {str(e).splitlines()[0][:60]}")
 
-    mode = "real" if n_llm_calls > 0 else "real-keyword"
-    src = f"Google News '{source_label}' ({len(entries)} entries, "
-    src += f"LLM {n_llm_calls}회 호출, {len(weekly_score)}주)" if n_llm_calls > 0 \
-        else f"키워드 fallback, {len(weekly_score)}주)"
-    return weekly_score, mode, src
+    if open_weeks and n_llm_calls == 0:
+        raise EnvironmentError(f"{sid} Gemini 채점 전부 실패 ({n_failed}주) — 기존 파일 유지")
+    src = (f"Google News '{source_label}' ({len(entries)} entries, "
+           f"LLM {n_llm_calls}회 호출, 실패 {n_failed}주, 마감 {ft or '없음'} 이후만 채점)")
+    return weekly_score, "real", src
 
 
 def collect_B1_earnings_sentiment():
     """B-1: 메모리社 실적 발표 sentiment (Google News + LLM)."""
     return _collect_ir_news_sentiment(
+        "B-1",
         prompt_topic="quarterly earnings memory pricing outlook",
         source_label="Earnings Call sentiment",
     )
@@ -825,6 +880,7 @@ def collect_B1_earnings_sentiment():
 def collect_B5_lta_sentiment():
     """B-5: LTA (장기 계약) 비율 관련 뉴스 sentiment."""
     return _collect_ir_news_sentiment(
+        "B-5",
         prompt_topic="long-term agreement LTA contract memory supply ratio",
         source_label="LTA ratio",
     )
@@ -833,6 +889,7 @@ def collect_B5_lta_sentiment():
 def collect_B6_hbm_mix():
     """B-6: HBM 매출 비중 관련 뉴스 sentiment."""
     return _collect_ir_news_sentiment(
+        "B-6",
         prompt_topic="HBM revenue mix share growth high bandwidth memory",
         source_label="HBM mix",
     )
@@ -1017,7 +1074,10 @@ def run_one(sid: str) -> dict:
         return {"signalId": sid, "status": "unknown"}
     try:
         data, mode, source = fn()
-        r = write_signal(sid, data, source, mode)
+        frozen = None
+        if sid in FREEZE_SIGNALS:
+            data, frozen = _merge_frozen(sid, data)
+        r = write_signal(sid, data, source, mode, frozen)
         return {"signalId": sid, "status": "ok", "weeks": r["weeks"], "source": source}
     except (NotImplementedError, EnvironmentError) as e:
         return {"signalId": sid, "status": "needs_setup", "reason": str(e)}
