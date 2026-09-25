@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/validation/latest.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-25T08:00:00.743289Z
+// 생성 시각: 2026-09-25T08:13:29.597361Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-25) · events 8건 (기상이변 제외)
 
 export const SIXSENSE_DATA = {
@@ -15,16 +15,16 @@ export const SIXSENSE_DATA = {
     "proxyNote": "실제 DRAM 계약가가 아닌 대용 지표입니다.",
     "updated": "2026-09-25 06:00 KST",
     "insight": {
-      "headline": "메모리 3사 지수 상승 및 AI 수요 뉴스 지속",
-      "summary": "메모리 3사 주가지수는 750.4포인트로 1주 전 대비 4.9%, 4주 전 대비 14.3% 상승하며 단기 회복세를 나타냈다. **AI 메모리 부족**과 관련된 뉴스 감성이 +0.80 이상의 높은 수치를 유지하는 가운데, B-6 HBM 뉴스 감성도 +0.80을 기록했다. 거시경제에서는 **미국 10년물 국채금리**가 5.01, 달러 인덱스가 101.29로 집계되었다. 대만 파운드리 주가인 A-1 신호는 239.121을 기록 중이며, 향후 **공급망 변화**와 거시 지표 추이를 주시해야 한다.",
+      "headline": "메모리 3사 주가지수 상승세, AI 수요 긍정적",
+      "summary": "메모리 3사 주가지수는 현재 750.4pt를 기록하며 1주간 4.9%, 4주간 14.3% 상승했으나 13주 기준으로는 15.1% 하락했습니다. 최신 수집 신호에 따르면, 실적 발표, LTA, HBM 관련 뉴스 감성이 모두 긍정적이며, 특히 **AI 수요**와 관련된 뉴스 감성이 높은 점수를 보입니다. 관세청 메모리 수출액은 157억 달러를 넘어섰습니다. 최근 핵심 뉴스들은 **AI 메모리 부족** 심화와 이로 인한 기기 설계 변화 및 가격 상승 주도 가능성을 언급하며 전반적으로 **긍정적 감성**을 나타냅니다. 메모리 관련 Hacker News 화제도도 310으로 높은 수준입니다.",
       "tone": "pos",
       "keySignals": [
-        "A-1",
-        "B-6",
-        "B-1"
+        "A-3",
+        "B-1",
+        "B-6"
       ],
-      "model": "Gemini gemini-3-flash-preview",
-      "generatedAt": "2026-09-25T08:00:00"
+      "model": "Gemini gemini-2.5-flash",
+      "generatedAt": "2026-09-25T17:13:29"
     }
   },
   "history": [
@@ -378,31 +378,31 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "n": 39,
-            "modelMape": 26.92,
+            "modelMape": 26.82,
             "naiveMape": 7.42,
-            "winRate": 15.4,
-            "dirAcc": 38.5
+            "winRate": 5.1,
+            "dirAcc": 30.8
           },
           {
             "h": 2,
             "n": 37,
-            "modelMape": 30.47,
+            "modelMape": 30.1,
             "naiveMape": 11.34,
-            "winRate": 8.1,
-            "dirAcc": 29.7
+            "winRate": 13.5,
+            "dirAcc": 37.8
           },
           {
             "h": 3,
             "n": 35,
-            "modelMape": 31.68,
+            "modelMape": 31.91,
             "naiveMape": 13.33,
-            "winRate": 20.0,
-            "dirAcc": 34.3
+            "winRate": 17.1,
+            "dirAcc": 31.4
           },
           {
             "h": 4,
             "n": 33,
-            "modelMape": 34.92,
+            "modelMape": 33.94,
             "naiveMape": 16.44,
             "winRate": 12.1,
             "dirAcc": 21.2
@@ -410,7 +410,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 5,
             "n": 31,
-            "modelMape": 36.95,
+            "modelMape": 35.61,
             "naiveMape": 19.65,
             "winRate": 16.1,
             "dirAcc": 29.0
@@ -418,7 +418,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 6,
             "n": 29,
-            "modelMape": 37.69,
+            "modelMape": 36.74,
             "naiveMape": 21.73,
             "winRate": 17.2,
             "dirAcc": 37.9
@@ -426,18 +426,18 @@ export const SIXSENSE_DATA = {
           {
             "h": 7,
             "n": 27,
-            "modelMape": 38.2,
+            "modelMape": 38.16,
             "naiveMape": 24.68,
-            "winRate": 22.2,
-            "dirAcc": 33.3
+            "winRate": 33.3,
+            "dirAcc": 44.4
           }
         ],
         "overall": {
           "n": 231,
-          "modelMape": 33.37,
+          "modelMape": 32.88,
           "naiveMape": 15.69,
           "winRate": 15.6,
-          "dirAcc": 32.0,
+          "dirAcc": 32.9,
           "alwaysUpDirAcc": 70.6,
           "pValue": 1.0
         },
@@ -461,15 +461,15 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "n": 39,
-            "modelMape": 7.22,
+            "modelMape": 7.29,
             "naiveMape": 7.42,
-            "winRate": 56.4,
-            "dirAcc": 61.5
+            "winRate": 59.0,
+            "dirAcc": 64.1
           },
           {
             "h": 2,
             "n": 37,
-            "modelMape": 10.65,
+            "modelMape": 10.97,
             "naiveMape": 11.34,
             "winRate": 56.8,
             "dirAcc": 67.6
@@ -477,31 +477,31 @@ export const SIXSENSE_DATA = {
           {
             "h": 3,
             "n": 35,
-            "modelMape": 14.3,
+            "modelMape": 14.39,
             "naiveMape": 13.33,
-            "winRate": 54.3,
-            "dirAcc": 62.9
+            "winRate": 60.0,
+            "dirAcc": 71.4
           },
           {
             "h": 4,
             "n": 33,
-            "modelMape": 19.61,
+            "modelMape": 20.76,
             "naiveMape": 16.44,
             "winRate": 48.5,
-            "dirAcc": 75.8
+            "dirAcc": 78.8
           },
           {
             "h": 5,
             "n": 31,
-            "modelMape": 27.96,
+            "modelMape": 31.02,
             "naiveMape": 19.65,
-            "winRate": 48.4,
-            "dirAcc": 64.5
+            "winRate": 51.6,
+            "dirAcc": 71.0
           },
           {
             "h": 6,
             "n": 29,
-            "modelMape": 35.98,
+            "modelMape": 39.76,
             "naiveMape": 21.73,
             "winRate": 51.7,
             "dirAcc": 65.5
@@ -509,30 +509,30 @@ export const SIXSENSE_DATA = {
           {
             "h": 7,
             "n": 27,
-            "modelMape": 43.55,
+            "modelMape": 47.55,
             "naiveMape": 24.68,
-            "winRate": 48.1,
+            "winRate": 44.4,
             "dirAcc": 70.4
           }
         ],
         "overall": {
           "n": 231,
-          "modelMape": 21.25,
+          "modelMape": 22.85,
           "naiveMape": 15.69,
-          "winRate": 52.4,
-          "dirAcc": 66.7,
+          "winRate": 53.7,
+          "dirAcc": 69.7,
           "alwaysUpDirAcc": 70.6,
-          "pValue": 0.255
+          "pValue": 0.146
         },
         "procurement": {
           "n": 33,
           "horizonWeeks": 4,
           "alwaysNow": 528.03,
-          "model": 529.09,
-          "modelPct": 0.2,
+          "model": 528.03,
+          "modelPct": 0.0,
           "perfectPct": -4.9,
-          "waitRate": 3.0,
-          "waitCount": 1,
+          "waitRate": 0.0,
+          "waitCount": 0,
           "waitCorrect": 0
         },
         "pass": false
@@ -676,8 +676,8 @@ export const SIXSENSE_DATA = {
       "id": "A-3",
       "name": "관세청 메모리 수출",
       "source": "관세청 data.go.kr Itemtrade HS 854232",
-      "value": "9.25B",
-      "num": 9248046034.0,
+      "value": "15.73B",
+      "num": 15733149397.0,
       "tone": "neu",
       "desc": "HS 854232 월간 수출액 USD (관세청 Open API)",
       "spark": [
@@ -693,7 +693,7 @@ export const SIXSENSE_DATA = {
       "recent": [
         {
           "week": "2026-03-30",
-          "value": 9248046034.0
+          "value": 8012443877.0
         },
         {
           "week": "2026-04-06",
@@ -713,94 +713,94 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-05-04",
-          "value": 9248046034.0
+          "value": 11428371245.0
         },
         {
           "week": "2026-05-11",
-          "value": 9248046034.0
+          "value": 11428371245.0
         },
         {
           "week": "2026-05-18",
-          "value": 9248046034.0
+          "value": 11428371245.0
         },
         {
           "week": "2026-05-25",
-          "value": 9248046034.0
+          "value": 11428371245.0
         },
         {
           "week": "2026-06-01",
-          "value": 9248046034.0
+          "value": 11175623231.0
         },
         {
           "week": "2026-06-08",
-          "value": 9248046034.0
+          "value": 11175623231.0
         },
         {
           "week": "2026-06-15",
-          "value": 9248046034.0
+          "value": 11175623231.0
         },
         {
           "week": "2026-06-22",
-          "value": 9248046034.0
+          "value": 11175623231.0
         },
         {
           "week": "2026-06-29",
-          "value": 9248046034.0
+          "value": 11175623231.0
         },
         {
           "week": "2026-07-06",
-          "value": 9248046034.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-07-13",
-          "value": 9248046034.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-07-20",
-          "value": 9248046034.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-07-27",
-          "value": 9248046034.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-08-03",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-08-10",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-08-17",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-08-24",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-08-31",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-09-07",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-09-14",
-          "value": 9248046034.0
+          "value": 15733149397.0
         },
         {
           "week": "2026-09-21",
-          "value": 9248046034.0
+          "value": 15733149397.0
         }
       ],
       "asOf": "2026-09-21",
       "collectedAt": "2026-09-25",
-      "dataSince": "2026-03-30",
-      "stale": true,
-      "staleReason": "수집은 되지만 값이 2026-03-30 이후 26주째 같음 (원천 데이터 미갱신)"
+      "dataSince": "2026-08-03",
+      "stale": false,
+      "staleReason": null
     },
     {
       "id": "A-4",
@@ -823,7 +823,7 @@ export const SIXSENSE_DATA = {
       "recent": [
         {
           "week": "2026-03-30",
-          "value": 3842748.0
+          "value": 4747823.0
         },
         {
           "week": "2026-04-06",
@@ -839,7 +839,7 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-04-27",
-          "value": 3858177.0
+          "value": 3842748.0
         },
         {
           "week": "2026-05-04",
@@ -875,7 +875,7 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-06-29",
-          "value": 4923610.0
+          "value": 4274654.0
         },
         {
           "week": "2026-07-06",
@@ -928,9 +928,9 @@ export const SIXSENSE_DATA = {
       ],
       "asOf": "2026-09-21",
       "collectedAt": "2026-09-25",
-      "dataSince": "2026-06-29",
-      "stale": true,
-      "staleReason": "수집은 되지만 값이 2026-06-29 이후 13주째 같음 (원천 데이터 미갱신)"
+      "dataSince": "2026-07-06",
+      "stale": false,
+      "staleReason": null
     },
     {
       "id": "A-5",
@@ -3071,9 +3071,9 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-3",
         "name": "관세청 메모리 수출",
-        "then": "9248046034.0",
-        "now": "9248046034.0",
-        "direction": "flat"
+        "then": "13551552131.0",
+        "now": "15733149397.0",
+        "direction": "up"
       },
       {
         "id": "A-4",
@@ -3157,10 +3157,10 @@ export const SIXSENSE_DATA = {
   "collection": {
     "summary": {
       "total": 14,
-      "success": 11,
-      "stale": 3,
+      "success": 13,
+      "stale": 1,
       "fail": 0,
-      "newCount": 652
+      "newCount": 675
     },
     "week": "2026-09-25",
     "staleDays": 14,
@@ -3188,22 +3188,22 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-3",
         "name": "관세청 메모리 수출",
-        "source": "관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 (12",
+        "source": "관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 (15",
         "time": "2026-09-25",
-        "weeks": 57,
-        "dataSince": "2026-03-30",
-        "reason": "수집은 되지만 값이 2026-03-30 이후 26주째 같음 (원천 데이터 미갱신)",
-        "status": "stale"
+        "weeks": 67,
+        "dataSince": "2026-08-03",
+        "reason": null,
+        "status": "ok"
       },
       {
         "id": "A-4",
         "name": "전자부품 재고지수",
         "source": "KOSIS 광공업동향 C26 재고지수 (월간→주간 forward-fill)",
         "time": "2026-09-25",
-        "weeks": 57,
-        "dataSince": "2026-06-29",
-        "reason": "수집은 되지만 값이 2026-06-29 이후 13주째 같음 (원천 데이터 미갱신)",
-        "status": "stale"
+        "weeks": 60,
+        "dataSince": "2026-07-06",
+        "reason": null,
+        "status": "ok"
       },
       {
         "id": "A-5",
@@ -3272,7 +3272,7 @@ export const SIXSENSE_DATA = {
         "name": "지정학 리스크",
         "source": "Caldara & Iacoviello GPR Index (https://www.matteo",
         "time": "2026-09-25",
-        "weeks": 57,
+        "weeks": 67,
         "dataSince": "2026-08-03",
         "reason": null,
         "status": "ok"
