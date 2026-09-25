@@ -24,7 +24,7 @@ STALE_DAYS = 14
 # 값 정체 — 수집은 되지만 같은 값이 이 주수 이상 이어지면 데이터가 멈춘 것으로 본다.
 # 기준은 신호의 원천 발표 주기에 맞춘다 (예: A-3 관세청은 2026-03 값이 26주째 복사되고 있었음).
 FROZEN_WEEKS = 8                                    # 주간·일간 시장 데이터
-MONTHLY_SIGNALS = {"A-3", "A-4", "B-4", "macro-pmi"}  # 월간 통계 — 발표 지연 포함 최대 약 3개월 같은 값 정상
+MONTHLY_SIGNALS = {"A-3", "A-4", "B-4", "macro-pmi"}  # 월간 통계 — 한 달 값이 발표 지연(약 2개월)까지 이어져 최대 약 4개월 같은 값 정상
 QUARTERLY_SIGNALS = {"A-2"}                         # 분기 실적
 NO_FROZEN_CHECK = {"macro-fed"}                     # 정책금리 — 회의 사이 동결이 정상 (수집일만 검사)
 
@@ -36,7 +36,7 @@ def frozen_limit(sid: str) -> int | None:
     if sid in QUARTERLY_SIGNALS:
         return 26
     if sid in MONTHLY_SIGNALS:
-        return 13
+        return 17
     return FROZEN_WEEKS
 
 # 설명은 실제 수집 방식 그대로 적는다(auto_collectors.py / backfill.py 의 source 와 일치).

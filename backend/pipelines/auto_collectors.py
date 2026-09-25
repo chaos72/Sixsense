@@ -147,21 +147,6 @@ def _utc_ts(iso: str) -> int:
     return int(datetime.fromisoformat(iso).replace(tzinfo=timezone.utc).timestamp())
 
 
-def monthly_to_weekly(monthly: list[tuple[date, float]]) -> list[dict]:
-    """월간 데이터를 주간으로 forward-fill."""
-    monthly = sorted(monthly)
-    weeks = (END_D - START_D).days // 7 + 1
-    out = []
-    cur = 0
-    for i in range(weeks):
-        w = START_D + timedelta(weeks=i)
-        while cur + 1 < len(monthly) and monthly[cur + 1][0] <= w:
-            cur += 1
-        if cur < len(monthly):
-            out.append({"week": snap_to_monday(w).isoformat(), "value": round(monthly[cur][1], 4)})
-    return out
-
-
 def need_env(var: str, signup_url: str) -> str:
     val = os.getenv(var)
     if not val:
@@ -171,6 +156,17 @@ def need_env(var: str, signup_url: str) -> str:
             f"또는 backend/.env 파일에 {var}=... 추가 후 다시 실행."
         )
     return val
+
+
+def _history_months() -> list[tuple[int, int]]:
+    """대상 지수 시작 월(HISTORY_START)부터 실행 월까지 (연, 월) 목록 — 조회 기간을 코드에 고정하지 않는다.
+    (이전엔 A-3 이 2025-05~2026-04 로 고정돼 5월 이후 발표분을 가져오지 못했음)"""
+    y, m = int(HISTORY_START[:4]), int(HISTORY_START[5:7])
+    out = []
+    while (y, m) <= (END_D.year, END_D.month):
+        out.append((y, m))
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    return out
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -214,7 +210,7 @@ def collect_B4_gpr():
                         break
                     except ValueError:
                         continue
-                if d is None or not (START_D <= d <= END_D):
+                if d is None or not (_history_months()[0] <= (d.year, d.month) <= _history_months()[-1]):
                     continue
                 val = float(parts[1])
                 monthly.append((d, val))
@@ -230,7 +226,7 @@ def collect_B4_gpr():
         for _, row in df.iterrows():
             try:
                 d = pd.to_datetime(row[date_col]).date()
-                if not (START_D <= d <= END_D):
+                if not (_history_months()[0] <= (d.year, d.month) <= _history_months()[-1]):
                     continue
                 monthly.append((d, float(row[gpr_col])))
             except (ValueError, TypeError):
@@ -239,7 +235,7 @@ def collect_B4_gpr():
     if not monthly:
         raise RuntimeError(f"GPR 데이터 추출 실패 (사용 URL: {used_url})")
 
-    data = monthly_to_weekly(monthly)
+    data = _ffill_monthly_to_weekly(monthly)
     return data, "real", f"Caldara & Iacoviello GPR Index ({used_url})"
 
 
@@ -458,61 +454,56 @@ def collect_A3_kcs():
     base_url = os.getenv("KCS_API_URL", "https://apis.data.go.kr/1220000/Itemtrade")
     full_url = f"{base_url}/getItemtradeList"
     monthly = []
-    for year in (2025, 2026):
-        for month in range(1, 13):
-            if year == 2025 and month < 5:
-                continue
-            if year == 2026 and month > 4:
-                break
-            ym = f"{year}{month:02d}"
-            params = {
-                "serviceKey": key,
-                "strtYymm": ym,
-                "endYymm": ym,
-                "hsSgn": "854232",     # 메모리 (이전 854231=프로세서 오류)
-                "imexTpcd": "1",       # 수출 (이전 expoImpoTp 잘못된 파라미터명)
-                "type": "json",
-            }
+    for year, month in _history_months():
+        ym = f"{year}{month:02d}"
+        params = {
+            "serviceKey": key,
+            "strtYymm": ym,
+            "endYymm": ym,
+            "hsSgn": "854232",     # 메모리 (이전 854231=프로세서 오류)
+            "imexTpcd": "1",       # 수출 (이전 expoImpoTp 잘못된 파라미터명)
+            "type": "json",
+        }
+        try:
+            r = requests.get(full_url, params=params, timeout=30)
+            if r.status_code == 401:
+                raise RuntimeError(
+                    f"data.go.kr 401 Unauthorized — 다음 중 하나일 가능성:\n"
+                    f"  (1) Itemtrade 서비스 활용신청 미승인 (data.go.kr 마이페이지 확인)\n"
+                    f"  (2) 신청 후 활성화 대기 중 (보통 1~2시간 소요)\n"
+                    f"  (3) encoding/decoding 키 혼동 — 마이페이지에서 두 종류 확인"
+                )
+            r.raise_for_status()
+            # JSON 응답 우선 시도
             try:
-                r = requests.get(full_url, params=params, timeout=30)
-                if r.status_code == 401:
-                    raise RuntimeError(
-                        f"data.go.kr 401 Unauthorized — 다음 중 하나일 가능성:\n"
-                        f"  (1) Itemtrade 서비스 활용신청 미승인 (data.go.kr 마이페이지 확인)\n"
-                        f"  (2) 신청 후 활성화 대기 중 (보통 1~2시간 소요)\n"
-                        f"  (3) encoding/decoding 키 혼동 — 마이페이지에서 두 종류 확인"
-                    )
-                r.raise_for_status()
-                # JSON 응답 우선 시도
-                try:
-                    j = r.json()
-                    items = j.get("response", {}).get("body", {}).get("items", {}).get("item", [])
-                    if isinstance(items, dict):
-                        items = [items]
-                    if items:
-                        amt = float(items[0].get("expDlr", 0))
-                        d = date(year, month, 1)
-                        monthly.append((d, amt))
-                except (ValueError, KeyError):
-                    # XML fallback
-                    from xml.etree import ElementTree as ET
-                    root = ET.fromstring(r.text)
-                    for item in root.iter("item"):
-                        amt_el = item.find("expDlr")
-                        if amt_el is not None and amt_el.text:
-                            monthly.append((date(year, month, 1), float(amt_el.text)))
-                            break
-            except RuntimeError:
-                raise
-            except Exception as e:
-                print(f"  ⚠️ {ym} 실패: {str(e)[:80]}")
-            time.sleep(0.3)
+                j = r.json()
+                items = j.get("response", {}).get("body", {}).get("items", {}).get("item", [])
+                if isinstance(items, dict):
+                    items = [items]
+                if items:
+                    amt = float(items[0].get("expDlr", 0))
+                    d = date(year, month, 1)
+                    monthly.append((d, amt))
+            except (ValueError, KeyError):
+                # XML fallback
+                from xml.etree import ElementTree as ET
+                root = ET.fromstring(r.text)
+                for item in root.iter("item"):
+                    amt_el = item.find("expDlr")
+                    if amt_el is not None and amt_el.text:
+                        monthly.append((date(year, month, 1), float(amt_el.text)))
+                        break
+        except RuntimeError:
+            raise
+        except Exception as e:
+            print(f"  ⚠️ {ym} 실패: {str(e)[:80]}")
+        time.sleep(0.3)
     if not monthly:
         raise RuntimeError(
             "관세청 API 응답에서 데이터 추출 실패. "
             "data.go.kr 마이페이지에서 Itemtrade 서비스 활성화 상태 확인 필요."
         )
-    data = monthly_to_weekly(monthly)
+    data = _ffill_monthly_to_weekly(monthly)
     return data, "real", f"관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 ({len(monthly)}개월, USD)"
 
 
@@ -537,7 +528,7 @@ def collect_A4_kosis():
             "method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y",
             "userStatsId": user_stats_id,
             "prdSe": "M",
-            "startPrdDe": "202505", "endPrdDe": "202604",
+            "startPrdDe": f"{_history_months()[0][0]}{_history_months()[0][1]:02d}", "endPrdDe": f"{_history_months()[-1][0]}{_history_months()[-1][1]:02d}",
         }
         r = requests.get(url, params=params, timeout=30)
         r.raise_for_status()
@@ -553,7 +544,7 @@ def collect_A4_kosis():
         params = {
             "method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y",
             "itmId": "T20", "objL1": "13102641",
-            "prdSe": "M", "startPrdDe": "202505", "endPrdDe": "202604",
+            "prdSe": "M", "startPrdDe": f"{_history_months()[0][0]}{_history_months()[0][1]:02d}", "endPrdDe": f"{_history_months()[-1][0]}{_history_months()[-1][1]:02d}",
             "orgId": "101", "tblId": "DT_1F02012",
         }
         r = requests.get(url, params=params, timeout=30)
@@ -577,7 +568,7 @@ def collect_A4_kosis():
             continue
     if not monthly:
         raise RuntimeError("KOSIS 데이터 파싱 실패")
-    data = monthly_to_weekly(monthly)
+    data = _ffill_monthly_to_weekly(monthly)
     return data, "real", "KOSIS 광공업동향 C26 재고지수 (월간→주간 forward-fill)"
 
 

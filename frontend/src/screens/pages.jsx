@@ -331,7 +331,7 @@ function S014({ onClose }) {
 
   return (
     <div className="content">
-      <PageHead num="S-014" icon="▤" title="데이터 수집 현황" sub={`기준일 ${c.week} · ${c.staleDays}일 넘게 수집이 없거나, 같은 값이 오래 이어지면(주간 데이터 8주·월간 통계 13주·분기 26주, 기준금리는 제외) '갱신 중단'`} onBack={onClose}
+      <PageHead num="S-014" icon="▤" title="데이터 수집 현황" sub={`기준일 ${c.week} · ${c.staleDays}일 넘게 수집이 없거나, 같은 값이 오래 이어지면(주간 데이터 8주·월간 통계 17주·분기 26주, 기준금리는 제외) '갱신 중단'`} onBack={onClose}
         summary={
           <div className="chips">
             <span className="chip">전체 <span className="n">{c.summary.total}</span></span>
