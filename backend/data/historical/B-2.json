@@ -1,6 +1,6 @@
 {
   "signalId": "B-2",
-  "source": "TechNews.tw + Digitimes + Google News RSS (1035 entries, \ud0a4\uc6cc\ub4dc sentiment, 26\uc8fc)",
+  "source": "TechNews.tw + Digitimes + Google News RSS (1033 entries, \ud0a4\uc6cc\ub4dc sentiment, 26\uc8fc)",
   "mode": "real",
   "collectedAt": "2026-09-25",
   "rangeStart": "2026-02-09",
@@ -112,7 +112,7 @@
     },
     {
       "week": "2026-09-21",
-      "value": 0.1057
+      "value": 0.1032
     }
   ]
 }
