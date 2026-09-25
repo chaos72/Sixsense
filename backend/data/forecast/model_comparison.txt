@@ -40,8 +40,8 @@ LSTM held-out MAPE: 41.15%
 중장기 단순 기준선(naive) MAPE: 26.75%  (검증 시퀀스 24개)
 
 ⏱  학습 소요 시간:
-  prophet         0.87s
-  tree_short      3.65s
-  lstm_mid        5.66s
+  prophet         1.92s
+  tree_short      3.56s
+  lstm_mid        5.55s
 
 ════════════════════════════════════════════════════════════════════════════════
