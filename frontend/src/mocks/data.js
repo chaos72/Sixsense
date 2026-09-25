@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/validation/latest.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-24T10:34:31.810134Z
+// 생성 시각: 2026-09-25T07:47:10.645769Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-24) · events 9건 (기상이변 제외)
 
 export const SIXSENSE_DATA = {
@@ -15,8 +15,8 @@ export const SIXSENSE_DATA = {
     "proxyNote": "실제 DRAM 계약가가 아닌 대용 지표입니다.",
     "updated": "2026-09-24 06:00 KST",
     "insight": {
-      "headline": "메모리 주가지수 4주 연속 상승",
-      "summary": "메모리 3사 주가지수는 현재 746.9 pt로, 4주간 +13.7% 상승하며 최근 강세를 보였으나 13주 기준으로는 -15.5% 하락했습니다. 수집 신호 중 **HBM** 뉴스 감성이 +0.90으로 매우 긍정적이며, LTA 뉴스 감성도 +0.70을 기록했습니다. 최근 핵심 뉴스에서는 '메모리 칩 가격 연산 칩 추월', '2027년 심각한 부족 경고', '**AI 칩** 수요 폭증' 등 **긍정적**인 내용이 주를 이루고 있습니다. 특히 앤스로픽의 2027년 400억 개 D램 요구와 삼성 D램 증설에도 품귀 지속 소식은 **수요 강세**를 시사합니다. 거시경제 지표 중 미국 10년물 국채금리는 4.96%를 기록했습니다.",
+      "headline": "메모리 3사 주가지수 단기 상승세",
+      "summary": "메모리 3사 주가지수는 746.9pt를 기록하며 1주간 +4.4%, 4주간 +13.7% 상승했으나, 13주 기준으로는 -15.5% 하락했습니다. 최근 '메모리 칩 가격 연산 칩 추월' 및 '2027년 D램 400억 개 요구' 등 **AI 칩 수요** 폭증 관련 뉴스가 이어지며, HBM, LTA, 실적발표 **뉴스 감성** 모두 +0.70 이상으로 긍정적입니다. 대만 파운드리 주가는 239.718을 기록했고, Hacker News 메모리 **화제도**는 310으로 높은 수준을 보입니다. 미국 10년물 국채금리는 4.96입니다.",
       "tone": "pos",
       "keySignals": [
         "A-1",
@@ -24,7 +24,7 @@ export const SIXSENSE_DATA = {
         "B-7"
       ],
       "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-09-24T10:34:31"
+      "generatedAt": "2026-09-25T16:47:10"
     }
   },
   "history": [
@@ -356,7 +356,7 @@ export const SIXSENSE_DATA = {
     "weeklyVol13w": 7.0
   },
   "validation": {
-    "runAt": "2026-09-24",
+    "runAt": "2026-09-25",
     "dataWeeks": 67,
     "dataRange": [
       "2025-06-16",
@@ -937,7 +937,7 @@ export const SIXSENSE_DATA = {
       "name": "AWS 스팟 가격",
       "source": "AWS EC2 m6i.xlarge spot",
       "value": "$0.13",
-      "num": 0.1313,
+      "num": 0.131,
       "tone": "pos",
       "desc": "EC2 m6i.xlarge 스팟 시간당 USD (최근 90일)",
       "spark": [
@@ -948,7 +948,7 @@ export const SIXSENSE_DATA = {
         0.473,
         0.801,
         1.0,
-        0.917
+        0.905
       ],
       "recent": [
         {
@@ -1005,11 +1005,11 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 0.1313
+          "value": 0.131
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-24",
+      "collectedAt": "2026-09-25",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1139,7 +1139,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-24",
+      "collectedAt": "2026-09-25",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1280,8 +1280,8 @@ export const SIXSENSE_DATA = {
       "id": "B-1",
       "name": "실적발표 뉴스 감성",
       "source": "Google News 'Earnings Call sentiment'",
-      "value": "+0.30",
-      "num": 0.3,
+      "value": "+0.70",
+      "num": 0.7,
       "tone": "pos",
       "desc": "구글 뉴스 헤드라인을 Gemini 로 감성 점수화 (-1~+1)",
       "spark": [
@@ -1292,7 +1292,7 @@ export const SIXSENSE_DATA = {
         0.714,
         0.714,
         1.0,
-        0.571
+        0.857
       ],
       "recent": [
         {
@@ -1373,11 +1373,11 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 0.3
+          "value": 0.7
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-24",
+      "collectedAt": "2026-09-25",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1386,8 +1386,8 @@ export const SIXSENSE_DATA = {
       "id": "B-5",
       "name": "LTA 뉴스 감성",
       "source": "Google News 'LTA ratio'",
-      "value": "+0.70",
-      "num": 0.7,
+      "value": "+0.80",
+      "num": 0.8,
       "tone": "pos",
       "desc": "구글 뉴스 'LTA' 헤드라인 Gemini 감성 점수 (-1~+1)",
       "spark": [
@@ -1398,7 +1398,7 @@ export const SIXSENSE_DATA = {
         0.929,
         0.929,
         0.929,
-        0.857
+        0.929
       ],
       "recent": [
         {
@@ -1483,12 +1483,12 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 0.7
+          "value": 0.8
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-24",
-      "dataSince": "2026-09-21",
+      "collectedAt": "2026-09-25",
+      "dataSince": "2026-08-03",
       "stale": false,
       "staleReason": null
     },
@@ -1496,8 +1496,8 @@ export const SIXSENSE_DATA = {
       "id": "B-6",
       "name": "HBM 뉴스 감성",
       "source": "Google News 'HBM mix'",
-      "value": "+0.90",
-      "num": 0.9,
+      "value": "+0.80",
+      "num": 0.8,
       "tone": "pos",
       "desc": "구글 뉴스 'HBM' 헤드라인 Gemini 감성 점수 (-1~+1)",
       "spark": [
@@ -1508,7 +1508,7 @@ export const SIXSENSE_DATA = {
         0.889,
         0.889,
         1.0,
-        1.0
+        0.889
       ],
       "recent": [
         {
@@ -1613,12 +1613,12 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 0.9
+          "value": 0.8
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-24",
-      "dataSince": "2026-09-14",
+      "collectedAt": "2026-09-25",
+      "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
     },
@@ -1747,7 +1747,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-24",
+      "collectedAt": "2026-09-25",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -3145,14 +3145,14 @@ export const SIXSENSE_DATA = {
         "id": "B-1",
         "name": "실적발표 뉴스 감성",
         "then": "+0.20",
-        "now": "+0.30",
+        "now": "+0.70",
         "direction": "up"
       },
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
         "then": "+0.09",
-        "now": "+0.12",
+        "now": "+0.10",
         "direction": "up"
       },
       {
@@ -3173,15 +3173,15 @@ export const SIXSENSE_DATA = {
         "id": "B-5",
         "name": "LTA 뉴스 감성",
         "then": "+0.80",
-        "now": "+0.70",
-        "direction": "down"
+        "now": "+0.80",
+        "direction": "flat"
       },
       {
         "id": "B-6",
         "name": "HBM 뉴스 감성",
         "then": "+0.80",
-        "now": "+0.90",
-        "direction": "up"
+        "now": "+0.80",
+        "direction": "flat"
       },
       {
         "id": "B-7",
@@ -3247,7 +3247,7 @@ export const SIXSENSE_DATA = {
         "id": "A-5",
         "name": "AWS 스팟 가격",
         "source": "AWS EC2 m6i.xlarge spot (us-east-1a, 최대 90일)",
-        "time": "2026-09-24",
+        "time": "2026-09-25",
         "weeks": 14,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3257,7 +3257,7 @@ export const SIXSENSE_DATA = {
         "id": "A-6",
         "name": "대만 침공 예측시장",
         "source": "Manifold Markets 'Will China launch a full-scale i",
-        "time": "2026-09-24",
+        "time": "2026-09-25",
         "weeks": 52,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3279,7 +3279,7 @@ export const SIXSENSE_DATA = {
         "id": "B-1",
         "name": "실적발표 뉴스 감성",
         "source": "Google News 'Earnings Call sentiment' (180 entries",
-        "time": "2026-09-24",
+        "time": "2026-09-25",
         "weeks": 20,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3288,8 +3288,8 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
-        "source": "TechNews.tw + Digitimes + Google News RSS (1027 en",
-        "time": "2026-09-24",
+        "source": "TechNews.tw + Digitimes + Google News RSS (1023 en",
+        "time": "2026-09-25",
         "weeks": 26,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3299,7 +3299,7 @@ export const SIXSENSE_DATA = {
         "id": "B-3",
         "name": "HN 메모리가격 화제도",
         "source": "Hacker News Algolia ('memory chip price') — Reddit",
-        "time": "2026-09-24",
+        "time": "2026-09-25",
         "weeks": 57,
         "dataSince": "2026-08-10",
         "reason": null,
@@ -3318,20 +3318,20 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-5",
         "name": "LTA 뉴스 감성",
-        "source": "Google News 'LTA ratio' (85 entries, LLM 21회 호출, 2",
-        "time": "2026-09-24",
+        "source": "Google News 'LTA ratio' (85 entries, LLM 1회 호출, 실패",
+        "time": "2026-09-25",
         "weeks": 21,
-        "dataSince": "2026-09-21",
+        "dataSince": "2026-08-03",
         "reason": null,
         "status": "ok"
       },
       {
         "id": "B-6",
         "name": "HBM 뉴스 감성",
-        "source": "Google News 'HBM mix' (163 entries, LLM 43회 호출, 43",
-        "time": "2026-09-24",
+        "source": "Google News 'HBM mix' (162 entries, LLM 1회 호출, 실패 ",
+        "time": "2026-09-25",
         "weeks": 43,
-        "dataSince": "2026-09-14",
+        "dataSince": "2026-09-21",
         "reason": null,
         "status": "ok"
       },
@@ -3339,7 +3339,7 @@ export const SIXSENSE_DATA = {
         "id": "B-7",
         "name": "HN 메모리 화제도",
         "source": "Hacker News Algolia API (queries: 4건)",
-        "time": "2026-09-24",
+        "time": "2026-09-25",
         "weeks": 57,
         "dataSince": "2026-09-21",
         "reason": null,

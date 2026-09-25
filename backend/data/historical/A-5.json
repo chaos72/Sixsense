@@ -2,10 +2,13 @@
   "signalId": "A-5",
   "source": "AWS EC2 m6i.xlarge spot (us-east-1a, \ucd5c\ub300 90\uc77c)",
   "mode": "real",
-  "collectedAt": "2026-09-24",
+  "collectedAt": "2026-09-25",
   "rangeStart": "2026-06-22",
   "rangeEnd": "2026-09-21",
   "note": "Auto-collected via auto_collectors.py",
+  "finalThrough": "2026-09-14",
+  "frozenSince": "2026-09-14",
+  "freezeNote": "2026-09-14 \uae4c\uc9c0\uc758 \uac12\uc740 \uace0\uc815 \ub3c4\uc785 \uc804 \uc0ac\ud6c4 \uc77c\uad04 \uacc4\uc0b0\uac12. \uc774\ud6c4 \uc8fc\ub294 \uadf8 \uc8fc\uac00 \ub05d\ub09c \uc9c1\ud6c4 \ud55c \ubc88 \uacc4\uc0b0\ud574 \uace0\uc815.",
   "data": [
     {
       "week": "2026-06-22",
@@ -61,7 +64,7 @@
     },
     {
       "week": "2026-09-21",
-      "value": 0.131273
+      "value": 0.131041
     }
   ]
 }
