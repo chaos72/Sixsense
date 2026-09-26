@@ -2,6 +2,29 @@
 
 이 저장소는 `v1.0`부터 버전 태그를 시작합니다 (Git 커밋에 `git tag`로 표시).
 
+## [v2.5.2] — 2026-09-26 — 실행되지 않는 옛 파일 정리
+
+주간 작업·배포가 쓰지 않고, 어디서도 불러 쓰지 않는 파일 30개 삭제. 남은 파이프라인 파이썬은 6개
+(auto_collectors, collect_news_events, honest_backtest, build_insight, build_frontend_data, gemini_client).
+
+### 삭제
+- 옛 서버: `backend/app/`(main.py·supabase_client.py·schema.sql·data.json), `backend/dump_data.mjs`, `backend/tests/l1_api_test.sh`
+- 옛 DB 동기화: `backend/pipelines/sync_supabase.py`
+- 옛 예측: `forecast.py`·`forecast_compare.py`·`forecast_v2.py`·`preprocessing.py`, 결과 `backend/data/forecast/`(5개)
+- 옛 확인 도구: `verify_b2_gcp.py`
+- 수동 업로드: `upload_manual.py`, `backend/data/manual/`(CSV 13개) — 실행하면 고정된 과거 값·A-4 를 옛 CSV 로 덮어쓰는 위험
+
+### 문서
+- 사용 설명서 3개(`manual-upload-guide.md`·`kosis-url-generation.md`·`supabase-integration.md`) 맨 위에 '더 이상 쓰지 않음' 안내.
+- 이전 작업 기록 문서(PRD·설계·보고서 등)는 당시 기록이라 그대로 둠 — 지운 파일 이름이 남아 있음.
+
+### 복원 방법
+- 삭제 직전 기록 `a0ab6a9` 에서 꺼낼 수 있음: `git checkout a0ab6a9 -- <파일 경로>`
+
+### 확인
+- 남은 코드에서 지운 파일을 부르는 곳 0, 정적 검사 경고 0, 주간 작업 5단계 로컬 실행 성공(수집 25/25),
+  고정 구간 변경 0, 빌드·화면 40개 문제 0.
+
 ## [v2.5.1] — 2026-09-26 — A-4 복구: 반도체 제조업 재고지수
 
 ### 고친 것

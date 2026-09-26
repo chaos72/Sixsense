@@ -4,7 +4,7 @@ theme: default
 size: 16:9
 paginate: true
 header: 'Sixsense · 메모리 반도체 시장 신호 모니터링'
-footer: 'KAIST CAIO 10기 6조 · v2.5.1 · 2026-09-26'
+footer: 'KAIST CAIO 10기 6조 · v2.5.2 · 2026-09-26'
 style: |
   section {
     font-family: 'Pretendard Variable', 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif;
@@ -53,7 +53,7 @@ style: |
 
 <br><br>
 
-<span class="small">KAIST CAIO 10기 6조 · v2.5.1 (2026-09-26 — 예측 검증 + 화면 정직화 + 수집기 복구 + 재현성 + 불합격 예측의 참고 표시 + 최종 검증 반영)</span>
+<span class="small">KAIST CAIO 10기 6조 · v2.5.2 (2026-09-26 — 예측 검증 + 화면 정직화 + 수집기 복구 + 재현성 + 불합격 예측의 참고 표시 + 최종 검증 반영)</span>
 
 ---
 
@@ -129,11 +129,12 @@ style: |
 | v2.4 | 2026-09-25 | 불합격 예측도 참고용 표시 · "왜 불합격인가" Gemini 설명(숫자 자동 대조) |
 | v2.4.1 | 2026-09-25 | A-4 제외 — 조회 주소가 다른 표를 가리켜 값이 재고지수가 아니었음 |
 | v2.5 | 2026-09-26 | 최종 검증 반영 — 오류 7 수정 · p값 겹침 보정 검정 · 발표 지연 7주 · 주간 작업 경량화(5분 30초→4분) |
-| **v2.5.1** | **2026-09-26** | **A-4 복구 — 올바른 KOSIS 표(반도체 제조업 재고지수, 2020=100)** |
+| v2.5.1 | 2026-09-26 | A-4 복구 — 올바른 KOSIS 표(반도체 제조업 재고지수, 2020=100) |
+| **v2.5.2** | **2026-09-26** | **실행되지 않는 옛 파일 30개 정리 (옛 서버·DB 동기화·옛 예측·수동 업로드)** |
 
 <br>
 
-**Git history**: 132 commits · 문서: [prd.md](../../prd.md) · [plan](../01-plan/features/sixsense.plan.md) · [design](../02-design/features/sixsense.design.md) · [CHANGELOG](../../CHANGELOG.md)
+**Git history**: 135 commits · 문서: [prd.md](../../prd.md) · [plan](../01-plan/features/sixsense.plan.md) · [design](../02-design/features/sixsense.design.md) · [CHANGELOG](../../CHANGELOG.md)
 
 <span class="small">※ plan·design·QA 등 PDCA 문서는 v2.2 이전에 작성되어 예측 성능 서술이 v2.3 검증 결과와 다릅니다. 최신 사실은 CHANGELOG v2.3 기준.</span>
 
@@ -416,8 +417,8 @@ style: |
 | 수집 현황 | 14개 신호 중 정상 13 · 갱신 중단 1 · 거시 6종 모두 정상 |
 | AI 요약 | Gemini 무료 티어 · 사실만 · "검증되지 않은 해석" 표시 |
 | 자동화 | GitHub Actions 매주 화 06:00 KST + 앱 버튼 (비용 0원) |
-| GitHub commits | **132개** |
-| 현재 버전 | **v2.5.1** (2026-09-26) |
+| GitHub commits | **135개** |
+| 현재 버전 | **v2.5.2** (2026-09-26) |
 
 <br>
 
