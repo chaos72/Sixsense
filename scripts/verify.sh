@@ -9,6 +9,7 @@
 #  3. 돌연변이 시험                — 과거 버그를 되살렸을 때 시험이 모두 잡는지 (시험의 시험)
 #  4. 데이터 의미 검사 (--strict)  — 값이 그 지표가 맞는지, 걸린 신호가 제외 처리됐는지, 화면 데이터 이상
 #  5. 화면 타입 검사 + 빌드
+#  6. 화면 40개 자동 검사 (headless 브라우저 — 금지 표현·오류·NaN·모바일 넘침·불합격 표시)
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PY="$ROOT/backend/.venv/bin/python"
@@ -18,16 +19,18 @@ step() { echo; echo "── $1 ──"; }
 run() { if "$@"; then echo "  ✅ 통과"; else echo "  ❌ 실패"; FAIL=1; fi; }
 
 cd "$ROOT/backend"
-step "1/5 정적 검사";          run "$PY" -m pyflakes pipelines tests
-step "2/5 자동 시험";          run "$PY" -m pytest tests -q -p no:cacheprovider
-step "3/5 돌연변이 시험";      run "$PY" tests/mutation_check.py
-step "4/5 데이터 의미 검사";   run "$PY" pipelines/data_checks.py --strict
+step "1/6 정적 검사";          run "$PY" -m pyflakes pipelines tests
+step "2/6 자동 시험";          run "$PY" -m pytest tests -q -p no:cacheprovider
+step "3/6 돌연변이 시험";      run "$PY" tests/mutation_check.py
+step "4/6 데이터 의미 검사";   run "$PY" pipelines/data_checks.py --strict
 if [ "${VERIFY_SKIP_FRONTEND:-0}" != "1" ]; then
   cd "$ROOT/frontend"
-  step "5/5 화면 타입 검사·빌드"
+  step "5/6 화면 타입 검사·빌드"
   OUT="$(mktemp -d)"
   run bash -c "npx tsc -b && npx vite build --outDir '$OUT' --emptyOutDir --logLevel error"
   rm -rf "$OUT"
+  step "6/6 화면 40개 자동 검사"
+  run node scripts/screen-check-run.mjs
 fi
 
 echo

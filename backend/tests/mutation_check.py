@@ -46,6 +46,10 @@ MUTATIONS = [
      "        if not d.get(key):\n            problems.append(f\"화면 데이터에 {label} 0건\")\n", ""),
     ("v2.6 데이터 의미 검사 범위 확인 제거 (492만 통과)", "data_checks.py",
      'out = [v for v in nums if not (rule["lo"] <= v <= rule["hi"])]', "out = []"),
+    ("v2.6.1 정책: 오픈소스 모델(llama) 몰래 추가", "gemini_client.py",
+     'BULK_MODELS = (', 'BULK_MODELS = ("llama-3.3-70b-versatile", '),
+    ("v2.6.1 정책: 호출 주소를 다른 공급자로", "gemini_client.py",
+     '_URL = "https://generativelanguage.googleapis.com/', '_URL = "https://api.groq.com/openai/'),
     ("v2.3.1 신선도: 기준금리도 같은 값 검사", "build_frontend_data.py",
      "    if sid in NO_FROZEN_CHECK:\n        return None\n", ""),
 ]

@@ -3,7 +3,7 @@
 
 각 collector:
 - 환경변수에서 자격증명 읽음 (없으면 인포한 에러 메시지)
-- requests/boto3/google-cloud-bigquery/anthropic 등 적합한 클라이언트
+- requests/boto3 등 적합한 클라이언트 (LLM 은 Gemini 무료 티어 단독 — gemini_client)
 - 결과를 [{week, value}] 표준 형식으로 반환
 
 사용:
@@ -584,7 +584,6 @@ def collect_B2_rss_sentiment():
 
     GDELT BigQuery 대안 — GCP credentials 불필요.
     feedparser로 RSS 파싱, 키워드 기반 sentiment (기본).
-    ANTHROPIC_API_KEY + 크레딧 있으면 Claude로 정확한 sentiment 옵션 활성화.
     """
     try:
         import feedparser
@@ -690,7 +689,7 @@ def collect_B2_rss_sentiment():
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# B-1, B-5, B-6 — Claude API + IR PDF 자동 분석
+# B-1, B-5, B-6 — 구글 뉴스 헤드라인 + Gemini 감성 채점
 # ──────────────────────────────────────────────────────────────────────────────
 def _llm_sentiment(text: str, prompt_topic: str) -> float:
     """LLM 기반 sentiment (-1~+1) — Gemini 무료 티어 단독 (gemini_client 참고).

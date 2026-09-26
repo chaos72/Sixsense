@@ -10,9 +10,9 @@
 - 판단에는 "왜냐하면 ~" 근거. 의도나 추정을 사실처럼 쓰지 않는다("재시도된다", "원천이 멈췄다" 금지 — 확인 후에만).
 
 ## 1. 완료·커밋 전 필수 — `bash scripts/verify.sh`
-- 정적 검사 → 자동 시험 → 돌연변이 시험(시험의 시험) → 데이터 의미 검사 → 화면 빌드. **하나라도 ❌ 면 커밋·완료 보고 금지.**
+- 정적 검사 → 자동 시험(정책 검사 포함) → 돌연변이 시험(시험의 시험) → 데이터 의미 검사 → 화면 빌드 → 화면 40개 검사. **하나라도 ❌ 면 커밋·완료 보고 금지.**
 - Claude 의 `git commit` 은 `.claude/hooks/verify-before-commit.sh` 훅이 자동으로 verify.sh 를 돌려 실패 시 막는다.
-- 화면을 바꿨으면 추가로 브라우저 40개 화면 검사: `frontend/scripts/screen-check.js` 내용을 개발 서버 탭(javascript_tool)에서 실행한 뒤 `await screenCheck(0, 20)` → `await screenCheck(20)` (한 번에 45초 제한).
+- 화면 40개 검사는 verify.sh 6단계에서 자동(`frontend/scripts/screen-check-run.mjs`, headless 브라우저). 주간 작업에서도 데이터 배포 전에 실행된다.
 
 ## 2. 데이터 — "그 지표가 맞는가"
 - 신호를 '정상'이라 판정하기 전에 **원천 응답이 정말 그 지표인지**(표 이름·항목·업종·단위·행 수)를 확인한다.
