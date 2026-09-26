@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/validation/latest.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-26T09:22:04.590624Z
+// 생성 시각: 2026-09-26T09:35:54.378613Z
 // 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-26) · events 8건 (기상이변 제외)
 
 export const SIXSENSE_DATA = {
@@ -13,18 +13,18 @@ export const SIXSENSE_DATA = {
     "unitDesc": "MU 50% · SK하이닉스 30% · 삼성전자 20% 주가 가중, 2025-06-16 = 100",
     "unitShort": "pt",
     "proxyNote": "실제 DRAM 계약가가 아닌 대용 지표입니다.",
-    "updated": "2026-09-26 18:22 KST",
+    "updated": "2026-09-26 18:35 KST",
     "insight": {
-      "headline": "메모리 3사 주가지수 최근 상승",
-      "summary": "메모리 3사 주가지수는 현재 751.1pt로, 최근 1주간 5.0%, 4주간 14.4% 상승하며 단기적인 상승세를 보였으나 13주간은 15.0% 하락했습니다. 최근 뉴스는 DDR5 노트북 메모리 가격 6배 급등, AI발 **메모리 부족** 심화, 메모리 칩의 컴퓨트 칩 대비 고가화 등 전반적으로 긍정적인 분위기를 나타냅니다. LTA 및 HBM 관련 뉴스 감성도 +0.80으로 매우 높습니다. 관세청 메모리 수출액은 157억 달러를 기록했으며, 미국 10년물 국채금리는 5.05%입니다. **AI 메모리** 수요와 공급 상황을 주시해야 합니다.",
+      "headline": "AI 메모리 부족 심화, 주가 급등",
+      "summary": "메모리 3사 주가지수는 현재 751.1pt를 기록하며 1주간 5.0%, 4주간 14.4% 상승했으나, 13주간으로는 15.0% 하락했습니다. 최근 **AI 메모리** 부족 심화로 삼성·SK하이닉스 주가가 급등했으며, DDR5 노트북 메모리 가격이 6배 급등하고 메모리 칩이 컴퓨트 칩보다 고가라는 뉴스가 보도되었습니다. LTA 및 HBM 관련 뉴스 감성 또한 +0.80으로 매우 긍정적입니다. 관세청 메모리 수출액은 157억 달러를 넘어섰고, 반도체 재고지수는 106.5를 나타냅니다. 전반적으로 **메모리 부족**과 **가격 상승**에 대한 시장의 높은 관심이 관찰됩니다.",
       "tone": "pos",
       "keySignals": [
         "A-3",
-        "B-5",
-        "B-6"
+        "B-6",
+        "A-4"
       ],
       "model": "Gemini gemini-2.5-flash",
-      "generatedAt": "2026-09-26T09:21:54"
+      "generatedAt": "2026-09-26T18:35:33"
     }
   },
   "history": [
@@ -382,7 +382,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "n": 39,
-            "modelMape": 26.18,
+            "modelMape": 26.36,
             "naiveMape": 7.42,
             "winRate": 12.8,
             "dirAcc": 38.5
@@ -390,15 +390,15 @@ export const SIXSENSE_DATA = {
           {
             "h": 2,
             "n": 37,
-            "modelMape": 29.49,
+            "modelMape": 29.69,
             "naiveMape": 11.34,
-            "winRate": 13.5,
-            "dirAcc": 35.1
+            "winRate": 16.2,
+            "dirAcc": 37.8
           },
           {
             "h": 3,
             "n": 35,
-            "modelMape": 32.63,
+            "modelMape": 33.24,
             "naiveMape": 13.33,
             "winRate": 14.3,
             "dirAcc": 28.6
@@ -406,7 +406,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 4,
             "n": 33,
-            "modelMape": 35.6,
+            "modelMape": 36.47,
             "naiveMape": 16.44,
             "winRate": 12.1,
             "dirAcc": 21.2
@@ -414,7 +414,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 5,
             "n": 31,
-            "modelMape": 37.97,
+            "modelMape": 37.52,
             "naiveMape": 19.65,
             "winRate": 16.1,
             "dirAcc": 29.0
@@ -422,15 +422,15 @@ export const SIXSENSE_DATA = {
           {
             "h": 6,
             "n": 29,
-            "modelMape": 38.8,
+            "modelMape": 38.21,
             "naiveMape": 21.73,
-            "winRate": 17.2,
+            "winRate": 20.7,
             "dirAcc": 37.9
           },
           {
             "h": 7,
             "n": 27,
-            "modelMape": 40.22,
+            "modelMape": 39.96,
             "naiveMape": 24.68,
             "winRate": 22.2,
             "dirAcc": 33.3
@@ -438,13 +438,13 @@ export const SIXSENSE_DATA = {
         ],
         "overall": {
           "n": 231,
-          "modelMape": 33.84,
+          "modelMape": 33.95,
           "naiveMape": 15.69,
-          "winRate": 15.2,
-          "dirAcc": 32.0,
+          "winRate": 16.0,
+          "dirAcc": 32.5,
           "alwaysUpDirAcc": 70.6,
-          "underRate": 92.2,
-          "pValue": 0.988
+          "underRate": 93.5,
+          "pValue": 0.992
         },
         "procurement": {
           "n": 33,
@@ -462,44 +462,44 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "week": "2026-09-28",
-            "value": 724.79,
-            "changePct": -3.51
+            "value": 728.76,
+            "changePct": -2.98
           },
           {
             "h": 2,
             "week": "2026-10-05",
-            "value": 710.77,
-            "changePct": -5.37
+            "value": 727.98,
+            "changePct": -3.08
           },
           {
             "h": 3,
             "week": "2026-10-12",
-            "value": 716.27,
-            "changePct": -4.64
+            "value": 735.4,
+            "changePct": -2.09
           },
           {
             "h": 4,
             "week": "2026-10-19",
-            "value": 727.7,
-            "changePct": -3.12
+            "value": 728.35,
+            "changePct": -3.03
           },
           {
             "h": 5,
             "week": "2026-10-26",
-            "value": 712.53,
-            "changePct": -5.14
+            "value": 712.85,
+            "changePct": -5.1
           },
           {
             "h": 6,
             "week": "2026-11-02",
-            "value": 729.85,
-            "changePct": -2.83
+            "value": 716.86,
+            "changePct": -4.56
           },
           {
             "h": 7,
             "week": "2026-11-09",
-            "value": 694.81,
-            "changePct": -7.5
+            "value": 689.47,
+            "changePct": -8.21
           }
         ]
       },
@@ -510,7 +510,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "n": 39,
-            "modelMape": 7.09,
+            "modelMape": 7.1,
             "naiveMape": 7.42,
             "winRate": 64.1,
             "dirAcc": 69.2
@@ -518,7 +518,7 @@ export const SIXSENSE_DATA = {
           {
             "h": 2,
             "n": 37,
-            "modelMape": 10.78,
+            "modelMape": 10.89,
             "naiveMape": 11.34,
             "winRate": 54.1,
             "dirAcc": 67.6
@@ -526,39 +526,39 @@ export const SIXSENSE_DATA = {
           {
             "h": 3,
             "n": 35,
-            "modelMape": 13.13,
+            "modelMape": 13.81,
             "naiveMape": 13.33,
-            "winRate": 54.3,
-            "dirAcc": 65.7
+            "winRate": 57.1,
+            "dirAcc": 68.6
           },
           {
             "h": 4,
             "n": 33,
-            "modelMape": 19.17,
+            "modelMape": 20.23,
             "naiveMape": 16.44,
-            "winRate": 45.5,
-            "dirAcc": 75.8
+            "winRate": 48.5,
+            "dirAcc": 78.8
           },
           {
             "h": 5,
             "n": 31,
-            "modelMape": 28.06,
+            "modelMape": 30.56,
             "naiveMape": 19.65,
-            "winRate": 45.2,
-            "dirAcc": 64.5
+            "winRate": 51.6,
+            "dirAcc": 71.0
           },
           {
             "h": 6,
             "n": 29,
-            "modelMape": 33.27,
+            "modelMape": 38.56,
             "naiveMape": 21.73,
-            "winRate": 55.2,
+            "winRate": 51.7,
             "dirAcc": 65.5
           },
           {
             "h": 7,
             "n": 27,
-            "modelMape": 39.94,
+            "modelMape": 42.19,
             "naiveMape": 24.68,
             "winRate": 51.9,
             "dirAcc": 70.4
@@ -566,23 +566,23 @@ export const SIXSENSE_DATA = {
         ],
         "overall": {
           "n": 231,
-          "modelMape": 20.26,
+          "modelMape": 21.8,
           "naiveMape": 15.69,
-          "winRate": 53.2,
-          "dirAcc": 68.4,
+          "winRate": 54.5,
+          "dirAcc": 70.1,
           "alwaysUpDirAcc": 70.6,
-          "underRate": 43.3,
-          "pValue": 0.686
+          "underRate": 45.0,
+          "pValue": 0.736
         },
         "procurement": {
           "n": 33,
           "horizonWeeks": 4,
           "alwaysNow": 528.03,
-          "model": 529.09,
-          "modelPct": 0.2,
+          "model": 528.03,
+          "modelPct": 0.0,
           "perfectPct": -4.9,
-          "waitRate": 3.0,
-          "waitCount": 1,
+          "waitRate": 0.0,
+          "waitCount": 0,
           "waitCorrect": 0
         },
         "pass": false,
@@ -590,8 +590,8 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "week": "2026-09-28",
-            "value": 793.65,
-            "changePct": 5.66
+            "value": 794.5,
+            "changePct": 5.77
           },
           {
             "h": 2,
@@ -602,8 +602,8 @@ export const SIXSENSE_DATA = {
           {
             "h": 3,
             "week": "2026-10-12",
-            "value": 857.47,
-            "changePct": 14.16
+            "value": 869.77,
+            "changePct": 15.79
           },
           {
             "h": 4,
@@ -614,20 +614,20 @@ export const SIXSENSE_DATA = {
           {
             "h": 5,
             "week": "2026-10-26",
-            "value": 812.51,
-            "changePct": 8.17
+            "value": 815.74,
+            "changePct": 8.6
           },
           {
             "h": 6,
             "week": "2026-11-02",
-            "value": 840.38,
-            "changePct": 11.88
+            "value": 838.25,
+            "changePct": 11.6
           },
           {
             "h": 7,
             "week": "2026-11-09",
-            "value": 798.07,
-            "changePct": 6.25
+            "value": 774.9,
+            "changePct": 3.16
           }
         ]
       }
@@ -636,7 +636,7 @@ export const SIXSENSE_DATA = {
     "verdict": "불합격",
     "explanation": {
       "status": "ok",
-      "text": "이 AI 모델은 두 가지 합격 기준을 모두 충족하지 못해 불합격 판정을 받았습니다. 모델의 평균 오차가 기준선보다 높았고, 4주 예측의 p값도 0.05 미만이라는 기준을 넘지 못했습니다. 특히 '앱이 쓰던 방식 (가격 수준 예측)'은 모델 평균 오차가 33.8%로 기준선 평균 오차 15.7%보다 훨씬 높았고, 예측이 실제보다 낮았던 비율이 92.2%에 달해 오르는 시장을 계속 낮게 보는 경향이 강했습니다. '개선 시도 (변화율 예측)' 역시 모델 평균 오차가 20.3%로 기준선 15.7%보다 높았고, p값도 0.686으로 합격 기준인 0.05를 크게 웃돌아 모델이 기준선보다 실력이 낫다고 보기 어렵습니다. 이러한 결과는 67주치의 데이터만을 사용했고, 예측 대상이 실제 DRAM 가격이 아닌 주가지수 대용 지표라는 점도 고려해야 합니다. 현재 4주 뒤 예측은 '앱이 쓰던 방식 (가격 수준 예측)'이 727.7pt로 하락을 예상하는 반면, '개선 시도 (변화율 예측)'는 829.06pt로 상승을 예상하며 서로 다른 방향을 가리키고 있습니다.",
+      "text": "이번 AI 모델은 검증 결과 불합격 판정을 받았습니다. 모델의 평균 오차가 기준선보다 낮고, 4주 예측의 p값이 0.05 미만이어야 합격인데, 두 방식 모두 이 기준을 충족하지 못했습니다. 특히 '앱이 쓰던 방식 (가격 수준 예측)'은 예측이 실제보다 93.5%나 낮게 나오는 경향이 있었고, 오르내림 적중률도 32.5%로 항상 오른다고 찍는 것(70.6%)보다 훨씬 낮아 시장 방향을 제대로 예측하지 못했습니다. '개선 시도 (변화율 예측)' 방식도 모델 평균 오차가 기준선보다 높았고, p값 0.736으로 모델이 기준선보다 확실히 낫다고 보기 어려웠습니다. 이 모델은 67주간의 데이터만을 사용했으며, 예측 대상이 실제 DRAM 가격이 아닌 주가지수 대용 지표라는 점도 한계로 작용할 수 있습니다. 현재 4주 뒤 예측을 보면, '앱이 쓰던 방식 (가격 수준 예측)'은 -3.03% 하락을 예상하는 반면, '개선 시도 (변화율 예측)'은 10.4% 상승을 예상하여 두 방식의 예측이 크게 다릅니다.",
       "model": "Gemini gemini-2.5-flash",
       "reason": null,
       "attempts": 1
@@ -900,6 +900,136 @@ export const SIXSENSE_DATA = {
       "asOf": "2026-09-21",
       "collectedAt": "2026-09-26",
       "dataSince": "2026-08-03",
+      "stale": false,
+      "staleReason": null
+    },
+    {
+      "id": "A-4",
+      "name": "반도체 재고지수",
+      "source": "KOSIS 광업제조업동향조사 반도체 제조업",
+      "value": "106.50",
+      "num": 106.5,
+      "tone": "neu",
+      "desc": "KOSIS 광업제조업동향조사 · 반도체 제조업(C261) 생산자제품 재고지수(원지수, 2020=100), 월간",
+      "spark": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "recent": [
+        {
+          "week": "2026-03-30",
+          "value": 84.8
+        },
+        {
+          "week": "2026-04-06",
+          "value": 96.8
+        },
+        {
+          "week": "2026-04-13",
+          "value": 96.8
+        },
+        {
+          "week": "2026-04-20",
+          "value": 96.8
+        },
+        {
+          "week": "2026-04-27",
+          "value": 96.8
+        },
+        {
+          "week": "2026-05-04",
+          "value": 95.5
+        },
+        {
+          "week": "2026-05-11",
+          "value": 95.5
+        },
+        {
+          "week": "2026-05-18",
+          "value": 95.5
+        },
+        {
+          "week": "2026-05-25",
+          "value": 95.5
+        },
+        {
+          "week": "2026-06-01",
+          "value": 88.7
+        },
+        {
+          "week": "2026-06-08",
+          "value": 88.7
+        },
+        {
+          "week": "2026-06-15",
+          "value": 88.7
+        },
+        {
+          "week": "2026-06-22",
+          "value": 88.7
+        },
+        {
+          "week": "2026-06-29",
+          "value": 88.7
+        },
+        {
+          "week": "2026-07-06",
+          "value": 106.5
+        },
+        {
+          "week": "2026-07-13",
+          "value": 106.5
+        },
+        {
+          "week": "2026-07-20",
+          "value": 106.5
+        },
+        {
+          "week": "2026-07-27",
+          "value": 106.5
+        },
+        {
+          "week": "2026-08-03",
+          "value": 106.5
+        },
+        {
+          "week": "2026-08-10",
+          "value": 106.5
+        },
+        {
+          "week": "2026-08-17",
+          "value": 106.5
+        },
+        {
+          "week": "2026-08-24",
+          "value": 106.5
+        },
+        {
+          "week": "2026-08-31",
+          "value": 106.5
+        },
+        {
+          "week": "2026-09-07",
+          "value": 106.5
+        },
+        {
+          "week": "2026-09-14",
+          "value": 106.5
+        },
+        {
+          "week": "2026-09-21",
+          "value": 106.5
+        }
+      ],
+      "asOf": "2026-09-21",
+      "collectedAt": "2026-09-26",
+      "dataSince": "2026-07-06",
       "stale": false,
       "staleReason": null
     },
@@ -3059,9 +3189,9 @@ export const SIXSENSE_DATA = {
       },
       {
         "id": "A-4",
-        "name": "전자부품 재고지수",
-        "then": "4923610.0",
-        "now": "4923610.0",
+        "name": "반도체 재고지수",
+        "then": "106.5",
+        "now": "106.5",
         "direction": "flat"
       },
       {
@@ -3139,10 +3269,10 @@ export const SIXSENSE_DATA = {
   "collection": {
     "summary": {
       "total": 14,
-      "success": 12,
+      "success": 13,
       "stale": 1,
       "fail": 0,
-      "invalid": 1
+      "invalid": 0
     },
     "week": "2026-09-26",
     "staleDays": 14,
@@ -3179,13 +3309,13 @@ export const SIXSENSE_DATA = {
       },
       {
         "id": "A-4",
-        "name": "전자부품 재고지수",
-        "source": "KOSIS 광공업동향 C26 재고지수 (월간→주간 forward-fill)",
+        "name": "반도체 재고지수",
+        "source": "KOSIS 광업제조업동향조사 반도체 제조업(C261) 생산자제품 재고지수(원지수, 2020",
         "time": "2026-09-26",
-        "weeks": 60,
+        "weeks": 67,
         "dataSince": "2026-07-06",
-        "reason": "KOSIS 조회 주소가 다른 표(품목별 광공업 생산·출하·재고·내수·수출량, 반도체 품목 없음)를 가리켜 값이 전자부품 재고지수가 아님 — 올바른 주소 등록 전까지 화면·예측에서 제외",
-        "status": "invalid"
+        "reason": null,
+        "status": "ok"
       },
       {
         "id": "A-5",

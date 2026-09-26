@@ -25,7 +25,7 @@
         {
           "h": 1,
           "n": 39,
-          "modelMape": 26.18,
+          "modelMape": 26.36,
           "naiveMape": 7.42,
           "winRate": 12.8,
           "dirAcc": 38.5
@@ -33,15 +33,15 @@
         {
           "h": 2,
           "n": 37,
-          "modelMape": 29.49,
+          "modelMape": 29.69,
           "naiveMape": 11.34,
-          "winRate": 13.5,
-          "dirAcc": 35.1
+          "winRate": 16.2,
+          "dirAcc": 37.8
         },
         {
           "h": 3,
           "n": 35,
-          "modelMape": 32.63,
+          "modelMape": 33.24,
           "naiveMape": 13.33,
           "winRate": 14.3,
           "dirAcc": 28.6
@@ -49,7 +49,7 @@
         {
           "h": 4,
           "n": 33,
-          "modelMape": 35.6,
+          "modelMape": 36.47,
           "naiveMape": 16.44,
           "winRate": 12.1,
           "dirAcc": 21.2
@@ -57,7 +57,7 @@
         {
           "h": 5,
           "n": 31,
-          "modelMape": 37.97,
+          "modelMape": 37.52,
           "naiveMape": 19.65,
           "winRate": 16.1,
           "dirAcc": 29.0
@@ -65,15 +65,15 @@
         {
           "h": 6,
           "n": 29,
-          "modelMape": 38.8,
+          "modelMape": 38.21,
           "naiveMape": 21.73,
-          "winRate": 17.2,
+          "winRate": 20.7,
           "dirAcc": 37.9
         },
         {
           "h": 7,
           "n": 27,
-          "modelMape": 40.22,
+          "modelMape": 39.96,
           "naiveMape": 24.68,
           "winRate": 22.2,
           "dirAcc": 33.3
@@ -81,13 +81,13 @@
       ],
       "overall": {
         "n": 231,
-        "modelMape": 33.84,
+        "modelMape": 33.95,
         "naiveMape": 15.69,
-        "winRate": 15.2,
-        "dirAcc": 32.0,
+        "winRate": 16.0,
+        "dirAcc": 32.5,
         "alwaysUpDirAcc": 70.6,
-        "underRate": 92.2,
-        "pValue": 0.988
+        "underRate": 93.5,
+        "pValue": 0.992
       },
       "procurement": {
         "n": 33,
@@ -105,44 +105,44 @@
         {
           "h": 1,
           "week": "2026-09-28",
-          "value": 724.79,
-          "changePct": -3.51
+          "value": 728.76,
+          "changePct": -2.98
         },
         {
           "h": 2,
           "week": "2026-10-05",
-          "value": 710.77,
-          "changePct": -5.37
+          "value": 727.98,
+          "changePct": -3.08
         },
         {
           "h": 3,
           "week": "2026-10-12",
-          "value": 716.27,
-          "changePct": -4.64
+          "value": 735.4,
+          "changePct": -2.09
         },
         {
           "h": 4,
           "week": "2026-10-19",
-          "value": 727.7,
-          "changePct": -3.12
+          "value": 728.35,
+          "changePct": -3.03
         },
         {
           "h": 5,
           "week": "2026-10-26",
-          "value": 712.53,
-          "changePct": -5.14
+          "value": 712.85,
+          "changePct": -5.1
         },
         {
           "h": 6,
           "week": "2026-11-02",
-          "value": 729.85,
-          "changePct": -2.83
+          "value": 716.86,
+          "changePct": -4.56
         },
         {
           "h": 7,
           "week": "2026-11-09",
-          "value": 694.81,
-          "changePct": -7.5
+          "value": 689.47,
+          "changePct": -8.21
         }
       ]
     },
@@ -153,7 +153,7 @@
         {
           "h": 1,
           "n": 39,
-          "modelMape": 7.09,
+          "modelMape": 7.1,
           "naiveMape": 7.42,
           "winRate": 64.1,
           "dirAcc": 69.2
@@ -161,7 +161,7 @@
         {
           "h": 2,
           "n": 37,
-          "modelMape": 10.78,
+          "modelMape": 10.89,
           "naiveMape": 11.34,
           "winRate": 54.1,
           "dirAcc": 67.6
@@ -169,39 +169,39 @@
         {
           "h": 3,
           "n": 35,
-          "modelMape": 13.13,
+          "modelMape": 13.81,
           "naiveMape": 13.33,
-          "winRate": 54.3,
-          "dirAcc": 65.7
+          "winRate": 57.1,
+          "dirAcc": 68.6
         },
         {
           "h": 4,
           "n": 33,
-          "modelMape": 19.17,
+          "modelMape": 20.23,
           "naiveMape": 16.44,
-          "winRate": 45.5,
-          "dirAcc": 75.8
+          "winRate": 48.5,
+          "dirAcc": 78.8
         },
         {
           "h": 5,
           "n": 31,
-          "modelMape": 28.06,
+          "modelMape": 30.56,
           "naiveMape": 19.65,
-          "winRate": 45.2,
-          "dirAcc": 64.5
+          "winRate": 51.6,
+          "dirAcc": 71.0
         },
         {
           "h": 6,
           "n": 29,
-          "modelMape": 33.27,
+          "modelMape": 38.56,
           "naiveMape": 21.73,
-          "winRate": 55.2,
+          "winRate": 51.7,
           "dirAcc": 65.5
         },
         {
           "h": 7,
           "n": 27,
-          "modelMape": 39.94,
+          "modelMape": 42.19,
           "naiveMape": 24.68,
           "winRate": 51.9,
           "dirAcc": 70.4
@@ -209,23 +209,23 @@
       ],
       "overall": {
         "n": 231,
-        "modelMape": 20.26,
+        "modelMape": 21.8,
         "naiveMape": 15.69,
-        "winRate": 53.2,
-        "dirAcc": 68.4,
+        "winRate": 54.5,
+        "dirAcc": 70.1,
         "alwaysUpDirAcc": 70.6,
-        "underRate": 43.3,
-        "pValue": 0.686
+        "underRate": 45.0,
+        "pValue": 0.736
       },
       "procurement": {
         "n": 33,
         "horizonWeeks": 4,
         "alwaysNow": 528.03,
-        "model": 529.09,
-        "modelPct": 0.2,
+        "model": 528.03,
+        "modelPct": 0.0,
         "perfectPct": -4.9,
-        "waitRate": 3.0,
-        "waitCount": 1,
+        "waitRate": 0.0,
+        "waitCount": 0,
         "waitCorrect": 0
       },
       "pass": false,
@@ -233,8 +233,8 @@
         {
           "h": 1,
           "week": "2026-09-28",
-          "value": 793.65,
-          "changePct": 5.66
+          "value": 794.5,
+          "changePct": 5.77
         },
         {
           "h": 2,
@@ -245,8 +245,8 @@
         {
           "h": 3,
           "week": "2026-10-12",
-          "value": 857.47,
-          "changePct": 14.16
+          "value": 869.77,
+          "changePct": 15.79
         },
         {
           "h": 4,
@@ -257,20 +257,20 @@
         {
           "h": 5,
           "week": "2026-10-26",
-          "value": 812.51,
-          "changePct": 8.17
+          "value": 815.74,
+          "changePct": 8.6
         },
         {
           "h": 6,
           "week": "2026-11-02",
-          "value": 840.38,
-          "changePct": 11.88
+          "value": 838.25,
+          "changePct": 11.6
         },
         {
           "h": 7,
           "week": "2026-11-09",
-          "value": 798.07,
-          "changePct": 6.25
+          "value": 774.9,
+          "changePct": 3.16
         }
       ]
     }
