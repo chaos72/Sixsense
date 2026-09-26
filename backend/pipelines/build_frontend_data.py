@@ -44,7 +44,7 @@ SIGNAL_META = {
     "A-1": {"name": "대만 파운드리 주가",  "desc": "TSMC 70%·UMC 30% 주가 (각각 2025-06-16=100 정규화, Yahoo Finance)", "fmt": "pct"},
     "A-2": {"name": "빅테크 CapEx",        "desc": "빅테크 4사 분기 CapEx (SEC EDGAR, 분기 4개 관측)",     "fmt": "usd_b"},
     "A-3": {"name": "관세청 메모리 수출",  "desc": "HS 854232 월간 수출액 USD (관세청 Open API)",          "fmt": "raw"},
-    "A-4": {"name": "전자부품 재고지수",   "desc": "KOSIS 광공업동향 C26 재고지수, 2020=100, 월간",         "fmt": "raw"},
+    "A-4": {"name": "반도체 재고지수",     "desc": "KOSIS 광업제조업동향조사 · 반도체 제조업(C261) 생산자제품 재고지수(원지수, 2020=100), 월간", "fmt": "raw"},
     "A-5": {"name": "AWS 스팟 가격",       "desc": "EC2 m6i.xlarge 스팟 시간당 USD (최근 90일)",            "fmt": "usd"},
     "A-6": {"name": "대만 침공 예측시장",  "desc": "Manifold Markets '2030년 전 중국의 대만 침공' 확률",    "fmt": "pct100"},
     "A-7": {"name": "구리 선물가",         "desc": "COMEX 구리 선물 HG=F (Yahoo Finance)",                  "fmt": "usd"},
@@ -61,8 +61,7 @@ SIGNAL_META = {
 EXCLUDED_SIGNALS = {"A-2", "B-2", "B-3", "B-4"}
 # 수집은 되지만 값이 그 신호가 아님이 확인된 것 — 화면·AI 요약·예측 검증에서 모두 뺀다 (한 곳에서만 정의).
 INVALID_SIGNALS = {
-    "A-4": ("KOSIS 조회 주소가 다른 표(품목별 광공업 생산·출하·재고·내수·수출량, 반도체 품목 없음)를 가리켜 "
-            "값이 전자부품 재고지수가 아님 — 올바른 주소 등록 전까지 화면·예측에서 제외"),
+    # (v2.5.1) A-4 는 올바른 표(반도체 재고지수)로 복구되어 제외 해제
 }
 
 MACRO_META = {

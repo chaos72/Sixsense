@@ -489,68 +489,48 @@ def collect_A3_kcs():
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# A-4 KOSIS 재고/출하 지수 — KOSIS_API_KEY 필요
+# A-4 KOSIS 반도체 재고지수 — KOSIS_API_KEY 필요
 # ──────────────────────────────────────────────────────────────────────────────
+# v2.5.1: 조회 조건(비밀 아님)을 코드에 고정하고 키만 환경변수에서 읽는다.
+# 이전 KOSIS_FULL_URL 은 반도체가 없는 '품목별 광공업 생산·출하량' 표를 가리켜 임의 행이 저장됐었음.
+KOSIS_A4_QUERY = {
+    "orgId": "101", "tblId": "DT_1F02001",   # 광업제조업동향조사 · 시도/산업별 광공업생산지수(2020=100)
+    "itmId": "T12",                          # 생산자제품 재고지수(원지수)
+    "objL1": "00",                           # 전국
+    "objL2": "C261",                         # 반도체 제조업
+    "prdSe": "M",
+}
+
+
 def collect_A4_kosis():
-    """KOSIS 광공업동향조사 — 전자부품(C26) 재고지수 월간.
-
-    3가지 방식 지원 (우선순위 순):
-    1. KOSIS_USER_STATS_ID — 사용자가 KOSIS 사이트에서 만든 사용자정의표 ID (가장 간단)
-    2. KOSIS_FULL_URL — KOSIS 사이트의 'URL 생성기'로 만든 전체 URL
-    3. (기본) 하드코드된 표 + objL1/itmId (사용자 등록 표과 일치해야 함)
-    """
+    """KOSIS — 반도체 제조업(C261) 생산자제품 재고지수(원지수, 2020=100), 월간.
+    응답이 이 지표가 아니면(달마다 1행이 아니거나 항목·업종 이름이 다르면) 오류로 끝내 기존 파일을 유지한다."""
     key = need_env("KOSIS_API_KEY", "https://kosis.kr/openapi")
-
-    # 방식 1: 사용자 통계작성 ID (가장 안정적)
-    user_stats_id = os.getenv("KOSIS_USER_STATS_ID")
-    if user_stats_id:
-        url = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
-        params = {
-            "method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y",
-            "userStatsId": user_stats_id,
-            "prdSe": "M",
-            "startPrdDe": f"{_history_months()[0][0]}{_history_months()[0][1]:02d}", "endPrdDe": f"{_history_months()[-1][0]}{_history_months()[-1][1]:02d}",
-        }
-        r = requests.get(url, params=params, timeout=30)
-        r.raise_for_status()
-        arr = r.json()
-    elif os.getenv("KOSIS_FULL_URL"):
-        # 방식 2: 사용자가 KOSIS URL 생성기로 만든 URL 직접 사용
-        r = requests.get(os.environ["KOSIS_FULL_URL"], timeout=30)
-        r.raise_for_status()
-        arr = r.json()
-    else:
-        # 방식 3: 기본 시도 (사용자 등록 표과 일치해야 함)
-        url = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
-        params = {
-            "method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y",
-            "itmId": "T20", "objL1": "13102641",
-            "prdSe": "M", "startPrdDe": f"{_history_months()[0][0]}{_history_months()[0][1]:02d}", "endPrdDe": f"{_history_months()[-1][0]}{_history_months()[-1][1]:02d}",
-            "orgId": "101", "tblId": "DT_1F02012",
-        }
-        r = requests.get(url, params=params, timeout=30)
-        r.raise_for_status()
-        arr = r.json()
-
+    months = _history_months()
+    params = {"method": "getList", "apiKey": key, "format": "json", "jsonVD": "Y", **KOSIS_A4_QUERY,
+              "startPrdDe": f"{months[0][0]}{months[0][1]:02d}",
+              "endPrdDe": f"{months[-1][0]}{months[-1][1]:02d}"}
+    r = requests.get("https://kosis.kr/openapi/Param/statisticsParameterData.do", params=params, timeout=60)
+    r.raise_for_status()
+    arr = r.json()
     if not isinstance(arr, list) or not arr:
-        raise RuntimeError(
-            f"KOSIS 응답 비어있음 또는 오류: {arr}\n"
-            f"→ KOSIS_USER_STATS_ID 또는 KOSIS_FULL_URL 사용 권장. "
-            f"가이드: docs/09-data-acquisition/kosis-url-generation.md"
-        )
+        raise RuntimeError(f"KOSIS 응답 비어있음 또는 오류: {str(arr)[:120]}")
+
+    # 응답 검사 — 같은 사고(엉뚱한 표의 임의 행 저장) 재발 방지
+    names = {(row.get("ITM_NM", ""), row.get("C2_NM", "")) for row in arr}
+    if not all("재고지수" in itm and "반도체" in ind for itm, ind in names):
+        raise RuntimeError(f"KOSIS 응답이 반도체 재고지수가 아님: {sorted(names)[:3]}")
+    periods = [row.get("PRD_DE", "") for row in arr]
+    if len(periods) != len(set(periods)):
+        raise RuntimeError("KOSIS 응답에 같은 달이 여러 행 — 조회 조건이 한 계열을 가리키지 않음")
+
     monthly = []
     for row in arr:
-        try:
-            prd = row.get("PRD_DE", "")  # YYYYMM
-            val = float(row.get("DT", 0))
-            d = date(int(prd[:4]), int(prd[4:]), 1)
-            monthly.append((d, val))
-        except (ValueError, KeyError):
-            continue
-    if not monthly:
-        raise RuntimeError("KOSIS 데이터 파싱 실패")
+        prd = row["PRD_DE"]  # YYYYMM
+        monthly.append((date(int(prd[:4]), int(prd[4:]), 1), float(row["DT"])))
     data = _ffill_monthly_to_weekly(monthly)
-    return data, "real", "KOSIS 광공업동향 C26 재고지수 (월간→주간 forward-fill)"
+    return data, "real", (f"KOSIS 광업제조업동향조사 반도체 제조업(C261) 생산자제품 재고지수(원지수, 2020=100) "
+                          f"({len(monthly)}개월, 최신 {max(periods)})")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
