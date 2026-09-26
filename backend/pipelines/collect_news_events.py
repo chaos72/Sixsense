@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import re
 import json
+import sys
 import time
 from pathlib import Path
 from datetime import date, timedelta
@@ -646,11 +647,15 @@ def llm_enrich(entries: list[dict]) -> list[dict] | None:
 
 
 def _as_index(v) -> int:
-    """LLM 응답의 1부터 세는 번호(숫자 또는 "3" 같은 글자) → 0부터 세는 번호. 해석 불가면 -1 (호출부에서 범위 밖으로 걸러짐)."""
-    try:
-        return int(float(v)) - 1
-    except (TypeError, ValueError):
+    """LLM 응답의 1부터 세는 번호 → 0부터 세는 번호. 해석 불가면 -1 (호출부에서 범위 밖으로 걸러짐).
+    지시문이 번호를 'N3'·'E5' 형태로 붙이므로 숫자 3, 글자 "3", "N3" 모두 받는다.
+    (v2.5 에서 "3" 만 처리해 'N3' 10건을 조용히 모두 버린 사고 → v2.6 수정)"""
+    if isinstance(v, bool):
         return -1
+    if isinstance(v, (int, float)):
+        return int(v) - 1
+    m = re.search(r"\d+", str(v or ""))
+    return int(m.group()) - 1 if m else -1
 
 
 def merge(enriched: list[dict], pool: list[dict]) -> tuple[list[dict], list[dict]]:
@@ -1109,15 +1114,20 @@ def main():
     method_news = method_events = "키워드 휴리스틱"
     enriched = llm_enrich_split(news_top, events_top)
     if enriched and (enriched.get("news") or enriched.get("events")):
-        if enriched.get("news"):
-            news = merge_news_only(enriched["news"], news_top)
+        news = merge_news_only(enriched["news"], news_top) if enriched.get("news") else []
+        if news:
             method_news = "Gemini LLM 분류"
         else:
+            # Gemini 가 답했는데 합친 결과가 0건 = 번호 형식 등 해석 실패 — 조용히 0건을 저장하지 않고 키워드 방식으로 (v2.6)
+            if enriched.get("news"):
+                print(f"  ⚠️ Gemini 뉴스 {len(enriched['news'])}건을 하나도 해석하지 못함 → 키워드 방식으로 대체")
             news = heuristic_news_only(news_top)
-        if enriched.get("events"):
-            events = merge_events_only(enriched["events"], events_top)
+        events = merge_events_only(enriched["events"], events_top) if enriched.get("events") else []
+        if events:
             method_events = "Gemini LLM 분류"
         else:
+            if enriched.get("events"):
+                print(f"  ⚠️ Gemini 이벤트 {len(enriched['events'])}건을 하나도 해석하지 못함 → 키워드 방식으로 대체")
             _, events = heuristic_fallback(events_top)
     else:
         news = heuristic_news_only(news_top)
@@ -1183,6 +1193,10 @@ def main():
             for (arr, idx, field), orig in zip(refs, to_translate):
                 arr[idx][field] = safe_korean_title(orig)
 
+    if not news and news_top:
+        # 수집한 기사가 있는데 뉴스 0건이면 저장하지 않는다 — 화면이 빈 뉴스로 덮이는 것을 막고 실패로 보고 (v2.6)
+        print(f"  ❌ 기사 {len(news_top)}건을 모았지만 뉴스 0건 — 기존 뉴스 파일을 유지하고 실패로 끝냄")
+        sys.exit(1)
     print("[6/6] 저장")
     payload_news = {
         "collectedAt": date.today().isoformat(),

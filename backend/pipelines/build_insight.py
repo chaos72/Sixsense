@@ -45,8 +45,8 @@ OUT = ROOT / "backend/data/insight/latest.json"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 # 화면과 같은 신호 이름·제외 목록·신선도 기준을 쓴다 (한 곳에서만 정의)
-from build_frontend_data import (EXCLUDED_SIGNALS, INVALID_SIGNALS, MACRO_META, SIGNAL_META, UNIT_LABEL,
-                                 freshness)
+from build_frontend_data import (EXCLUDED_SIGNALS, MACRO_META, SIGNAL_META, UNIT_LABEL,
+                                 freshness, invalid_signals)
 
 
 def _load(sid: str) -> dict:
@@ -65,9 +65,10 @@ def build_prompt() -> tuple[str, dict]:
         return round((vals[-1] / vals[-1 - n] - 1) * 100, 1) if len(vals) > n else None
 
     sig_lines, allowed = [], []
+    invalid = invalid_signals()   # 사람이 정한 제외 + 자동 데이터 검사 실패 (v2.6)
     for sid, meta in SIGNAL_META.items():
         sig = _load(sid); r = sig["data"]
-        if sid in EXCLUDED_SIGNALS or sid in INVALID_SIGNALS or not r:
+        if sid in EXCLUDED_SIGNALS or sid in invalid or not r:
             continue
         stale = freshness(r, sig.get("collectedAt"), ref_date, sid)["stale"]
         v = r[-1]["value"]

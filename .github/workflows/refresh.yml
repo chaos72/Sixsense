@@ -55,6 +55,8 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           set -e
+          echo "── 0/5 자동 시험 — 실패하면 여기서 중단 (잘못된 코드로 만든 데이터 배포 방지) ──"
+          python -m pytest tests -q -p no:cacheprovider
           echo "── 1/5 데이터 수집 (신호별 실패는 자체 격리) ──"
           python pipelines/auto_collectors.py --all || echo "auto_collectors 경고 — 계속 진행"
           echo "── 2/5 뉴스/이벤트 수집 ──"
@@ -65,6 +67,8 @@ jobs:
           python pipelines/build_insight.py
           echo "── 5/5 프론트엔드 데이터 빌드 ──"
           python pipelines/build_frontend_data.py
+          echo "── 검사: 데이터 의미 검사 — 걸린 신호가 제외되지 않았거나 화면 데이터 이상이면 중단 ──"
+          python pipelines/data_checks.py --strict
 
       - name: 변경된 데이터 커밋 & 푸시 (Vercel 자동 재배포 트리거)
         run: |

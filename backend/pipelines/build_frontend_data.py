@@ -64,6 +64,16 @@ INVALID_SIGNALS = {
     # (v2.5.1) A-4 는 올바른 표(반도체 재고지수)로 복구되어 제외 해제
 }
 
+
+def invalid_signals() -> dict[str, str]:
+    """제외할 신호와 사유 — 사람이 정한 INVALID_SIGNALS + 데이터 의미 검사(data_checks)에 걸린 신호 (v2.6).
+    화면·AI 요약·예측 검증이 모두 이 함수 하나를 쓴다."""
+    from data_checks import check_all
+    out = dict(INVALID_SIGNALS)
+    for sid, probs in check_all().items():
+        out.setdefault(sid, "자동 데이터 검사 실패: " + "; ".join(probs))
+    return out
+
 MACRO_META = {
     # USER-REQUESTED EXTENSION (2026-05-19 #15) — 10년물 국채금리를 §06 거시경제 카드 첫번째로 배치
     # (위험자산 선호도 핵심 지표 → DRAM 의사결정에 가장 직접적)
@@ -284,12 +294,13 @@ def freshness(rows: list[dict], collected: str | None, ref_date: str, sid: str) 
 
 def build_collection(group: str, ref_date: str) -> list[dict]:
     """신호별 수집 상태 — 마지막 수집일이 기준일보다 STALE_DAYS 넘게 오래되면 '갱신 중단'."""
+    invalid = invalid_signals()
     rows = []
     for sid in (f"{group}-{i}" for i in range(1, 8)):
         sig = load_signal(sid)
         collected = sig.get("collectedAt")
         fr = freshness(sig.get("data", []), collected, ref_date, sid)
-        status = ("invalid" if sid in INVALID_SIGNALS else "fail" if not sig.get("data")
+        status = ("invalid" if sid in invalid else "fail" if not sig.get("data")
                   else "stale" if fr["stale"] else "ok")
         rows.append({
             "id": sid,
@@ -298,7 +309,7 @@ def build_collection(group: str, ref_date: str) -> list[dict]:
             "time": collected or "-",
             "weeks": len(sig.get("data", [])),
             "dataSince": fr["dataSince"],
-            "reason": INVALID_SIGNALS.get(sid) or fr["reason"],
+            "reason": invalid.get(sid) or fr["reason"],
             "status": status,
         })
     return rows
@@ -390,11 +401,12 @@ def main():
     history, current = build_history(target_rows)
     trend = build_trend(target_rows)
     ref_date = target.get("collectedAt") or target_rows[-1]["week"]
+    invalid = invalid_signals()
 
     signalsA = [fmt_signal(f"A-{i}", load_signal(f"A-{i}")["data"], ref_date)
-                for i in range(1, 8) if f"A-{i}" not in EXCLUDED_SIGNALS | INVALID_SIGNALS.keys()]
+                for i in range(1, 8) if f"A-{i}" not in EXCLUDED_SIGNALS | invalid.keys()]
     signalsB = [fmt_signal(f"B-{i}", load_signal(f"B-{i}")["data"], ref_date)
-                for i in range(1, 8) if f"B-{i}" not in EXCLUDED_SIGNALS | INVALID_SIGNALS.keys()]
+                for i in range(1, 8) if f"B-{i}" not in EXCLUDED_SIGNALS | invalid.keys()]
     macro = build_macro(ref_date)
 
     real_news, real_events, news_label = load_news_events()

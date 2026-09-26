@@ -36,8 +36,8 @@ HIST = ROOT / "data" / "historical"
 OUT = ROOT / "data" / "validation" / "latest.json"
 
 TARGET = "target-dram"
-# 값이 그 신호가 아님이 확인된 것은 피처에서 뺀다 (정의는 화면과 같은 곳 — build_frontend_data)
-from build_frontend_data import INVALID_SIGNALS
+# 값이 그 신호가 아님이 확인된 것(사람이 정한 제외 + 자동 데이터 검사 실패)은 피처에서 뺀다 — 화면과 같은 판정 (v2.6)
+from build_frontend_data import invalid_signals
 PUB_LAG_WEEKS = 7   # 월간 통계(A-3·산업생산)는 다음 달 중순 발표(약 45일) → 7주(49일) 뒤부터 사용 (v2.5, 이전 6주는 며칠 미래 정보)
 LAGGED = {"A-2", "A-3", "A-4", "B-4", "macro-pmi"}   # 월간·분기 발표 통계
 SENTIMENT = {"B-1", "B-2", "B-3", "B-5", "B-6", "B-7"}
@@ -53,9 +53,10 @@ VARIANTS = {
 
 def load_clean_frame() -> tuple[pd.DataFrame, pd.Series]:
     series = {}
+    invalid = invalid_signals()
     for f in sorted(glob.glob(str(HIST / "*.json"))):
         sid = Path(f).stem
-        if sid.startswith("_") or sid in INVALID_SIGNALS:
+        if sid.startswith("_") or sid in invalid:
             continue
         rows = json.loads(Path(f).read_text()).get("data", [])
         if not rows:

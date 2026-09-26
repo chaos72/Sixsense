@@ -13,4 +13,5 @@ lightgbm==4.6.0
 feedparser==6.0.12
 boto3==1.42.97
 xlrd==2.0.1
-
+# v2.6: 재발 방지 자동 시험 (backend/tests) — 주간 작업 시작 전에 실행
+pytest==8.3.5
