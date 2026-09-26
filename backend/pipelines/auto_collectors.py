@@ -1005,6 +1005,9 @@ def run_one(sid: str) -> dict:
             data, frozen = _merge_frozen(sid, data)
         r = write_signal(sid, data, source, mode, frozen)
         return {"signalId": sid, "status": "ok", "weeks": r["weeks"], "source": source}
+    except requests.exceptions.RequestException as e:
+        # 네트워크 오류는 OSError(=EnvironmentError) 계열이라 먼저 잡는다 — '설정 필요'로 잘못 보고되던 문제 (v2.5)
+        return {"signalId": sid, "status": "failed", "reason": f"네트워크 오류(다음 실행에서 재시도): {e}"}
     except (NotImplementedError, EnvironmentError) as e:
         return {"signalId": sid, "status": "needs_setup", "reason": str(e)}
     except Exception as e:
