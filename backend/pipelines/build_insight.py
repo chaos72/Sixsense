@@ -1,7 +1,7 @@
 """build_insight.py — 수집된 사실을 LLM(Gemini)으로 요약해 '시장 신호 요약' 카드 JSON 생성
 
 매주 화요일 06:00 KST 자동 실행 (auto_collectors → collect_news_events → honest_backtest →
-forecast_v2(참고) → **build_insight** → build_frontend_data).
+**build_insight** → build_frontend_data).
 
 입력 (사실만 — 요약에는 예측 수치를 넣지 않음. 예측은 별도 "왜 불합격인가" 설명에서만 다룸):
   - backend/data/historical/{A-*, B-*, macro-*, target-dram}.json (최신값·기준일)

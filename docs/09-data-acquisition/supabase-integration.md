@@ -1,3 +1,6 @@
+> ⚠️ **더 이상 쓰지 않는 안내서입니다 (v2.5.2, 2026-09-26).** Supabase 동기화(`sync_supabase.py`)와 옛 서버(`backend/app`)는 실행되지 않아 삭제했습니다. 화면은 정적 데이터 파일(`frontend/src/mocks/data.js`)만 씁니다.
+> 이 문서는 당시 기록으로만 남겨 둡니다. 현재 방식은 `CHANGELOG.md` 를 보세요.
+
 # Sixsense × Supabase 통합 가이드
 
 > **목적**: 백엔드의 JSON 파일 저장소를 Supabase Postgres로 확장.
