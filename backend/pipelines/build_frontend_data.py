@@ -5,9 +5,8 @@
 """
 from __future__ import annotations
 import json
-import re
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 ROOT = Path(__file__).resolve().parents[2]
 HIST = ROOT / "backend/data/historical"
@@ -409,7 +408,6 @@ def main():
             "stale": sum(r["status"] == "stale" for r in rows),
             "fail": sum(r["status"] == "fail" for r in rows),
             "invalid": sum(r["status"] == "invalid" for r in rows),
-            "newCount": sum(r["weeks"] for r in rows),
         },
         "week": ref_date,
         "staleDays": STALE_DAYS,
@@ -425,7 +423,8 @@ def main():
             "unitDesc": UNIT_DESC,
             "unitShort": "pt",
             "proxyNote": PROXY_NOTE,
-            "updated": f"{ref_date} 06:00 KST",
+            # 실제 생성 시각(한국 시간) — 이전엔 "06:00 KST" 고정이라 수동 실행·UTC 월요일 실행 때 틀렸음 (v2.5)
+            "updated": datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M KST"),
             "insight": load_insight(),
         },
         "history": history,

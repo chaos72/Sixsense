@@ -140,12 +140,15 @@ const pct = (v) => (v === null || v === undefined ? "—" : `${v > 0 ? "+" : ""}
 
 // v2.4 — 검증 불합격이어도 예측 수치를 '참고용'으로 보여준다. 차트·카드는 오차가 더 작은 개선 시도(변화율) 방식.
 const chartVariant = (v) => v && (v.variants.find((x) => x.key === "return") || v.variants[0]);
+// 예측의 기준 주가 차트 최신 주와 같을 때만 예측을 쓴다 — 검증 단계가 실패해 지난주 예측이 남은 경우 대비 (v2.5)
+const latestWeek = () => (D.history.length ? D.history[D.history.length - 1].date : null);
+const forecastUsable = (v) => !!(v && v.current && v.current.week === latestWeek());
 
 // "왜 불합격인가" — Gemini 작성, 숫자 대조(build_insight.unknown_numbers) 통과분만 표시
 function ValidationExplanation({ v }) {
   const e = v && v.explanation;
   if (!e || e.status !== "ok") {
-    return <div className="muted" style={{ fontSize: 11.5 }}>불합격 이유 설명을 만들지 못했습니다 — 아래 수치를 참고하세요.</div>;
+    return <div className="muted" style={{ fontSize: 11.5 }}>{v && v.pass ? "합격" : "불합격"} 이유 설명을 만들지 못했습니다 — 아래 수치를 참고하세요.</div>;
   }
   return <AiNote label={`왜 ${v.verdict}인가 · AI 작성 (${e.model})`}>{e.text}</AiNote>;
 }
@@ -173,7 +176,7 @@ function ValidationSummary({ v, onNav }) {
               <td>{x.name}</td>
               <td className="num-cell">{x.overall.modelMape.toFixed(1)}%</td>
               <td className="num-cell">{x.overall.naiveMape.toFixed(1)}%</td>
-              <td className="num-cell">{(() => { const f = (x.forecast || []).find((q) => q.h === 4); return f ? `${f.value.toFixed(1)} (${pct(f.changePct)})` : "—"; })()}</td>
+              <td className="num-cell">{(() => { const f = forecastUsable(v) && (x.forecast || []).find((q) => q.h === 4); return f ? `${f.value.toFixed(1)} (${pct(f.changePct)})` : "—"; })()}</td>
               <td>{x.pass ? "합격" : "불합격"}</td>
             </tr>
           ))}
@@ -220,14 +223,15 @@ function Dashboard({ onNav }) {
             />
             {(() => {
               const cv = chartVariant(v);
-              const f4 = cv && cv.forecast && cv.forecast.find((f) => f.h === 4);
+              const usable = forecastUsable(v);
+              const f4 = usable && cv && cv.forecast && cv.forecast.find((f) => f.h === 4);
               return (
                 <MetricCard
-                  label={`AI 4주 뒤 예측 · ${v && v.pass ? "✅ 검증 합격" : "❌ 검증 불합격 · 참고용"}`}
+                  label={`AI 4주 뒤 예측 · ${!cv ? "검증 결과 없음" : cv.pass ? "✅ 검증 합격" : "❌ 검증 불합격 · 참고용"}`}
                   code={cv ? `과거 평균 오차 ${cv.overall.modelMape.toFixed(1)}% vs 단순 기준선 ${cv.overall.naiveMape.toFixed(1)}% (${cv.name})` : "검증 결과 없음"}
                   value={f4 ? f4.value.toFixed(1) : "—"}
                   unit={f4 ? m.unitShort : null}
-                  change={f4 ? `현재 대비 ${pct(f4.changePct)} · ${f4.week} 주` : "예측 없음"}
+                  change={f4 ? `현재 대비 ${pct(f4.changePct)} · ${f4.week} 주` : cv && !usable ? "예측 기준 주가 최신 주와 달라 표시 안 함" : "예측 없음"}
                   changeTone="neu" /* 상승·하락 화살표를 붙이지 않음 — 불합격 예측에 방향 강조 금지 */
                   onClick={() => onNav("S-012")}
                 />
@@ -240,7 +244,7 @@ function Dashboard({ onNav }) {
 
       {/* 주가지수 추이 — 실측만 */}
       <div className="section">
-        <SectionHead num="02" icon="◢" title={`${m.unitLabel} 52주 추이`} sub={v && v.pass ? "실선 실측 · 점선 앞으로 7주 예측" : "실선 = 실측 · 점선 = 앞으로 7주 AI 예측(❌ 검증 불합격, 참고용)과 기준선(지난주 값 그대로)"}
+        <SectionHead num="02" icon="◢" title={`${m.unitLabel} 52주 추이`} sub={chartVariant(v) && chartVariant(v).pass ? "실선 실측 · 점선 앞으로 7주 예측" : "실선 = 실측 · 점선 = 앞으로 7주 AI 예측(❌ 검증 불합격, 참고용)과 기준선(지난주 값 그대로)"}
           actions={<button className="btn sm" onClick={() => onNav("S-009")}>8주 전과 비교 →</button>} />
         <div className="card dram-chart-card">
           <IndexChart />
@@ -403,14 +407,14 @@ function IndexChart() {
   const series = [{ data: D.history.map((d) => ({ x: d.week, value: d.value })), color: "var(--text)" }];
   const at = (w) => (D.history.find((d) => d.week === w) || {}).date || "";
   const v = D.validation, cv = chartVariant(v);
-  const fc = (cv && cv.forecast) || [];
+  const fc = (forecastUsable(v) && cv && cv.forecast) || [];
   const now = D.meta.current;
   if (fc.length) {
     const last = fc[fc.length - 1];
     series.push({
       data: [{ x: 0, value: now }, ...fc.map((f) => ({ x: f.h, value: f.value }))],
       color: "var(--forecast-mid)", dashed: true,
-      endLabel: `AI 예측 ${last.value.toFixed(1)}${v.pass ? "" : " (불합격)"}`,
+      endLabel: `AI 예측 ${last.value.toFixed(1)}${cv.pass ? "" : " (불합격)"}`,
     });
     series.push({
       data: [{ x: 0, value: now }, { x: last.h, value: now }],

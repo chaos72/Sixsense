@@ -21,9 +21,8 @@ import os
 import re
 import json
 from pathlib import Path
-from datetime import date, datetime
+from datetime import datetime
 
-import requests
 
 from gemini_client import QUALITY_MODELS, available, gemini_generate
 
@@ -191,29 +190,52 @@ def validation_facts(v: dict) -> dict:
     return facts
 
 
-def _fact_numbers(obj) -> set[float]:
-    out = set()
+def _fact_values(obj) -> list[float]:
+    """입력 검증 수치 (부호 유지)."""
+    out = []
     if isinstance(obj, dict):
         for v in obj.values():
-            out |= _fact_numbers(v)
-    elif isinstance(obj, (int, float)) and obj is not None:
-        out.add(abs(float(obj)))
+            out += _fact_values(v)
+    elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
+        out.append(float(obj))
     return out
 
 
+_UP = ("상승", "증가", "올랐", "오를")
+_DOWN = ("하락", "감소", "절감", "내렸", "떨어", "내릴")
+
+
 def unknown_numbers(text: str, facts: dict) -> list[str]:
-    """설명 속 숫자 중 입력 수치(반올림 허용)나 예측 기간(1~7주)으로 설명되지 않는 것."""
-    allowed = _fact_numbers(facts) | {float(h) for h in range(1, 8)}
+    """설명 속 숫자 중 입력 수치로 설명되지 않는 것 (반올림 허용, 부호 검사).
+    - 쓴 자릿수만큼의 반올림 오차 허용 (749.25 → 749.3 통과). 1 미만 값(p 값 등)은 그대로여야 함 (0.146 → 0.1 금지)
+    - '-0.16%'처럼 부호를 붙이면 부호까지 일치해야 함 (v2.5)
+    - '%' 변화율 바로 뒤 '상승·증가'/'하락·감소·절감'이 실제 부호와 반대면 거부 (예: +0.35% 를 '0.35% 절감') (v2.5)
+    한계: 어느 방식의 숫자인지는 구분하지 못함 — 화면에 '검증되지 않은 해석' 표시."""
+    facts_v = _fact_values(facts) + [float(h) for h in range(1, 8)]
     bad = []
-    for tok in re.findall(r"\d+(?:[.,]\d+)*", text):
+    # 부호: 숫자 앞의 +, -, − (단 '2025-06', '1~7' 처럼 앞이 숫자·물결이면 부호가 아님)
+    for m in re.finditer(r"(?<![\d~])([+\-−])?(\d+(?:[.,]\d+)*)", text):
+        sign_ch, tok = m.group(1), m.group(2)
         num = tok.replace(",", "")
         x = float(num)
-        # 쓴 자릿수만큼의 반올림 오차 허용 (749.25 → 749.3 은 통과; 파이썬 round 의 749.2 와 비교하면 오판).
-        # 소수 둘째 자리보다 거칠게 줄이는 것은 1 이상인 값만 — p 값처럼 작은 수는 그대로 (0.146 → 0.1 금지)
         decimals = len(num.split(".")[1]) if "." in num else 0
         tol = 0.5 * 10 ** -decimals + 1e-9
-        if not any(abs(x - a) < 1e-9 or (a >= 1 and abs(x - a) <= tol) for a in allowed):
-            bad.append(tok)
+
+        def close(a):
+            return abs(x - abs(a)) < 1e-9 or (abs(a) >= 1 and abs(x - abs(a)) <= tol)
+        matches = [a for a in facts_v if close(a)]
+        if sign_ch:
+            want_neg = sign_ch in "-−"
+            matches = [a for a in matches if (a < 0) == want_neg and a != 0]
+        # 방향 검사는 '%' 가 붙은 변화율에만 — '727.7pt로 하락'처럼 수준값 뒤의 방향어는 정상 문장
+        after = text[m.end():m.end() + 8]
+        if after.lstrip().startswith("%"):
+            if matches and any(w in after for w in _UP) and all(a < 0 for a in matches):
+                matches = []
+            if matches and any(w in after for w in _DOWN) and all(a > 0 for a in matches):
+                matches = []
+        if not matches:
+            bad.append((sign_ch or "") + tok)
     return bad
 
 
@@ -230,8 +252,8 @@ def explain_validation() -> dict:
 {json.dumps(facts, ensure_ascii=False, indent=1)}
 
 용어 (반드시 이 뜻으로 써라):
-- p값 = 모델과 기준선의 실력이 같다고 가정할 때, 모델이 이만큼 이길 확률. 작을수록 '우연이 아니라 진짜 낫다'는 뜻이며
-  0.05 미만이어야 합격. p값을 '우연이 아닐 확률'이나 '맞을 확률'로 설명하지 마라.
+- p값 = 모델과 기준선의 실력이 같다고 가정할 때, 4주 예측에서 모델이 이만큼 앞설 확률(겹치는 예측을 보정한 검정).
+  작을수록 '우연이 아니라 진짜 낫다'는 뜻이며 0.05 미만이어야 합격. p값을 '우연이 아닐 확률'이나 '맞을 확률'로 설명하지 마라.
 - 평균오차 = 예측이 실제와 평균 몇 % 어긋났는지. 작을수록 좋다.
 
 규칙:
@@ -246,16 +268,22 @@ def explain_validation() -> dict:
 - 방식 이름은 JSON 의 이름('앱이 쓰던 방식 (가격 수준 예측)', '개선 시도 (변화율 예측)')대로 써라. '현재 앱이 쓰는 방식' 같은 표현 금지.
 - 매수·매도·구매 시점 권유 금지. 과장 금지.
 JSON 으로만 답하라: {{"explanation": "..."}}"""
-    obj, source = call_gemini(prompt)
-    text = ((obj or {}).get("explanation") or "").strip()
-    if not text:
-        return {"status": "failed", "text": "", "model": source, "reason": "Gemini 응답 없음"}
-    bad = unknown_numbers(text, facts)
-    if bad:
-        # 입력에 없는 숫자가 하나라도 있으면 거짓 설명일 수 있으므로 쓰지 않는다
-        return {"status": "rejected", "text": "", "model": source,
-                "reason": f"입력에 없는 숫자 {bad[:5]} — 설명을 표시하지 않음"}
-    return {"status": "ok", "text": text, "model": source, "reason": None}
+    # 입력에 없는 숫자가 하나라도 있으면 거짓 설명일 수 있으므로 쓰지 않는다.
+    # 한 번 거부되면 틀린 숫자를 알려 주고 한 번만 다시 쓰게 한다 (v2.5 — 이전엔 한 번 틀리면 그 주 설명이 없었음).
+    attempt_prompt, bad, source = prompt, [], ""
+    for attempt in (1, 2):
+        obj, source = call_gemini(attempt_prompt)
+        text = ((obj or {}).get("explanation") or "").strip()
+        if not text:
+            return {"status": "failed", "text": "", "model": source, "reason": "Gemini 응답 없음"}
+        bad = unknown_numbers(text, facts)
+        if not bad:
+            return {"status": "ok", "text": text, "model": source, "reason": None,
+                    "attempts": attempt}
+        attempt_prompt = (prompt + f"\n\n[주의] 직전 답에 입력 JSON 에 없는 숫자 {bad[:5]} 가 있었다. "
+                          "JSON 의 값을 그대로(1 이상은 소수 첫째 자리 반올림만) 옮겨 다시 써라.")
+    return {"status": "rejected", "text": "", "model": source,
+            "reason": f"입력에 없는 숫자 {bad[:5]} (2회 시도) — 설명을 표시하지 않음"}
 
 
 def main():

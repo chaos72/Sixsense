@@ -22,7 +22,6 @@ import sys
 import time
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
-from io import StringIO
 from pathlib import Path
 
 import requests
@@ -65,7 +64,8 @@ _load_dotenv(ROOT / ".env")  # backend/.env (있다면)
 # 이전엔 END="2026-04-30" 하드코딩이라 그 이후 Yahoo/FRED 데이터가 필터링됨.
 # 환경변수로 오버라이드 가능 (SIXSENSE_START / SIXSENSE_END), 미지정 시 today 기준 최근 1년.
 from datetime import timedelta as _td
-END_D = date.fromisoformat(os.getenv("SIXSENSE_END")) if os.getenv("SIXSENSE_END") else date.today()
+# 기준 날짜는 UTC — 한국 월요일 새벽(UTC 로는 일요일)에 돌려도 끝나지 않은 주를 마감하지 않게 (v2.5)
+END_D = date.fromisoformat(os.getenv("SIXSENSE_END")) if os.getenv("SIXSENSE_END") else datetime.now(timezone.utc).date()
 START_D = date.fromisoformat(os.getenv("SIXSENSE_START")) if os.getenv("SIXSENSE_START") else (END_D - _td(weeks=56))
 START = START_D.isoformat()
 END = END_D.isoformat()
@@ -124,13 +124,32 @@ def _final_through(sid: str) -> str | None:
     return old.get("finalThrough") or _last_completed_week()
 
 
-def _merge_frozen(sid: str, new_data: list[dict]) -> tuple[list[dict], dict]:
-    """마감된 주(≤ finalThrough)는 기존 값 그대로 — 새로 계산된 값이 있어도, 원래 없던 주여도 무시.
-    그 이후 주만 새 값을 쓰고, 마감선을 '끝난 마지막 주'까지 올린다."""
+RETRY_WEEKS = 4   # 값이 비어 있는 주는 마감 후 이 주수 동안 다시 채울 수 있다 (주 1회 실행 → 4번의 재시도)
+
+
+def _open_week_test(sid: str):
+    """이 신호에서 '다시 계산해도 되는 주'인지 판정하는 함수를 돌려준다. 합치기와 AI 채점이 같은 판정을 쓴다.
+    - 마감선 이후의 주 → 계산
+    - 마감선 이하이지만 값이 비어 있고 마감 후 RETRY_WEEKS 주 이내 → 다시 채움 (일시적 실패로 영구 빈칸 방지)
+    - 값이 있는 마감된 주 → 절대 다시 계산하지 않음"""
     old = _load_existing(sid) or {}
     ft = _final_through(sid)
+    have = {r["week"] for r in old.get("data", [])}
+    retry_from = (date.fromisoformat(ft) - timedelta(weeks=RETRY_WEEKS - 1)).isoformat() if ft else None
+
+    def is_open(week: str) -> bool:
+        return not ft or week > ft or (week not in have and week >= retry_from)
+    return is_open
+
+
+def _merge_frozen(sid: str, new_data: list[dict]) -> tuple[list[dict], dict]:
+    """마감된 주(≤ finalThrough)의 기존 값은 그대로 — 새로 계산된 값이 와도 무시.
+    마감선 이후 주와, 마감 후 RETRY_WEEKS 주 이내의 '빈 주'만 새 값을 쓰고, 마감선을 '끝난 마지막 주'까지 올린다."""
+    old = _load_existing(sid) or {}
+    ft = _final_through(sid)
+    is_open = _open_week_test(sid)
     kept = [r for r in old.get("data", []) if ft and r["week"] <= ft]
-    fresh = [r for r in new_data if not ft or r["week"] > ft]
+    fresh = [r for r in new_data if is_open(r["week"])]
     merged = sorted(kept + fresh, key=lambda r: r["week"])
     new_ft = max(ft or "", _last_completed_week())
     since = old.get("frozenSince") or new_ft
@@ -256,8 +275,8 @@ def collect_B7_bom_hn():
             "hitsPerPage": 200,
         }
         r = requests.get(url, params=params, timeout=30)
-        if r.status_code != 200:
-            continue
+        # 한 검색어라도 실패하면 오류로 끝낸다 — 일부만 모인 합계가 마감되어 영구히 남지 않도록 (v2.5)
+        r.raise_for_status()
         j = r.json()
         for hit in j.get("hits", []):
             try:
@@ -275,6 +294,8 @@ def collect_B7_bom_hn():
     data = []
     for i in range(weeks):
         w = snap_to_monday(START_D + timedelta(weeks=i)).isoformat()
+        if w > _last_completed_week():   # 진행 중인 주 제외 — 개수·점수 합은 주가 끝나야 의미 (v2.5)
+            continue
         data.append({"week": w, "value": round(weekly_scores[w], 2)})
     return data, "real", f"Hacker News Algolia API (queries: {len(queries)}건)"
 
@@ -328,50 +349,6 @@ def collect_A6_manifold():
     return data, "real", f"Manifold Markets '{question}' ({len(all_bets)} bets → {len(data)}주)"
 
 
-def collect_A6_polymarket():
-    """(deprecated) Polymarket — history 비어있음. collect_A6_manifold 사용 권장."""
-    search_url = "https://gamma-api.polymarket.com/markets"
-    r = requests.get(search_url, params={"limit": 50, "active": "true", "closed": "false", "tag_id": "703"}, timeout=20)
-    if r.status_code != 200:
-        raise RuntimeError(f"Polymarket markets API 실패: {r.status_code}")
-    markets = r.json() if isinstance(r.json(), list) else r.json().get("markets", [])
-    taiwan_markets = [m for m in markets if "taiwan" in (m.get("question", "") + m.get("description", "")).lower()]
-    if not taiwan_markets:
-        # Fallback: try without tag filter
-        r2 = requests.get(search_url, params={"limit": 200, "q": "Taiwan"}, timeout=20)
-        if r2.status_code == 200:
-            markets = r2.json() if isinstance(r2.json(), list) else r2.json().get("markets", [])
-            taiwan_markets = [m for m in markets if "taiwan" in (m.get("question", "") + m.get("description", "")).lower()]
-    if not taiwan_markets:
-        raise RuntimeError("Polymarket에 'Taiwan' 관련 active market 없음 (시간 따라 변동). Metaculus 대체 권장.")
-
-    # Use first Taiwan market with longest history
-    market = taiwan_markets[0]
-    market_id = market.get("id") or market.get("conditionId")
-    history_url = f"https://clob.polymarket.com/prices-history?market={market_id}&interval=1w&fidelity=10080"
-    r = requests.get(history_url, timeout=30)
-    if r.status_code != 200:
-        raise RuntimeError(f"Polymarket prices-history 실패: {r.status_code}")
-    hist = r.json().get("history", [])
-    weekly = defaultdict(list)
-    for pt in hist:
-        try:
-            t = datetime.fromtimestamp(pt["t"]).date()
-            if not (START_D <= t <= END_D):
-                continue
-            wk = snap_to_monday(t).isoformat()
-            weekly[wk].append(pt["p"])
-        except (KeyError, ValueError):
-            continue
-    data = [{"week": w, "value": round(sum(v) / len(v), 4)} for w, v in sorted(weekly.items())]
-    if not data:
-        raise RuntimeError(f"Polymarket history 비어있음 (market_id={market_id})")
-    return data, "real", f"Polymarket gamma+clob API (market: {market.get('question', market_id)[:60]})"
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# B-3 Reddit — PRAW (env var) 또는 HN 대체 (즉시)
-# ──────────────────────────────────────────────────────────────────────────────
 def collect_B3_reddit():
     """Reddit PRAW으로 r/hardware r/memorymarket 'memory price' 주간 게시물.
     환경변수 미설정 시 Hacker News 대체."""
@@ -399,6 +376,8 @@ def collect_B3_reddit():
             data = []
             for i in range(weeks):
                 w = snap_to_monday(START_D + timedelta(weeks=i)).isoformat()
+                if w > _last_completed_week():
+                    continue
                 data.append({"week": w, "value": weekly[w]})
             return data, "real", "Reddit PRAW (r/hardware + buildapc + memorymarket, 'memory price')"
         except ImportError:
@@ -432,6 +411,8 @@ def collect_B3_reddit():
     data = []
     for i in range(weeks):
         w = snap_to_monday(START_D + timedelta(weeks=i)).isoformat()
+        if w > _last_completed_week():   # 진행 중인 주 제외 — 개수·점수 합은 주가 끝나야 의미 (v2.5)
+            continue
         data.append({"week": w, "value": weekly[w]})
     return data, "real", "Hacker News Algolia ('memory chip price') — Reddit 대체"
 
@@ -468,10 +449,10 @@ def collect_A3_kcs():
             r = requests.get(full_url, params=params, timeout=30)
             if r.status_code == 401:
                 raise RuntimeError(
-                    f"data.go.kr 401 Unauthorized — 다음 중 하나일 가능성:\n"
-                    f"  (1) Itemtrade 서비스 활용신청 미승인 (data.go.kr 마이페이지 확인)\n"
-                    f"  (2) 신청 후 활성화 대기 중 (보통 1~2시간 소요)\n"
-                    f"  (3) encoding/decoding 키 혼동 — 마이페이지에서 두 종류 확인"
+                    "data.go.kr 401 Unauthorized — 다음 중 하나일 가능성:\n"
+                    "  (1) Itemtrade 서비스 활용신청 미승인 (data.go.kr 마이페이지 확인)\n"
+                    "  (2) 신청 후 활성화 대기 중 (보통 1~2시간 소요)\n"
+                    "  (3) encoding/decoding 키 혼동 — 마이페이지에서 두 종류 확인"
                 )
             r.raise_for_status()
             # JSON 응답 우선 시도
@@ -577,7 +558,7 @@ def collect_A4_kosis():
 # ──────────────────────────────────────────────────────────────────────────────
 def collect_A5_aws_spot():
     """AWS describe_spot_price_history — m6i.xlarge 90일 history."""
-    aws_key = need_env("AWS_ACCESS_KEY_ID", "https://console.aws.amazon.com/iam (계정 → IAM → Access keys, 무료)")
+    need_env("AWS_ACCESS_KEY_ID", "https://console.aws.amazon.com/iam (계정 → IAM → Access keys, 무료)")
     _ = need_env("AWS_SECRET_ACCESS_KEY", "(위와 함께 발급되는 secret)")
     try:
         import boto3
@@ -662,8 +643,6 @@ def collect_B2_rss_sentiment():
     NEG = ["下跌", "減少", "萎縮", "弱勢", "疲軟", "庫存過剩", "拒買", "管制", "禁令",
            "decline", "drop", "weak", "oversupply", "ban", "restrict", "bearish", "slump"]
 
-    from collections import defaultdict
-    from datetime import datetime
     import time as _t
 
     all_entries = []
@@ -723,49 +702,9 @@ def collect_B2_rss_sentiment():
     )
 
 
-def collect_B2_gdelt_bq():
-    """GDELT BigQuery — 1TB/월 free, 대만 반도체 뉴스 주간 볼륨."""
-    creds = need_env(
-        "GOOGLE_APPLICATION_CREDENTIALS",
-        "https://console.cloud.google.com → IAM → Service Accounts → JSON 다운로드 (BigQuery 권한)",
-    )
-    try:
-        from google.cloud import bigquery
-    except ImportError:
-        raise EnvironmentError("google-cloud-bigquery 미설치: pip install google-cloud-bigquery")
-    client = bigquery.Client.from_service_account_json(creds)
-    query = """
-    SELECT
-      DATE_TRUNC(DATE(_PARTITIONTIME), WEEK(MONDAY)) AS week,
-      COUNT(*) AS article_count
-    FROM `gdelt-bq.gdeltv2.events_partitioned`
-    WHERE _PARTITIONTIME BETWEEN '2025-05-01' AND '2026-04-30'
-      AND (Actor1CountryCode = 'TWN' OR Actor2CountryCode = 'TWN')
-      AND THEMES LIKE '%TECH_%'
-    GROUP BY week
-    ORDER BY week
-    """
-    res = client.query(query).result()
-    data = []
-    for row in res:
-        wk = snap_to_monday(row["week"]).isoformat()
-        data.append({"week": wk, "value": int(row["article_count"])})
-    if not data:
-        raise RuntimeError("GDELT BigQuery 결과 비어있음")
-    return data, "real", "GDELT BigQuery events_partitioned (TWN actor + TECH theme)"
-
-
 # ──────────────────────────────────────────────────────────────────────────────
 # B-1, B-5, B-6 — Claude API + IR PDF 자동 분석
 # ──────────────────────────────────────────────────────────────────────────────
-SAMSUNG_IR_URLS = [
-    # 분기당 1개씩, 총 5개 (Q2-25, Q3-25, Q4-25, Q1-26, Q2-26 일부)
-    "https://www.samsung.com/global/ir/financial-information/earnings-release/",
-]
-SKHYNIX_IR_URLS = ["https://www.skhynix.com/eng/ir/earningsRelease.do"]
-MICRON_IR_URLS = ["https://investors.micron.com/financial-information/quarterly-results"]
-
-
 def _llm_sentiment(text: str, prompt_topic: str) -> float:
     """LLM 기반 sentiment (-1~+1) — Gemini 무료 티어 단독 (gemini_client 참고).
     실행당 수십 회 호출되는 대량 작업이라 lite 모델부터 써서 flash 한도를 아낀다.
@@ -789,17 +728,11 @@ def _llm_sentiment(text: str, prompt_topic: str) -> float:
     )
 
 
-# Backwards-compat alias
-_claude_sentiment = _llm_sentiment
-
-
 def _collect_ir_news_sentiment(sid: str, prompt_topic: str, source_label: str) -> tuple[list[dict], str, str]:
     """B-1/B-5/B-6 공통 파이프라인: Google News에서 메모리社 IR/실적 헤드라인 → LLM sentiment.
     PDF 다운로드 + 추출은 회사별 IR 페이지 구조가 자주 바뀌어 불안정 → 뉴스 헤드라인으로 우회.
     """
     import feedparser
-    from collections import defaultdict
-    from datetime import datetime
 
     # 메모리社 실적/IR 뉴스 검색
     queries = [
@@ -833,9 +766,11 @@ def _collect_ir_news_sentiment(sid: str, prompt_topic: str, source_label: str) -
         wk = snap_to_monday(ent["date"]).isoformat()
         weekly_text[wk].append(ent["text"])
 
-    # 이미 마감된 주는 채점하지 않는다 (값은 run_one 에서 기존 것을 그대로 씀 → Gemini 호출도 절약)
+    # 값이 있는 마감된 주는 채점하지 않는다 (run_one 이 기존 값을 그대로 씀 → Gemini 호출도 절약).
+    # 판정은 _merge_frozen 과 같은 _open_week_test 를 쓴다.
     ft = _final_through(sid)
-    open_weeks = [wk for wk in sorted(weekly_text) if not ft or wk > ft]
+    is_open = _open_week_test(sid)
+    open_weeks = [wk for wk in sorted(weekly_text) if is_open(wk)]
 
     weekly_score = []
     n_llm_calls, n_failed = 0, 0
@@ -847,8 +782,8 @@ def _collect_ir_news_sentiment(sid: str, prompt_topic: str, source_label: str) -
             n_llm_calls += 1
             weekly_score.append({"week": wk, "value": round(score, 4)})
         except (EnvironmentError, RuntimeError) as e:
-            # 키워드 점수로 대신 채우지 않는다 — 척도가 달라 섞이면 안 되고, 마감되면 영구히 남기 때문.
-            # 빈칸으로 두면 그 주가 마감되기 전 다음 실행에서 다시 시도한다.
+            # 키워드 점수로 대신 채우지 않는다 — 척도가 달라 섞이면 안 되기 때문.
+            # 빈칸으로 두면 마감 후 RETRY_WEEKS 주 동안 다음 실행들에서 다시 시도한다 (_open_week_test).
             n_failed += 1
             print(f"  ⚠️ {sid} {wk} 채점 실패, 다음 실행에서 재시도: {str(e).splitlines()[0][:60]}")
 

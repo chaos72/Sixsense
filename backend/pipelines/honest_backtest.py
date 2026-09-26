@@ -10,7 +10,8 @@ forecast_v2.py 의 데이터 준비에 있던 결함을 여기서는 제거하�
   4) 매 시점마다 그 시점까지 정답이 확정된 데이터로만 재학습 (진짜 표본 외 예측)
 
 비교: LightGBM 두 방식(가격 수준 예측 = 앱이 쓰던 방식 / 변화율 예측 = 개선 시도) vs 단순 기준선(지난주 값 유지).
-합격 기준: 모델 평균 오차 < 기준선 평균 오차 그리고 '모델이 이긴 횟수'의 부호검정 p < 0.05.
+합격 기준: 모델 평균 오차 < 기준선 평균 오차 그리고 구매 결정 기간(4주) 예측의 Diebold–Mariano 검정 p < 0.05.
+  (v2.5 — 이전의 '1~7주 전체 이긴 횟수 부호검정'은 서로 겹치는 예측을 독립으로 보아 p 가 실제보다 작게 나올 수 있었음)
 
 출력: backend/data/validation/latest.json
 """
@@ -23,7 +24,6 @@ import glob
 import json
 import warnings
 from datetime import date
-from math import comb
 from pathlib import Path
 
 import numpy as np
@@ -38,7 +38,7 @@ OUT = ROOT / "data" / "validation" / "latest.json"
 TARGET = "target-dram"
 # 값이 그 신호가 아님이 확인된 것은 피처에서 뺀다 (정의는 화면과 같은 곳 — build_frontend_data)
 from build_frontend_data import INVALID_SIGNALS
-PUB_LAG_WEEKS = 6
+PUB_LAG_WEEKS = 7   # 월간 통계(A-3·산업생산)는 다음 달 중순 발표(약 45일) → 7주(49일) 뒤부터 사용 (v2.5, 이전 6주는 며칠 미래 정보)
 LAGGED = {"A-2", "A-3", "A-4", "B-4", "macro-pmi"}   # 월간·분기 발표 통계
 SENTIMENT = {"B-1", "B-2", "B-3", "B-5", "B-6", "B-7"}
 H_MAX = 7
@@ -134,9 +134,24 @@ def current_forecast(X: pd.DataFrame, y: pd.Series, kind: str) -> list[dict]:
     return out
 
 
-def sign_test_p(wins: int, n: int) -> float:
-    """모델이 기준선을 wins 번 이상 이길 확률 (둘의 실력이 같다고 가정할 때)."""
-    return sum(comb(n, k) for k in range(wins, n + 1)) / 2 ** n
+def dm_test_p(e_model: np.ndarray, e_naive: np.ndarray, h: int) -> float:
+    """Diebold–Mariano 검정 (Harvey–Leybourne–Newbold 소표본 보정) — 한쪽 검정.
+    '모델과 기준선의 실력이 같다'고 가정할 때 모델이 이만큼 앞설 확률. h 주 예측은 서로 h-1 주 겹치므로
+    Newey–West 방식으로 겹침(자기상관)을 보정한다."""
+    from scipy import stats
+    d = np.asarray(e_naive) - np.asarray(e_model)          # 양수 = 모델이 더 정확
+    n = len(d)
+    if n < 3:
+        return 1.0
+    dc = d - d.mean()
+    lrv = float(dc @ dc) / n
+    for k in range(1, h):                                  # 겹치는 h-1 주만큼 자기공분산 더함
+        lrv += 2 * float(dc[k:] @ dc[:-k]) / n
+    if lrv <= 0:
+        return 1.0
+    dm = d.mean() / np.sqrt(lrv / n)
+    dm *= np.sqrt((n + 1 - 2 * h + h * (h - 1) / n) / n)   # HLN 소표본 보정
+    return float(1 - stats.t.cdf(dm, df=n - 1))
 
 
 def summarize(r: pd.DataFrame) -> dict:
@@ -147,7 +162,8 @@ def summarize(r: pd.DataFrame) -> dict:
     } for h, g in r.groupby("h")]
 
     wins, n = int(r.win.sum()), len(r)
-    p = sign_test_p(wins, n)
+    dh = r[r.h == DECISION_H]
+    p = dm_test_p(dh.e_model.values, dh.e_naive.values, DECISION_H)
     overall = {
         "n": n,
         "modelMape": round(r.e_model.mean(), 2), "naiveMape": round(r.e_naive.mean(), 2),
@@ -195,7 +211,7 @@ def main():
         "dataRange": [y.index.min().date().isoformat(), y.index.max().date().isoformat()],
         "target": "메모리 3사 주가지수 (MU 50% · SK하이닉스 30% · 삼성전자 20%, 2025-06-16 = 100)",
         "baseline": "단순 기준선 — 지난주 값이 그대로 유지된다고 가정",
-        "passRule": "모델 평균 오차 < 기준선 평균 오차, 그리고 부호검정 p < 0.05",
+        "passRule": f"모델 평균 오차 < 기준선 평균 오차, 그리고 {DECISION_H}주 예측의 Diebold–Mariano 검정(겹침 보정) p < 0.05",
         "method": [
             f"과거 각 시점마다 그 시점까지 정답이 확정된 데이터로만 새로 학습해 1~{H_MAX}주 뒤를 예측",
             "날짜를 월요일로 통일, 미래 값으로 과거를 채우지 않음",

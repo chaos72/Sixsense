@@ -280,7 +280,7 @@ function S012({ onClose }) {
       <div style={{ marginBottom: 18 }}>
         {v.explanation && v.explanation.status === "ok"
           ? <AiNote label={`왜 ${v.verdict}인가 · AI 작성 (${v.explanation.model})`}>{v.explanation.text}</AiNote>
-          : <div className="card muted" style={{ fontSize: 12 }}>불합격 이유 설명을 만들지 못했습니다{v.explanation && v.explanation.reason ? ` (${v.explanation.reason})` : ""} — 아래 수치를 참고하세요.</div>}
+          : <div className="card muted" style={{ fontSize: 12 }}>{v.verdict} 이유 설명을 만들지 못했습니다{v.explanation && v.explanation.reason ? ` (${v.explanation.reason})` : ""} — 아래 수치를 참고하세요.</div>}
       </div>
 
       {v.variants.map(x => {
@@ -316,7 +316,7 @@ function S012({ onClose }) {
               </table>
             </div>
             <div className="muted" style={{ fontSize: 11.5, marginTop: 8, lineHeight: 1.7 }}>
-              우연히 이 정도로 이길 확률 p = {o.pValue} · '항상 오른다'고 찍었을 때 방향 적중률 {o.alwaysUpDirAcc.toFixed(0)}% ·
+              4주 예측에서 실력이 같은데도 이만큼 앞설 확률 p = {o.pValue} (겹치는 예측 보정 검정, 0.05 미만이어야 합격) · '항상 오른다'고 찍었을 때 방향 적중률 {o.alwaysUpDirAcc.toFixed(0)}% ·
               {" "}{pr.horizonWeeks}주 대기 여부를 모델대로 정했을 때 평균 구매 단가 {pr.modelPct > 0 ? "+" : ""}{pr.modelPct.toFixed(2)}%
               (대기 신호 {pr.waitCount}회 중 실제로 옳았던 경우 {pr.waitCorrect}회, 미래를 안다면 {pr.perfectPct.toFixed(2)}%)
               {o.underRate !== undefined && <> · 과거 예측이 실제보다 낮았던 비율 {o.underRate.toFixed(1)}%</>}
@@ -325,6 +325,8 @@ function S012({ onClose }) {
               <>
                 <div className="dlabel" style={{ margin: "14px 0 8px" }}>
                   지금 이 방식이 내놓은 예측 ({v.current ? `${v.current.week} 주 ${v.current.value.toFixed(1)} pt 기준` : "최신 주 기준"}) · {x.pass ? "✅ 합격" : "❌ 불합격 — 참고용"}
+                  {v.current && D3.history.length && v.current.week !== D3.history[D3.history.length - 1].date &&
+                    <span style={{ color: "var(--sig-neg)" }}> · ⚠ 기준 주가 최신 데이터({D3.history[D3.history.length - 1].date})와 다름 — 지난 예측</span>}
                 </div>
                 <div className="card" style={{ padding: 0 }}>
                   <table className="tbl">

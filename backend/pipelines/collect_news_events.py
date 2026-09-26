@@ -15,9 +15,8 @@ import re
 import json
 import time
 from pathlib import Path
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
-import requests
 
 from gemini_client import QUALITY_MODELS, available, gemini_generate
 
@@ -646,6 +645,14 @@ def llm_enrich(entries: list[dict]) -> list[dict] | None:
     return None
 
 
+def _as_index(v) -> int:
+    """LLM 응답의 1부터 세는 번호(숫자 또는 "3" 같은 글자) → 0부터 세는 번호. 해석 불가면 -1 (호출부에서 범위 밖으로 걸러짐)."""
+    try:
+        return int(float(v)) - 1
+    except (TypeError, ValueError):
+        return -1
+
+
 def merge(enriched: list[dict], pool: list[dict]) -> tuple[list[dict], list[dict]]:
     """enrich 결과 + 원본 entries 병합 → news[] / events[] 분리.
     USER-REQUESTED EXTENSION (#8/#9): events 는 5 카테고리(국내 반도체/물리적 충돌/기상이변/금융 위기/기타)
@@ -655,7 +662,7 @@ def merge(enriched: list[dict], pool: list[dict]) -> tuple[list[dict], list[dict
     ALLOWED_TYPES = {"국내 반도체", "물리적 충돌", "기상이변", "금융 위기", "기타"}
 
     for item in enriched:
-        idx = item.get("idx", 0) - 1
+        idx = _as_index(item.get("idx"))   # LLM 이 번호를 "3" 처럼 글자로 줄 때도 처리 (v2.5)
         if not (0 <= idx < len(pool)):
             continue
         src_entry = pool[idx]
@@ -953,7 +960,7 @@ def merge_news_only(enriched_news: list[dict], pool: list[dict]) -> list[dict]:
     """enriched news → news[] (events 분리 없음)."""
     out = []
     for item in enriched_news:
-        idx = item.get("idx", 0) - 1
+        idx = _as_index(item.get("idx"))   # LLM 이 번호를 "3" 처럼 글자로 줄 때도 처리 (v2.5)
         if not (0 <= idx < len(pool)):
             continue
         src = pool[idx]
@@ -996,7 +1003,7 @@ def merge_events_only(enriched_events: list[dict], pool: list[dict]) -> list[dic
     ALLOWED = {"국내 반도체", "물리적 충돌", "기상이변", "금융 위기", "기타"}
     raw = []
     for item in enriched_events:
-        idx = item.get("idx", 0) - 1
+        idx = _as_index(item.get("idx"))   # LLM 이 번호를 "3" 처럼 글자로 줄 때도 처리 (v2.5)
         if not (0 <= idx < len(pool)):
             continue
         src = pool[idx]
@@ -1080,7 +1087,7 @@ def main():
     news_entries = fetch_entries(news_urls)
     print(f"  → {len(news_entries)}건 (NEWS_QUERIES {len(NEWS_QUERIES)}개)")
 
-    print(f"[2/5] EVENTS RSS 수집 (글로벌 + 국내 반도체 이벤트성)…")
+    print("[2/5] EVENTS RSS 수집 (글로벌 + 국내 반도체 이벤트성)…")
     events_urls = build_rss_urls(EVENTS_RSS_FEEDS, EVENTS_QUERIES)
     events_entries_raw = fetch_entries(events_urls)
     # NEWS 풀과 중복 제거 (titles)
@@ -1092,10 +1099,10 @@ def main():
         raise SystemExit("❌ RSS 결과 0건 — 네트워크/피드 확인")
 
     # NEWS 풀 처리
-    print(f"[3/5] NEWS 풀 처리 (휴리스틱 우선, LLM 실패 시 휴리스틱)")
+    print("[3/5] NEWS 풀 처리 (휴리스틱 우선, LLM 실패 시 휴리스틱)")
     news_top = pre_rank(news_entries) if news_entries else []
     # EVENTS 풀 처리
-    print(f"[4/5] EVENTS 풀 처리 (5 카테고리 분류 + 다양성)")
+    print("[4/5] EVENTS 풀 처리 (5 카테고리 분류 + 다양성)")
     events_top = pre_rank(events_entries) if events_entries else []
 
     # LLM 호출 — 두 풀을 하나의 호출에 분리 출력 요청 (LLM 한도 절약)
@@ -1172,11 +1179,11 @@ def main():
         else:
             # Gemini 모든 모델 실패 — 고유명사만 안전 치환, 나머지는
             # 깨끗한 영어 유지 (동사/일반명사 부분치환의 한·영 혼합 깨짐 방지)
-            print(f"  ⚠ LLM 번역 불가 — 고유명사만 치환, 나머지 영어 원문 유지 (깨짐 방지)")
+            print("  ⚠ LLM 번역 불가 — 고유명사만 치환, 나머지 영어 원문 유지 (깨짐 방지)")
             for (arr, idx, field), orig in zip(refs, to_translate):
                 arr[idx][field] = safe_korean_title(orig)
 
-    print(f"[6/6] 저장")
+    print("[6/6] 저장")
     payload_news = {
         "collectedAt": date.today().isoformat(),
         "method": method_news,

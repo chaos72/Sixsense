@@ -1,6 +1,7 @@
 # Sixsense 데이터 파이프라인 의존성 — GitHub Actions(공용 주방)에서 설치.
 # 버전은 로컬 .venv(작동 확인됨)와 동일하게 고정.
-# torch 는 워크플로에서 CPU 전용 index 를 추가로 지정해 설치한다.
+# v2.5: 화면에 쓰지 않는 옛 예측 스크립트(forecast*.py)용 torch·prophet·xgboost 등은 주간 작업에서 제외.
+# scikit-learn 은 LightGBM(honest_backtest)이 필요로 하므로 유지.
 
 numpy==2.0.2
 pandas==2.3.3
@@ -8,11 +9,6 @@ scipy==1.13.1
 scikit-learn==1.6.1
 requests==2.32.5
 yfinance==1.2.0
-prophet==1.3.0
-holidays==0.83
-cmdstanpy==1.3.0
-torch==2.4.1
-xgboost==2.1.4
 lightgbm==4.6.0
 feedparser==6.0.12
 boto3==1.42.97
