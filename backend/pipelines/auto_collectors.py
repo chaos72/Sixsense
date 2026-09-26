@@ -435,6 +435,7 @@ def collect_A3_kcs():
     base_url = os.getenv("KCS_API_URL", "https://apis.data.go.kr/1220000/Itemtrade")
     full_url = f"{base_url}/getItemtradeList"
     monthly = []
+    net_errors = 0
     for year, month in _history_months():
         ym = f"{year}{month:02d}"
         params = {
@@ -478,7 +479,13 @@ def collect_A3_kcs():
             raise
         except Exception as e:
             print(f"  ⚠️ {ym} 실패: {str(e)[:80]}")
+            if isinstance(e, requests.exceptions.RequestException):
+                net_errors += 1
         time.sleep(0.3)
+    if not monthly and net_errors:
+        # 모든 달이 연결 실패면 설정 문제가 아니라 네트워크(해외 IP 차단 등) — 원인을 정확히 보고 (v2.5.1)
+        raise requests.exceptions.ConnectionError(
+            f"관세청 연결 실패 {net_errors}개월 — 해외 IP 차단 가능성, 한국에서 로컬 수집으로 보충")
     if not monthly:
         raise RuntimeError(
             "관세청 API 응답에서 데이터 추출 실패. "
