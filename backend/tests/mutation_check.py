@@ -26,8 +26,8 @@ MUTATIONS = [
     ("v2.5 오류6 기준 날짜를 현지 날짜로", "auto_collectors.py",
      'else datetime.now(timezone.utc).date()', 'else date.today()'),
     ("v2.5 오류2 B-7 진행 중인 주 포함 (0 표시)", "auto_collectors.py",
-     "        if w > _last_completed_week():   # 진행 중인 주 제외 — 개수·점수 합은 주가 끝나야 의미 (v2.5)\n            continue\n",
-     ""),
+     "    # Sum all weeks in range (zero-fill missing)\n    weeks = (END_D - START_D).days // 7 + 1\n    data = []\n    for i in range(weeks):\n        w = snap_to_monday(START_D + timedelta(weeks=i)).isoformat()\n        if w > _last_completed_week():   # 진행 중인 주 제외 — 개수·점수 합은 주가 끝나야 의미 (v2.5)\n            continue\n",
+     "    # Sum all weeks in range (zero-fill missing)\n    weeks = (END_D - START_D).days // 7 + 1\n    data = []\n    for i in range(weeks):\n        w = snap_to_monday(START_D + timedelta(weeks=i)).isoformat()\n"),
     ("v2.4.1 A-4 응답 검사 제거 (엉뚱한 표 저장)", "auto_collectors.py",
      'if not all("재고지수" in itm and "반도체" in ind for itm, ind in names):', "if False:"),
     ("v2.3.1 A-1 정규화 없이 가중 (TSMC 98%)", "auto_collectors.py",
@@ -53,7 +53,11 @@ MUTATIONS = [
     ("v2.6.1 A-3 한 달 연결 실패를 무시하고 일부 달로 저장", "auto_collectors.py",
      "    if net_errors:\n", "    if False:\n"),
     ("v2.6.1 최신 관측 후퇴 방지 장치 제거", "auto_collectors.py",
-     "        if why:\n", "        if False:\n"),
+     "        why = _regressed(sid, data)\n        if why:\n", "        why = _regressed(sid, data)\n        if False:\n"),
+    ("v2.6.2 뉴스 피드 일부 실패를 무시하고 나머지로 저장 (B-2·B-1·B-5·B-6)", "auto_collectors.py",
+     "    if errors:\n", "    if False:\n"),
+    ("v2.6.2 피드 연결 실패(응답 없음)를 정상으로 간주", "auto_collectors.py",
+     "    if status is None:\n        return \"응답 없음(연결 실패)\"\n", "    if status is None:\n        return None\n"),
     ("v2.3.1 신선도: 기준금리도 같은 값 검사", "build_frontend_data.py",
      "    if sid in NO_FROZEN_CHECK:\n        return None\n", ""),
 ]
@@ -67,11 +71,13 @@ def main() -> int:
             shutil.copytree(PIPELINES, copy, ignore=shutil.ignore_patterns("__pycache__"))
             f = copy / fname
             src = f.read_text()
-            if src.count(now) < 1:
-                print(f"  ⚠️ {name}: 되살릴 위치를 못 찾음(코드가 바뀜) — 목록 갱신 필요")
-                survived.append(name + " (위치 없음)")
+            n = src.count(now)
+            if n != 1:
+                # 여러 곳이면 엉뚱한 곳을 바꿀 수 있다(v2.6.2: 새 코드의 같은 문장이 후퇴 방지 대신 바뀌던 문제) → 앞뒤 문맥을 넣어 한 곳으로
+                print(f"  ⚠️ {name}: 되살릴 위치가 {n}곳(정확히 1곳이어야 함) — 목록 갱신 필요")
+                survived.append(name + f" (위치 {n}곳)")
                 continue
-            f.write_text(src.replace(now, old, 1))   # 여러 곳이면 첫 번째(B-7 은 B-3 보다 앞)만
+            f.write_text(src.replace(now, old))
             r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider", str(BACKEND / "tests")],
                                env={**os.environ, "SIXSENSE_PIPELINES": str(copy)},
                                capture_output=True, text=True, cwd=BACKEND)

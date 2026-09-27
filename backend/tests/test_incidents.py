@@ -58,7 +58,7 @@ def test_v25_전부_마감되면_Gemini를_부르지_않음(ac, write_signal_fil
     write_signal_file("B-6", _rows([("2026-09-14", 0.5)]), finalThrough="2026-12-28")
     import feedparser
     entry = {"published_parsed": time.struct_time((2026, 9, 15, 0, 0, 0, 1, 258, 0)), "title": "HBM demand", "summary": ""}
-    monkeypatch.setattr(feedparser, "parse", lambda url: type("F", (), {"entries": [entry]})())
+    monkeypatch.setattr(feedparser, "parse", lambda url: _feed([entry]))
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
     calls = []
@@ -71,7 +71,7 @@ def test_v232_Gemini가_전부_실패하면_키워드로_채우지_않고_파일
     before = write_signal_file("B-6", _rows([("2026-09-14", 0.5)]), finalThrough="2026-09-07")
     import feedparser
     entry = {"published_parsed": time.struct_time((2026, 9, 15, 0, 0, 0, 1, 258, 0)), "title": "HBM growth surge", "summary": ""}
-    monkeypatch.setattr(feedparser, "parse", lambda url: type("F", (), {"entries": [entry]})())
+    monkeypatch.setattr(feedparser, "parse", lambda url: _feed([entry]))
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
 
@@ -397,3 +397,63 @@ def test_v261_정상_갱신은_후퇴_검사를_통과(ac, write_signal_file, mo
     monkeypatch.setitem(ac.COLLECTORS, "A-7", lambda: (_rows([("2026-09-07", 6.5), ("2026-09-14", 6.6),
                                                                 ("2026-09-21", 6.7)]), "real", "HG=F"))
     assert ac.run_one("A-7")["status"] == "ok"
+
+
+# ───────────── v2.6.2 · 뉴스 피드 일부가 조용히 실패해도 나머지로 점수를 내 저장하던 위험 (B-2, B-1·B-5·B-6) ─────────────
+# feedparser 는 연결이 끊겨도 오류를 내지 않고 빈 결과(응답 코드 없음)를 돌려준다.
+def _feed(entries, status=200, bozo=False):
+    return type("F", (), {"entries": entries, "status": status, "bozo": bozo, "get": lambda self, k, d=None: getattr(self, k, d)})()
+
+
+def _news_entry(title="DRAM memory surge growth"):
+    return {"published_parsed": time.struct_time((2026, 9, 22, 0, 0, 0, 1, 265, 0)), "title": title, "summary": ""}
+
+
+def test_v262_B2_피드_하나라도_연결_실패면_저장하지_않고_기존_값_유지(ac, write_signal_file, monkeypatch):
+    old = write_signal_file("B-2", _rows([("2026-09-14", 0.1)]), finalThrough="2026-09-07")
+    import feedparser
+    urls = []
+
+    def flaky(url):
+        urls.append(url)
+        return _feed([], status=None) if len(urls) == 3 else _feed([_news_entry()])   # 3번째 피드만 연결 실패
+    monkeypatch.setattr(feedparser, "parse", flaky)
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
+    r = ac.run_one("B-2")
+    assert r["status"] == "failed" and "피드" in r["reason"], r
+    assert json.loads((ac.HIST_DIR / "B-2.json").read_text())["data"] == old["data"]
+
+
+def test_v262_B2_경고_표시만_있고_기사가_있는_피드는_정상(ac, monkeypatch):
+    import feedparser
+    monkeypatch.setattr(feedparser, "parse", lambda url: _feed([_news_entry()], bozo=True))   # Digitimes 실측과 같은 모양
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
+    assert ac.run_one("B-2")["status"] == "ok"
+
+
+def test_v262_B6_공통_수집기도_피드_하나라도_실패면_전체_실패(ac, write_signal_file, monkeypatch):
+    old = write_signal_file("B-6", _rows([("2026-09-14", 0.5)]), finalThrough="2026-09-07")
+    import feedparser
+    urls = []
+
+    def flaky(url):
+        urls.append(url)
+        return _feed([], status=500) if len(urls) == 2 else _feed([_news_entry()])
+    monkeypatch.setattr(feedparser, "parse", flaky)
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
+    monkeypatch.setattr(ac, "_llm_sentiment", lambda *a, **k: 0.3)
+    monkeypatch.setitem(ac.COLLECTORS, "B-6", lambda: ac._collect_ir_news_sentiment("B-6", "HBM", "HBM mix"))
+    r = ac.run_one("B-6")
+    assert r["status"] == "failed" and "피드" in r["reason"], r
+    assert json.loads((ac.HIST_DIR / "B-6.json").read_text())["data"] == old["data"]
+
+
+def test_v262_피드_판정_경계(ac):
+    assert ac._feed_failed(_feed([], status=None)) and ac._feed_failed(_feed([], status=404))
+    assert ac._feed_failed(_feed([], bozo=True))                        # 읽기 실패 + 기사 0건 → 실패
+    assert ac._feed_failed(_feed([_news_entry()], bozo=True)) is None   # 경고만 있고 기사 있음 → 정상 (Digitimes)
+    assert ac._feed_failed(_feed([_news_entry()], status=302)) is None  # 주소 이동 후 정상 (구글 뉴스 zh-TW)
+    assert ac._feed_failed(_feed([], status=200)) is None               # 검색 결과가 정말 없는 경우 → 정상

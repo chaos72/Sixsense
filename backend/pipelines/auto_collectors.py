@@ -579,7 +579,45 @@ def collect_A5_aws_spot():
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# B-2 GDELT BigQuery (대만 뉴스 감성)
+# 뉴스 피드 공통 수신 (v2.6.2) — 하나라도 실패하면 전체 실패
+# ──────────────────────────────────────────────────────────────────────────────
+def _feed_failed(f) -> str | None:
+    """feedparser 는 연결이 끊겨도 오류 없이 빈 결과를 준다 → 응답 코드로 판정.
+    경고 표시(bozo)만으로는 실패가 아님 — Digitimes 는 정상 응답에도 인코딩 경고가 붙는다(2026-09-27 실측)."""
+    status = f.get("status")
+    if status is None:
+        return "응답 없음(연결 실패)"
+    if status >= 400:
+        return f"응답 코드 {status}"
+    if f.get("bozo") and not f.entries:
+        return f"읽기 실패({type(f.get('bozo_exception')).__name__})"
+    return None
+
+
+def _fetch_feeds(urls: list[str], label: str, pause: float) -> list:
+    """피드 목록을 모두 받는다. 일부만 받은 채로 점수를 내면 마감 주에 틀린 값이 고정되므로
+    하나라도 실패하면 ConnectionError → run_one 이 '실패, 기존 값 유지'로 처리하고 다음 실행에서 재시도한다."""
+    import feedparser
+    feeds, errors = [], []
+    for url in urls:
+        try:
+            f = feedparser.parse(url)
+            why = _feed_failed(f)
+        except Exception as e:
+            f, why = None, f"{type(e).__name__}: {str(e)[:40]}"
+        if why:
+            errors.append(f"{url[:45]}… {why}")
+        else:
+            feeds.append(f)
+        time.sleep(pause)
+    if errors:
+        raise requests.exceptions.ConnectionError(
+            f"{label} 피드 {len(errors)}/{len(urls)}개 받기 실패 — 일부만으로 저장하지 않음, 기존 값 유지: {errors[0]}")
+    return feeds
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# B-2 대만·구글 뉴스 RSS 감성 (키워드)
 # ──────────────────────────────────────────────────────────────────────────────
 def collect_B2_rss_sentiment():
     """B-2: TechNews.tw + Digitimes RSS 피드 → 서버/메모리 헤드라인 sentiment.
@@ -587,9 +625,8 @@ def collect_B2_rss_sentiment():
     GDELT BigQuery 대안 — GCP credentials 불필요.
     feedparser로 RSS 파싱, 키워드 기반 sentiment (기본).
     """
-    try:
-        import feedparser
-    except ImportError:
+    import importlib.util
+    if importlib.util.find_spec("feedparser") is None:
         raise EnvironmentError("feedparser 미설치: pip install feedparser")
 
     # 1. Topic-specific RSS (대만 기술 매체)
@@ -631,30 +668,22 @@ def collect_B2_rss_sentiment():
     NEG = ["下跌", "減少", "萎縮", "弱勢", "疲軟", "庫存過剩", "拒買", "管制", "禁令",
            "decline", "drop", "weak", "oversupply", "ban", "restrict", "bearish", "slump"]
 
-    import time as _t
-
     all_entries = []
-    for url in RSS_FEEDS:
-        try:
-            f = feedparser.parse(url)
-            for e in f.entries:
-                pub = e.get("published_parsed") or e.get("updated_parsed")
-                if not pub:
-                    continue
-                d = date(pub.tm_year, pub.tm_mon, pub.tm_mday)
-                # RSS는 보통 최근 4~30일만 제공 — END_D(2026-04-30) 무시하고 START_D 이상만
-                # 운영 시 매주 cron으로 누적 → 1년 차에 완전 history
-                if d < START_D:
-                    continue
-                title = e.get("title", "") or ""
-                summary = e.get("summary", "") or ""
-                text = (title + " " + summary)[:500]
-                if not any(kw.lower() in text.lower() for kw in TOPIC_KEYWORDS):
-                    continue
-                all_entries.append({"date": d, "title": title, "text": text})
-        except Exception as e:
-            print(f"  ⚠️ {url[:50]}: {str(e)[:60]}")
-        _t.sleep(0.2)
+    for f in _fetch_feeds(RSS_FEEDS, "B-2", pause=0.2):
+        for e in f.entries:
+            pub = e.get("published_parsed") or e.get("updated_parsed")
+            if not pub:
+                continue
+            d = date(pub.tm_year, pub.tm_mon, pub.tm_mday)
+            # RSS는 최근 기사만 제공 — 매주 실행으로 누적된다
+            if d < START_D:
+                continue
+            title = e.get("title", "") or ""
+            summary = e.get("summary", "") or ""
+            text = (title + " " + summary)[:500]
+            if not any(kw.lower() in text.lower() for kw in TOPIC_KEYWORDS):
+                continue
+            all_entries.append({"date": d, "title": title, "text": text})
 
     if not all_entries:
         raise RuntimeError("RSS 토픽 매칭 entries 0건")
@@ -720,18 +749,15 @@ def _collect_ir_news_sentiment(sid: str, prompt_topic: str, source_label: str) -
     """B-1/B-5/B-6 공통 파이프라인: Google News에서 메모리社 IR/실적 헤드라인 → LLM sentiment.
     PDF 다운로드 + 추출은 회사별 IR 페이지 구조가 자주 바뀌어 불안정 → 뉴스 헤드라인으로 우회.
     """
-    import feedparser
-
     # 메모리社 실적/IR 뉴스 검색
     queries = [
         f"Samsung memory {prompt_topic}",
         f"SK Hynix {prompt_topic}",
         f"Micron {prompt_topic}",
     ]
+    urls = [f"https://news.google.com/rss/search?q={q.replace(' ', '+')}&hl=en-US&gl=US&ceid=US:en" for q in queries]
     entries = []
-    for q in queries:
-        url = f"https://news.google.com/rss/search?q={q.replace(' ', '+')}&hl=en-US&gl=US&ceid=US:en"
-        f = feedparser.parse(url)
+    for f in _fetch_feeds(urls, sid, pause=0.3):
         for e in f.entries[:60]:
             pub = e.get("published_parsed") or e.get("updated_parsed")
             if not pub:
@@ -743,7 +769,6 @@ def _collect_ir_news_sentiment(sid: str, prompt_topic: str, source_label: str) -
                 "date": d,
                 "text": ((e.get("title") or "") + " " + (e.get("summary") or ""))[:600],
             })
-        time.sleep(0.3)
 
     if not entries:
         raise RuntimeError(f"{source_label} 뉴스 entries 0건")
