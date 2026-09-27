@@ -2,8 +2,8 @@
 // DO NOT EDIT MANUALLY — regenerate via: python3 pipelines/build_frontend_data.py
 // 데이터 소스: backend/data/historical/* + backend/data/validation/latest.json
 //             + backend/data/news/latest.json + backend/data/events/latest.json
-// 생성 시각: 2026-09-26T14:41:45.741744Z
-// 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-26) · events 8건 (기상이변 제외)
+// 생성 시각: 2026-09-27T10:55:16.618818Z
+// 뉴스/이벤트: news 10건 (Gemini LLM 분류, 2026-09-27) · events 8건 (기상이변 제외)
 
 export const SIXSENSE_DATA = {
   "meta": {
@@ -13,18 +13,18 @@ export const SIXSENSE_DATA = {
     "unitDesc": "MU 50% · SK하이닉스 30% · 삼성전자 20% 주가 가중, 2025-06-16 = 100",
     "unitShort": "pt",
     "proxyNote": "실제 DRAM 계약가가 아닌 대용 지표입니다.",
-    "updated": "2026-09-26 23:41 KST",
+    "updated": "2026-09-27 19:55 KST",
     "insight": {
-      "headline": "메모리 3사 지수 반등 및 AI 메모리 부족 심화",
-      "summary": "메모리 3사 주가지수는 751.1 pt로 4주간 14.4% 상승하며 반등세를 보였다. 최근 뉴스에서는 **DDR5 메모리 가격**이 6배 급등하고 AI 수요로 인한 **메모리 부족** 현상이 심화되고 있음이 관찰된다. 관세청 메모리 수출액은 약 157억 달러를 기록했으며, HBM 및 LTA 관련 뉴스 감성 지수는 +0.80으로 높은 수준이다. 향후 **재고지수** 추이와 미국 10년물 국채금리(5.05%) 등 거시경제 지표의 변동성을 주시할 필요가 있다.",
+      "headline": "메모리 3사 주가지수 상승세 지속",
+      "summary": "메모리 3사 주가지수는 현재 751.1pt로, 지난 1주간 +5.0%, 4주간 +14.4% 상승했으나, 13주간으로는 -15.0% 하락했습니다. 최근 **AI 수요** 증가와 관련된 메모리칩 가치 급등, DDR5 랩톱 메모리 가격 급등, 그리고 **AI 메모리 부족** 심화 뉴스가 긍정적인 감성 점수를 보였습니다. 실적발표, LTA, HBM 관련 뉴스 감성도 모두 긍정적입니다. 관세청 메모리 수출액은 135억 달러를 기록했으며, 반도체 재고지수는 106.5입니다. 미국 10년물 국채금리는 5.05%를 기록했습니다.",
       "tone": "pos",
       "keySignals": [
         "A-3",
-        "B-6",
-        "A-4"
+        "A-4",
+        "B-6"
       ],
-      "model": "Gemini gemini-3-flash-preview",
-      "generatedAt": "2026-09-26T14:41:31"
+      "model": "Gemini gemini-2.5-flash",
+      "generatedAt": "2026-09-27T10:55:03"
     }
   },
   "history": [
@@ -356,7 +356,7 @@ export const SIXSENSE_DATA = {
     "weeklyVol13w": 7.0
   },
   "validation": {
-    "runAt": "2026-09-26",
+    "runAt": "2026-09-27",
     "dataWeeks": 67,
     "dataRange": [
       "2025-06-16",
@@ -590,8 +590,8 @@ export const SIXSENSE_DATA = {
           {
             "h": 1,
             "week": "2026-09-28",
-            "value": 794.5,
-            "changePct": 5.77
+            "value": 785.42,
+            "changePct": 4.56
           },
           {
             "h": 2,
@@ -636,8 +636,8 @@ export const SIXSENSE_DATA = {
     "verdict": "불합격",
     "explanation": {
       "status": "ok",
-      "text": "이번 검증은 '앱이 쓰던 방식 (가격 수준 예측)'과 '개선 시도 (변화율 예측)' 모두 평균오차가 기준선인 15.7%보다 크고, 모델과 기준선의 실력이 같다고 가정할 때 모델이 앞설 확률인 p값이 각각 0.993과 0.736으로 기준인 0.05 미만을 충족하지 못해 불합격하였습니다. 특히 '앱이 쓰던 방식 (가격 수준 예측)'은 예측이 실제보다 낮았던 비율이 94.8%에 달해 오르는 시장을 계속 낮게 보았으며, 오르내림 적중률(32.5%)도 단순히 항상 오른다고 찍었을 때의 적중률(70.6%)에 크게 못 미쳤습니다. 이는 데이터가 67주로 부족한 데다 예측 대상이 실제 DRAM 가격이 아닌 주가 대용 지표라는 점이 한계로 작용했습니다. 현재 4주 뒤 예측에 대해서도 '앱이 쓰던 방식 (가격 수준 예측)'은 728.4pt로 하락을, '개선 시도 (변화율 예측)'는 824.7pt로 상승을 전망하며 서로 상반된 결과를 보이고 있습니다.",
-      "model": "Gemini gemini-3-flash-preview",
+      "text": "이 AI 모델은 검증 결과 '불합격' 판정을 받았습니다. 합격 기준은 모델의 평균 오차가 기준선(15.7%)보다 낮고, 모델과 기준선의 실력이 같다고 가정할 때 모델이 이만큼 앞설 확률을 나타내는 p값이 0.05 미만이어야 합니다. '앱이 쓰던 방식 (가격 수준 예측)'은 평균 오차가 34.3%로 기준선보다 훨씬 높았고, 예측이 실제보다 낮았던 비율이 94.8%에 달하며 오르내림 적중률도 32.5%로 '항상 오른다'고 찍었을 때의 70.6%보다 크게 낮았습니다. '개선 시도 (변화율 예측)' 방식 역시 평균 오차가 21.9%로 기준선보다 높았으며, 두 방식 모두 p값이 각각 0.993과 0.736으로 합격 기준인 0.05를 충족하지 못했습니다. 이 모델은 67주치의 데이터만을 사용했고 실제 DRAM 가격이 아닌 주가지수를 예측한다는 한계가 있으며, 현재 4주 뒤 예측도 '앱이 쓰던 방식 (가격 수준 예측)'은 728.4pt(-3.0% 변화), '개선 시도 (변화율 예측)'은 824.7pt(9.8% 변화)로 서로 다르게 나타났습니다.",
+      "model": "Gemini gemini-2.5-flash",
       "reason": null,
       "attempts": 1
     }
@@ -768,7 +768,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -777,8 +777,8 @@ export const SIXSENSE_DATA = {
       "id": "A-3",
       "name": "관세청 메모리 수출",
       "source": "관세청 data.go.kr Itemtrade HS 854232",
-      "value": "15.73B",
-      "num": 15733149397.0,
+      "value": "13.55B",
+      "num": 13551552131.0,
       "tone": "neu",
       "desc": "HS 854232 월간 수출액 USD (관세청 Open API)",
       "spark": [
@@ -866,40 +866,40 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-08-03",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-08-10",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-08-17",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-08-24",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-08-31",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-09-07",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-09-14",
-          "value": 15733149397.0
+          "value": 13551552131.0
         },
         {
           "week": "2026-09-21",
-          "value": 15733149397.0
+          "value": 13551552131.0
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
-      "dataSince": "2026-08-03",
+      "collectedAt": "2026-09-27",
+      "dataSince": "2026-07-06",
       "stale": false,
       "staleReason": null
     },
@@ -1028,7 +1028,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-07-06",
       "stale": false,
       "staleReason": null
@@ -1038,7 +1038,7 @@ export const SIXSENSE_DATA = {
       "name": "AWS 스팟 가격",
       "source": "AWS EC2 m6i.xlarge spot",
       "value": "$0.13",
-      "num": 0.1301,
+      "num": 0.1298,
       "tone": "pos",
       "desc": "EC2 m6i.xlarge 스팟 시간당 USD (최근 90일)",
       "spark": [
@@ -1049,7 +1049,7 @@ export const SIXSENSE_DATA = {
         0.473,
         0.801,
         1.0,
-        0.86
+        0.843
       ],
       "recent": [
         {
@@ -1106,11 +1106,11 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 0.1301
+          "value": 0.1298
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1240,7 +1240,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1370,7 +1370,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1381,8 +1381,8 @@ export const SIXSENSE_DATA = {
       "id": "B-1",
       "name": "실적발표 뉴스 감성",
       "source": "Google News 'Earnings Call sentiment'",
-      "value": "+0.70",
-      "num": 0.7,
+      "value": "+0.60",
+      "num": 0.6,
       "tone": "pos",
       "desc": "구글 뉴스 헤드라인을 Gemini 로 감성 점수화 (-1~+1)",
       "spark": [
@@ -1393,7 +1393,7 @@ export const SIXSENSE_DATA = {
         0.714,
         0.714,
         1.0,
-        0.857
+        0.786
       ],
       "recent": [
         {
@@ -1474,11 +1474,11 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 0.7
+          "value": 0.6
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1588,7 +1588,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-08-03",
       "stale": false,
       "staleReason": null
@@ -1718,7 +1718,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-21",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-21",
       "stale": false,
       "staleReason": null
@@ -1848,7 +1848,7 @@ export const SIXSENSE_DATA = {
         }
       ],
       "asOf": "2026-09-14",
-      "collectedAt": "2026-09-26",
+      "collectedAt": "2026-09-27",
       "dataSince": "2026-09-14",
       "stale": false,
       "staleReason": null
@@ -1857,14 +1857,14 @@ export const SIXSENSE_DATA = {
   "news": [
     {
       "date": "2026-09-25",
-      "title": "DDR5 노트북 메모리 가격 6배 급등",
+      "title": "DDR5 랩톱 메모리 가격 6배 급등",
       "titleEn": "DDR5 laptop memory prices surge 6X in 12 months — Schenker raises laptop prices and warns shortage will last through 2027, other components also on the rise - Tom's Hardware",
       "source": "RSS",
-      "score": 0.95,
+      "score": 0.9,
       "tone": "pos",
       "conf": 95,
       "hot": true,
-      "summary": "DDR5 노트북 메모리 가격이 12개월 만에 6배 급등했으며, Schenker는 노트북 가격 인상과 함께 2027년까지 공급 부족이 지속될 것이라고 경고했습니다. 이는 다른 부품 가격 상승과 함께 전반적인 시장 압력을 시사합니다.",
+      "summary": "DDR5 랩톱 메모리 가격이 지난 12개월간 6배나 급등했다. 쉥커는 랩톱 가격을 인상하고 2027년까지 공급 부족이 지속될 것이라고 경고했다. 다른 부품 가격도 상승 중이다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1887,14 +1887,14 @@ export const SIXSENSE_DATA = {
     },
     {
       "date": "2026-09-22",
-      "title": "AI 수요로 DRAM 다이 가치 급등",
+      "title": "AI 수요로 메모리칩 가치 급등",
       "titleEn": "Memory chips are now more expensive than compute chips on a per-area basis — AI demand drives DRAM die value past leading-edge silicon - Tom's Hardware",
       "source": "RSS",
       "score": 0.9,
       "tone": "pos",
-      "conf": 95,
+      "conf": 90,
       "hot": true,
-      "summary": "AI 수요 증가로 인해 메모리 칩, 특히 DRAM 다이의 단위 면적당 가치가 컴퓨트 칩보다 높아졌습니다. 이는 AI 시장의 폭발적인 성장이 고성능 DRAM의 가격 상승을 주도하고 있음을 명확히 보여줍니다.",
+      "summary": "AI 수요 증가로 인해 메모리 칩의 단위 면적당 가격이 컴퓨팅 칩보다 비싸졌다. 이는 DRAM 다이의 가치가 최첨단 실리콘을 넘어섰음을 의미한다. AI 시장의 성장이 DRAM 가격 상승을 견인하고 있다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1910,21 +1910,21 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [
-        "B-6 관련",
-        "A-2 관련"
+        "A-2 관련",
+        "B-6 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNc3FyNEY1Y2Z5RlVDUlE3MkdETi1ielNrTEFCeHFQc2sweUw0MWF0VTB1Q1NSVXdzMlBITWJPekMzRWxhX25acmlZQ21qVHNZSFhYdXJsVEpkOXV0enFDaHp3Z2pHSmxoVnZoUzhPVHRmUkY5bzkzV01KdFhRUlRKN1Iya0kxMVdVcnpmVVBRVlp1S1lnUE94N2E4OGVZWldMSk8zeW9DbnN5T2paejRrLTRRbkp2dWFRYkYtelAtc00wSnBMa01vSVpqaGhoSTB5UDA4SGs5RlRob09UNzZJeTlfeFNQVWFPdnpZNTEyWUNVYTJiWUVLbDdJcnUxSmlx?oc=5"
     },
     {
       "date": "2026-09-21",
-      "title": "삼성·SK하이닉스, AI 메모리 부족 심화로 주가 급등",
+      "title": "AI 메모리 부족 심화, 삼성·SK 주가 급등",
       "titleEn": "Samsung and SK Hynix Stocks Surge as AI Memory Shortage Deepens",
       "source": "Startup Fortune",
-      "score": 0.9,
+      "score": 0.85,
       "tone": "pos",
-      "conf": 95,
+      "conf": 92,
       "hot": true,
-      "summary": "삼성과 SK하이닉스 주가가 AI 메모리 부족 심화로 급등했습니다. 이는 고성능 AI용 DRAM에 대한 강력한 수요와 제한된 공급이 지속되면서, 관련 기업들의 실적 개선과 DRAM 가격 상승을 견인하고 있음을 나타냅니다.",
+      "summary": "AI 메모리 부족 현상이 심화되면서 삼성전자와 SK하이닉스 주가가 급등했다. 이는 AI 시장의 폭발적인 성장이 메모리 수요를 크게 늘리고 있음을 보여준다. 주요 메모리 제조사들이 수혜를 입고 있다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1940,21 +1940,22 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [
-        "B-6 관련",
-        "A-4 관련"
+        "A-2 관련",
+        "A-4 관련",
+        "B-6 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOa3o2bTFqaWRsM1lMRm44YlBFMy1FTjl3Y1Z1azFWSkNmeXU1ZUZRZ2txcFIxNlBCTHJzNEx0bDY3djBhSXd4VzZaX1RPcG5kaHp0X3FRUG9mYWdSNzNUcHdOUGd1ZXpCTmtBb1F4VXNlc0lMTGdIcFZJa0l5Ykx4UEJ3TVI0ZWdKbnFVOUw0aG5GMUxiWmc?oc=5"
     },
     {
       "date": "2026-09-10",
-      "title": "메모리 칩 시장 심각한 부족 직면",
+      "title": "2027년 램 부족 심화 전망 (AI 영향)",
       "titleEn": "'The memory chip market is heading toward a severe shortage': analyst firm believes RAM crisis could get far worse in 2027 — and you can blame AI ramping up",
-      "source": "TechRadar",
-      "score": 0.9,
+      "source": "techradar.com",
+      "score": 0.8,
       "tone": "pos",
-      "conf": 95,
+      "conf": 88,
       "hot": true,
-      "summary": "한 분석 기관은 메모리 칩 시장이 심각한 부족 사태에 직면하고 있으며, 2027년에는 상황이 더욱 악화될 수 있다고 경고했습니다. 이는 AI 수요 증가가 주요 원인으로 지목되며, DRAM 가격에 지속적인 상승 압력을 가할 것으로 예상됩니다.",
+      "summary": "한 분석 기관은 메모리 칩 시장이 심각한 부족 사태로 향하고 있으며, 2027년에는 RAM 위기가 더욱 악화될 수 있다고 경고했다. 이는 AI 기술의 급격한 발전과 수요 증가에 기인한다. DRAM 가격 상승 압력이 지속될 것으로 보인다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -1970,22 +1971,22 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [
-        "B-6 관련",
+        "A-2 관련",
         "A-4 관련",
-        "A-2 관련"
+        "B-6 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMinwJBVV95cUxNaXR3TlhtMHllWjJkNXEzOTJ0U1lpSGFxX2MxVE04dUlRdVA0MG90bS1HVkJObFpBS2xISHk3YUxHV291ODVyMGRTQlUwaVNPcmxqNDZ6RDhnUENCS2szRDhPcWZBYl9Db3R6UEVTaXVmc0kyNHJNT215OGNhLUhGQVhRVGcwZFlNY3NFZXFuN2tIdjI1NW1WX2ZDTVRsZEZLZElIb2tfMC1VYWxOazlES1drQmoyWVZCblcwTU5OcDVQejM3cDFzSm5uMlJnaTdkZExBeHlzdXdab01pUGZmQk1hTHlZSlVMc2lwY0d0aDkxcHBTdlcxWUpFeXc1VHRRNVFhUzVCSC1mMWV0ZzVlbHlmRFpXVlpKRWJFWC0wOA?oc=5"
     },
     {
-      "date": "2026-09-24",
-      "title": "마이크론 랠리, 메모리 부족 반영",
-      "titleEn": "Micron’s Rally Looks Overdone Until You Price The Memory Shortage",
-      "source": "Trefis",
-      "score": 0.85,
+      "date": "2026-09-27",
+      "title": "마이크론 실적, 메모리 부족에 달려",
+      "titleEn": "Micron's $50 Billion Quarter Hinges on a Memory Shortage That Won't Quit",
+      "source": "AD HOC NEWS",
+      "score": 0.75,
       "tone": "pos",
-      "conf": 90,
+      "conf": 85,
       "hot": true,
-      "summary": "마이크론의 주가 랠리가 메모리 부족 현상을 반영하고 있다는 분석이 나왔습니다. 이는 DRAM 시장의 공급 부족이 심화되고 있으며, 가격 상승 압력이 지속될 것임을 시사합니다.",
+      "summary": "마이크론의 500억 달러 분기 실적이 지속적인 메모리 부족 현상에 달려있다는 분석이 나왔다. 이는 메모리 시장의 공급 제약이 기업 실적에 긍정적인 영향을 미치고 있음을 시사한다. DRAM 가격 강세가 유지될 가능성이 높다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -2002,49 +2003,50 @@ export const SIXSENSE_DATA = {
       },
       "linked": [
         "A-4 관련",
-        "B-6 관련"
+        "B-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQQ0JwMXlveVRZQ0lSNk9kUlp1WjY5UGFGU0Z0cDJSNFl6cmdBbW9uVExOdER4MlFLM3dsazRMN1BVMmR5Qjh3QWIzOWZvSzYxU2VxME1VV3kzckFXQjN6bEFfM3lrTWgySGJoVEgyb3dvbDhiZ0JkRTNEZHo4dm5zM1Q4d2ZWVER1NFRYS2xoZkZOcjRKTUhkTktwV2F1bE1GVlBOa0l0a2c0Mll2SkxPdUFMWndoSk9XVk0yUHd2dmdCNnc0bGhUZ3FWSUZoVDVkTmhBWHJsZjdLNHM?oc=5"
+    },
+    {
+      "date": "2026-09-24",
+      "title": "마이크론 랠리, 메모리 부족 반영해야",
+      "titleEn": "Micron’s Rally Looks Overdone Until You Price The Memory Shortage",
+      "source": "Trefis",
+      "score": 0.7,
+      "tone": "pos",
+      "conf": 80,
+      "hot": true,
+      "summary": "마이크론의 주가 랠리가 과도해 보일 수 있지만, 현재의 메모리 부족 현상을 가격에 반영하면 합리적이라는 분석이다. 이는 시장이 메모리 공급 부족을 심각하게 인식하고 있음을 보여준다. DRAM 가격 상승 기대감이 반영된 결과이다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-1 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxON19DYmdtVm9HcUJGcUZDZ3lmNmtSZno2UGJHbUZjRkNNd3d2Y3REM201MVN0dGI3dGxlY1RveXNxLVVYR056UjRoTWszTmw3NFpycTZYbFVEQl96Vi14TDhSWm9FaWhrdW5MTmhJYi1feVRtcHA5bzd0QlpVeWVtcnpGQXBHNjJGc1VSRGVUaHF0X2NEcGFOdGZjSkMzbFY5S1YwdXJJY0xreUE4eHFlTVA4eGFoS1VEaEp2bXNGTW0?oc=5"
     },
     {
-      "date": "2026-09-11",
-      "title": "엑셀레람, RAM 부족 심화 경고",
-      "titleEn": "Exceleram warns RAM shortage is still escalating",
-      "source": "KitGuru",
-      "score": 0.8,
-      "tone": "pos",
-      "conf": 90,
-      "hot": true,
-      "summary": "Exceleram은 RAM 부족 현상이 여전히 심화되고 있다고 경고했습니다. 이는 DRAM 시장의 공급 제약이 지속되고 있으며, 단기적으로 가격 상승 압력이 유지될 가능성이 높음을 시사합니다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQM0FtSUdJc0R6ckV1UmFkUmk5WUtUZUNwOUxJS2NGMl9pNnhoMTludFo0V3NMdXBZdl9MRzcwRzk4SjhwZ1JON1d3R0EzZkZ3LVg2a1VrUDFlQ0dCYS1JYndORGVyZUdqUDc4M0ZXNlgxalQzX25nLXk0ZlRZS3RzcHkwRE8xcDhzWUNjQTdRZlhqMlIxUU8yc1FleDBtMTYybV9GTzc2bGNtZw?oc=5"
-    },
-    {
-      "date": "2026-09-26",
-      "title": "마이크론 AI 메모리 칩 투자 통찰",
-      "titleEn": "Micron's AI Memory Chips: Investment Insights",
-      "source": "Intellectia AI",
-      "score": 0.75,
+      "date": "2026-09-04",
+      "title": "AI 메모리 부족, 금리 인상 우려 압도",
+      "titleEn": "Micron, SanDisk Surge as AI Memory Shortage Trumps Rate-Hike Fears",
+      "source": "finance.biggo.com",
+      "score": 0.7,
       "tone": "pos",
       "conf": 85,
       "hot": true,
-      "summary": "마이크론의 AI 메모리 칩에 대한 투자 통찰은 AI 시장의 성장과 함께 고성능 메모리 수요가 증가하고 있음을 보여줍니다. 이는 DRAM 시장의 긍정적인 변화를 이끌 수 있습니다.",
+      "summary": "AI 메모리 부족 현상이 금리 인상에 대한 우려를 압도하며 마이크론과 샌디스크 주가가 급등했다. 이는 AI 관련 메모리 수요가 거시 경제적 불확실성보다 더 강력한 시장 동력임을 시사한다. DRAM 시장에 긍정적인 신호이다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -2060,21 +2062,21 @@ export const SIXSENSE_DATA = {
         }
       },
       "linked": [
-        "B-6 관련",
-        "A-2 관련"
+        "A-2 관련",
+        "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBDTml0Y0JaSEtkeU9kajZSRlFXTUpLb2huU2JiQmxnWm82SFNIV3N6ODBOdmlTMThHUTBFbnRWMmNDYm5GcEFnMWQwVi1Pcm1sSnltQmczMTdNdkthanVGb1VRZ2FrbTN2bkwxOXU4eWtsSTBGUUhabzBYUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9YT3JrZDBzb0Y1d2psWk9TUDZwNWdNclhDR3Vqd2VJQ3JJUXA3RVBHVG5IVmlfaEwyQ0llam9PNXd3cWhlNm90TzhLZWduTHhEM2FXaXIxaFc0QUNqNEVWT0xPa3VLd2J2REVaTkQzSkVaWjFDTVE?oc=5"
     },
     {
       "date": "2026-09-21",
       "title": "에이서 CEO, 메모리 부족 과장 주장",
       "titleEn": "Acer CEO says memory makers are hyping 2030 shortage fears to protect margins — PC prices set to decline by late 2027, cheaper Chinese capacity coming online delivers lower memory prices - Tom's Hardware",
       "source": "RSS",
-      "score": -0.7,
+      "score": -0.6,
       "tone": "neg",
-      "conf": 80,
+      "conf": 75,
       "hot": true,
-      "summary": "에이서 CEO는 메모리 제조사들이 마진 보호를 위해 2030년 부족 우려를 과장하고 있다고 밝혔습니다. 2027년 말까지 PC 가격이 하락하고, 저렴한 중국 생산 능력이 가동되면 메모리 가격이 낮아질 수 있다고 경고했습니다.",
+      "summary": "에이서 CEO는 메모리 제조사들이 마진 보호를 위해 2030년 부족 우려를 과장하고 있다고 주장했다. 2027년 말까지 PC 가격이 하락하고, 저렴한 중국산 생산 능력 확대로 메모리 가격이 낮아질 것이라고 전망했다. 이는 DRAM 가격 하락 요인으로 작용할 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
@@ -2100,22 +2102,22 @@ export const SIXSENSE_DATA = {
       "title": "HP, 메모리 가격 급등으로 PC 출하량 감소 경고",
       "titleEn": "HP Warns PC Shipments Will Shrink Through 2027 as Memory Prices Surge",
       "source": "Startup Fortune",
-      "score": 0.65,
-      "tone": "pos",
-      "conf": 85,
-      "hot": true,
-      "summary": "HP는 메모리 가격 급등으로 인해 2027년까지 PC 출하량이 감소할 것이라고 경고했습니다. 이는 메모리 가격 상승이 최종 제품 수요에 부정적인 영향을 미치고 있음을 시사합니다.",
+      "score": -0.5,
+      "tone": "neg",
+      "conf": 80,
+      "hot": false,
+      "summary": "HP는 메모리 가격 급등으로 인해 2027년까지 PC 출하량이 감소할 것이라고 경고했다. 이는 높은 메모리 가격이 최종 제품 수요에 부정적인 영향을 미칠 수 있음을 시사한다. DRAM 수요 둔화 가능성을 내포한다.",
       "effects": {
         "short": {
-          "tone": "pos",
+          "tone": "neg",
           "text": "단기 분석"
         },
         "mid": {
-          "tone": "pos",
+          "tone": "neg",
           "text": "중기 분석"
         },
         "long": {
-          "tone": "pos",
+          "tone": "neg",
           "text": "장기 분석"
         }
       },
@@ -2125,15 +2127,15 @@ export const SIXSENSE_DATA = {
       "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNa3FWeTdCZ0dCa0ZYV2ZDTG11N0VJTHFWS2NVczNGaFlsQmN4b1hjeXpkWlk0SXB4Y2g5eUNXbWU0ZmZTbVd2ZG5iaW5zLV9kd1NLTlZxanFrUTNYbmdZT0RNU0FFR3lwUVpzTG5XRVVpZFI1eXhrdkNibWlkSDkwWjB3WkJDZno4X1gyaElwQ0s3Z1hILXpETDNJTXNWQQ?oc=5"
     },
     {
-      "date": "2026-09-25",
-      "title": "엔비디아 등 유리 기판 사용 고려",
-      "titleEn": "SCHMID surges after Nvidia, AMD, Intel consider using glass substrates in chips",
-      "source": "Seeking Alpha",
-      "score": 0.6,
+      "date": "2026-09-02",
+      "title": "마이크론, 차세대 DRAM 기술 발표",
+      "titleEn": "Micron says tightly coupled DRAM could deliver more than 10x HBM bandwidth",
+      "source": "digitimes",
+      "score": 0.4,
       "tone": "pos",
-      "conf": 75,
-      "hot": true,
-      "summary": "엔비디아, AMD, 인텔이 칩에 유리 기판 사용을 고려하면서 SCHMID 주가가 급등했습니다. 이는 고성능 반도체 패키징 기술의 변화를 시사하며, 향후 HBM 등 첨단 DRAM 생산 방식에도 영향을 줄 수 있습니다.",
+      "conf": 85,
+      "hot": false,
+      "summary": "마이크론은 긴밀하게 결합된 DRAM이 HBM보다 10배 이상의 대역폭을 제공할 수 있다고 밝혔다. 이는 차세대 메모리 기술 발전의 가능성을 보여준다. 향후 고성능 DRAM 수요 증가 및 가치 상승에 기여할 수 있다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -2151,7 +2153,7 @@ export const SIXSENSE_DATA = {
       "linked": [
         "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNdXhLZHd2a0czR1RUQ19QaWlSenZxSmNoRVJSMWo2VnJjV0d1UGhSeVdHdjdxeUNuOVlzQmRHTUZVZkZXRmx5c1RSYUg4cVpGcFYzUk1LZDlrMjNQTGlBY1FNVUlUODhTNHBFb3kxQl9yNFRILXctd0c1Sy1PeHhxWURXRWxFbE9ibjdTWWV3VFJvRU53NHZaVGd6ckJHa2FVYVpRcmhNZFh1QVV1dmZWbThjOUNNUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPeEs2ejhUaFhQbk9qZGxkWWhuSG9rdE5MWWhWNUhHY2lQMlRvNXJNR0dGWXI4ZGJwT2xWU29kb2VaYXpiMkFZQ0d3ZU03SHEtOU44V2R6S2dBQVlhcWtsVFVDLVY1eXM5bjE0WmItZ2JIdHIwTVJyeFVHOXMxSzVEUzFtVS0tYjRB?oc=5"
     }
   ],
   "macro": [
@@ -2779,14 +2781,14 @@ export const SIXSENSE_DATA = {
         },
         {
           "week": "2026-09-21",
-          "value": 1367.36
+          "value": 1353.65
         }
       ],
       "stale": false,
       "staleReason": null,
       "dataSince": "2026-09-21",
       "name": "USD/KRW",
-      "value": "1,367",
+      "value": "1,354",
       "change": "↓ 부정",
       "tone": "pos",
       "desc": "원화 약세 = 수입 원가↑ (Yahoo KRW=X)",
@@ -2797,7 +2799,7 @@ export const SIXSENSE_DATA = {
         1344.61,
         1339.97,
         1384.54,
-        1367.36
+        1353.65
       ]
     },
     {
@@ -2935,23 +2937,79 @@ export const SIXSENSE_DATA = {
       "id": "ev-1",
       "type": "국내 반도체",
       "region": "한국",
-      "risk": "mid",
-      "title": "SK하이닉스 파업 위기 해결",
+      "risk": "low",
+      "title": "SK하이닉스 파업 위기 해결, 주가 급등",
       "impact": "공급↑",
       "date": "2026-09-16",
-      "summary": "SK하이닉스의 파업 위기가 해결되면서 주가가 4% 급등했습니다. 이는 국내 주요 메모리 제조사의 생산 차질 우려가 해소되어 시장에 긍정적인 신호로 작용했습니다.",
+      "summary": "SK하이닉스의 파업 위기가 해결되면서 주가가 4% 급등했다. 이는 국내 주요 메모리 제조사의 생산 차질 우려가 해소되었음을 의미한다. DRAM 공급 안정화에 긍정적인 영향을 미친다.",
       "effects": {
         "short": {
           "tone": "pos",
-          "text": "파업 위기 해소로 단기적인 생산 차질 우려가 완화되어 공급 안정에 긍정적입니다."
+          "text": "단기적으로 SK하이닉스의 생산 차질 우려가 해소되어 DRAM 공급 안정화에 기여한다."
         },
         "mid": {
           "tone": "pos",
-          "text": "중기적으로는 생산량 회복과 함께 시장에 안정적인 DRAM 공급을 기대할 수 있습니다."
+          "text": "중기적으로 생산량 회복 및 시장 신뢰도 향상으로 DRAM 시장에 긍정적 영향을 미친다."
         },
         "long": {
-          "tone": "pos",
-          "text": "장기적으로는 노사 관계 안정화가 생산 효율성 증대에 기여하여 공급 능력 강화에 긍정적입니다."
+          "tone": "neu",
+          "text": "장기적으로는 다른 시장 요인에 의해 영향이 희석될 수 있다."
+        }
+      },
+      "links": [],
+      "affects": [
+        "A-4"
+      ]
+    },
+    {
+      "id": "ev-2",
+      "type": "물리적 충돌",
+      "region": "중동",
+      "risk": "mid",
+      "title": "서안지구 테러 공격 발생",
+      "impact": "물류↑",
+      "date": "2026-09-24",
+      "summary": "서안지구에서 테러 공격이 발생하여 이스라엘 대사의 아들이 뇌 수술을 받았다. 이는 중동 지역의 지정학적 불안정을 심화시킬 수 있는 사건이다. 국제 정세 불안정은 원자재 가격 및 물류에 영향을 줄 수 있다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 중동 지역의 긴장 고조로 유가 상승 및 물류 비용 증가 가능성이 있다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로 지정학적 리스크가 투자 심리를 위축시키고 글로벌 공급망에 불확실성을 더할 수 있다."
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기적으로는 지역 안정화 노력에 따라 영향이 완화될 수 있으나, 근본적인 해결 없이는 잠재적 위험이 지속된다."
+        }
+      },
+      "links": [],
+      "affects": [
+        "B-4"
+      ]
+    },
+    {
+      "id": "ev-4",
+      "type": "금융 위기",
+      "region": "글로벌",
+      "risk": "high",
+      "title": "미-이란 회담 진전, 유가 급등, 연준 매파적",
+      "impact": "수요↓",
+      "date": "2026-09-25",
+      "summary": "미-이란 회담 진전에도 불구하고 유가가 급등했으며, 연준 관계자들은 매파적 발언으로 10월 금리 인상 가능성을 높였다. 이는 에너지 가격 상승과 긴축 통화 정책이 동시에 진행될 수 있음을 시사한다. DRAM 시장에 복합적인 영향을 줄 수 있다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기적으로 유가 상승은 생산 비용 증가로 이어지고, 금리 인상 가능성은 투자 심리를 위축시킨다."
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기적으로는 고유가와 고금리 환경이 결합되어 전반적인 경제 활동을 둔화시키고 DRAM 수요에 부정적 영향을 미칠 수 있다."
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기적으로는 이러한 복합적 요인들이 글로벌 경제의 불확실성을 높여 DRAM 시장의 회복을 더디게 할 수 있다."
         }
       },
       "links": [],
@@ -2960,112 +3018,54 @@ export const SIXSENSE_DATA = {
       ]
     },
     {
-      "id": "ev-2",
-      "type": "물리적 충돌",
-      "region": "중동",
-      "risk": "high",
-      "title": "이란 전쟁 이후 사우디 석유 수출 급증",
-      "impact": "물류↑",
-      "date": "2026-09-24",
-      "summary": "이란 전쟁 시작 이후 사우디의 석유 수출이 호르무즈 해협을 통해 최고치를 기록했습니다. 이는 중동 지역의 군사적 긴장 속에서도 에너지 공급망의 중요성을 보여줍니다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "이란 전쟁 이후 사우디 석유 수출 급증은 단기적으로 유가 변동성을 높여 DRAM 생산 및 운송 비용에 영향을 줄 수 있습니다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 중동 지역의 군사적 긴장이 지속될 경우 글로벌 에너지 시장 불안정성이 심화되어 DRAM 산업 전반에 부담을 줄 수 있습니다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 전쟁의 장기화가 글로벌 경제 침체로 이어져 DRAM 수요 감소를 초래할 수 있습니다."
-        }
-      },
-      "links": [],
-      "affects": [
-        "B-4",
-        "A-7"
-      ]
-    },
-    {
-      "id": "ev-4",
-      "type": "금융 위기",
-      "region": "글로벌",
-      "risk": "high",
-      "title": "인플레이션 데이터, Fed 금리 인상 가능성",
-      "impact": "수요↓",
-      "date": "2026-09-11",
-      "summary": "뜨거운 인플레이션 데이터가 연준의 금리 인상 가능성을 높이고 있습니다. 이는 시장의 불확실성을 증대시키며, 향후 통화 정책 방향에 대한 관심이 집중되고 있습니다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "뜨거운 인플레이션 데이터는 단기적으로 Fed의 금리 인상 가능성을 높여 시장의 불확실성을 증대시키고 DRAM 수요에 부정적인 영향을 줄 수 있습니다."
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기적으로는 고금리 기조가 지속될 경우 기업의 투자 심리가 위축되고 소비자 지출이 감소하여 DRAM 시장 성장을 둔화시킬 수 있습니다."
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기적으로는 인플레이션 통제 실패 시 글로벌 경제 불안정이 심화되어 DRAM 산업의 장기적인 전망에 그림자를 드리울 수 있습니다."
-        }
-      },
-      "links": [],
-      "affects": [
-        "A-2"
-      ]
-    },
-    {
       "id": "ev-5",
       "type": "기타",
-      "region": "중동",
-      "risk": "high",
-      "title": "홍해 리스크로 사우디 석유 수출 비용 급증",
-      "impact": "물류↑",
-      "date": "2026-09-24",
-      "summary": "홍해 지역의 리스크가 증가하면서 사우디의 석유 수출 비용이 급증했습니다. 이는 주요 해상 운송로의 불안정성이 글로벌 에너지 및 물류 시장에 미치는 영향을 보여줍니다.",
+      "region": "미국",
+      "risk": "mid",
+      "title": "트럼프, 연준 금리 결정에 관세 위협",
+      "impact": "가격?",
+      "date": "2026-09-18",
+      "summary": "트럼프 전 대통령이 연준의 금리 결정에 대해 관세 위협을 가했다. 이는 정치적 개입이 통화 정책 및 무역 정책에 불확실성을 더할 수 있음을 보여준다. 글로벌 무역 환경에 부정적인 영향을 미칠 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "홍해 리스크 증가는 단기적으로 사우디 석유 수출 비용을 급증시켜 글로벌 물류 비용 상승 압력을 가중시킬 수 있습니다."
+          "text": "단기적으로 무역 정책의 불확실성은 기업의 투자 및 생산 계획에 혼란을 줄 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 주요 해상 운송로의 불안정성이 지속될 경우 원자재 및 완제품 운송 지연으로 DRAM 생산 및 공급망에 차질을 줄 수 있습니다."
+          "text": "중기적으로 관세 부과가 현실화될 경우 반도체 부품 가격 상승 및 글로벌 공급망 재편 압력으로 작용할 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 이러한 지정학적 물류 리스크가 글로벌 무역 흐름을 변화시키고, 공급망 재편을 가속화하여 DRAM 산업에 간접적인 영향을 미칠 수 있습니다."
+          "text": "장기적으로는 보호무역주의 강화가 글로벌 경제 성장을 저해하여 DRAM 수요에 부정적 영향을 미칠 수 있다."
         }
       },
       "links": [],
       "affects": [
-        "B-4",
-        "A-7"
+        "A-1"
       ]
     },
     {
       "id": "ev-6",
       "type": "물리적 충돌",
       "region": "중동",
-      "risk": "high",
-      "title": "서안지구 테러 공격 발생",
+      "risk": "mid",
+      "title": "이란 전쟁 이후 사우디 원유 수출 급증",
       "impact": "물류↑",
       "date": "2026-09-24",
-      "summary": "서안지구에서 테러 공격이 발생하여 이스라엘 대사의 아들이 뇌 수술을 받았습니다. 이는 중동 지역의 지정학적 불안정성을 다시 한번 부각시키며 긴장감을 고조시키고 있습니다.",
+      "summary": "이란 전쟁 시작 이후 사우디아라비아의 원유 수출량이 호르무즈 해협을 통해 최고치를 기록했다. 이는 중동 지역의 지정학적 긴장 속에서도 원유 공급이 활발함을 보여준다. 하지만 전쟁 언급은 여전히 불안정성을 내포한다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "테러 공격은 중동 지역의 지정학적 불안정성을 높여 단기적으로 물류 비용 상승 및 공급망 불확실성을 야기할 수 있습니다."
+          "text": "단기적으로 중동 지역의 군사적 긴장이 고조될 경우 유가 및 물류 비용 상승 압력이 커질 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 지역 긴장 고조가 유가 상승으로 이어져 생산 및 운송 비용에 부정적인 영향을 미칠 수 있습니다."
+          "text": "중기적으로는 에너지 시장의 불확실성이 글로벌 경제에 부담을 주어 DRAM 수요에 간접적인 영향을 미칠 수 있다."
         },
         "long": {
-          "tone": "neg",
-          "text": "장기적으로는 지정학적 리스크가 지속될 경우 글로벌 경제 성장에 제약을 가해 DRAM 수요에 간접적인 영향을 줄 수 있습니다."
+          "tone": "neu",
+          "text": "장기적으로는 국제 사회의 개입이나 상황 변화에 따라 영향이 달라질 수 있다."
         }
       },
       "links": [],
@@ -3076,86 +3076,87 @@ export const SIXSENSE_DATA = {
     {
       "id": "ev-8",
       "type": "금융 위기",
-      "region": "글로벌",
+      "region": "미국",
       "risk": "high",
       "title": "10년물 국채금리 2007년 이후 최고치",
       "impact": "수요↓",
       "date": "2026-09-23",
-      "summary": "10년물 국채금리가 2007년 이후 최고 수준을 기록하며 시장이 추가적인 연준 금리 인상을 반영하고 있습니다. 이는 고금리 환경이 장기화될 수 있다는 우려를 증폭시킵니다.",
+      "summary": "시장이 추가 연준 금리 인상을 반영하면서 10년물 국채금리가 2007년 이후 최고 수준을 기록했다. 이는 금융 시장의 긴축 기조가 강화되고 있음을 나타낸다. 고금리 환경은 전반적인 경제 활동과 투자 심리에 부정적이다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "10년물 국채금리 급등은 단기적으로 기업의 자금 조달 비용을 높여 설비 투자 위축 및 DRAM 수요 감소로 이어질 수 있습니다."
+          "text": "단기적으로 높은 국채금리는 주식 시장의 변동성을 키우고 기술주 투자 심리를 위축시킬 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 고금리 환경이 지속될 경우 글로벌 경제 성장 둔화와 함께 IT 기기 수요가 감소하여 DRAM 시장에 부정적인 영향을 미칠 것입니다."
+          "text": "중기적으로는 기업의 투자 계획 재검토로 이어져 서버 및 데이터센터 증설에 영향을 미쳐 DRAM 수요를 둔화시킬 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 고금리 기조가 장기화될 경우 기술 기업들의 CapEx 축소로 이어져 DRAM 산업의 성장 동력을 약화시킬 수 있습니다."
+          "text": "장기적으로는 고금리 장기화가 글로벌 경제 성장을 저해하여 DRAM 시장의 회복을 지연시킬 수 있다."
         }
       },
       "links": [],
       "affects": [
-        "A-2"
+        "A-2",
+        "B-5"
       ]
     },
     {
       "id": "ev-9",
       "type": "기타",
-      "region": "대만",
+      "region": "미국",
       "risk": "low",
-      "title": "대만 지진·쓰나미 경고 훈련 실시",
+      "title": "백악관, 디젤 수출 금지 배제 (가격 급등)",
       "impact": "가격?",
-      "date": "2026-09-20",
-      "summary": "대만이 월요일에 지진 및 쓰나미 경고 훈련을 실시할 예정입니다. 이는 자연재해에 대한 대비 태세를 강화하려는 노력의 일환으로, 주요 반도체 생산 지역의 리스크 관리에 대한 인식을 높입니다.",
+      "date": "2026-09-23",
+      "summary": "백악관이 디젤 가격이 갤런당 6.50달러 이상으로 급등했음에도 불구하고 디젤 수출 금지 조치를 배제했다. 이는 에너지 시장의 공급 안정화를 위한 정책적 결정으로 해석될 수 있다. 유가 변동성에 영향을 미친다.",
       "effects": {
         "short": {
           "tone": "neu",
-          "text": "대만의 지진 및 쓰나미 경고 훈련은 단기적으로 생산 차질을 일으키지 않지만, 재해 대비의 중요성을 상기시킵니다."
+          "text": "단기적으로 디젤 수출 금지 배제는 유가 안정화에 기여할 수 있으나, 높은 가격 자체는 여전히 부담이다."
         },
         "mid": {
-          "tone": "pos",
-          "text": "중기적으로는 이러한 훈련이 대만 반도체 산업의 재해 대응 능력을 향상시켜 잠재적 리스크를 줄이는 데 기여할 수 있습니다."
+          "tone": "neu",
+          "text": "중기적으로 에너지 정책은 물류 비용 및 전반적인 경제 활동에 영향을 미쳐 DRAM 수요에 간접적 영향을 줄 수 있다."
         },
         "long": {
-          "tone": "pos",
-          "text": "장기적으로는 대만 지역의 자연재해 리스크 관리가 강화되어 글로벌 반도체 공급망 안정성에 긍정적인 영향을 줄 수 있습니다."
+          "tone": "neu",
+          "text": "장기적으로는 에너지 정책의 일관성이 글로벌 경제 안정에 기여할 수 있다."
         }
       },
       "links": [],
       "affects": [
-        "A-1"
+        "B-5"
       ]
     },
     {
       "id": "ev-10",
       "type": "금융 위기",
-      "region": "글로벌",
+      "region": "미국",
       "risk": "high",
-      "title": "미-이란 회담 진전, 유가 급등, Fed 매파적 발언",
-      "impact": "가격?",
-      "date": "2026-09-25",
-      "summary": "미-이란 회담 진전에도 불구하고 유가가 급등했으며, 연준 관계자들의 매파적 발언으로 10월 금리 인상 가능성이 높아졌습니다. 이는 글로벌 경제에 복합적인 불확실성을 더하고 있습니다.",
+      "title": "연준 금리 인상 후 10년물 국채금리 5%",
+      "impact": "수요↓",
+      "date": "2026-09-16",
+      "summary": "연준의 금리 인상 이후 10년물 국채금리가 5%로 다시 상승했다. 이는 인플레이션 위험이 여전히 높음을 시사하며, 시장의 긴축 우려를 증폭시킨다. 높은 금리는 기업 투자 및 소비자 수요에 부정적인 영향을 줄 수 있다.",
       "effects": {
         "short": {
           "tone": "neg",
-          "text": "미-이란 회담 진전에도 유가 급등과 Fed의 매파적 발언은 단기적으로 DRAM 생산 비용 상승 및 수요 위축 우려를 높입니다."
+          "text": "단기적으로 높은 금리는 기업의 자금 조달 비용을 증가시켜 반도체 설비 투자에 부담을 줄 수 있다."
         },
         "mid": {
           "tone": "neg",
-          "text": "중기적으로는 고유가와 고금리 기조가 지속될 경우 기업 투자 위축과 소비자 구매력 감소로 DRAM 수요에 부정적인 영향을 미칠 수 있습니다."
+          "text": "중기적으로는 고금리 환경이 지속될 경우 IT 기기 및 서버 수요 둔화로 DRAM 수요에 부정적 영향을 미칠 수 있다."
         },
         "long": {
           "tone": "neg",
-          "text": "장기적으로는 글로벌 경제 성장 둔화가 심화될 경우 DRAM 시장의 전반적인 침체로 이어질 수 있습니다."
+          "text": "장기적으로는 경제 성장 둔화로 이어져 DRAM 시장의 전반적인 성장세를 제약할 수 있다."
         }
       },
       "links": [],
       "affects": [
-        "B-4",
-        "A-7"
+        "A-2",
+        "B-5"
       ]
     }
   ],
@@ -3183,8 +3184,8 @@ export const SIXSENSE_DATA = {
         "id": "A-3",
         "name": "관세청 메모리 수출",
         "then": "13551552131.0",
-        "now": "15733149397.0",
-        "direction": "up"
+        "now": "13551552131.0",
+        "direction": "flat"
       },
       {
         "id": "A-4",
@@ -3218,15 +3219,15 @@ export const SIXSENSE_DATA = {
         "id": "B-1",
         "name": "실적발표 뉴스 감성",
         "then": "+0.20",
-        "now": "+0.70",
+        "now": "+0.60",
         "direction": "up"
       },
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
         "then": "+0.09",
-        "now": "+0.10",
-        "direction": "up"
+        "now": "+0.09",
+        "direction": "flat"
       },
       {
         "id": "B-3",
@@ -3273,14 +3274,14 @@ export const SIXSENSE_DATA = {
       "fail": 0,
       "invalid": 1
     },
-    "week": "2026-09-26",
+    "week": "2026-09-27",
     "staleDays": 14,
     "groupA": [
       {
         "id": "A-1",
         "name": "대만 파운드리 주가",
         "source": "Yahoo Finance: TSM (70%) + UMC (30%), 각각 2025-06-1",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 67,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3299,10 +3300,10 @@ export const SIXSENSE_DATA = {
       {
         "id": "A-3",
         "name": "관세청 메모리 수출",
-        "source": "관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 (15",
-        "time": "2026-09-26",
+        "source": "관세청 data.go.kr Itemtrade HS 854232 (메모리) 월간 수출 (14",
+        "time": "2026-09-27",
         "weeks": 67,
-        "dataSince": "2026-08-03",
+        "dataSince": "2026-07-06",
         "reason": null,
         "status": "ok"
       },
@@ -3310,7 +3311,7 @@ export const SIXSENSE_DATA = {
         "id": "A-4",
         "name": "반도체 재고지수",
         "source": "KOSIS 광업제조업동향조사 반도체 제조업(C261) 생산자제품 재고지수(원지수, 2020",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 67,
         "dataSince": "2026-07-06",
         "reason": null,
@@ -3320,7 +3321,7 @@ export const SIXSENSE_DATA = {
         "id": "A-5",
         "name": "AWS 스팟 가격",
         "source": "AWS EC2 m6i.xlarge spot (us-east-1a, 최대 90일)",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 14,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3330,7 +3331,7 @@ export const SIXSENSE_DATA = {
         "id": "A-6",
         "name": "대만 침공 예측시장",
         "source": "Manifold Markets 'Will China launch a full-scale i",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 52,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3340,7 +3341,7 @@ export const SIXSENSE_DATA = {
         "id": "A-7",
         "name": "구리 선물가",
         "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME 대체)",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 67,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3352,7 +3353,7 @@ export const SIXSENSE_DATA = {
         "id": "B-1",
         "name": "실적발표 뉴스 감성",
         "source": "Google News 'Earnings Call sentiment' (180 entries",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 20,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3361,10 +3362,10 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-2",
         "name": "대만 뉴스 감성",
-        "source": "TechNews.tw + Digitimes + Google News RSS (1036 en",
-        "time": "2026-09-26",
+        "source": "TechNews.tw + Digitimes + Google News RSS (1039 en",
+        "time": "2026-09-27",
         "weeks": 26,
-        "dataSince": "2026-09-21",
+        "dataSince": "2026-09-14",
         "reason": null,
         "status": "ok"
       },
@@ -3372,7 +3373,7 @@ export const SIXSENSE_DATA = {
         "id": "B-3",
         "name": "HN 메모리가격 화제도",
         "source": "Hacker News Algolia ('memory chip price') — Reddit",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 56,
         "dataSince": "2026-08-10",
         "reason": null,
@@ -3382,7 +3383,7 @@ export const SIXSENSE_DATA = {
         "id": "B-4",
         "name": "지정학 리스크",
         "source": "Caldara & Iacoviello GPR Index (https://www.matteo",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 67,
         "dataSince": "2026-08-03",
         "reason": null,
@@ -3391,8 +3392,8 @@ export const SIXSENSE_DATA = {
       {
         "id": "B-5",
         "name": "LTA 뉴스 감성",
-        "source": "Google News 'LTA ratio' (87 entries, LLM 1회 호출, 실패",
-        "time": "2026-09-26",
+        "source": "Google News 'LTA ratio' (86 entries, LLM 1회 호출, 실패",
+        "time": "2026-09-27",
         "weeks": 21,
         "dataSince": "2026-08-03",
         "reason": null,
@@ -3402,7 +3403,7 @@ export const SIXSENSE_DATA = {
         "id": "B-6",
         "name": "HBM 뉴스 감성",
         "source": "Google News 'HBM mix' (162 entries, LLM 1회 호출, 실패 ",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 43,
         "dataSince": "2026-09-21",
         "reason": null,
@@ -3412,7 +3413,7 @@ export const SIXSENSE_DATA = {
         "id": "B-7",
         "name": "HN 메모리 화제도",
         "source": "Hacker News Algolia API (queries: 4건)",
-        "time": "2026-09-26",
+        "time": "2026-09-27",
         "weeks": 56,
         "dataSince": "2026-09-14",
         "reason": null,
