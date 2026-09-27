@@ -1,6 +1,7 @@
 """pytest 공통 설정 — 파이프라인 모듈을 가져올 수 있게 경로를 잡고, 신호 파일은 임시 폴더에서만 다룬다."""
 import json
 import os
+import socket
 import sys
 from pathlib import Path
 
@@ -39,3 +40,19 @@ class FakeResponse:
 
     def json(self):
         return self._payload
+
+
+_LOCAL_HOSTS = {"127.0.0.1", "localhost", "::1"}
+
+
+@pytest.fixture(autouse=True)
+def _block_internet(monkeypatch):
+    """시험 중 외부 인터넷 접속 차단 (v2.6.3) — 시험은 인터넷 없이, 내 컴퓨터 안(127.0.0.1)만. 돌연변이 시험에서 옛 코드가
+    실제 인터넷에 접속해 결과가 인터넷 상태에 좌우되던 문제도 막는다."""
+    real = socket.getaddrinfo
+
+    def guarded(host, *a, **k):
+        if host not in _LOCAL_HOSTS:
+            raise OSError(f"시험 중 외부 인터넷 접속 금지: {host}")
+        return real(host, *a, **k)
+    monkeypatch.setattr(socket, "getaddrinfo", guarded)

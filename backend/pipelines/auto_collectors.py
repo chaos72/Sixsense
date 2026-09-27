@@ -26,6 +26,7 @@ from pathlib import Path
 
 import requests
 
+import feeds
 from gemini_client import BULK_MODELS, gemini_generate
 
 ROOT = Path(__file__).parent.parent
@@ -594,26 +595,31 @@ def _feed_failed(f) -> str | None:
     return None
 
 
+SIGNAL_FEED_BUDGET = 180   # 신호 하나의 피드 전체 받기 예산(초) — 정상 B-2 13개가 약 7~15초 (v2.6.3)
+
+
 def _fetch_feeds(urls: list[str], label: str, pause: float) -> list:
     """피드 목록을 모두 받는다. 일부만 받은 채로 점수를 내면 마감 주에 틀린 값이 고정되므로
-    하나라도 실패하면 ConnectionError → run_one 이 '실패, 기존 값 유지'로 처리하고 다음 실행에서 재시도한다."""
-    import feedparser
-    feeds, errors = [], []
-    for url in urls:
+    하나라도 실패하면 ConnectionError → run_one 이 '실패, 기존 값 유지'로 처리하고 다음 실행에서 재시도한다.
+    어차피 전체 실패이므로 첫 실패에서 바로 멈춘다 — 느린 피드를 여러 개 기다리다 주간 작업 한도(30분)를 넘기지 않게 (v2.6.3)."""
+    got = []
+    started = time.monotonic()
+    for i, url in enumerate(urls, 1):
+        if time.monotonic() - started > SIGNAL_FEED_BUDGET:
+            # 느리지만 성공하는 피드가 이어져도 작업 한도를 넘지 않게 — 예산 초과도 실패로 보고 기존 값 유지 (v2.6.3)
+            raise requests.exceptions.ConnectionError(
+                f"{label} 피드 받기 시간 예산 {SIGNAL_FEED_BUDGET}초 초과({i - 1}/{len(urls)}개에서) — 기존 값 유지")
         try:
-            f = feedparser.parse(url)
+            f = feeds.get_feed(url)          # 대기 시간 제한 있음 (v2.6.3)
             why = _feed_failed(f)
         except Exception as e:
-            f, why = None, f"{type(e).__name__}: {str(e)[:40]}"
+            why = f"{type(e).__name__}: {str(e)[:40]}"
         if why:
-            errors.append(f"{url[:45]}… {why}")
-        else:
-            feeds.append(f)
+            raise requests.exceptions.ConnectionError(
+                f"{label} 피드 {i}/{len(urls)}번째 받기 실패 — 일부만으로 저장하지 않음, 기존 값 유지: {url[:45]}… {why}")
+        got.append(f)
         time.sleep(pause)
-    if errors:
-        raise requests.exceptions.ConnectionError(
-            f"{label} 피드 {len(errors)}/{len(urls)}개 받기 실패 — 일부만으로 저장하지 않음, 기존 값 유지: {errors[0]}")
-    return feeds
+    return got
 
 
 # ──────────────────────────────────────────────────────────────────────────────

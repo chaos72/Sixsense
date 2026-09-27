@@ -56,9 +56,8 @@ def test_v25_실패한_주는_다음_실행에서_채워지고_그_뒤엔_고정
 
 def test_v25_전부_마감되면_Gemini를_부르지_않음(ac, write_signal_file, monkeypatch):
     write_signal_file("B-6", _rows([("2026-09-14", 0.5)]), finalThrough="2026-12-28")
-    import feedparser
     entry = {"published_parsed": time.struct_time((2026, 9, 15, 0, 0, 0, 1, 258, 0)), "title": "HBM demand", "summary": ""}
-    monkeypatch.setattr(feedparser, "parse", lambda url: _feed([entry]))
+    monkeypatch.setattr(ac.feeds, "get_feed", lambda url: _feed([entry]))
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
     calls = []
@@ -69,9 +68,8 @@ def test_v25_전부_마감되면_Gemini를_부르지_않음(ac, write_signal_fil
 
 def test_v232_Gemini가_전부_실패하면_키워드로_채우지_않고_파일_유지(ac, write_signal_file, monkeypatch):
     before = write_signal_file("B-6", _rows([("2026-09-14", 0.5)]), finalThrough="2026-09-07")
-    import feedparser
     entry = {"published_parsed": time.struct_time((2026, 9, 15, 0, 0, 0, 1, 258, 0)), "title": "HBM growth surge", "summary": ""}
-    monkeypatch.setattr(feedparser, "parse", lambda url: _feed([entry]))
+    monkeypatch.setattr(ac.feeds, "get_feed", lambda url: _feed([entry]))
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
 
@@ -411,13 +409,12 @@ def _news_entry(title="DRAM memory surge growth"):
 
 def test_v262_B2_피드_하나라도_연결_실패면_저장하지_않고_기존_값_유지(ac, write_signal_file, monkeypatch):
     old = write_signal_file("B-2", _rows([("2026-09-14", 0.1)]), finalThrough="2026-09-07")
-    import feedparser
     urls = []
 
     def flaky(url):
         urls.append(url)
         return _feed([], status=None) if len(urls) == 3 else _feed([_news_entry()])   # 3번째 피드만 연결 실패
-    monkeypatch.setattr(feedparser, "parse", flaky)
+    monkeypatch.setattr(ac.feeds, "get_feed", flaky)
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
     r = ac.run_one("B-2")
@@ -426,8 +423,7 @@ def test_v262_B2_피드_하나라도_연결_실패면_저장하지_않고_기존
 
 
 def test_v262_B2_경고_표시만_있고_기사가_있는_피드는_정상(ac, monkeypatch):
-    import feedparser
-    monkeypatch.setattr(feedparser, "parse", lambda url: _feed([_news_entry()], bozo=True))   # Digitimes 실측과 같은 모양
+    monkeypatch.setattr(ac.feeds, "get_feed", lambda url: _feed([_news_entry()], bozo=True))   # Digitimes 실측과 같은 모양
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
     assert ac.run_one("B-2")["status"] == "ok"
@@ -435,13 +431,12 @@ def test_v262_B2_경고_표시만_있고_기사가_있는_피드는_정상(ac, m
 
 def test_v262_B6_공통_수집기도_피드_하나라도_실패면_전체_실패(ac, write_signal_file, monkeypatch):
     old = write_signal_file("B-6", _rows([("2026-09-14", 0.5)]), finalThrough="2026-09-07")
-    import feedparser
     urls = []
 
     def flaky(url):
         urls.append(url)
         return _feed([], status=500) if len(urls) == 2 else _feed([_news_entry()])
-    monkeypatch.setattr(feedparser, "parse", flaky)
+    monkeypatch.setattr(ac.feeds, "get_feed", flaky)
     monkeypatch.setattr(ac.time, "sleep", lambda s: None)
     monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
     monkeypatch.setattr(ac, "_llm_sentiment", lambda *a, **k: 0.3)
@@ -483,3 +478,148 @@ def test_v262_월간_값을_이어_붙이는_수집기는_모두_월간_목록�
             ffill.add(sid)
     assert ffill, "월간 수집기를 하나도 못 찾음 — 시험이 헛돎"
     assert ffill <= MONTHLY_SIGNALS | QUARTERLY_SIGNALS, ffill - (MONTHLY_SIGNALS | QUARTERLY_SIGNALS)
+
+
+# ───────────── v2.6.3 · 피드 대기 시간 제한 없음 — 응답 없는 피드 하나가 주간 작업 전체를 붙잡을 수 있었음 ─────────────
+def _local_feed_server(mode, total=10.0):
+    """내 컴퓨터 안(127.0.0.1)의 진짜 HTTP 서버. drip: 0.3초마다 1바이트씩 total 초 동안, hang: 아무것도 안 보내고 total 초 대기,
+    rel: 상대 주소 링크가 든 정상 RSS. 가짜 시계가 아니라 실제 소켓으로 시험한다 (v2.6.3 — 가짜가 현실과 달라 빈틈을 놓쳤음)."""
+    import http.server
+    import threading
+
+    class H(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            try:
+                if mode == "hang":
+                    time.sleep(total)
+                    return
+                self.send_response(200)
+                self.send_header("Content-Type", "application/rss+xml; charset=utf-8")
+                self.end_headers()
+                if mode == "rel":
+                    self.wfile.write(b'<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel><title>t</title>'
+                                     b'<item><title>DRAM</title><link>/news/1</link>'
+                                     b'<pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate></item></channel></rss>')
+                    return
+                t0 = time.time()
+                while time.time() - t0 < total:
+                    self.wfile.write(b"<")
+                    self.wfile.flush()
+                    time.sleep(0.3)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+
+        def log_message(self, *a):
+            pass
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
+    srv.daemon_threads = True
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv, f"http://127.0.0.1:{srv.server_address[1]}"
+
+
+@pytest.mark.parametrize("mode", ["drip", "hang"])
+def test_v263_느리거나_응답_없는_피드는_전체_제한_시간에_중단(mode, monkeypatch):
+    import feeds
+    srv, base = _local_feed_server(mode)
+    monkeypatch.setattr(feeds, "TOTAL_TIMEOUT", 1)
+    t0 = time.time()
+    try:
+        with pytest.raises(requests.exceptions.Timeout):
+            feeds.get_feed(base + "/feed")
+        assert time.time() - t0 < 3, f"제한 1초인데 {time.time() - t0:.1f}초"
+    finally:
+        srv.shutdown()
+
+
+def test_v263_상대_주소_링크는_최종_주소_기준으로_풀림():
+    import feeds
+    srv, base = _local_feed_server("rel")
+    try:
+        f = feeds.get_feed(base + "/feed")
+        assert f.get("status") == 200 and [e.link for e in f.entries] == [base + "/news/1"]
+    finally:
+        srv.shutdown()
+
+
+def test_v263_신호_피드는_첫_실패에서_바로_멈춤(ac, monkeypatch):
+    calls = []
+
+    def fake(url):
+        calls.append(url)
+        if len(calls) == 2:
+            raise requests.exceptions.ReadTimeout("모의 시간 초과")
+        return _feed([_news_entry()])
+    monkeypatch.setattr(ac.feeds, "get_feed", fake)
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    with pytest.raises(requests.exceptions.ConnectionError):
+        ac._fetch_feeds([f"https://x/{i}" for i in range(5)], "B-2", pause=0)
+    assert len(calls) == 2                                  # 3~5번째는 기다리지 않음
+
+
+def test_v263_뉴스_목록은_시간_예산을_넘으면_남은_피드를_건너뛰고_받은_기사는_유지(monkeypatch):
+    import collect_news_events as cne
+    today = date.today()
+    clock = {"t": 0.0}
+
+    def fake(url):
+        clock["t"] += 200.0                                 # 피드 하나에 200초 걸린 것으로
+        return _feed([{"published_parsed": time.struct_time((today.year, today.month, today.day, 0, 0, 0, 0, 1, 0)),
+                       "title": f"Samsung HBM memory {url[-1]} - Reuters", "summary": "", "link": "https://x"}])
+    monkeypatch.setattr(cne.feeds, "get_feed", fake)
+    monkeypatch.setattr(cne.time, "sleep", lambda s: None)
+    monkeypatch.setattr(cne.time, "monotonic", lambda: clock["t"])
+    got = cne.fetch_entries([f"https://f/{i}" for i in range(6)])
+    assert 1 <= len(got) < 6, len(got)                      # 예산 안에서 받은 것만, 전부는 아님
+
+
+def test_v263_시험_중_외부_인터넷_접속은_막힘():
+    import socket
+    with pytest.raises(OSError, match="외부 인터넷"):
+        socket.create_connection(("example.com", 80), timeout=2)
+
+
+def test_v263_B2_피드_시간_초과면_저장하지_않고_기존_값_유지(ac, write_signal_file, monkeypatch):
+    old = write_signal_file("B-2", _rows([("2026-09-14", 0.1)]), finalThrough="2026-09-07")
+    urls = []
+
+    def slow(url):
+        urls.append(url)
+        if len(urls) == 2:
+            raise requests.exceptions.ReadTimeout("모의 시간 초과")
+        return _feed([_news_entry()])
+    monkeypatch.setattr(ac.feeds, "get_feed", slow)
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    monkeypatch.setattr(ac, "START_D", date(2026, 1, 1))
+    r = ac.run_one("B-2")
+    assert r["status"] == "failed" and "피드" in r["reason"], r
+    assert json.loads((ac.HIST_DIR / "B-2.json").read_text())["data"] == old["data"]
+
+
+def test_v263_뉴스_목록은_피드_하나가_시간_초과돼도_나머지를_수집(monkeypatch):
+    import collect_news_events as cne
+    today = date.today()
+    good = {"published_parsed": time.struct_time((today.year, today.month, today.day, 0, 0, 0, 0, 1, 0)),
+            "title": "Samsung HBM memory supply - Reuters", "summary": "", "link": "https://x"}
+
+    def fake(url):
+        if "slow" in url:
+            raise requests.exceptions.ReadTimeout("모의 시간 초과")
+        return _feed([good])
+    monkeypatch.setattr(cne.feeds, "get_feed", fake)
+    monkeypatch.setattr(cne.time, "sleep", lambda s: None)
+    got = cne.fetch_entries(["https://slow.example/feed", "https://ok.example/feed"])
+    assert [e["title"] for e in got] == ["Samsung HBM memory supply"]
+
+
+def test_v263_신호_피드는_느리지만_성공해도_시간_예산을_넘으면_전체_실패(ac, monkeypatch):
+    clock = {"t": 0.0}
+
+    def slow_ok(url):
+        clock["t"] += 59.0                                  # 제한(60초) 직전까지 걸리지만 성공하는 피드
+        return _feed([_news_entry()])
+    monkeypatch.setattr(ac.feeds, "get_feed", slow_ok)
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    monkeypatch.setattr(ac.time, "monotonic", lambda: clock["t"])
+    with pytest.raises(requests.exceptions.ConnectionError, match="예산"):
+        ac._fetch_feeds([f"https://x/{i}" for i in range(13)], "B-2", pause=0)
+    assert clock["t"] <= ac.SIGNAL_FEED_BUDGET + 60         # 13개 × 59초(767초)를 다 기다리지 않음

@@ -19,6 +19,7 @@ from pathlib import Path
 from datetime import date, timedelta
 
 
+import feeds
 from gemini_client import QUALITY_MODELS, available, gemini_generate
 
 # 프로젝트 루트 .env 로드 (auto_collectors와 동일 패턴)
@@ -40,6 +41,7 @@ OUT_NEWS.parent.mkdir(parents=True, exist_ok=True)
 OUT_EVENTS.parent.mkdir(parents=True, exist_ok=True)
 
 LOOKBACK_DAYS = 30
+FEED_BUDGET = 300    # 피드 전체 받기 예산(초) — 정상은 약 60초 (v2.6.3)
 
 
 # USER-REQUESTED EXTENSION (2026-05-18 #10) — news 풀과 events 풀을 entry 단계부터 분리
@@ -466,10 +468,6 @@ def korean_summary(category: str, region: str, title: str, raw_summary: str) -> 
 
 def fetch_entries(rss_urls: list[str] | None = None) -> list[dict]:
     """주어진 RSS URL 리스트에서 entries 수집 (default = NEWS+EVENTS 통합)."""
-    try:
-        import feedparser
-    except ImportError:
-        raise SystemExit("feedparser 미설치: pip install feedparser")
 
     if rss_urls is None:
         rss_urls = build_rss_urls(NEWS_RSS_FEEDS, NEWS_QUERIES) + build_rss_urls(EVENTS_RSS_FEEDS, EVENTS_QUERIES)
@@ -478,9 +476,14 @@ def fetch_entries(rss_urls: list[str] | None = None) -> list[dict]:
     seen_titles = set()
     entries = []
 
-    for url in rss_urls:
+    started = time.monotonic()
+    for n, url in enumerate(rss_urls):
+        if time.monotonic() - started > FEED_BUDGET:
+            # 느린 피드가 여러 개면 주간 작업 한도(30분)를 넘길 수 있다 → 남은 피드는 건너뛰고 받은 기사로 계속 (v2.6.3)
+            print(f"  ⚠️  피드 시간 예산 {FEED_BUDGET}초 초과로 남은 {len(rss_urls) - n}개 건너뜀")
+            break
         try:
-            f = feedparser.parse(url)
+            f = feeds.get_feed(url)          # 대기 시간 제한 있음 (v2.6.3)
             for e in f.entries:
                 pub = e.get("published_parsed") or e.get("updated_parsed")
                 if not pub:
