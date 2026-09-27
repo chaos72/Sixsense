@@ -50,6 +50,10 @@ MUTATIONS = [
      'BULK_MODELS = (', 'BULK_MODELS = ("llama-3.3-70b-versatile", '),
     ("v2.6.1 정책: 호출 주소를 다른 공급자로", "gemini_client.py",
      '_URL = "https://generativelanguage.googleapis.com/', '_URL = "https://api.groq.com/openai/'),
+    ("v2.6.1 A-3 한 달 연결 실패를 무시하고 일부 달로 저장", "auto_collectors.py",
+     "    if net_errors:\n", "    if False:\n"),
+    ("v2.6.1 최신 관측 후퇴 방지 장치 제거", "auto_collectors.py",
+     "        if why:\n", "        if False:\n"),
     ("v2.3.1 신선도: 기준금리도 같은 값 검사", "build_frontend_data.py",
      "    if sid in NO_FROZEN_CHECK:\n        return None\n", ""),
 ]

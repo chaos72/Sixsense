@@ -363,3 +363,37 @@ def test_v25_화면_데이터_예측_기준_주_불일치를_잡음(tmp_path):
     f = tmp_path / "data.js"
     f.write_text("export const SIXSENSE_DATA = " + json.dumps(d) + ";\n")
     assert any("기준 주" in p for p in check_frontend_data(f))
+
+
+# ───────────── v2.6.1 · A-3 8월 1건 시간 초과 → 7월 값으로 되돌아가 배포된 사고 (2026-09-27 미국 서버) ─────────────
+def test_v261_A3_한_달이라도_연결_실패면_전체_실패(ac, monkeypatch):
+    monkeypatch.setenv("KCS_API_KEY", "test")
+    monkeypatch.setattr(ac.time, "sleep", lambda s: None)
+    monkeypatch.setattr(ac, "END_D", date(2026, 9, 25))
+    calls = {"n": 0}
+
+    def flaky(url, params=None, timeout=None):
+        calls["n"] += 1
+        if params["strtYymm"] == "202608":
+            raise requests.exceptions.ReadTimeout("Read timed out")
+        return FakeResponse({"response": {"body": {"items": {"item": [{"expDlr": "1000000000"}]}}}})
+    monkeypatch.setattr(ac.requests, "get", flaky)
+    r = ac.run_one("A-3")
+    assert r["status"] == "failed" and "네트워크" in r["reason"]
+    assert not (ac.HIST_DIR / "A-3.json").exists()           # 일부 달만으로 저장하지 않음
+
+
+def test_v261_최신_관측이_후퇴하면_저장하지_않고_기존_값_유지(ac, write_signal_file, monkeypatch):
+    old = write_signal_file("A-3", _rows([("2026-07-06", 13.5e9), ("2026-08-03", 15.7e9), ("2026-08-10", 15.7e9)]))
+    monkeypatch.setitem(ac.COLLECTORS, "A-3", lambda: (_rows([("2026-07-06", 13.5e9), ("2026-08-03", 13.5e9),
+                                                                ("2026-08-10", 13.5e9)]), "real", "관세청 854232"))
+    r = ac.run_one("A-3")
+    assert r["status"] == "failed" and "후퇴" in r["reason"]
+    assert json.loads((ac.HIST_DIR / "A-3.json").read_text())["data"] == old["data"]
+
+
+def test_v261_정상_갱신은_후퇴_검사를_통과(ac, write_signal_file, monkeypatch):
+    write_signal_file("A-7", _rows([("2026-09-07", 6.5), ("2026-09-14", 6.6)]))
+    monkeypatch.setitem(ac.COLLECTORS, "A-7", lambda: (_rows([("2026-09-07", 6.5), ("2026-09-14", 6.6),
+                                                                ("2026-09-21", 6.7)]), "real", "HG=F"))
+    assert ac.run_one("A-7")["status"] == "ok"

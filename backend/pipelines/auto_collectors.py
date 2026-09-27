@@ -482,10 +482,12 @@ def collect_A3_kcs():
             if isinstance(e, requests.exceptions.RequestException):
                 net_errors += 1
         time.sleep(0.3)
-    if not monthly and net_errors:
-        # 모든 달이 연결 실패면 설정 문제가 아니라 네트워크(해외 IP 차단 등) — 원인을 정확히 보고 (v2.5.1)
+    if net_errors:
+        # 한 달이라도 연결 실패면 전체 실패 — 일부 달만으로 저장하면 최신 달이 빠진다
+        # (2026-09-27 미국 서버: 8월 1건 시간 초과 → 8월 157억 달러가 7월 135억으로 되돌아간 사고, v2.6.1)
+        # 원인이 설정이 아니라 네트워크(해외 IP 차단 등)임을 정확히 보고 (v2.5.1)
         raise requests.exceptions.ConnectionError(
-            f"관세청 연결 실패 {net_errors}개월 — 해외 IP 차단 가능성, 한국에서 로컬 수집으로 보충")
+            f"관세청 연결 실패 {net_errors}개월 — 해외 IP 차단·시간 초과 가능성, 기존 값 유지 (한국에서 로컬 수집으로 보충)")
     if not monthly:
         raise RuntimeError(
             "관세청 API 응답에서 데이터 추출 실패. "
@@ -980,6 +982,32 @@ COLLECTORS = {
 }
 
 
+def _latest_observation(rows: list[dict]) -> tuple[str, str]:
+    """(마지막 주, 마지막으로 값이 바뀐 주). 월간 통계는 두 번째가 '가장 최근 달 값이 시작된 주'."""
+    if not rows:
+        return ("", "")
+    i = len(rows) - 1
+    while i > 0 and rows[i - 1]["value"] == rows[i]["value"]:
+        i -= 1
+    return (rows[-1]["week"], rows[i]["week"])
+
+
+def _regressed(sid: str, new_rows: list[dict]) -> str | None:
+    """새 데이터의 최신 관측이 기존 파일보다 과거로 후퇴했으면 사유 — 부분 실패로 최신 값이 빠진 결과를 저장하지 않는다 (v2.6.1).
+    SIXSENSE_ALLOW_SHRINK=1 이면 검사를 건너뛴다(의도적으로 기간을 줄일 때만)."""
+    if os.getenv("SIXSENSE_ALLOW_SHRINK") == "1":
+        return None
+    old = _load_existing(sid)
+    if not old or not old.get("data"):
+        return None
+    (ol, oc), (nl, nc) = _latest_observation(old["data"]), _latest_observation(new_rows)
+    if nl < ol:
+        return f"마지막 주가 {ol} → {nl} 로 후퇴"
+    if nc < oc:
+        return f"가장 최근 관측이 시작된 주가 {oc} → {nc} 로 후퇴 (최신 값이 빠짐)"
+    return None
+
+
 def run_one(sid: str) -> dict:
     fn = COLLECTORS.get(sid)
     if not fn:
@@ -989,6 +1017,9 @@ def run_one(sid: str) -> dict:
         frozen = None
         if sid in FREEZE_SIGNALS:
             data, frozen = _merge_frozen(sid, data)
+        why = _regressed(sid, data)
+        if why:
+            return {"signalId": sid, "status": "failed", "reason": f"저장 안 함 — {why}. 기존 값 유지 (다음 실행에서 재시도)"}
         r = write_signal(sid, data, source, mode, frozen)
         return {"signalId": sid, "status": "ok", "weeks": r["weeks"], "source": source}
     except requests.exceptions.RequestException as e:
