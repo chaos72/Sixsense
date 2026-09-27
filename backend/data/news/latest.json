@@ -2,19 +2,19 @@
   "collectedAt": "2026-09-27",
   "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 695,
+  "rawCount": 691,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
       "date": "2026-09-25",
-      "title": "DDR5 노트북 메모리 가격 6배 급등",
+      "title": "DDR5 랩톱 메모리 가격 6배 급등",
       "titleEn": "DDR5 laptop memory prices surge 6X in 12 months — Schenker raises laptop prices and warns shortage will last through 2027, other components also on the rise - Tom's Hardware",
       "source": "RSS",
-      "score": 0.9,
+      "score": 0.95,
       "tone": "pos",
-      "conf": 90,
+      "conf": 95,
       "hot": true,
-      "summary": "DDR5 노트북 메모리 가격이 12개월 만에 6배 급등했다. Schenker는 노트북 가격을 인상하고 2027년까지 부족 현상이 지속될 것이라고 경고했다. 다른 부품 가격도 상승 중이다.",
+      "summary": "DDR5 랩톱 메모리 가격이 12개월 만에 6배 급등했으며, Schenker는 랩톱 가격을 인상하고 2027년까지 부족 현상이 지속될 것이라고 경고했습니다. 다른 부품 가격도 상승 중입니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -31,50 +31,20 @@
       },
       "linked": [
         "A-4 관련",
-        "A-2 관련"
+        "B-6 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxOQ3JuZEFtUk5QeDZ0X2x6M0xEd01QYUpoeVgwaVVxcTZIaHlMWEJkR1Vkb05vbS1OMmtGNFlNNldORFp2aFdGdDlZdzc0YnExM3J0RXQ3Z1FvWXp3Y24zNHVhTDByamtrMy0ybmdxNzdTclI4bm9NcnBaQU9DV2l4R3R5cGNiTXBOOXNZczQ3VU4xQmJYU0w1R0ktYVUxMDhDVk9wVUx5MkJ0Mk1UX0hCRGw1bHBLMXY0aE9kVWdYZ3RpcVNza3pZS25OLUZVem5LZWlydTFvdkhnMndJSktBOXIxYWQ1b0ZEUmpnUWtHbWk0cFFQeGlKSnV1Ym50Wl9f?oc=5"
     },
     {
-      "date": "2026-09-22",
-      "title": "AI 수요로 메모리칩 가격 컴퓨트칩 추월",
-      "titleEn": "Memory chips are now more expensive than compute chips on a per-area basis — AI demand drives DRAM die value past leading-edge silicon - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 92,
-      "hot": true,
-      "summary": "AI 수요 증가로 인해 메모리 칩이 단위 면적당 컴퓨트 칩보다 비싸졌다. 이는 DRAM 다이 가치가 최첨단 실리콘을 넘어섰음을 의미하며, AI 시장의 메모리 중요성을 강조한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNc3FyNEY1Y2Z5RlVDUlE3MkdETi1ielNrTEFCeHFQc2sweUw0MWF0VTB1Q1NSVXdzMlBITWJPekMzRWxhX25acmlZQ21qVHNZSFhYdXJsVEpkOXV0enFDaHp3Z2pHSmxoVnZoUzhPVHRmUkY5bzkzV01KdFhRUlRKN1Iya0kxMVdVcnpmVVBRVlp1S1lnUE94N2E4OGVZWldMSk8zeW9DbnN5T2paejRrLTRRbkp2dWFRYkYtelAtc00wSnBMa01vSVpqaGhoSTB5UDA4SGs5RlRob09UNzZJeTlfeFNQVWFPdnpZNTEyWUNVYTJiWUVLbDdJcnUxSmlx?oc=5"
-    },
-    {
       "date": "2026-09-21",
-      "title": "AI 메모리 부족 심화에 삼성·SK하이닉스 주가 급등",
+      "title": "AI 메모리 부족 심화로 삼성, SK하이닉스 주가 급등",
       "titleEn": "Samsung and SK Hynix Stocks Surge as AI Memory Shortage Deepens",
       "source": "Startup Fortune",
-      "score": 0.85,
+      "score": 0.92,
       "tone": "pos",
-      "conf": 88,
+      "conf": 94,
       "hot": true,
-      "summary": "AI 메모리 부족 현상이 심화되면서 삼성전자와 SK하이닉스 주가가 급등했다. 이는 AI 시장의 강력한 메모리 수요와 공급 제약이 국내 주요 메모리 제조사에 긍정적인 영향을 미치고 있음을 보여준다.",
+      "summary": "AI 메모리 부족 현상이 심화되면서 삼성과 SK하이닉스 주가가 급등했습니다. 이는 고성능 AI 메모리에 대한 강력한 수요와 공급 제약이 국내 주요 메모리 기업에 긍정적인 영향을 미치고 있음을 보여줍니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -90,21 +60,51 @@
         }
       },
       "linked": [
-        "A-2 관련",
-        "B-6 관련"
+        "B-6 관련",
+        "A-4 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOa3o2bTFqaWRsM1lMRm44YlBFMy1FTjl3Y1Z1azFWSkNmeXU1ZUZRZ2txcFIxNlBCTHJzNEx0bDY3djBhSXd4VzZaX1RPcG5kaHp0X3FRUG9mYWdSNzNUcHdOUGd1ZXpCTmtBb1F4VXNlc0lMTGdIcFZJa0l5Ykx4UEJ3TVI0ZWdKbnFVOUw0aG5GMUxiWmc?oc=5"
     },
     {
+      "date": "2026-09-22",
+      "title": "AI 수요로 메모리 칩, 컴퓨트 칩보다 비싸져",
+      "titleEn": "Memory chips are now more expensive than compute chips on a per-area basis — AI demand drives DRAM die value past leading-edge silicon - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 93,
+      "hot": true,
+      "summary": "AI 수요가 DRAM 다이 가치를 최첨단 실리콘보다 높게 끌어올리면서, 단위 면적당 메모리 칩 가격이 컴퓨트 칩보다 비싸졌습니다. 이는 AI 시대의 메모리 중요성을 강조합니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "B-6 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNc3FyNEY1Y2Z5RlVDUlE3MkdETi1ielNrTEFCeHFQc2sweUw0MWF0VTB1Q1NSVXdzMlBITWJPekMzRWxhX25acmlZQ21qVHNZSFhYdXJsVEpkOXV0enFDaHp3Z2pHSmxoVnZoUzhPVHRmUkY5bzkzV01KdFhRUlRKN1Iya0kxMVdVcnpmVVBRVlp1S1lnUE94N2E4OGVZWldMSk8zeW9DbnN5T2paejRrLTRRbkp2dWFRYkYtelAtc00wSnBMa01vSVpqaGhoSTB5UDA4SGs5RlRob09UNzZJeTlfeFNQVWFPdnpZNTEyWUNVYTJiWUVLbDdJcnUxSmlx?oc=5"
+    },
+    {
       "date": "2026-09-10",
-      "title": "2027년 램 부족 심화, AI 수요 탓",
+      "title": "메모리 칩 시장 심각한 부족 직면, 2027년 더 악화될 것",
       "titleEn": "'The memory chip market is heading toward a severe shortage': analyst firm believes RAM crisis could get far worse in 2027 — and you can blame AI ramping up",
       "source": "TechRadar",
-      "score": 0.85,
+      "score": 0.9,
       "tone": "pos",
-      "conf": 90,
+      "conf": 93,
       "hot": true,
-      "summary": "한 분석 기관은 메모리 칩 시장이 심각한 부족 사태로 향하고 있으며, 2027년에는 상황이 더욱 악화될 수 있다고 경고했다. 이는 AI 수요 급증이 주요 원인으로 지목된다.",
+      "summary": "한 분석 기관은 메모리 칩 시장이 심각한 부족 사태로 향하고 있으며, AI 수요 증가로 인해 2027년에는 상황이 더욱 악화될 수 있다고 전망했습니다. 이는 장기적인 메모리 가격 상승 요인으로 작용할 수 있습니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -121,20 +121,21 @@
       },
       "linked": [
         "A-4 관련",
+        "B-6 관련",
         "A-2 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMinwJBVV95cUxNaXR3TlhtMHllWjJkNXEzOTJ0U1lpSGFxX2MxVE04dUlRdVA0MG90bS1HVkJObFpBS2xISHk3YUxHV291ODVyMGRTQlUwaVNPcmxqNDZ6RDhnUENCS2szRDhPcWZBYl9Db3R6UEVTaXVmc0kyNHJNT215OGNhLUhGQVhRVGcwZFlNY3NFZXFuN2tIdjI1NW1WX2ZDTVRsZEZLZElIb2tfMC1VYWxOazlES1drQmoyWVZCblcwTU5OcDVQejM3cDFzSm5uMlJnaTdkZExBeHlzdXdab01pUGZmQk1hTHlZSlVMc2lwY0d0aDkxcHBTdlcxWUpFeXc1VHRRNVFhUzVCSC1mMWV0ZzVlbHlmRFpXVlpKRWJFWC0wOA?oc=5"
     },
     {
       "date": "2026-09-24",
-      "title": "마이크론 랠리, 메모리 부족 반영해야",
+      "title": "메모리 부족 감안하면 마이크론 랠리 과도하지 않아",
       "titleEn": "Micron’s Rally Looks Overdone Until You Price The Memory Shortage",
       "source": "Trefis",
-      "score": 0.8,
+      "score": 0.88,
       "tone": "pos",
-      "conf": 85,
+      "conf": 92,
       "hot": true,
-      "summary": "마이크론의 주가 랠리가 과도해 보일 수 있지만, 현재 심화되는 메모리 부족 현상을 가격에 반영하면 합리적이다. 이는 메모리 시장의 강한 수요와 공급 제약을 시사한다.",
+      "summary": "메모리 부족 현상을 고려하면 마이크론의 주가 랠리가 과도하지 않다는 분석이 나왔습니다. 이는 지속적인 메모리 수요 강세와 공급 제약이 주가에 반영되고 있음을 의미합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -156,15 +157,15 @@
       "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxON19DYmdtVm9HcUJGcUZDZ3lmNmtSZno2UGJHbUZjRkNNd3d2Y3REM201MVN0dGI3dGxlY1RveXNxLVVYR056UjRoTWszTmw3NFpycTZYbFVEQl96Vi14TDhSWm9FaWhrdW5MTmhJYi1feVRtcHA5bzd0QlpVeWVtcnpGQXBHNjJGc1VSRGVUaHF0X2NEcGFOdGZjSkMzbFY5S1YwdXJJY0xreUE4eHFlTVA4eGFoS1VEaEp2bXNGTW0?oc=5"
     },
     {
-      "date": "2026-09-27",
-      "title": "마이크론 분기 실적, 메모리 부족에 달려",
-      "titleEn": "Micron's $50 Billion Quarter Hinges on a Memory Shortage That Won't Quit",
-      "source": "AD HOC NEWS",
-      "score": 0.8,
+      "date": "2026-09-11",
+      "title": "엑셀레람, RAM 부족 심화 경고",
+      "titleEn": "Exceleram warns RAM shortage is still escalating",
+      "source": "KitGuru",
+      "score": 0.85,
       "tone": "pos",
-      "conf": 87,
+      "conf": 90,
       "hot": true,
-      "summary": "마이크론의 500억 달러 분기 실적은 지속적인 메모리 부족 현상에 크게 의존하고 있다. 이는 메모리 시장의 견고한 수요와 공급 제약이 마이크론의 매출 성장을 견인하고 있음을 시사한다.",
+      "summary": "Exceleram은 RAM 부족 현상이 여전히 심화되고 있다고 경고했습니다. 이는 전반적인 메모리 시장의 공급 제약이 지속되고 있음을 나타내며, 가격 상승 압력을 유지할 수 있습니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -180,51 +181,20 @@
         }
       },
       "linked": [
-        "A-4 관련",
-        "B-1 관련"
+        "A-4 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQQ0JwMXlveVRZQ0lSNk9kUlp1WjY5UGFGU0Z0cDJSNFl6cmdBbW9uVExOdER4MlFLM3dsazRMN1BVMmR5Qjh3QWIzOWZvSzYxU2VxME1VV3kzckFXQjN6bEFfM3lrTWgySGJoVEgyb3dvbDhiZ0JkRTNEZHo4dm5zM1Q4d2ZWVER1NFRYS2xoZkZOcjRKTUhkTktwV2F1bE1GVlBOa0l0a2c0Mll2SkxPdUFMWndoSk9XVk0yUHd2dmdCNnc0bGhUZ3FWSUZoVDVkTmhBWHJsZjdLNHM?oc=5"
-    },
-    {
-      "date": "2026-09-26",
-      "title": "마이크론 AI 메모리 칩 투자 분석",
-      "titleEn": "Micron's AI Memory Chips: Investment Insights",
-      "source": "Intellectia AI",
-      "score": 0.75,
-      "tone": "pos",
-      "conf": 80,
-      "hot": true,
-      "summary": "마이크론의 AI 메모리 칩에 대한 투자 분석 보고서가 발표되었다. 이는 AI 시장의 성장과 함께 고성능 메모리 수요가 증가하고 있음을 보여주며, 마이크론의 관련 기술 및 시장 전략에 대한 통찰을 제공한다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBDTml0Y0JaSEtkeU9kajZSRlFXTUpLb2huU2JiQmxnWm82SFNIV3N6ODBOdmlTMThHUTBFbnRWMmNDYm5GcEFnMWQwVi1Pcm1sSnltQmczMTdNdkthanVGb1VRZ2FrbTN2bkwxOXU4eWtsSTBGUUhabzBYUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQM0FtSUdJc0R6ckV1UmFkUmk5WUtUZUNwOUxJS2NGMl9pNnhoMTludFo0V3NMdXBZdl9MRzcwRzk4SjhwZ1JON1d3R0EzZkZ3LVg2a1VrUDFlQ0dCYS1JYndORGVyZUdqUDc4M0ZXNlgxalQzX25nLXk0ZlRZS3RzcHkwRE8xcDhzWUNjQTdRZlhqMlIxUU8yc1FleDBtMTYybV9GTzc2bGNtZw?oc=5"
     },
     {
       "date": "2026-09-02",
-      "title": "마이크론, HBM 대역폭 10배 이상 DRAM 기술",
+      "title": "마이크론, '타이트하게 결합된 DRAM' HBM 대역폭 10배 이상 가능",
       "titleEn": "Micron says tightly coupled DRAM could deliver more than 10x HBM bandwidth",
       "source": "digitimes",
-      "score": 0.7,
+      "score": 0.78,
       "tone": "pos",
-      "conf": 85,
+      "conf": 89,
       "hot": true,
-      "summary": "마이크론은 긴밀하게 결합된 DRAM이 HBM보다 10배 이상의 대역폭을 제공할 수 있다고 밝혔다. 이는 차세대 고성능 메모리 기술 개발의 진전을 의미하며, AI 및 데이터 센터 시장에 큰 영향을 미칠 수 있다.",
+      "summary": "마이크론은 '타이트하게 결합된 DRAM' 기술이 HBM보다 10배 이상의 대역폭을 제공할 수 있다고 밝혔습니다. 이는 차세대 고성능 메모리 기술 발전의 가능성을 보여주며, AI 시대의 메모리 혁신을 예고합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -245,15 +215,15 @@
       "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPeEs2ejhUaFhQbk9qZGxkWWhuSG9rdE5MWWhWNUhHY2lQMlRvNXJNR0dGWXI4ZGJwT2xWU29kb2VaYXpiMkFZQ0d3ZU03SHEtOU44V2R6S2dBQVlhcWtsVFVDLVY1eXM5bjE0WmItZ2JIdHIwTVJyeFVHOXMxSzVEUzFtVS0tYjRB?oc=5"
     },
     {
-      "date": "2026-09-25",
-      "title": "엔비디아, 차세대 유리 기판으로 HBM 집적 가속",
-      "titleEn": "To pack more HBM into its chips, NVIDIA is accelerating the deployment of next-generation glass substrates. - 富途牛牛",
-      "source": "RSS",
-      "score": 0.7,
+      "date": "2026-09-26",
+      "title": "마이크론 AI 메모리 칩 투자 통찰",
+      "titleEn": "Micron's AI Memory Chips: Investment Insights",
+      "source": "Intellectia AI",
+      "score": 0.75,
       "tone": "pos",
-      "conf": 82,
+      "conf": 88,
       "hot": true,
-      "summary": "엔비디아는 더 많은 HBM을 칩에 집적하기 위해 차세대 유리 기판 도입을 가속화하고 있다. 이는 고대역폭 메모리 효율을 높이고 AI 칩 성능을 향상시키기 위한 기술적 진보를 의미한다.",
+      "summary": "마이크론의 AI 메모리 칩에 대한 투자 통찰 보고서가 발표되었습니다. 이는 AI 시장의 성장에 따른 메모리 수요 증가와 마이크론의 전략적 중요성을 시사합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -270,38 +240,68 @@
       },
       "linked": [
         "B-6 관련",
-        "B-7 관련"
+        "A-2 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOUWVnMzZFdFdIam83WWhFRkdveER3N1hmUGpRZm5oTmphVXYwLU40eWNuY1RkV2FObjIxanFTTWlNTjdGcmZyVDd5bDNyWmtMTzBVR0J2ckJLVV9JYmUtV01hR0E4YWtXMGV4NGZTUDEyN0pRWHVmZ3pUUGR3V1NFR3Q1bVVvQU5KWHY2QWJVbTl2TTdfajAyTm1aNFMzUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBDTml0Y0JaSEtkeU9kajZSRlFXTUpLb2huU2JiQmxnWm82SFNIV3N6ODBOdmlTMThHUTBFbnRWMmNDYm5GcEFnMWQwVi1Pcm1sSnltQmczMTdNdkthanVGb1VRZ2FrbTN2bkwxOXU4eWtsSTBGUUhabzBYUQ?oc=5"
     },
     {
-      "date": "2026-09-25",
-      "title": "엔비디아 등 유리 기판 고려에 SCHMID 급등",
-      "titleEn": "SCHMID surges after Nvidia, AMD, Intel consider using glass substrates in chips",
-      "source": "Seeking Alpha",
-      "score": 0.65,
-      "tone": "pos",
-      "conf": 78,
+      "date": "2026-09-21",
+      "title": "에이서 CEO, 메모리 제조사 마진 보호 위해 부족 과장",
+      "titleEn": "Acer CEO says memory makers are hyping 2030 shortage fears to protect margins — PC prices set to decline by late 2027, cheaper Chinese capacity coming online delivers lower memory prices - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.7,
+      "tone": "neg",
+      "conf": 85,
       "hot": true,
-      "summary": "엔비디아, AMD, 인텔이 칩에 유리 기판 사용을 고려하면서 SCHMID 주가가 급등했다. 이는 반도체 패키징 기술의 변화를 시사하며, 고성능 칩 생산에 새로운 재료가 도입될 가능성을 보여준다.",
+      "summary": "에이서 CEO는 메모리 제조사들이 마진 보호를 위해 2030년 부족 우려를 과장하고 있다고 주장했습니다. 2027년 말까지 PC 가격이 하락하고, 저렴한 중국 생산 능력이 가동되면 메모리 가격이 낮아질 것이라고 전망했습니다.",
       "effects": {
         "short": {
-          "tone": "pos",
+          "tone": "neg",
           "text": "단기 분석"
         },
         "mid": {
-          "tone": "pos",
+          "tone": "neg",
           "text": "중기 분석"
         },
         "long": {
-          "tone": "pos",
+          "tone": "neg",
           "text": "장기 분석"
         }
       },
       "linked": [
-        "B-7 관련"
+        "A-4 관련",
+        "A-1 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNdXhLZHd2a0czR1RUQ19QaWlSenZxSmNoRVJSMWo2VnJjV0d1UGhSeVdHdjdxeUNuOVlzQmRHTUZVZkZXRmx5c1RSYUg4cVpGcFYzUk1LZDlrMjNQTGlBY1FNVUlUODhTNHBFb3kxQl9yNFRILXctd0c1Sy1PeHhxWURXRWxFbE9ibjdTWWV3VFJvRU53NHZaVGd6ckJHa2FVYVpRcmhNZFh1QVV1dmZWbThjOUNNUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi0AJBVV95cUxPbVZDTTFRWmRmbGhzMjBtd1NBQTlkZUZWZWtXUHpUcmJUcnFrLUo3OXA0cnl6Sk9aaC1FMUJpbVNPazUzWmk4NlVRMmtmVG5YTFhjYXZMdWlvaHpodWJLYUxHQTdzamdVQmNoNGU5ZEg1X3NadlFwQWlZM1FTb3BmTXFFNGNwaGt6ZEtjVDBqeEtwTHpLYUFDWkk5d2lLb3lNOGFSYnpUXzY4UHkzUE80cUJpVTlSTE41aC14OGZYbk1YVDVfcjl5dlE5UUNwNTZyQXFHMEpwUXJfc19kTWp1bWZOWjc3amdXQk1DbWd6cm1hN2hLUUZfNTJLazVuSllBLWhTOU41STdEZVVISzRzandyNFJ4QjZfRlMwVnJkV2FVNWtFY2VZZlRZYjMzdWVvSHFtcko5OVMxWlhfamw5ZVNaR2FHeFZxRXhJS28tcHk?oc=5"
+    },
+    {
+      "date": "2026-09-21",
+      "title": "HP, 메모리 가격 급등으로 2027년까지 PC 출하량 감소 경고",
+      "titleEn": "HP Warns PC Shipments Will Shrink Through 2027 as Memory Prices Surge",
+      "source": "Startup Fortune",
+      "score": -0.65,
+      "tone": "neg",
+      "conf": 87,
+      "hot": true,
+      "summary": "HP는 메모리 가격 급등으로 인해 2027년까지 PC 출하량이 감소할 것이라고 경고했습니다. 이는 높은 메모리 가격이 최종 제품 수요에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNa3FWeTdCZ0dCa0ZYV2ZDTG11N0VJTHFWS2NVczNGaFlsQmN4b1hjeXpkWlk0SXB4Y2g5eUNXbWU0ZmZTbVd2ZG5iaW5zLV9kd1NLTlZxanFrUTNYbmdZT0RNU0FFR3lwUVpzTG5XRVVpZFI1eXhrdkNibWlkSDkwWjB3WkJDZno4X1gyaElwQ0s3Z1hILXpETDNJTXNWQQ?oc=5"
     }
   ]
 }
