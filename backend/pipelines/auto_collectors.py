@@ -1028,7 +1028,10 @@ def _regressed(sid: str, new_rows: list[dict]) -> str | None:
     (ol, oc), (nl, nc) = _latest_observation(old["data"]), _latest_observation(new_rows)
     if nl < ol:
         return f"마지막 주가 {ol} → {nl} 로 후퇴"
-    if nc < oc:
+    # 두 번째 검사는 월간·분기 값을 여러 주에 이어 붙이는 신호에만 — 매주 새로 계산하는 신호는 이번 주 값이 우연히
+    # 전주와 같을 수 있다(v2.6.2: B-2 9/21 이 9/14 와 같은 0.0889 로 나와 오탐). 목록은 화면 신선도 판정과 같은 것을 쓴다.
+    from build_frontend_data import MONTHLY_SIGNALS, QUARTERLY_SIGNALS
+    if sid in MONTHLY_SIGNALS | QUARTERLY_SIGNALS and nc < oc:
         return f"가장 최근 관측이 시작된 주가 {oc} → {nc} 로 후퇴 (최신 값이 빠짐)"
     return None
 

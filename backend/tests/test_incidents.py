@@ -457,3 +457,29 @@ def test_v262_피드_판정_경계(ac):
     assert ac._feed_failed(_feed([_news_entry()], bozo=True)) is None   # 경고만 있고 기사 있음 → 정상 (Digitimes)
     assert ac._feed_failed(_feed([_news_entry()], status=302)) is None  # 주소 이동 후 정상 (구글 뉴스 zh-TW)
     assert ac._feed_failed(_feed([], status=200)) is None               # 검색 결과가 정말 없는 경우 → 정상
+
+
+# ───────────── v2.6.2 · 후퇴 방지 장치 오탐 — 진행 중인 주 값이 우연히 전주와 같자 B-2 저장 거부 (2026-09-27 미국 서버) ─────────────
+def test_v262_주간_신호의_이번주_값이_전주와_같아도_정상_저장(ac, write_signal_file, monkeypatch):
+    write_signal_file("B-2", _rows([("2026-09-14", 0.0889), ("2026-09-21", 0.087)]), finalThrough="2026-09-14")
+    monkeypatch.setattr(ac, "_last_completed_week", lambda: "2026-09-14")
+    monkeypatch.setitem(ac.COLLECTORS, "B-2", lambda: (_rows([("2026-09-14", 0.0889), ("2026-09-21", 0.0889)]),
+                                                        "real", "Google News RSS"))
+    r = ac.run_one("B-2")
+    assert r["status"] == "ok", r
+    assert json.loads((ac.HIST_DIR / "B-2.json").read_text())["data"][-1] == {"week": "2026-09-21", "value": 0.0889}
+
+
+def test_v262_월간_값을_이어_붙이는_수집기는_모두_월간_목록에_있음(ac):
+    """후퇴 방지 두 번째 검사·신선도 판정이 MONTHLY_SIGNALS 에 의존 — 새 월간 수집기를 목록에 안 넣으면 보호가 조용히 사라진다."""
+    import ast
+    import inspect
+    from build_frontend_data import MONTHLY_SIGNALS, QUARTERLY_SIGNALS
+    ffill = set()
+    for sid, fn in ac.COLLECTORS.items():
+        calls = {n.func.id for n in ast.walk(ast.parse(inspect.getsource(fn)))
+                 if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+        if "_ffill_monthly_to_weekly" in calls:
+            ffill.add(sid)
+    assert ffill, "월간 수집기를 하나도 못 찾음 — 시험이 헛돎"
+    assert ffill <= MONTHLY_SIGNALS | QUARTERLY_SIGNALS, ffill - (MONTHLY_SIGNALS | QUARTERLY_SIGNALS)

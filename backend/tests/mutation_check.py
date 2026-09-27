@@ -54,6 +54,8 @@ MUTATIONS = [
      "    if net_errors:\n", "    if False:\n"),
     ("v2.6.1 최신 관측 후퇴 방지 장치 제거", "auto_collectors.py",
      "        why = _regressed(sid, data)\n        if why:\n", "        why = _regressed(sid, data)\n        if False:\n"),
+    ("v2.6.2 후퇴 방지 두 번째 검사를 주간 신호에도 적용 (B-2 오탐)", "auto_collectors.py",
+     "    if sid in MONTHLY_SIGNALS | QUARTERLY_SIGNALS and nc < oc:\n", "    if nc < oc:\n"),
     ("v2.6.2 뉴스 피드 일부 실패를 무시하고 나머지로 저장 (B-2·B-1·B-5·B-6)", "auto_collectors.py",
      "    if errors:\n", "    if False:\n"),
     ("v2.6.2 피드 연결 실패(응답 없음)를 정상으로 간주", "auto_collectors.py",
