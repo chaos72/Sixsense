@@ -2,9 +2,9 @@
   "signalId": "macro-pmi",
   "source": "FRED CSV INDPRO (Industrial Production Index, monthly\u2192forward-fill weekly, PMI \ub300\uccb4)",
   "mode": "real",
-  "collectedAt": "2026-09-27",
+  "collectedAt": "2026-09-29",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-09-21",
+  "rangeEnd": "2026-09-28",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -273,6 +273,10 @@
     },
     {
       "week": "2026-09-21",
+      "value": 103.0682
+    },
+    {
+      "week": "2026-09-28",
       "value": 103.0682
     }
   ]

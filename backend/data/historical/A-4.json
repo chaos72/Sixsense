@@ -2,9 +2,9 @@
   "signalId": "A-4",
   "source": "KOSIS \uad11\uc5c5\uc81c\uc870\uc5c5\ub3d9\ud5a5\uc870\uc0ac \ubc18\ub3c4\uccb4 \uc81c\uc870\uc5c5(C261) \uc0dd\uc0b0\uc790\uc81c\ud488 \uc7ac\uace0\uc9c0\uc218(\uc6d0\uc9c0\uc218, 2020=100) (14\uac1c\uc6d4, \ucd5c\uc2e0 202607)",
   "mode": "real",
-  "collectedAt": "2026-09-27",
+  "collectedAt": "2026-09-29",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-09-21",
+  "rangeEnd": "2026-09-28",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -273,6 +273,10 @@
     },
     {
       "week": "2026-09-21",
+      "value": 106.5
+    },
+    {
+      "week": "2026-09-28",
       "value": 106.5
     }
   ]
