@@ -2,9 +2,9 @@
   "signalId": "macro-krw",
   "source": "Yahoo Finance KRW=X (USD/KRW spot)",
   "mode": "real",
-  "collectedAt": "2026-09-29",
+  "collectedAt": "2026-10-06",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-09-28",
+  "rangeEnd": "2026-10-05",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -277,7 +277,11 @@
     },
     {
       "week": "2026-09-28",
-      "value": 1354.51
+      "value": 1341.51
+    },
+    {
+      "week": "2026-10-05",
+      "value": 1342.5601
     }
   ]
 }
