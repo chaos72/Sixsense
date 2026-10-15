@@ -4,8 +4,10 @@
 외부 API·Gemini 는 가짜 응답으로 대체 — 인터넷 없이 수 초 안에 끝난다.
 """
 import json
+import re
 import time
 from datetime import date, datetime, timezone
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -623,3 +625,39 @@ def test_v263_신호_피드는_느리지만_성공해도_시간_예산을_넘으
     with pytest.raises(requests.exceptions.ConnectionError, match="예산"):
         ac._fetch_feeds([f"https://x/{i}" for i in range(13)], "B-2", pause=0)
     assert clock["t"] <= ac.SIGNAL_FEED_BUDGET + 60         # 13개 × 59초(767초)를 다 기다리지 않음
+
+
+# ───────────── v3.0.1 · 화면 검사 금지어 오탐 — 진짜 값 '-4.54%' 를 옛 허위 정확도로 잡아 10/10·10/13 배포가 막힘 ─────────────
+_SCREEN_CHECK = Path(__file__).resolve().parents[2] / "frontend" / "scripts" / "screen-check.js"
+_OLD_FAKE_LINES = ["GBR ★ (1~7w · 4.54%)", "HistGBR (1~7w · 6.86%)", "LSTM ★ (8~21w · 9.19%)"]   # git 6f4a228 의 옛 화면 문구
+
+
+def _forbidden_list(src: str) -> list[str]:
+    body = re.search(r"const forbidden = \[(.*?)\];", src, re.S).group(1)
+    return re.findall(r"'([^']*)'", body)
+
+
+def _number_only(words: list[str]) -> list[str]:
+    """숫자·기호만으로 된 금지어 — 매주 바뀌는 진짜 측정값과 우연히 같아지면 오탐이 난다."""
+    return [w for w in words if re.fullmatch(r"[\d\s.,%$+\-/MKBkmb]+", w)]
+
+
+# 숫자만이어도 진짜 측정값이 될 수 없는 '형식 오류'는 허용 — 이유를 함께 적는다
+_NUMBER_ONLY_ALLOWED = {"2026-00": "월이 00 인 날짜 — 측정값으로 나올 수 없는 형식 오류(옛 날짜 표시 버그)"}
+
+
+def test_v301_화면_검사_금지어에_숫자만으로_된_항목이_없음():
+    words = _forbidden_list(_SCREEN_CHECK.read_text())
+    assert words, "금지 목록을 못 읽음 — 시험이 헛돎"
+    bad = [w for w in _number_only(words) if w not in _NUMBER_ONLY_ALLOWED]
+    assert not bad, f"숫자만 금지어는 진짜 값과 충돌함 — 옛 문구의 문맥으로 바꿀 것: {bad}"
+
+
+def test_v301_옛_허위_정확도_문구는_여전히_막힘():
+    words = _forbidden_list(_SCREEN_CHECK.read_text())
+    for line in _OLD_FAKE_LINES:
+        assert any(w in line for w in words), f"옛 허위 문구가 금지 목록에 안 걸림: {line}"
+
+
+def test_v301_숫자만_금지어_검사가_정답을_아는_입력에서_작동():
+    assert _number_only(["GBR ★", "4.54%", "4.92M", "1~7w"]) == ["4.54%", "4.92M"]

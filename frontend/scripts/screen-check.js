@@ -15,9 +15,11 @@ window.screenCheck = async (from = 0, to = Infinity) => {
   // 과거에 화면에 있었던 가짜·허위 표시 — 다시 나타나면 안 됨
   const forbidden = ['현재 계약가', 'DDR5 8Gb', '/ GB', '/GB', 'CLAUDE', 'Claude', '신뢰 81', '신뢰 74', '예측가', 'HITL',
     '저장 & 재학습', 'Graph RAG', '구리 선행', '재학습 시 오차', '가중치 상향', '100% 성공', '재시도 3회', 'Red Alert', '공급과잉',
-    'NaN', 'undefined', 'Infinity', '예측분석 인사이트', '정확도 트래킹', 'GBR ★', 'LSTM ★', '4.54%', '6.86%', '9.19%', '2026-00',
+    'NaN', 'undefined', 'Infinity', '예측분석 인사이트', '정확도 트래킹', 'GBR ★', 'LSTM ★', 'HistGBR', '1~7w', '8~21w', '2026-00',
     'Polymarket', 'ICE', 'S&P Global', 'BOK API', 'LME Public', 'DRAMeXchange', 'TrendForce', 'p4d.24xlarge',
-    '예측 수치를 표시하지', '예측선 없음', '부호검정', '우연히 이 정도로', '4.92M', '전자부품 재고지수'];
+    '예측 수치를 표시하지', '예측선 없음', '부호검정', '우연히 이 정도로', '전자부품 재고지수'];
+  // 숫자만으로 된 금지어는 넣지 않는다 — 매주 바뀌는 진짜 측정값과 우연히 같아지면 배포가 막힌다
+  // (v3.0.1: '4.54%' 가 '미래를 안다면 -4.54%' 를 잡아 10/10·10/13 배포 차단). 옛 허위 표시는 문맥(1~7w · …)으로 막는다.
   const R = (window.__screenCheckResult = from === 0 ? { done: 0, bad: [], over: [], fcNoFail: [] } : window.__screenCheckResult);
   const { bad, over, fcNoFail } = R;
   for (const q of urls.slice(from, to)) {
