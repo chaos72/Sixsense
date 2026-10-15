@@ -1,10 +1,10 @@
 {
   "signalId": "A-3",
-  "source": "\uad00\uc138\uccad data.go.kr Itemtrade HS 854232 (\uba54\ubaa8\ub9ac) \uc6d4\uac04 \uc218\ucd9c (15\uac1c\uc6d4, USD)",
+  "source": "\uad00\uc138\uccad data.go.kr Itemtrade HS 854232 (\uba54\ubaa8\ub9ac) \uc6d4\uac04 \uc218\ucd9c (16\uac1c\uc6d4, USD)",
   "mode": "real",
-  "collectedAt": "2026-10-06",
+  "collectedAt": "2026-10-15",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-10-05",
+  "rangeEnd": "2026-10-12",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -265,23 +265,27 @@
     },
     {
       "week": "2026-09-07",
-      "value": 15733149397.0
+      "value": 16777015530.0
     },
     {
       "week": "2026-09-14",
-      "value": 15733149397.0
+      "value": 16777015530.0
     },
     {
       "week": "2026-09-21",
-      "value": 15733149397.0
+      "value": 16777015530.0
     },
     {
       "week": "2026-09-28",
-      "value": 15733149397.0
+      "value": 16777015530.0
     },
     {
       "week": "2026-10-05",
-      "value": 15733149397.0
+      "value": 16777015530.0
+    },
+    {
+      "week": "2026-10-12",
+      "value": 16777015530.0
     }
   ]
 }
