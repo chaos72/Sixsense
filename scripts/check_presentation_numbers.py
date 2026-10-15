@@ -15,6 +15,11 @@ DECK = (ROOT / "docs/06-presentation/sixsense.presentation.md").read_text()
 PY = str(ROOT / "backend/.venv/bin/python")
 
 
+def _signed(x) -> str:
+    """양수는 '+', 음수는 '-' 를 붙인다 (지수가 하락한 주에 '+-14.3%' 를 찾던 결함 수정 — v3.0.1)."""
+    return f"+{x}" if x > 0 else f"{x}"
+
+
 def _run(cmd, cwd=ROOT):
     return subprocess.run(cmd, capture_output=True, text=True, cwd=cwd).stdout
 
@@ -31,17 +36,19 @@ def main() -> int:
     commits = _run(["git", "rev-list", "--count", "HEAD"]).strip()
 
     expect = [   # (이름, 발표에 있어야 할 문자열)
-        ("앱 방식 MAPE", f"{ov['modelMape']}%"), ("기준선 MAPE", f"{round(ov['naiveMape'], 1)}%"),
+        ("앱 방식 MAPE", f"{round(ov['modelMape'], 1)}%"), ("기준선 MAPE", f"{round(ov['naiveMape'], 1)}%"),
         ("개선 시도 MAPE", f"{round(oc['modelMape'], 1)}%"), ("앱 방식 기준선 이긴 비율", f"{ov['winRate']}%"),
         ("개선 시도 이긴 비율", f"{oc['winRate']}%"), ("개선 시도 p값", f"p = {oc['pValue']}"),
         ("앱 방식 오르내림 적중률", f"{ov['dirAcc']}%"), ("개선 시도 오르내림 적중률", f"{oc['dirAcc']}%"),
         ("'항상 오른다' 적중률", f"{ov['alwaysUpDirAcc']}%"), ("검증 횟수", f"{ov['n']}회 워크포워드"),
-        ("모델대로 구매 시 단가", f"+{pr['modelPct']}%"), ("미래를 알 때 단가", f"{pr['perfectPct']}%"),
-        ("현재 지수", f"{round(D['h']['value'], 1)} pt"), ("4주 변화", f"+{D['t']['change4w']}%"),
+        ("모델대로 구매 시 단가", f"{_signed(pr['modelPct'])}%"), ("미래를 알 때 단가", f"{pr['perfectPct']}%"),
+        ("현재 지수", f"{round(D['h']['value'], 1)} pt"), ("4주 변화", f"{_signed(D['t']['change4w'])}%"),
         ("신호 수", f"{D['c']['total']}개 신호"), ("정상 신호", f"정상 {D['c']['success']}"),
         ("제외 신호", f"제외 {D['c']['invalid']}"),
         ("자동 시험 수", f"자동 시험 {tests.group(1)}개" if tests else "(시험 실행 실패)"),
         ("돌연변이 적발", f"{mut.group(2)}개 모두 적발" if mut else "(돌연변이 실행 실패)"),
+        ("데이터 기간", f"{v['dataWeeks']}주 ({v['dataRange'][0]} ~ {v['dataRange'][1]})"),
+        ("데이터 길이(한계 표)", f"데이터 {v['dataWeeks']}주"),
         ("커밋 수", f"{commits} commits"),
     ]
     bad = 0

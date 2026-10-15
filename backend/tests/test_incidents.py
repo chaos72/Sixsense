@@ -639,7 +639,8 @@ def _forbidden_list(src: str) -> list[str]:
 
 def _number_only(words: list[str]) -> list[str]:
     """숫자·기호만으로 된 금지어 — 매주 바뀌는 진짜 측정값과 우연히 같아지면 오탐이 난다."""
-    return [w for w in words if re.fullmatch(r"[\d\s.,%$+\-/MKBkmb]+", w)]
+    # 단위가 붙은 숫자(751.1 pt·157억·9배·4.54%p)와 유니코드 마이너스(−)도 숫자만으로 본다
+    return [w for w in words if re.fullmatch(r"[\d\s.,%$+\-−/MKBkmb]+(?:pt|p|억|배|원)?", w)]
 
 
 # 숫자만이어도 진짜 측정값이 될 수 없는 '형식 오류'는 허용 — 이유를 함께 적는다
@@ -657,7 +658,11 @@ def test_v301_옛_허위_정확도_문구는_여전히_막힘():
     words = _forbidden_list(_SCREEN_CHECK.read_text())
     for line in _OLD_FAKE_LINES:
         assert any(w in line for w in words), f"옛 허위 문구가 금지 목록에 안 걸림: {line}"
+        # 모델 이름(GBR ★ 등)을 빼고 괄호 부분만 남아도 막혀야 함 — '1~7w'·'8~21w' 문맥이 실제로 일하는지
+        tail = line[line.index("("):]
+        assert any(w in tail for w in words), f"모델 이름 없이 옛 수치 문구가 통과: {tail}"
 
 
 def test_v301_숫자만_금지어_검사가_정답을_아는_입력에서_작동():
-    assert _number_only(["GBR ★", "4.54%", "4.92M", "1~7w"]) == ["4.54%", "4.92M"]
+    assert _number_only(["GBR ★", "4.54%", "4.92M", "1~7w", "−4.54%", "751.1 pt", "157억", "9배", "4.54%p", "8~21w", "B-3 갱신"]) \
+        == ["4.54%", "4.92M", "−4.54%", "751.1 pt", "157억", "9배", "4.54%p"]
