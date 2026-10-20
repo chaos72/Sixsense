@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-10-15",
+  "runAt": "2026-10-20",
   "dataWeeks": 70,
   "dataRange": [
     "2025-06-16",
@@ -15,7 +15,7 @@
   ],
   "current": {
     "week": "2026-10-12",
-    "value": 613.42
+    "value": 576.44
   },
   "variants": [
     {
@@ -25,77 +25,77 @@
         {
           "h": 1,
           "n": 42,
-          "modelMape": 25.56,
-          "naiveMape": 7.4,
+          "modelMape": 25.73,
+          "naiveMape": 7.57,
           "winRate": 14.3,
           "dirAcc": 40.5
         },
         {
           "h": 2,
           "n": 40,
-          "modelMape": 29.17,
-          "naiveMape": 11.29,
+          "modelMape": 29.36,
+          "naiveMape": 11.48,
           "winRate": 12.5,
           "dirAcc": 35.0
         },
         {
           "h": 3,
           "n": 38,
-          "modelMape": 31.87,
-          "naiveMape": 13.1,
+          "modelMape": 32.07,
+          "naiveMape": 13.31,
           "winRate": 18.4,
           "dirAcc": 31.6
         },
         {
           "h": 4,
           "n": 36,
-          "modelMape": 34.44,
-          "naiveMape": 15.76,
+          "modelMape": 34.65,
+          "naiveMape": 15.97,
           "winRate": 13.9,
           "dirAcc": 22.2
         },
         {
           "h": 5,
           "n": 34,
-          "modelMape": 35.63,
-          "naiveMape": 18.69,
+          "modelMape": 35.85,
+          "naiveMape": 18.9,
           "winRate": 14.7,
           "dirAcc": 26.5
         },
         {
           "h": 6,
           "n": 32,
-          "modelMape": 36.35,
-          "naiveMape": 20.51,
+          "modelMape": 36.17,
+          "naiveMape": 20.73,
           "winRate": 21.9,
           "dirAcc": 37.5
         },
         {
           "h": 7,
           "n": 30,
-          "modelMape": 36.9,
-          "naiveMape": 22.8,
-          "winRate": 20.0,
+          "modelMape": 36.7,
+          "naiveMape": 23.03,
+          "winRate": 23.3,
           "dirAcc": 33.3
         }
       ],
       "overall": {
         "n": 252,
-        "modelMape": 32.43,
-        "naiveMape": 15.09,
-        "winRate": 16.3,
+        "modelMape": 32.53,
+        "naiveMape": 15.3,
+        "winRate": 16.7,
         "dirAcc": 32.5,
         "alwaysUpDirAcc": 68.7,
-        "underRate": 92.1,
+        "underRate": 91.7,
         "pValue": 0.992
       },
       "procurement": {
         "n": 36,
         "horizonWeeks": 4,
         "alwaysNow": 542.31,
-        "model": 586.24,
-        "modelPct": 8.1,
-        "perfectPct": -4.9,
+        "model": 585.21,
+        "modelPct": 7.91,
+        "perfectPct": -5.09,
         "waitRate": 100.0,
         "waitCount": 36,
         "waitCorrect": 8
@@ -105,44 +105,44 @@
         {
           "h": 1,
           "week": "2026-10-19",
-          "value": 672.31,
-          "changePct": 9.6
+          "value": 654.88,
+          "changePct": 13.61
         },
         {
           "h": 2,
           "week": "2026-10-26",
-          "value": 701.85,
-          "changePct": 14.42
+          "value": 694.04,
+          "changePct": 20.4
         },
         {
           "h": 3,
           "week": "2026-11-02",
-          "value": 698.95,
-          "changePct": 13.94
+          "value": 670.28,
+          "changePct": 16.28
         },
         {
           "h": 4,
           "week": "2026-11-09",
-          "value": 686.6,
-          "changePct": 11.93
+          "value": 637.11,
+          "changePct": 10.53
         },
         {
           "h": 5,
           "week": "2026-11-16",
-          "value": 692.59,
-          "changePct": 12.91
+          "value": 671.91,
+          "changePct": 16.56
         },
         {
           "h": 6,
           "week": "2026-11-23",
-          "value": 680.22,
-          "changePct": 10.89
+          "value": 654.84,
+          "changePct": 13.6
         },
         {
           "h": 7,
           "week": "2026-11-30",
-          "value": 674.05,
-          "changePct": 9.88
+          "value": 669.12,
+          "changePct": 16.08
         }
       ]
     },
@@ -153,69 +153,69 @@
         {
           "h": 1,
           "n": 42,
-          "modelMape": 7.36,
-          "naiveMape": 7.4,
+          "modelMape": 7.54,
+          "naiveMape": 7.57,
           "winRate": 59.5,
           "dirAcc": 64.3
         },
         {
           "h": 2,
           "n": 40,
-          "modelMape": 11.66,
-          "naiveMape": 11.29,
+          "modelMape": 11.88,
+          "naiveMape": 11.48,
           "winRate": 52.5,
           "dirAcc": 65.0
         },
         {
           "h": 3,
           "n": 38,
-          "modelMape": 14.41,
-          "naiveMape": 13.1,
+          "modelMape": 14.65,
+          "naiveMape": 13.31,
           "winRate": 52.6,
           "dirAcc": 65.8
         },
         {
           "h": 4,
           "n": 36,
-          "modelMape": 20.3,
-          "naiveMape": 15.76,
+          "modelMape": 20.54,
+          "naiveMape": 15.97,
           "winRate": 47.2,
           "dirAcc": 77.8
         },
         {
           "h": 5,
           "n": 34,
-          "modelMape": 29.83,
-          "naiveMape": 18.69,
+          "modelMape": 30.12,
+          "naiveMape": 18.9,
           "winRate": 50.0,
           "dirAcc": 70.6
         },
         {
           "h": 6,
           "n": 32,
-          "modelMape": 36.63,
-          "naiveMape": 20.51,
+          "modelMape": 36.86,
+          "naiveMape": 20.73,
           "winRate": 46.9,
           "dirAcc": 65.6
         },
         {
           "h": 7,
           "n": 30,
-          "modelMape": 43.54,
-          "naiveMape": 22.8,
+          "modelMape": 43.88,
+          "naiveMape": 23.03,
           "winRate": 43.3,
           "dirAcc": 70.0
         }
       ],
       "overall": {
         "n": 252,
-        "modelMape": 22.01,
-        "naiveMape": 15.09,
+        "modelMape": 22.25,
+        "naiveMape": 15.3,
         "winRate": 50.8,
         "dirAcc": 68.3,
         "alwaysUpDirAcc": 68.7,
         "underRate": 40.5,
-        "pValue": 0.798
+        "pValue": 0.8
       },
       "procurement": {
         "n": 36,
@@ -223,7 +223,7 @@
         "alwaysNow": 542.31,
         "model": 542.31,
         "modelPct": 0.0,
-        "perfectPct": -4.9,
+        "perfectPct": -5.09,
         "waitRate": 0.0,
         "waitCount": 0,
         "waitCorrect": 0
@@ -233,44 +233,44 @@
         {
           "h": 1,
           "week": "2026-10-19",
-          "value": 596.68,
-          "changePct": -2.73
+          "value": 551.29,
+          "changePct": -4.36
         },
         {
           "h": 2,
           "week": "2026-10-26",
-          "value": 608.33,
-          "changePct": -0.83
+          "value": 563.68,
+          "changePct": -2.21
         },
         {
           "h": 3,
           "week": "2026-11-02",
-          "value": 620.72,
-          "changePct": 1.19
+          "value": 578.2,
+          "changePct": 0.31
         },
         {
           "h": 4,
           "week": "2026-11-09",
-          "value": 637.26,
-          "changePct": 3.89
+          "value": 583.88,
+          "changePct": 1.29
         },
         {
           "h": 5,
           "week": "2026-11-16",
-          "value": 658.21,
-          "changePct": 7.3
+          "value": 628.33,
+          "changePct": 9.0
         },
         {
           "h": 6,
           "week": "2026-11-23",
-          "value": 750.84,
-          "changePct": 22.4
+          "value": 698.53,
+          "changePct": 21.18
         },
         {
           "h": 7,
           "week": "2026-11-30",
-          "value": 679.07,
-          "changePct": 10.7
+          "value": 630.3,
+          "changePct": 9.34
         }
       ]
     }

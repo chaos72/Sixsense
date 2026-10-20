@@ -1,50 +1,20 @@
 {
-  "collectedAt": "2026-10-15",
+  "collectedAt": "2026-10-20",
   "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 805,
+  "rawCount": 765,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
-      "date": "2026-09-30",
-      "title": "AI 서버, 메모리 가격 급등 주도, DDR5 5배 상승",
-      "titleEn": "AI Servers Drive Memory Prices Skyward—DDR5 Modules Surge Fivefold in 10 Months",
-      "source": "BigGo Finance",
-      "score": 0.95,
-      "tone": "pos",
-      "conf": 98,
-      "hot": true,
-      "summary": "AI 서버 수요가 메모리 가격을 급등시키며, DDR5 모듈 가격이 10개월 만에 5배 상승했다. 이는 AI 기술 발전이 고성능 메모리 수요를 폭발적으로 증가시키고 있음을 명확히 보여준다. DRAM 시장의 강력한 가격 상승 요인이다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "A-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBTTW5jdVFTU2dhWmJkSlhxbDd6ZmtRMDgwLXIyaGlMMDFOMWt0R0k5Mk5hemx2VzVpZFRlczl0dGpDTC1tdzgxcVRUNkRVM0Q4NzhwSlZsZ0FhWHMzZG9xUEEzS0tIZ2xvOUY4amk0SmtaaUxZSHc?oc=5"
-    },
-    {
       "date": "2026-10-12",
-      "title": "DDR4 가격 급등, 마이크론 공급난 2028년까지",
+      "title": "DDR4 가격 24% 급등, 마이크론 부족 2028년까지",
       "titleEn": "DDR4 Memory Chip Contract Prices Surge 24% In Three Months, Outpacing DDR5 As Barclays Warns Micron’s Memory Shortage Runs Until 2028",
       "source": "Wccftech",
       "score": 0.9,
       "tone": "pos",
-      "conf": 95,
+      "conf": 90,
       "hot": true,
-      "summary": "DDR4 메모리 칩 계약 가격이 3개월 만에 24% 급등하며 DDR5를 앞질렀다. 바클레이즈는 마이크론의 메모리 부족 현상이 2028년까지 지속될 것으로 경고했다. 이는 전반적인 DRAM 공급 부족과 가격 상승 압력을 시사한다.",
+      "summary": "DDR4 메모리 칩 계약 가격이 3개월 만에 24% 급등하며 DDR5를 앞질렀다. 바클레이즈는 마이크론의 메모리 부족 현상이 2028년까지 지속될 것이라고 경고했다. 이는 전반적인 DRAM 공급 부족과 가격 상승 압력을 시사한다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -66,15 +36,15 @@
       "link": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQajJoUENnN2hjRG5YaXk4RXE1YmgxMDhrRDFwc1dsNXF6Qm95T1hxZDBnOS1xOXhfcFhBdk9pLVJiUlUxeTZXS1p4YXlTdy1LTW9KNDJwbXdLelBlMzRHWmJKaWpxYWt1TjlrWHlMT01aTDJOU3dEZTNuaEc1S0diekthRUJQZTF6TzAzQ2JIaUdQZ2IyaDFMOFdjVGJMRkV5RVhCdWNUQ3Rvd2RJVlpzX0FvUm80Qkl2R2pXTXlnMjlXcHF1bEtweWxwM0VuR29WNDRlcXhQNzJOMkx2azZxSTR5Q1JEUDTSAewBQVVfeXFMT0FidXdBYUw0dE5qb3Q1Sm1iQ2NxTTFPWGdONnp6NjJ3QkFuaGNJU0ZSTWM0SDNxS3F0bzZabHJMd0s1NW9oZERmbm82R3ZFSnlzSEUxV3JuS0NGX0EtRHJyOUN2dk9fU0xJX2loZkhaN0xDbHdpX1R0RU1LSWhVbHBjNGdYczlxeU9tTmpZNndETFpwQ2VySWpwby0zVkpwZVM0VmtvemJncUplOGM3ekQ1dnhuOWczM3IwM24tR0VRR3A3dkZLcVdsTjRScHBZb0Z4Zk1ueVdGaTFjWEw2WHdBQXNBckxvYVhscTA?oc=5"
     },
     {
-      "date": "2026-09-22",
-      "title": "메모리 칩, 면적당 컴퓨트 칩보다 비싸져",
-      "titleEn": "Memory chips are now more expensive than compute chips on a per-area basis — AI demand drives DRAM die value past leading-edge silicon - Tom's Hardware",
+      "date": "2026-09-25",
+      "title": "DDR5 노트북 메모리 가격 1년새 6배 급등",
+      "titleEn": "DDR5 laptop memory prices surge 6X in 12 months — Schenker raises laptop prices and warns shortage will last through 2027, other components also on the rise - Tom's Hardware",
       "source": "RSS",
-      "score": 0.85,
+      "score": 0.9,
       "tone": "pos",
-      "conf": 93,
+      "conf": 90,
       "hot": true,
-      "summary": "AI 수요가 DRAM 다이 가치를 최첨단 실리콘보다 높게 만들면서, 메모리 칩이 면적당 컴퓨트 칩보다 비싸졌다. 이는 AI 시대에 메모리 반도체의 중요성과 가치가 크게 상승했음을 의미한다. DRAM 가격에 매우 긍정적인 신호이다.",
+      "summary": "DDR5 노트북 메모리 가격이 12개월 만에 6배 급등했다. 쉥커는 노트북 가격을 인상하고 2027년까지 부족 현상이 지속될 것이라고 경고했다. 이는 DDR5 수요 강세와 공급 부족 심화를 나타낸다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -90,21 +60,21 @@
         }
       },
       "linked": [
-        "A-2 관련",
-        "A-4 관련"
+        "A-4 관련",
+        "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNc3FyNEY1Y2Z5RlVDUlE3MkdETi1ielNrTEFCeHFQc2sweUw0MWF0VTB1Q1NSVXdzMlBITWJPekMzRWxhX25acmlZQ21qVHNZSFhYdXJsVEpkOXV0enFDaHp3Z2pHSmxoVnZoUzhPVHRmUkY5bzkzV01KdFhRUlRKN1Iya0kxMVdVcnpmVVBRVlp1S1lnUE94N2E4OGVZWldMSk8zeW9DbnN5T2paejRrLTRRbkp2dWFRYkYtelAtc00wSnBMa01vSVpqaGhoSTB5UDA4SGs5RlRob09UNzZJeTlfeFNQVWFPdnpZNTEyWUNVYTJiWUVLbDdJcnUxSmlx?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxOQ3JuZEFtUk5QeDZ0X2x6M0xEd01QYUpoeVgwaVVxcTZIaHlMWEJkR1Vkb05vbS1OMmtGNFlNNldORFp2aFdGdDlZdzc0YnExM3J0RXQ3Z1FvWXp3Y24zNHVhTDByamtrMy0ybmdxNzdTclI4bm9NcnBaQU9DV2l4R3R5cGNiTXBOOXNZczQ3VU4xQmJYU0w1R0ktYVUxMDhDVk9wVUx5MkJ0Mk1UX0hCRGw1bHBLMXY0aE9kVWdYZ3RpcVNza3pZS25OLUZVem5LZWlydTFvdkhnMndJSktBOXIxYWQ1b0ZEUmpnUWtHbWk0cFFQeGlKSnV1Ym50Wl9f?oc=5"
     },
     {
       "date": "2026-10-14",
-      "title": "DDR5 32GB 450달러, AI발 공급난 심화",
+      "title": "32GB DDR5 램 450달러, AI발 부족 심화",
       "titleEn": "32GB of DDR5 6000 RAM now costs $450 — AI-induced shortage reaches worst milestone yet - Tom's Hardware",
       "source": "RSS",
-      "score": 0.8,
+      "score": 0.9,
       "tone": "pos",
-      "conf": 92,
+      "conf": 90,
       "hot": true,
-      "summary": "32GB DDR5 6000 RAM 가격이 450달러에 달하며, AI 수요로 인한 공급 부족이 최악의 상황에 이르렀다. 이는 AI 서버용 고성능 메모리 수요가 일반 DRAM 시장에도 영향을 미치고 있음을 보여준다. 단기적인 가격 상승 압력이 예상된다.",
+      "summary": "32GB DDR5 6000 RAM 가격이 450달러에 달하며, AI로 인한 메모리 부족 현상이 최악의 상황에 이르렀다. 이는 AI 수요가 DRAM 가격 상승을 주도하고 있음을 명확히 보여준다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -120,21 +90,111 @@
         }
       },
       "linked": [
-        "A-2 관련",
-        "A-4 관련"
+        "A-5 관련",
+        "B-6 관련"
       ],
       "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNc21rMnh3c3JKS0RQa2lTNWNUclR3aWFMTnIyelBhZnpCd2lqYnF3cVphZ3hMVVhrN0hOVkRXbnNsLWc5UEZ3YXZzeGpwbmN3NmRKX3QzdjBlMlczN1NwT2tMME1HTTdYdU1oc2ZhZEpNc0dQM0xMVTNLV1BLcld1SXI0U1loMHVBSjg0MmdrYnpDY0hjZWZLczhRWUY2MTJRNEhIR0FTOGRxcjdjWWZ4Z3RxVEZaOGpEOGNET096UWdfOWI4SmQ1WkxOd3QtWVk?oc=5"
     },
     {
-      "date": "2026-10-13",
-      "title": "AI 붐으로 한국 전자제품 가격 급등, 칩 부족 심화",
-      "titleEn": "South Korea electronics prices surge as AI boom fuels chip shortages",
-      "source": "Latest news from Azerbaijan",
-      "score": 0.75,
+      "date": "2026-09-29",
+      "title": "AI 서버, 메모리 가격 급등 주도, DDR5 5배↑",
+      "titleEn": "AI Servers Drive Memory Prices Skyward—DDR5 Modules Surge Fivefold in 10 Months",
+      "source": "BigGo Finance",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 92,
+      "hot": true,
+      "summary": "AI 서버 수요가 메모리 가격을 급등시키며, DDR5 모듈 가격이 10개월 만에 5배 상승했다. 이는 AI 시장의 폭발적인 성장이 DRAM 수요를 견인하고 있음을 보여준다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-5 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBTTW5jdVFTU2dhWmJkSlhxbDd6ZmtRMDgwLXIyaGlMMDFOMWt0R0k5Mk5hemx2VzVpZFRlczl0dGpDTC1tdzgxcVRUNkRVM0Q4NzhwSlZsZ0FhWHMzZG9xUEEzS0tIZ2xvOUY4amk0SmtaaUxZSHc?oc=5"
+    },
+    {
+      "date": "2026-10-02",
+      "title": "마이크론, 메모리 부족 2028년까지 악화 경고",
+      "titleEn": "Micron Warns Memory Shortage Will Get Worse Through 2028",
+      "source": "TechRepublic",
+      "score": 0.85,
       "tone": "pos",
       "conf": 88,
       "hot": true,
-      "summary": "AI 붐으로 인한 칩 부족 현상이 심화되면서 한국 전자제품 가격이 급등하고 있다. 이는 AI 관련 수요가 메모리 반도체 시장 전반에 걸쳐 공급 부족을 야기하고 있음을 나타낸다. DRAM 가격 상승에 긍정적인 요인으로 작용할 것이다.",
+      "summary": "마이크론은 메모리 부족 현상이 2028년까지 더욱 심화될 것이라고 경고했다. 이는 장기적인 DRAM 공급 제약과 가격 상승 압력이 지속될 것임을 시사한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPZjNwVnFkeDhRbGV3ekJfUDlJbW5xQjBWVUhRRWgxYm52TlJKcEkwVWNxM1ZOUE5ZVDZmUVlocG10NVpibEdSc1ZKc2pYalVma0c4UlpuVXN4LVJSVHFlYWdYbURMOVZYV0JuQUxnaVhXME1KNXEyMENqNkVSYllDNWpGSERVRGc?oc=5"
+    },
+    {
+      "date": "2026-10-16",
+      "title": "서버 가격 4배 급등, 메모리 부족 심화",
+      "titleEn": "Server Prices Surge Fourfold Amid Memory Shortage—A Double-Edged Sword for Samsung and SK Hynix",
+      "source": "BigGo Finance",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 85,
+      "hot": true,
+      "summary": "메모리 부족으로 서버 가격이 4배 급등했다. 이는 삼성과 SK하이닉스에게 양날의 검으로 작용할 수 있다. 높은 가격은 수익성 개선에 기여하지만, 수요 위축 가능성도 내포한다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "A-2 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5tS1RXTVJZanNYd1VrU1I0Q3ppU093dVd5YTVaVkFKaGI5QVF6QXF0SzRzQldGbTZhczBYOEFER2M1NUFIS3FSUzhTY011ZEF0UlBVc0hwR2w3RklBQ1pHQjBxLVZGcHlYckJ1UU11eThNNlpmdEE?oc=5"
+    },
+    {
+      "date": "2026-10-19",
+      "title": "빅테크 AI 지출 1.12조 달러 돌파, 데이터센터 전망↑",
+      "titleEn": "歷史級資本狂潮！四大科技巨頭 AI 支出破 1.12 兆美元，市場看好資料中心資本展望",
+      "source": "TechNews",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 87,
+      "hot": true,
+      "summary": "4대 빅테크 기업의 AI 지출이 1.12조 달러를 돌파하며 역사적인 자본 투자를 기록했다. 시장은 데이터센터 자본 지출 전망을 긍정적으로 보고 있다. 이는 서버 DRAM 수요의 강력한 성장 동력이 될 것이다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -151,20 +211,20 @@
       },
       "linked": [
         "A-2 관련",
-        "A-4 관련"
+        "A-5 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOWkJvSjlYVzMyWFRiOHZ6cU9DNGZoSWNBVmY0NGVGVGRCc2MwV2JGYkF3LTVTZnRFZUR5VHhWQXB6ZUxoMkJNSlJKaFp0Wmo4OWdEODI4S3lidzg5aUhCanE2Ymd3RmxaakdFYlhxRXcxa2xtWlZ5M2JzZ1N6TFZNc0dzRlZqeG51bllnOXc4RVlHN1E?oc=5"
+      "link": "https://finance.technews.tw/2026/10/19/the-four-major-tech-giants-have-spent-over-1-12-trillion-on-ai/"
     },
     {
       "date": "2026-09-29",
-      "title": "삼성, SK하이닉스, 마이크론 HBM 생산 전환",
+      "title": "주요 3사, HBM 생산으로 전환 가속화",
       "titleEn": "Three companies make the vast majority of microchips used in everyday electronic devices. But recently those companies — Micron, Samsung, and SK Hynix — have all shifted at least some production capacity toward high-bandwidth memory, or HBM, chips",
       "source": "LinkedIn",
-      "score": 0.7,
+      "score": 0.75,
       "tone": "pos",
-      "conf": 90,
+      "conf": 80,
       "hot": true,
-      "summary": "마이크론, 삼성, SK하이닉스 등 주요 칩 제조사들이 HBM(고대역폭 메모리) 칩 생산으로 일부 역량을 전환하고 있다. 이는 일반 DRAM 생산량 감소로 이어져 시장 공급에 영향을 미칠 수 있다. HBM 수요 증가에 따른 전략적 변화로 보인다.",
+      "summary": "마이크론, 삼성, SK하이닉스 등 주요 3사가 생산 능력 일부를 고대역폭 메모리(HBM) 칩으로 전환하고 있다. 이는 일반 DRAM 공급 감소로 이어져 가격 상승 압력을 가중시킬 수 있다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -186,74 +246,15 @@
       "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNb3pQRjY0Qkw2eEtiQk1ZM1hmWUhJM0Z0VDZGQmwwMHBPNDRqTU5XazdrbWp1aE8wODVZTnM5dDJOT1NFckZveGplS1ExV3BuanhaMW5FOS1GTHJIb3BLSTljeG9IaURFaDQ0VnlPcTdnX2FucmZZZ0huSlB6NzNRNG13OUc1cDhiM1BBYk1mZjBpQ2l6U1QyVUhDakJJbkI5emdiMGxjUk1YNHhoWUNwbVByOGxIc3hyc0ZJbU4tOA?oc=5"
     },
     {
-      "date": "2026-10-13",
-      "title": "팻 겔싱어 HBM 비판, 난야 D램 부족 2028년까지",
-      "titleEn": "Intel’s Ex-CEO Pat Gelsinger Says HBM Is A “Hideous Memory,” Replete With Terrible Bit Density, And Thermal And Shoreline Bandwidth Issues, Even As Nanya Reiterates DRAM Shortages Till 2028",
-      "source": "Wccftech",
-      "score": 0.6,
-      "tone": "neu",
-      "conf": 85,
-      "hot": true,
-      "summary": "인텔 전 CEO 팻 겔싱어는 HBM이 비트 밀도, 열, 대역폭 문제로 \"끔찍한 메모리\"라고 비판했다. 그럼에도 불구하고 난야는 2028년까지 DRAM 부족이 지속될 것이라고 재차 강조했다. 이는 HBM 기술의 한계와 DRAM 시장의 지속적인 공급난을 동시에 보여준다.",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련",
-        "A-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMirgJBVV95cUxNWnU0RWZWbGllV3paUXBpMWRrYU9yd2Fkc3ZCbkVDUzRyd3IxaS1odmFqYV9hTm41d0dJd2pXMTVjcEtPQWp1R0pGM3RNTF93eFJNWWZ3UE90cjVaekxSTUhtdk9tZkpNMk9CZzVFc1htN2tpNFFSc2k1UVpoWmdRVnUxTDJUeTY2OUZCclNnam1UZDBZOUR3aWRQTnZKTG1Ka0l6Q29jYUxYVEJwaWczbEFGWmUzUlNvQS10NWQtU2JzdkRhX3NpTkNBSko1NzdyYVJ2cFZBN3VMVDNKakR2NFFJWklIaG5oY19rX0NSdzZIMDM3ZGozUTloOVQyWFpxRU9JRDVzck1TOGNzR3dzTDZRNk51TUgtdHd6bzEzTi1wc21LTm1laTdiRzBZd9IBswJBVV95cUxPd18yZzY1VXRzSG8xdnVZUDNGb29CNDluOVYzaHRxVTBsSjE4bGYtR3pjT3hJYnRZZjc2d2tFeHBoc0lseDMwRlBwTzRqVVVRTjNVaURsaVF5SjBhbm9Iam5PMFNZVnljMkJRc3hqR0gtWENvMHVCUGpCc1U5eEpDb1hDcWhjTkRMMUp6dUhERlg4YXJacUxpdWVISmhTaEVGVEdqaEFDQWVHbDhvUUl5M0oyeThaZVpIdFhxRTNBcGd1ZmxnV25EdXlVSDM2V19WcUw5ZkZEeWpvd08zNVREejFEUTBndXdkb0g4aGl6X2JJUDl2NXBUZFBWelduWl9kNlNHbGc1Mmd3ZmhNdVFQYlF4QUQzakd3WlhHem4wTlU3bm1ld0xMZ21QLXJObGFBN2FR?oc=5"
-    },
-    {
-      "date": "2026-10-15",
-      "title": "일론 머스크, 메모리 칩 가격 '터무니없다' 비판",
-      "titleEn": "Elon Musk calls out memory makers over 'extortionate' chip pricing, says Micron is playing smart for long-term loyalty — yet Micron is pulling in 90% margins on consumer RAM - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.6,
-      "tone": "neu",
-      "conf": 85,
-      "hot": true,
-      "summary": "일론 머스크가 메모리 제조사들의 \"터무니없는\" 칩 가격 책정을 비판했다. 그는 마이크론이 장기적인 충성도를 위해 현명하게 행동하고 있다고 언급했지만, 마이크론이 소비자 RAM에서 90% 마진을 올리고 있다고 지적했다. 이는 DRAM 가격 상승에 대한 시장의 인식을 보여준다.",
-      "effects": {
-        "short": {
-          "tone": "neu",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neu",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neu",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNZlh4UVVKLV80Mk9wZXZjS1hWdEpUblZXWkY5QnJNaDdQbGJvOTdQZkhJTUJ5bGdsRmxIekxneWI1RHR6VXZMbzBZOHBQb1hSSDZ4c1o5eGltU041Mjk1TkpEcjZwVjhOU3JzTlVWN0pkbU5ybGVkN3U4cEdnNW5FbmtYa2IxeF8ydGgzZWdTS0pXLUtaSHJYVlBoZE9nVEFiSmhOT21ndUhpdUxhZW9ZZGw5WQ?oc=5"
-    },
-    {
-      "date": "2026-10-08",
-      "title": "AMD, 삼성과 메모리 공급 협력 강화 모색",
-      "titleEn": "AMD seeks 'broader partnership' with Samsung as it looks to secure memory supply — Samsung reportedly 'hopes to turn its memory supply relationship with AMD into foundry' orders for logic chips - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.5,
+      "date": "2026-10-19",
+      "title": "삼성, 엔비디아 차세대 메모리칩에 TSMC 기술 활용",
+      "titleEn": "Samsung said to use TSMC tech for Nvidia's next-generation memory chips (SSNLF:OTCMKTS)",
+      "source": "Seeking Alpha",
+      "score": 0.7,
       "tone": "pos",
       "conf": 80,
-      "hot": false,
-      "summary": "AMD가 메모리 공급 확보를 위해 삼성과의 파트너십 확대를 모색하고 있다. 삼성은 AMD와의 메모리 공급 관계를 로직 칩 파운드리 주문으로 전환하기를 희망하는 것으로 알려졌다. 이는 주요 기업들의 안정적인 메모리 확보 경쟁을 보여준다.",
+      "hot": true,
+      "summary": "삼성전자가 엔비디아의 차세대 메모리 칩 생산에 TSMC 기술을 활용할 것으로 알려졌다. 이는 HBM 등 고성능 메모리 생산을 위한 파운드리 협력의 중요성을 보여주며, 공급망 안정화에 기여할 수 있다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -270,20 +271,20 @@
       },
       "linked": [
         "A-1 관련",
-        "A-4 관련"
+        "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxORzl3VEpsM0dOTG9SRWZJeWVPUEwtdjYzV2lzTHUxTV9KOHNld1NxUnhSWGJzaU5xTVJYOUxzUHRJalEyNXMwU2E5U0NTUlhRWWphVXN6SkgwdW5MN3Q2ckw4bXVkZzFSTjE0VmZFb05JeVVWTm5WOGhEbEtYckh2eVJmMDN3ekNwZkpISHpMdmVpX2UwZXdjM1oyZnl5R21oUW95ZlYxMDBvNG5KaUJRMjRtc05GOHlKUVQwNU1CZlZPQkZvV3dCQ3hJNG5veURiZnBnT1VCRG9MYXRUVXFBY3V4NVkxMlBKaExhd096dWoyM0ZpQU9MeDUwbktQVkc2V0tWenZCR2VEUjd0dVpIZEF5cTAzS1p4NnhqOTFvSTVqT3dULU5OeFlZRWNSUmRadzdZcTF3Z09WTTJZOTJGZk56azlvNWRJTG53ZTVfWTJ4Q01uUGFQd0QwTUNFZXRMd2Z3?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQRkJIU0VodW9fR2l6YWRVX3JSZVhvOXNJRzZSS1R6bmxzRHZPRlJ1MEgzemwwS1czYTFzTkthU1pBNlp6QUcteGZTMXlNcnMzeGFYZjR2WmdOUm5NU3lSbWRHVnFWZ3dET3N1N3poaXpKNFRWWnBVdUxNNzRDZFk4dWEwcGd4QzlXTm01Ym9PYm5WZDB0SU00MndEVUhSOU5tdWliaFk3UXlNaldo?oc=5"
     },
     {
-      "date": "2026-10-13",
-      "title": "창신메모리 신규 D램 아키텍처, 낸드에 영향",
-      "titleEn": "SanDisk Stock Price Forecast: ChangXin Memory’s New DRAM Architecture Collaterally Hits NAND, HBF High-Bandwidth Flash Key to Turnaround",
-      "source": "TradingKey",
-      "score": 0.3,
+      "date": "2026-10-19",
+      "title": "중국 DRAM 업체 CXMT 매출 600% 급증",
+      "titleEn": "Chinese DRAM Maker CXMT Posts 600% Revenue Surge - 조선일보",
+      "source": "RSS",
+      "score": 0.6,
       "tone": "neu",
       "conf": 75,
-      "hot": false,
-      "summary": "창신메모리(CXMT)의 새로운 DRAM 아키텍처가 낸드(NAND) 시장에 간접적인 영향을 미치고 있다. 이는 DRAM 기술 발전이 메모리 시장 전반의 경쟁 구도와 제품 전략에 변화를 가져올 수 있음을 시사한다. 장기적으로는 시장 역학에 영향을 줄 수 있다.",
+      "hot": true,
+      "summary": "중국 DRAM 제조업체 CXMT가 600%의 매출 급증을 기록했다. 이는 중국의 DRAM 생산 능력 확대와 시장 점유율 증가 가능성을 시사하며, 장기적으로는 경쟁 심화 요인이 될 수 있다.",
       "effects": {
         "short": {
           "tone": "neu",
@@ -299,9 +300,10 @@
         }
       },
       "linked": [
-        "B-7 관련"
+        "A-1 관련",
+        "A-4 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxONm5GWWw2ZjRMemlVNFRrZ3pfazZqeVZGS3hxbVJzZ3ZjeVVUQlh1Z09uempFVzFNMUFGN0NNLXNlaXpkZFc0cnhvYU5SUUt1N1NORTdLbTljUV96RlFxaU8yeGlENThyWGFnVHRvTnB1a2ZQQTd0VWR2R0VFQmlEU1RuWHR2X1hKcHdDWmZhWS0xZEVSNmJfc1czRWxwYkVzQVd0c2xKcTB1Q096Q1BnMWZfdDJBWXFueVVIV2Z4a0oycG5SN1FGalMzOGhWdnZfUFNwMnRPQ2hLT245S29HNG5hUmMtMFU?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOUU9lZVVSQjI1eDg4c3VLOUM0WnR4TVlYWWJKc2ZKa19mc25OekxzSlFXOTlRVW9VY0o3V1ZVa1JuVEJoMk9jaHllU0xmSmRhZ1d1ZnQxNWp1VEhacVI2VVJfN3JqY21ISHZzanZ5cjQ2UWFNUFE2OC00dTIyazNLRVpJamdTSXFG?oc=5"
     }
   ]
 }
