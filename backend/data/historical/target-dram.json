@@ -2,9 +2,9 @@
   "signalId": "target-dram",
   "source": "Yahoo Finance blend: MU (50%) + SK Hynix (30%) + Samsung (20%), normalized to base 100",
   "mode": "real-proxy",
-  "collectedAt": "2026-10-20",
+  "collectedAt": "2026-10-23",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-10-12",
+  "rangeEnd": "2026-10-19",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -286,6 +286,10 @@
     {
       "week": "2026-10-12",
       "value": 576.4373
+    },
+    {
+      "week": "2026-10-19",
+      "value": 561.34
     }
   ]
 }

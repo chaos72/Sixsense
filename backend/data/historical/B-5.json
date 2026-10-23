@@ -1,10 +1,10 @@
 {
   "signalId": "B-5",
-  "source": "Google News 'LTA ratio' (96 entries, LLM 1\ud68c \ud638\ucd9c, \uc2e4\ud328 0\uc8fc, \ub9c8\uac10 2026-10-05 \uc774\ud6c4\ub9cc \ucc44\uc810)",
+  "source": "Google News 'LTA ratio' (98 entries, LLM 1\ud68c \ud638\ucd9c, \uc2e4\ud328 0\uc8fc, \ub9c8\uac10 2026-10-12 \uc774\ud6c4\ub9cc \ucc44\uc810)",
   "mode": "real",
-  "collectedAt": "2026-10-20",
+  "collectedAt": "2026-10-23",
   "rangeStart": "2025-12-08",
-  "rangeEnd": "2026-10-05",
+  "rangeEnd": "2026-10-19",
   "note": "Auto-collected via auto_collectors.py",
   "finalThrough": "2026-10-12",
   "frozenSince": "2026-09-14",
@@ -101,6 +101,10 @@
     {
       "week": "2026-10-05",
       "value": 0.9
+    },
+    {
+      "week": "2026-10-19",
+      "value": 0.8
     }
   ]
 }

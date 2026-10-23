@@ -1,8 +1,8 @@
 {
   "signalId": "B-1",
-  "source": "Google News 'Earnings Call sentiment' (176 entries, LLM 2\ud68c \ud638\ucd9c, \uc2e4\ud328 0\uc8fc, \ub9c8\uac10 2026-10-05 \uc774\ud6c4\ub9cc \ucc44\uc810)",
+  "source": "Google News 'Earnings Call sentiment' (175 entries, LLM 1\ud68c \ud638\ucd9c, \uc2e4\ud328 0\uc8fc, \ub9c8\uac10 2026-10-12 \uc774\ud6c4\ub9cc \ucc44\uc810)",
   "mode": "real",
-  "collectedAt": "2026-10-20",
+  "collectedAt": "2026-10-23",
   "rangeStart": "2026-03-16",
   "rangeEnd": "2026-10-19",
   "note": "Auto-collected via auto_collectors.py",
@@ -104,7 +104,7 @@
     },
     {
       "week": "2026-10-19",
-      "value": -0.5
+      "value": 0.7
     }
   ]
 }
