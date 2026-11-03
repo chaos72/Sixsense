@@ -1,20 +1,110 @@
 {
-  "collectedAt": "2026-10-27",
+  "collectedAt": "2026-11-03",
   "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 639,
+  "rawCount": 779,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
-      "date": "2026-09-29",
-      "title": "AI 서버, 메모리 가격 급등",
-      "titleEn": "AI Servers Drive Memory Prices Skyward—DDR5 Modules Surge Fivefold in 10 Months",
-      "source": "BigGo Finance",
+      "date": "2026-10-12",
+      "title": "DDR4 가격 24% 급등, 공급난 2028년까지",
+      "titleEn": "DDR4 Memory Chip Contract Prices Surge 24% In Three Months, Outpacing DDR5 As Barclays Warns Micron’s Memory Shortage Runs Until 2028",
+      "source": "Wccftech",
       "score": 0.9,
       "tone": "pos",
       "conf": 95,
       "hot": true,
-      "summary": "AI 서버 수요 증가로 DDR5 모듈 가격이 10개월 만에 5배 급등했습니다. 이는 AI 데이터센터의 메모리 수요가 DRAM 가격 상승의 주요 동력임을 보여줍니다.",
+      "summary": "DDR4 메모리 칩 계약 가격이 3개월 만에 24% 급등하며 DDR5를 앞질렀습니다. 바클레이즈는 마이크론의 메모리 부족 현상이 2028년까지 이어질 것이라고 경고했습니다. 이는 서버 DRAM 시장의 공급 부족 심화와 가격 상승 압력을 시사합니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQajJoUENnN2hjRG5YaXk4RXE1YmgxMDhrRDFwc1dsNXF6Qm95T1hxZDBnOS1xOXhfcFhBdk9pLVJiUlUxeTZXS1p4YXlTdy1LTW9KNDJwbXdLelBlMzRHWmJKaWpxYWt1TjlrWHlMT01aTDJOU3dEZTNuaEc1S0diekthRUJQZTF6TzAzQ2JIaUdQZ2IyaDFMOFdjVGJMRkV5RVhCdWNUQ3Rvd2RJVlpzX0FvUm80Qkl2R2pXTXlnMjlXcHF1bEtweWxwM0VuR29WNDRlcXhQNzJOMkx2azZxSTR5Q1JEUDTSAewBQVVfeXFMT0FidXdBYUw0dE5qb3Q1Sm1iQ2NxTTFPWGdONnp6NjJ3QkFuaGNJU0ZSTWM0SDNxS3F0bzZabHJMd0s1NW9oZERmbm82R3ZFSnlzSEUxV3JuS0NGX0EtRHJyOUN2dk9fU0xJX2loZkhaN0xDbHdpX1R0RU1LSWhVbHBjNGdYczlxeU9tTmpZNndETFpwQ2VySWpwby0zVkpwZVM0VmtvemJncUplOGM3ekQ1dnhuOWczM3IwM24tR0VRR3A3dkZLcVdsTjRScHBZb0Z4Zk1ueVdGaTFjWEw2WHdBQXNBckxvYVhscTA?oc=5"
+    },
+    {
+      "date": "2026-10-30",
+      "title": "삼성, 메모리 부족 지속 및 HBM 2027년 물량 완판",
+      "titleEn": "Samsung warns memory shortages aren't improving any time soon, and its entire 2027 supply of HBM is booked",
+      "source": "PC Guide",
+      "score": 0.9,
+      "tone": "pos",
+      "conf": 95,
+      "hot": true,
+      "summary": "삼성은 메모리 부족 현상이 당분간 개선되지 않을 것이며, 2027년 HBM 공급 물량이 이미 모두 예약되었다고 경고했습니다. 이는 HBM을 포함한 고성능 메모리 시장의 극심한 공급 부족과 장기적인 수요 강세를 보여줍니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQRGw3TE1sbXpTelBRZkQzQ3h6TnBDbWlXNnFaN2dZaGd5T3g3T0FoX0Y5RC1XbDEtcWFReUZ3UC1ENlJVMnAwMEI4cFVmTzdHS0pZOUl0bXZkcVVzajlEQVNsdnNHdUplY3M1eG43ZlBubGdieEdJMWVuOXR5SEl1ZmxxQTgtSHdJRmVZN1FWOC10QWZXZnNJSU5pZkFjdTRYcjhFRDZHSkV1VVpRcDFnOXctQ3M0Qk5lZlBScmRlNTdpakhyRDRCUXhlZTduV3M?oc=5"
+    },
+    {
+      "date": "2026-10-14",
+      "title": "DDR5 32GB RAM $450, AI발 부족 심화",
+      "titleEn": "32GB of DDR5 6000 RAM now costs $450 — AI-induced shortage reaches worst milestone yet - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.88,
+      "tone": "pos",
+      "conf": 93,
+      "hot": true,
+      "summary": "32GB DDR5 6000 RAM 가격이 450달러에 달하며, AI로 인한 메모리 부족이 최악의 상황에 이르렀습니다. 이는 일반 소비자 시장뿐 아니라 서버 DRAM 시장에도 가격 상승 압력을 가중시키는 요인으로 작용합니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNc21rMnh3c3JKS0RQa2lTNWNUclR3aWFMTnIyelBhZnpCd2lqYnF3cVphZ3hMVVhrN0hOVkRXbnNsLWc5UEZ3YXZzeGpwbmN3NmRKX3QzdjBlMlczN1NwT2tMME1HTTdYdU1oc2ZhZEpNc0dQM0xMVTNLV1BLcld1SXI0U1loMHVBSjg0MmdrYnpDY0hjZWZLczhRWUY2MTJRNEhIR0FTOGRxcjdjWWZ4Z3RxVEZaOGpEOGNET096UWdfOWI4SmQ1WkxOd3QtWVk?oc=5"
+    },
+    {
+      "date": "2026-11-01",
+      "title": "샘 올트먼, 삼성과 RAM 확보 논의",
+      "titleEn": "Sam Altman meets with Samsung leadership to secure more RAM for data centers amid crushing shortages — OpenAI CEO travels to South Korea to meet Samsung leadership to discuss future AI data centers - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.85,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "OpenAI CEO 샘 올트먼이 심각한 메모리 부족 상황 속에서 데이터센터용 RAM 확보를 위해 삼성 경영진과 만났습니다. 이는 AI 수요로 인한 서버 DRAM의 강력한 수요와 공급 부족 심화를 나타냅니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -31,20 +121,20 @@
       },
       "linked": [
         "A-2 관련",
-        "B-6 관련"
+        "A-4 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBTTW5jdVFTU2dhWmJkSlhxbDd6ZmtRMDgwLXIyaGlMMDFOMWt0R0k5Mk5hemx2VzVpZFRlczl0dGpDTC1tdzgxcVRUNkRVM0Q4NzhwSlZsZ0FhWHMzZG9xUEEzS0tIZ2xvOUY4amk0SmtaaUxZSHc?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi5AJBVV95cUxPcGdMMzlLWmVpU21udW13S2IzUy1DbGxzdFFRenNLd0hsQXo0N1ktb3o5dXZPdjVMQWFRdmlUenFOQ2l6MGdFdHZ0eS13YUNfMTBUQmJZUkx3M2hNUVhBcnFiZWpYRjk4V1BaSXozenFGS29iZXZBWVRPdzE4WGdYaDdGODF6QVlVWGFfNG91TjR2WkhTN2FTZFpNLWUyUTBTb19aTDN6SmlpQjZwRlpJVHA5VUJHMzNtRkszV0RGTDZZTkVHN0JyX0ZmUnBURTNCaDJib09PSlloUGVINlRKTk5FMzg1RDBBLWdPM3JfZjk5NnYxOEY4VkowTmw0MTNuWmcyV1lkcFNKQTdNUDFpRVJWQ3lyNXJQZGZybTBTc2xnbGtndkFNQTQtQ01wNjRDUDVHZFFuX3VDblRhdGl3bGxNUlJsRFU0QllZVkFBZF9xaEFNSFpsV2ZOQnBOR0t5Zk5FaA?oc=5"
     },
     {
-      "date": "2026-10-26",
-      "title": "마이크론 AI 메모리 2028년까지 매진",
-      "titleEn": "Micron says its AI memory chips are sold out through 2026 and into 2028",
-      "source": "Startup Fortune",
-      "score": 0.9,
+      "date": "2026-10-30",
+      "title": "삼성, AI 메모리 부족 2027년까지 악화 경고",
+      "titleEn": "Samsung Warns AI Memory Shortage Will Worsen Through 2027",
+      "source": "PYMNTS.com",
+      "score": 0.8,
       "tone": "pos",
-      "conf": 95,
+      "conf": 92,
       "hot": true,
-      "summary": "마이크론의 AI 메모리 칩이 2026년을 넘어 2028년까지 이미 매진되었습니다. 이는 AI 관련 DRAM에 대한 강력한 수요와 공급 부족이 장기화될 것임을 시사합니다.",
+      "summary": "삼성은 AI 메모리 부족 현상이 2027년까지 더욱 심화될 것이라고 경고했습니다. 이는 AI 시장의 폭발적인 성장에 따른 HBM 및 고성능 DRAM 수요 증가와 공급 제약이 지속될 것임을 의미합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -63,18 +153,18 @@
         "A-4 관련",
         "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPLTF2QmkzRUVoYjBYOENRZFRvb1IzdTEtZ2hKeXkxV0VOdndnS04yUmRtUkF5MGhZaUVhNkhBczRVdmpidlYwU0k4S2UtcEZfRndMR05mWjd2bl9JZEhnd2FibVZyZXBvQjZxSGJ2OV9KcXpEeFJuc01jT1ZJQXVkR0ZqS01aaHFlOElBOEVLQjYwRXRuNlFoREh6VWJmMERC?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQamF3cjZ2NE56NnhMZlhydENCQUhYUDNVdWhpWFNjRERuXzlwQXlqLTZsTXRsRUpuZTlQb1NPbklzV2h6VWQ1RWZReHQyN1N0Tk1NV2xmajRmTDByMWk2XzFGZTl1TDg1Y1kwcmVLRTRfNXk1SEhtYUEzZWptcnU3NEI4TS1iYkFEdVpTQUlHVEs1Q1d2UE40bER4MWRvSjJldjdmMGd3Rk5lVGFMNXRkb2xhaGY1Zw?oc=5"
     },
     {
-      "date": "2026-10-26",
-      "title": "삼성·SK하이닉스, AI칩으로 3분기 실적 호조",
-      "titleEn": "Samsung Electronics and SK hynix eye $139 billion combined Q3 profit on AI chips",
-      "source": "Korea JoongAng Daily",
+      "date": "2026-11-02",
+      "title": "삼성, AI 수요 급증에 장기 메모리 계약 확대",
+      "titleEn": "Samsung Electronics stock expands long-term memory deals as AI demand surges",
+      "source": "ad-hoc-news.de",
       "score": 0.8,
       "tone": "pos",
       "conf": 90,
       "hot": true,
-      "summary": "삼성전자와 SK하이닉스가 AI 칩 덕분에 3분기에 총 1,390억 달러의 이익을 기록할 것으로 예상됩니다. 이는 AI 메모리 시장의 강력한 성장과 두 회사의 시장 지배력을 보여줍니다.",
+      "summary": "삼성전자가 AI 수요 급증에 발맞춰 장기 메모리 공급 계약을 확대하고 있습니다. 이는 안정적인 수요 확보와 공급망 관리를 통해 시장 변동성을 줄이고 수익성을 강화하려는 전략으로 해석됩니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -90,51 +180,21 @@
         }
       },
       "linked": [
-        "B-1 관련",
-        "B-6 관련"
+        "A-2 관련",
+        "B-5 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxONlhDUGRhN3lwX2NiZjFqcWVtazNVY0cxWjl3ODQyVlRrNl94SVhyOU9kelg5T2FfVURvcTNSUW9YOEFIa0NraVRmbkVuYmVHaDdCRzFPaU41d3A3bDlYRU1FWjFkWGtmWjIwUldGcWpwWnh4bEJoREQteE5jQi1nRnVJeVZzQ2VuNEdTU1VJbkw5ZzUyb3ZKXy1hRDJkanVZQVJlbU5hemh4XzVKYkVxT0pFYnZLaURkQm1qMGZPMW9qbDJPU254NDZPcjg?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNMlNRdmJOUmUxckVCQmxHdW5fN3J6cE5kU1ZGSFB4ajl5RE5mTVdHMVNQU2dZdTl4bmoyWjJUOXFpVnpzeWd1V213VWx6MHVWWFc3dGNJSzhMdUNrb2VCM0NpdjlzNHZfWGctQzF1cnFPZUl1MHJpc3kwcEZOcTY2djNpZ0pTNFBZRDZDRnZrdUxieEt2dzhVSVpSdFVFakZjS2puMWZVcWxfN0hkUXE4ZndmcDR0ZWdLUTg1Mmw5dTVsYkxuX1ZQem1PM2c2YkFVaEFURnJR?oc=5"
     },
     {
-      "date": "2026-10-25",
-      "title": "노무라, 메모리 부족 2028년까지 지속 전망",
-      "titleEn": "Nomura Bucking the Trend with Bullish Memory Call: Shortages May Last Until 2028, Samsung and SK Hynix Price Targets Doubled",
-      "source": "BigGo Finance",
-      "score": 0.8,
+      "date": "2026-11-02",
+      "title": "SK하이닉스, HBM4 시대 진입",
+      "titleEn": "High Bandwidth Memory Market Enters the HBM4 Era as SK hynix",
+      "source": "openPR.com",
+      "score": 0.78,
       "tone": "pos",
-      "conf": 90,
+      "conf": 89,
       "hot": true,
-      "summary": "노무라 증권은 메모리 부족 현상이 2028년까지 지속될 것이며, 삼성과 SK하이닉스의 목표 주가를 두 배로 상향 조정했습니다. 이는 DRAM 시장의 장기적인 강세와 가격 상승 압력을 나타냅니다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE12dURBaUlRbi1nUUMyRHl0ZDFQX1YyY19Vd05icVdSWFdud0hwRGN4bUpFaFlGOFg5TklSUTBmWEgtODZpLTBlUTB0OHJiVnhkNDJwU2hCZmw4aEp0NkhCYm1QLWplUTRyektDTkVlcnRRb3llTkE?oc=5"
-    },
-    {
-      "date": "2026-10-25",
-      "title": "DDR4 가격 24% 급등, HBM 재설계 영향",
-      "titleEn": "DDR4 Prices Surge 24% as Big Tech Redesigns HBM, Converging on Samsung's Taylor Fab 2",
-      "source": "BigGo Finance",
-      "score": 0.8,
-      "tone": "pos",
-      "conf": 90,
-      "hot": true,
-      "summary": "빅테크 기업들이 HBM을 재설계하고 삼성 테일러 팹2에 집중하면서 DDR4 가격이 24% 급등했습니다. 이는 HBM으로의 전환이 기존 DRAM 시장에도 영향을 미치며 가격 상승을 유발하고 있음을 보여줍니다.",
+      "summary": "SK하이닉스가 HBM4 시대를 열면서 고대역폭 메모리 시장의 기술 경쟁이 심화되고 있습니다. 이는 AI 가속기 시장의 성장에 필수적인 차세대 메모리 기술 발전의 중요한 이정표입니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -153,106 +213,18 @@
         "B-6 관련",
         "A-2 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE0tUGl3SUpaNTFrcDk1YnJkd2JhUmFoSVpNeU80bjg0ZE5XVjFNNF9QMHRpLW5XZVFPZHBDU25JTnlCNF9YTWhVQ0hQNFVPdTRoZVFXbWJLYTAxOHBHLTBubXczNEFmZlM4YmRDNUhRNWtqQTlpaEE?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNQnFhMTVUbTRMazZTOTA3SHo5UkJFel9UeWRrN1dhOVI0TU9yMG9ySnRFRjhieDNYOG9LblkzMkxBTENfNmxVX2JzMl83aFFUQnd1c0VFWGhOVDNXQWw3QjYxeGU1eFQtR1doWlktbnR0ay1TWlJtTWk2cFFrRjNVLVVEQlJ4NWdLcGxJbWFxMnh3YWVxOFVNSEZFM3Y?oc=5"
     },
     {
-      "date": "2026-10-23",
-      "title": "메모리 가격 급등, PC 출하량 급감",
-      "titleEn": "Memory Price Surge Crushes Upgrade Intentions: Global PC Shipments Plunge 21% in Q3, May Fall Another 27% in Q4",
-      "source": "BigGo Finance",
-      "score": -0.8,
-      "tone": "neg",
-      "conf": 90,
-      "hot": true,
-      "summary": "메모리 가격 급등으로 인해 PC 업그레이드 의사가 꺾이면서 3분기 글로벌 PC 출하량이 21% 급감했습니다. 4분기에는 추가로 27% 감소할 수 있어 PC DRAM 수요에 부정적인 영향을 미칠 것입니다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1nTkcxYXVMTC1vczlfSUtQcElBZko5NzBRdDFpVUFuOU5ZQ190eHItMXlvWUhUZ0lfYWNJRDJjWGUyckdUR05vLWFzV2wtMkhnaUswZTdDblpZN1ZSa3NNYmd4TWNlcUJxNE5ldmR0M3NuWjVRbGc?oc=5"
-    },
-    {
-      "date": "2026-10-21",
-      "title": "삼성·SK하이닉스, 中 공장 AI 램 업그레이드",
-      "titleEn": "Samsung and SK Hynix are upgrading Chinese factories to produce advanced RAM chips as AI data center competition ramps up — big players move to fight off the threat from CXMT and co. - Tom's Hardware",
-      "source": "RSS",
-      "score": 0.7,
+      "date": "2026-11-02",
+      "title": "삼성, AI 메모리 수요 급증에 HBM4 박차",
+      "titleEn": "Samsung’s HBM4 Push Gains As AI Memory Demand Surges",
+      "source": "Electronics For You BUSINESS",
+      "score": 0.75,
       "tone": "pos",
-      "conf": 85,
+      "conf": 88,
       "hot": true,
-      "summary": "삼성과 SK하이닉스가 AI 데이터센터 경쟁 심화에 따라 중국 공장을 업그레이드하여 첨단 RAM 칩을 생산하고 있습니다. 이는 AI 수요에 대응하기 위한 공급 확대 노력으로, 장기적으로는 공급 안정화에 기여할 수 있습니다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiywJBVV95cUxNTjQtNUtfdjBfYVlVQVZZSnZXTl9pWnliTmVPc01oUDh2SlY5Zk1RVXk1anIxMTRTRU1MUFdDUkl0RFBrMHFoa1diaVp4ektVR21YYnA5aEdjeXJuMVo3X2tVekxmanlZajhfM1J3X3JfbW4tUGE3NE0wSHlXalRPQ001M2pZNDRFVVNIRUl0c0hYMTFUbkNVNmx2UTBBWG9EaEJjeVhHMmxCcG5oR25hVjlReHNJUjM2NHlyd0Fxc0VpRWR2cjY0UGxGSjZQNU1YVTFNcGU5MjVfam8yano2QTBNQkg3RThKUHg2LThtM0J6SmJJbXVqLVVfOFQtc3lYaGxjTHdpZnN6OU5tUTJxN2tnRWI3ajNBXzdEWnhnTlVDeTZoaHUySGR1OWIyY3I3UEtSYnZSV1doRW1DQ21NYzhGWTJTWFI4UDNj?oc=5"
-    },
-    {
-      "date": "2026-10-24",
-      "title": "HBM 넘어 차세대 메모리 기술 경쟁",
-      "titleEn": "[AI 메모리 전쟁] HBM 넘어 차세대 메모리로… 삼성·하이닉스 기술 경쟁 - CBC뉴스",
-      "source": "RSS",
-      "score": 0.7,
-      "tone": "pos",
-      "conf": 85,
-      "hot": true,
-      "summary": "삼성과 SK하이닉스가 HBM을 넘어 차세대 메모리 기술 개발 경쟁을 벌이고 있습니다. 이는 AI 시대에 필요한 고성능 메모리 수요에 대응하고 미래 시장을 선점하기 위한 중요한 움직임입니다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBBaGFTTVU4MTdKZ2wwa2REaGxkNlpxRDJxZzhoRFVKVHlteWI2eXZUblJmeEhwTGM0aWN3dEFpNFRoaVJrSHB3Uzh3OTkwUWUzeklYaWpaNGlHaGhueXkzRjhzRy1OYTBh?oc=5"
-    },
-    {
-      "date": "2026-10-23",
-      "title": "삼성·TSMC, 엔비디아 차세대 메모리 협력",
-      "titleEn": "Samsung and TSMC Partner on Next-Gen Memory Chips for Nvidia",
-      "source": "RS Web Solutions",
-      "score": 0.7,
-      "tone": "pos",
-      "conf": 85,
-      "hot": true,
-      "summary": "삼성과 TSMC가 엔비디아의 차세대 메모리 칩 개발을 위해 협력합니다. 이는 고성능 AI 칩의 공급망을 강화하고 기술 발전을 가속화하여 미래 DRAM 시장에 긍정적인 영향을 미칠 것입니다.",
+      "summary": "AI 메모리 수요가 급증하면서 삼성의 HBM4 개발 및 생산 노력이 탄력을 받고 있습니다. 이는 차세대 고성능 메모리 시장에서의 경쟁 심화와 기술 발전에 따른 시장 변화를 예고합니다.",
       "effects": {
         "short": {
           "tone": "pos",
@@ -269,39 +241,69 @@
       },
       "linked": [
         "B-6 관련",
-        "A-1 관련"
+        "A-2 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOMVBobmlWeV9HcTEwQTgzcTI3YTIwVWtKc0Y2UmpkTWZzSVpmc1pYNHhMdlNScDAtejdRVE0xQWR6RFRJZVVNc1lXMnlyTmVaOTluUjkzNC02ZDFNRWxXb1pLZzdFcTZzUDJndkJHQzBrXzlZNGtIcUFXR2R3SWtjMUIwLWpUVEJfaWJNcHcyaDlSS1J3TElVWTM4TV9jejg?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPOU5FTUlSenVKc3A4cExRQ1c0S2h6QVJQVEVhbnhsMFctXzNvd3RBZmdDUHdUY3l3TURMRHhLMkhGU0YxVEpRRnRKYWJXUl9ISFYwQTI2SzUtLUdBQlRXYzB2d3A3VmZNcW51Z2M0eUNEbDN0dEhJTm1XUTJsNzFicFYxM01GazBqVElKOXo2RFhBVFhZeUtoMnd1ME9LMGZtdlE?oc=5"
     },
     {
-      "date": "2026-10-16",
-      "title": "中, AI·칩 기술 수출 제한 계획",
-      "titleEn": "After years of U.S. export bans, China plans its own: 40 AI, chip and solar technologies could be restricted",
-      "source": "Fortune",
-      "score": -0.7,
-      "tone": "neg",
+      "date": "2026-10-28",
+      "title": "TSMC, CoWoS 가격 20% 인상 검토",
+      "titleEn": "Taiwan Semiconductor Said to Weigh 20% CoWoS Price Hike; Taiwan Index Futures Night Session Surges 774 Points as Investment Trusts Buy for 11th Straight Day",
+      "source": "BigGo Finance",
+      "score": 0.7,
+      "tone": "pos",
       "conf": 85,
       "hot": true,
-      "summary": "미국 수출 금지 조치에 대응하여 중국이 40개 AI, 칩 및 태양광 기술에 대한 자체 수출 제한을 계획하고 있습니다. 이는 글로벌 반도체 공급망에 추가적인 불확실성을 야기하고 특정 칩의 가격 상승 압력을 높일 수 있습니다.",
+      "summary": "대만 TSMC가 CoWoS 패키징 서비스 가격을 20% 인상하는 방안을 검토 중입니다. 이는 AI 칩 생산의 핵심 공정 비용 상승으로 이어져, 최종 AI 서버 및 고성능 DRAM 가격에 영향을 미칠 수 있습니다.",
       "effects": {
         "short": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "단기 분석"
         },
         "mid": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "중기 분석"
         },
         "long": {
-          "tone": "neg",
+          "tone": "pos",
           "text": "장기 분석"
         }
       },
       "linked": [
         "A-1 관련",
-        "B-4 관련"
+        "B-7 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOYTMzSUVVVGFLdGJPU01kOGJESE5IQjZCWEE4eFBjVVpOOVplNjREbGlIdGxzbTZ6ajRPOGhCUUw0bkZfYlEyYXRaSnBEUlpZU2VkRUJaWjdoY2cyLVEtVk5QOTBKLVhUQk9oM1pJZnBFN2dPMDZMWFpvd3g1RktRT19VdzU3bG9ZRmMwYXBXNUQxUQ?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5KZEh4ZWpjNGlZbk1XNkVOcVBJT2RVdUNPbmRjanBidlM2NXlHVU1vVlhLNHFwZnFnRlJwSmI5MGxNZ1VLMi1PNTBNUWM4SHU0RmJyQVpKUERXbUs4NmNZVllWUVBUaXZBMlpYbTB2SWQ1SUVQeUE?oc=5"
+    },
+    {
+      "date": "2026-10-21",
+      "title": "삼성/SK하이닉스, 中 공장 첨단 RAM 생산 업그레이드",
+      "titleEn": "Samsung and SK Hynix are upgrading Chinese factories to produce advanced RAM chips as AI data center competition ramps up — big players move to fight off the threat from CXMT and co. - Tom's Hardware",
+      "source": "RSS",
+      "score": 0.65,
+      "tone": "neu",
+      "conf": 80,
+      "hot": true,
+      "summary": "삼성과 SK하이닉스가 AI 데이터센터 경쟁 심화에 대응하여 중국 공장을 첨단 RAM 칩 생산 시설로 업그레이드하고 있습니다. 이는 글로벌 메모리 공급망의 변화와 생산 능력 확대를 시사합니다.",
+      "effects": {
+        "short": {
+          "tone": "neu",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "neu",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "neu",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-1 관련",
+        "A-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiywJBVV95cUxNTjQtNUtfdjBfYVlVQVZZSnZXTl9pWnliTmVPc01oUDh2SlY5Zk1RVXk1anIxMTRTRU1MUFdDUkl0RFBrMHFoa1diaVp4ektVR21YYnA5aEdjeXJuMVo3X2tVekxmanlZajhfM1J3X3JfbW4tUGE3NE0wSHlXalRPQ001M2pZNDRFVVNIRUl0c0hYMTFUbkNVNmx2UTBBWG9EaEJjeVhHMmxCcG5oR25hVjlReHNJUjM2NHlyd0Fxc0VpRWR2cjY0UGxGSjZQNU1YVTFNcGU5MjVfam8yano2QTBNQkg3RThKUHg2LThtM0J6SmJJbXVqLVVfOFQtc3lYaGxjTHdpZnN6OU5tUTJxN2tnRWI3ajNBXzdEWnhnTlVDeTZoaHUySGR1OWIyY3I3UEtSYnZSV1doRW1DQ21NYzhGWTJTWFI4UDNj?oc=5"
     }
   ]
 }
