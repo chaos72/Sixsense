@@ -1,9 +1,9 @@
 {
-  "runAt": "2026-11-03",
-  "dataWeeks": 73,
+  "runAt": "2026-11-10",
+  "dataWeeks": 74,
   "dataRange": [
     "2025-06-16",
-    "2026-11-02"
+    "2026-11-09"
   ],
   "target": "메모리 3사 주가지수 (MU 50% · SK하이닉스 30% · 삼성전자 20%, 2025-06-16 = 100)",
   "baseline": "단순 기준선 — 지난주 값이 그대로 유지된다고 가정",
@@ -14,8 +14,8 @@
     "월간·분기 발표 통계는 발표 지연 7주 반영 (그 시점에 실제로 알 수 있던 값만)"
   ],
   "current": {
-    "week": "2026-11-02",
-    "value": 586.02
+    "week": "2026-11-09",
+    "value": 493.02
   },
   "variants": [
     {
@@ -24,79 +24,79 @@
       "byHorizon": [
         {
           "h": 1,
-          "n": 45,
-          "modelMape": 24.37,
-          "naiveMape": 7.2,
-          "winRate": 17.8,
-          "dirAcc": 44.4
+          "n": 46,
+          "modelMape": 24.74,
+          "naiveMape": 7.65,
+          "winRate": 17.4,
+          "dirAcc": 43.5
         },
         {
           "h": 2,
-          "n": 43,
-          "modelMape": 28.48,
-          "naiveMape": 11.3,
-          "winRate": 11.6,
-          "dirAcc": 37.2
+          "n": 44,
+          "modelMape": 29.19,
+          "naiveMape": 11.99,
+          "winRate": 11.4,
+          "dirAcc": 34.1
         },
         {
           "h": 3,
-          "n": 41,
-          "modelMape": 31.42,
-          "naiveMape": 13.49,
-          "winRate": 17.1,
-          "dirAcc": 31.7
+          "n": 42,
+          "modelMape": 32.02,
+          "naiveMape": 14.04,
+          "winRate": 16.7,
+          "dirAcc": 28.6
         },
         {
           "h": 4,
-          "n": 39,
-          "modelMape": 34.04,
-          "naiveMape": 16.63,
-          "winRate": 15.4,
-          "dirAcc": 23.1
+          "n": 40,
+          "modelMape": 34.65,
+          "naiveMape": 17.34,
+          "winRate": 15.0,
+          "dirAcc": 22.5
         },
         {
           "h": 5,
-          "n": 37,
-          "modelMape": 34.81,
-          "naiveMape": 19.43,
-          "winRate": 18.9,
-          "dirAcc": 29.7
+          "n": 38,
+          "modelMape": 35.89,
+          "naiveMape": 20.81,
+          "winRate": 18.4,
+          "dirAcc": 28.9
         },
         {
           "h": 6,
-          "n": 35,
-          "modelMape": 34.62,
-          "naiveMape": 20.89,
-          "winRate": 28.6,
-          "dirAcc": 42.9
+          "n": 36,
+          "modelMape": 35.57,
+          "naiveMape": 22.55,
+          "winRate": 30.6,
+          "dirAcc": 44.4
         },
         {
           "h": 7,
-          "n": 33,
-          "modelMape": 33.89,
-          "naiveMape": 22.68,
-          "winRate": 30.3,
-          "dirAcc": 39.4
+          "n": 34,
+          "modelMape": 34.9,
+          "naiveMape": 24.39,
+          "winRate": 32.4,
+          "dirAcc": 41.2
         }
       ],
       "overall": {
-        "n": 273,
-        "modelMape": 31.34,
-        "naiveMape": 15.42,
-        "winRate": 19.4,
-        "dirAcc": 35.5,
-        "alwaysUpDirAcc": 65.2,
-        "underRate": 85.3,
-        "pValue": 0.991
+        "n": 280,
+        "modelMape": 32.09,
+        "naiveMape": 16.41,
+        "winRate": 19.6,
+        "dirAcc": 34.6,
+        "alwaysUpDirAcc": 63.2,
+        "underRate": 83.6,
+        "pValue": 0.992
       },
       "procurement": {
-        "n": 39,
+        "n": 40,
         "horizonWeeks": 4,
-        "alwaysNow": 556.85,
-        "model": 591.98,
-        "modelPct": 6.31,
-        "perfectPct": -6.56,
-        "waitRate": 94.9,
+        "alwaysNow": 557.34,
+        "model": 591.59,
+        "modelPct": 6.14,
+        "perfectPct": -7.27,
+        "waitRate": 92.5,
         "waitCount": 37,
         "waitCorrect": 9
       },
@@ -104,45 +104,45 @@
       "forecast": [
         {
           "h": 1,
-          "week": "2026-11-09",
-          "value": 568.63,
-          "changePct": -2.97
+          "week": "2026-11-16",
+          "value": 531.61,
+          "changePct": 7.83
         },
         {
           "h": 2,
-          "week": "2026-11-16",
-          "value": 665.35,
-          "changePct": 13.54
+          "week": "2026-11-23",
+          "value": 508.61,
+          "changePct": 3.16
         },
         {
           "h": 3,
-          "week": "2026-11-23",
-          "value": 609.47,
-          "changePct": 4.0
+          "week": "2026-11-30",
+          "value": 505.99,
+          "changePct": 2.63
         },
         {
           "h": 4,
-          "week": "2026-11-30",
-          "value": 565.83,
-          "changePct": -3.44
+          "week": "2026-12-07",
+          "value": 524.24,
+          "changePct": 6.33
         },
         {
           "h": 5,
-          "week": "2026-12-07",
-          "value": 606.06,
-          "changePct": 3.42
+          "week": "2026-12-14",
+          "value": 566.94,
+          "changePct": 14.99
         },
         {
           "h": 6,
-          "week": "2026-12-14",
-          "value": 566.24,
-          "changePct": -3.38
+          "week": "2026-12-21",
+          "value": 556.71,
+          "changePct": 12.92
         },
         {
           "h": 7,
-          "week": "2026-12-21",
-          "value": 589.37,
-          "changePct": 0.57
+          "week": "2026-12-28",
+          "value": 496.54,
+          "changePct": 0.71
         }
       ]
     },
@@ -152,78 +152,78 @@
       "byHorizon": [
         {
           "h": 1,
-          "n": 45,
-          "modelMape": 7.34,
-          "naiveMape": 7.2,
-          "winRate": 55.6,
-          "dirAcc": 60.0
+          "n": 46,
+          "modelMape": 7.92,
+          "naiveMape": 7.65,
+          "winRate": 54.3,
+          "dirAcc": 58.7
         },
         {
           "h": 2,
-          "n": 43,
-          "modelMape": 12.2,
-          "naiveMape": 11.3,
-          "winRate": 48.8,
-          "dirAcc": 60.5
+          "n": 44,
+          "modelMape": 12.58,
+          "naiveMape": 11.99,
+          "winRate": 52.3,
+          "dirAcc": 63.6
         },
         {
           "h": 3,
-          "n": 41,
-          "modelMape": 15.53,
-          "naiveMape": 13.49,
-          "winRate": 51.2,
-          "dirAcc": 63.4
+          "n": 42,
+          "modelMape": 15.79,
+          "naiveMape": 14.04,
+          "winRate": 50.0,
+          "dirAcc": 61.9
         },
         {
           "h": 4,
-          "n": 39,
-          "modelMape": 22.03,
-          "naiveMape": 16.63,
-          "winRate": 43.6,
-          "dirAcc": 71.8
+          "n": 40,
+          "modelMape": 22.71,
+          "naiveMape": 17.34,
+          "winRate": 42.5,
+          "dirAcc": 70.0
         },
         {
           "h": 5,
-          "n": 37,
-          "modelMape": 31.49,
-          "naiveMape": 19.43,
-          "winRate": 45.9,
-          "dirAcc": 64.9
+          "n": 38,
+          "modelMape": 33.29,
+          "naiveMape": 20.81,
+          "winRate": 44.7,
+          "dirAcc": 63.2
         },
         {
           "h": 6,
-          "n": 35,
-          "modelMape": 38.59,
-          "naiveMape": 20.89,
-          "winRate": 42.9,
-          "dirAcc": 60.0
+          "n": 36,
+          "modelMape": 40.84,
+          "naiveMape": 22.55,
+          "winRate": 41.7,
+          "dirAcc": 58.3
         },
         {
           "h": 7,
-          "n": 33,
-          "modelMape": 44.54,
-          "naiveMape": 22.68,
-          "winRate": 39.4,
-          "dirAcc": 63.6
+          "n": 34,
+          "modelMape": 46.46,
+          "naiveMape": 24.39,
+          "winRate": 38.2,
+          "dirAcc": 61.8
         }
       ],
       "overall": {
-        "n": 273,
-        "modelMape": 23.21,
-        "naiveMape": 15.42,
-        "winRate": 47.3,
-        "dirAcc": 63.4,
-        "alwaysUpDirAcc": 65.2,
-        "underRate": 39.2,
-        "pValue": 0.851
+        "n": 280,
+        "modelMape": 24.3,
+        "naiveMape": 16.41,
+        "winRate": 46.8,
+        "dirAcc": 62.5,
+        "alwaysUpDirAcc": 63.2,
+        "underRate": 37.9,
+        "pValue": 0.857
       },
       "procurement": {
-        "n": 39,
+        "n": 40,
         "horizonWeeks": 4,
-        "alwaysNow": 556.85,
-        "model": 556.85,
+        "alwaysNow": 557.34,
+        "model": 557.34,
         "modelPct": 0.0,
-        "perfectPct": -6.56,
+        "perfectPct": -7.27,
         "waitRate": 0.0,
         "waitCount": 0,
         "waitCorrect": 0
@@ -232,45 +232,45 @@
       "forecast": [
         {
           "h": 1,
-          "week": "2026-11-09",
-          "value": 594.34,
-          "changePct": 1.42
+          "week": "2026-11-16",
+          "value": 489.59,
+          "changePct": -0.7
         },
         {
           "h": 2,
-          "week": "2026-11-16",
-          "value": 606.69,
-          "changePct": 3.53
+          "week": "2026-11-23",
+          "value": 501.88,
+          "changePct": 1.8
         },
         {
           "h": 3,
-          "week": "2026-11-23",
-          "value": 566.03,
-          "changePct": -3.41
+          "week": "2026-11-30",
+          "value": 464.1,
+          "changePct": -5.87
         },
         {
           "h": 4,
-          "week": "2026-11-30",
-          "value": 541.81,
-          "changePct": -7.54
+          "week": "2026-12-07",
+          "value": 433.47,
+          "changePct": -12.08
         },
         {
           "h": 5,
-          "week": "2026-12-07",
-          "value": 569.34,
-          "changePct": -2.85
+          "week": "2026-12-14",
+          "value": 415.52,
+          "changePct": -15.72
         },
         {
           "h": 6,
-          "week": "2026-12-14",
-          "value": 597.41,
-          "changePct": 1.94
+          "week": "2026-12-21",
+          "value": 480.92,
+          "changePct": -2.45
         },
         {
           "h": 7,
-          "week": "2026-12-21",
-          "value": 563.27,
-          "changePct": -3.88
+          "week": "2026-12-28",
+          "value": 429.57,
+          "changePct": -12.87
         }
       ]
     }

@@ -2,9 +2,9 @@
   "signalId": "A-7",
   "source": "Yahoo Finance HG=F (COMEX Copper Futures, LME \ub300\uccb4)",
   "mode": "real",
-  "collectedAt": "2026-11-03",
+  "collectedAt": "2026-11-10",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-10-26",
+  "rangeEnd": "2026-11-09",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -294,6 +294,14 @@
     {
       "week": "2026-10-26",
       "value": 6.4585
+    },
+    {
+      "week": "2026-11-02",
+      "value": 6.218
+    },
+    {
+      "week": "2026-11-09",
+      "value": 6.3285
     }
   ]
 }

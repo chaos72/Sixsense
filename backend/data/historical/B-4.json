@@ -2,9 +2,9 @@
   "signalId": "B-4",
   "source": "Caldara & Iacoviello GPR Index (https://www.matteoiacoviello.com/gpr_files/data_gpr_export.xls)",
   "mode": "real",
-  "collectedAt": "2026-11-03",
+  "collectedAt": "2026-11-10",
   "rangeStart": "2025-06-16",
-  "rangeEnd": "2026-11-02",
+  "rangeEnd": "2026-11-09",
   "note": "Auto-collected via auto_collectors.py",
   "data": [
     {
@@ -297,6 +297,10 @@
     },
     {
       "week": "2026-11-02",
+      "value": 150.52
+    },
+    {
+      "week": "2026-11-09",
       "value": 150.52
     }
   ]
