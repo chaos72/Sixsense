@@ -1,230 +1,20 @@
 {
-  "collectedAt": "2026-11-10",
+  "collectedAt": "2026-11-17",
   "method": "Gemini LLM 분류",
   "lookbackDays": 30,
-  "rawCount": 520,
+  "rawCount": 394,
   "pool": "NEWS (DRAM/반도체 직접)",
   "news": [
     {
-      "date": "2026-11-05",
-      "title": "삼성전자, HBM 넘어 범용 DRAM 가격 상승 주도",
-      "titleEn": "Samsung leads DRAM boom as prices surge and commodity chips outpace HBM",
-      "source": "Chosunbiz",
-      "score": 0.9,
-      "tone": "pos",
-      "conf": 92,
-      "hot": true,
-      "summary": "범용 DRAM 가격이 HBM 상승세를 앞지르며 삼성전자의 실적을 견인하고 있다. 메모리 시장의 전반적인 호황이 지속되는 모습이다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-1 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBFUzkxc1pja0NLVkhUb21CTzFRWjNJWExlOFZuZVNjcmJQazdkdEJGbGpYaURTQzRiNF8wb0RrQzZmeVNHQURVSnRTR19uRl9GUGZTSGF1WXlxWkI3VHJLVjlIc0hCbWdEU0E4U0h3TUNiYS1lVUdEQVJB0gGOAUFVX3lxTE9JNDlOMUtObEFuZmxHckpOVEZWQ3JEd0JaaTViMXV3N0RvNjRXNVBQMjVEUjdBVVk5NzVRS0cwQ1lqSXFaaFhRTHBmQWRvUzJCalA2aVRvQUpfeHd4UUVGcUNtZFdBNkIzb19xdzdudHVaUE5PWFJRMkZVM1dsRlJHUk0tcHhidmZDbVphWlE?oc=5"
-    },
-    {
-      "date": "2026-10-14",
-      "title": "DDR5 32GB 가격 450달러 돌파, AI발 공급 부족 심화",
-      "titleEn": "32GB of DDR5 6000 RAM now costs $450 — AI-induced shortage reaches worst milestone yet - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.8,
-      "tone": "neg",
-      "conf": 98,
-      "hot": true,
-      "summary": "AI 수요 폭증으로 인한 메모리 부족 현상이 최악의 수준에 도달했다. DDR5 가격이 급등하며 시장 공급망에 큰 부담을 주고 있다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-5 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNc21rMnh3c3JKS0RQa2lTNWNUclR3aWFMTnIyelBhZnpCd2lqYnF3cVphZ3hMVVhrN0hOVkRXbnNsLWc5UEZ3YXZzeGpwbmN3NmRKX3QzdjBlMlczN1NwT2tMME1HTTdYdU1oc2ZhZEpNc0dQM0xMVTNLV1BLcld1SXI0U1loMHVBSjg0MmdrYnpDY0hjZWZLczhRWUY2MTJRNEhIR0FTOGRxcjdjWWZ4Z3RxVEZaOGpEOGNET096UWdfOWI4SmQ1WkxOd3QtWVk?oc=5"
-    },
-    {
-      "date": "2026-11-03",
-      "title": "애플, 메모리 비용 급증으로 제조 원가 330억 달러 상승",
-      "titleEn": "Apple faces unprecedented memory cost increases as RAM prices continue to surge, manufacturing bill climbs by $33 billion — rising component expenses threaten margins through the holiday quarter and into 2027 - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.7,
+      "date": "2026-11-15",
+      "title": "메모리 제조사, 반독점 소송 직면",
+      "titleEn": "Federal Judge Rejects Memory Makers’ Defense To Advance Class-Action Antitrust Lawsuit; Samsung, Micron & SK hynix Must Face The Music Over Artificial DRAM Shortage",
+      "source": "Wccftech",
+      "score": -0.95,
       "tone": "neg",
       "conf": 95,
       "hot": true,
-      "summary": "DRAM 가격 급등으로 애플의 제조 원가가 크게 상승했다. 이는 연말 분기와 2027년까지 수익성에 위협이 될 전망이다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi8AJBVV95cUxQRVRGUHpOR3dGQWFndFpuekxKZzF0c0FfV3g5UGVYSEd3WjJxeUYySHF6R29SdXlrUHB4d3prWjQ4aGlYbUFxSnBOY0VzZE9JYjJTRHM1S1J0QTFId2tCWnpNdVRFM000UEtsMG9MekJQS1BpV2hZaVp4ZTU5NlpCZ0dBMUF2X1VrQUROWHNfVzY1cWpmZjA1dGpPci1DZGNvNVZuRnQtbXRzM2gyMmhZbXFEbmo0MXQzWDR1WEdvR3M5aWk5SHY1RFlYUlJBdXYya2pOQk5yZGJXUlMyN0hOX21zRVVkZk9NVGU4SWUwOHJ1T3hZSVJSWVRSWlZtaHRJLWRHRTkwZnFxWkZwNEdISU9NU3VWNDl5MWRaYklnX3UwOXA5R19JM0dIbHFYTmVQQVhTd3ppU0VfdEtsMHU1V3ZGcWc3azVaWVc4ZF9oVDg4YnlKc0RlM0o3TXRfa0JnOE9vRDZlaVpjM2g2Wmxveg?oc=5"
-    },
-    {
-      "date": "2026-11-09",
-      "title": "엔비디아, 데이터센터에 한국산 AI 칩 도입",
-      "titleEn": "Nvidia to Run Korean AI Chips Alongside Its GPUs in Data Centers",
-      "source": "Seoul Economic Daily",
-      "score": 0.7,
-      "tone": "pos",
-      "conf": 93,
-      "hot": true,
-      "summary": "엔비디아가 자사 GPU와 함께 한국산 AI 메모리 칩을 데이터센터에 병행 사용하기로 했다. 한국 반도체 기업의 기술력이 입증되고 있다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-6 관련",
-        "B-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPMXJ4UTZVYllwekZNcHFzeDJ5ZDFmS2FlRzQ3VzRCNVMwMVM0blJva082MlhRSDJjY3BNY0M3NjVHRVNOdWtfTEJJVkVJd0xTS193aG15dTFheFNLU3VOdms0V0ttRjc4V0xZdE9ocEwyaDlDRkFoMWduVm5razVxOTVRRHFpUVFySGxtQllDXzFtbU5EZlFOclRmaE1nc0U?oc=5"
-    },
-    {
-      "date": "2026-11-10",
-      "title": "SK하이닉스, 고수익성 유지 전망",
-      "titleEn": "DS Investment Says SK Hynix Can Sustain High Profitability, Keeps $1,910 Target",
-      "source": "bloomingbit",
-      "score": 0.6,
-      "tone": "pos",
-      "conf": 90,
-      "hot": true,
-      "summary": "SK하이닉스가 높은 수익성을 지속할 것으로 평가받으며 증권가에서 목표가를 유지했다. 메모리 시장의 견조한 수요가 뒷받침되고 있다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "B-1 관련",
-        "B-6 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE10dkJIbEJ6bjRkd1NHX3AzZEdPNjFtak1paGhJTWRYSnpZYWhJeklJSzFHeDZzV1M5bGc5RUpXelZBQnpvREhQR2FWdDVQemo4eU1GRg?oc=5"
-    },
-    {
-      "date": "2026-11-09",
-      "title": "메모리 부족에 중고 칩 재활용하는 스마트폰 제조사들",
-      "titleEn": "Memory shortage spurs smartphone makers to melt used memory off old devices, then re-solder it onto new products — recycled memory to keep budget phones affordable; 'reballing' adoption to double by 2027 - Tom's Hardware",
-      "source": "RSS",
-      "score": -0.5,
-      "tone": "neg",
-      "conf": 88,
-      "hot": false,
-      "summary": "메모리 공급난이 심화되면서 일부 제조사가 구형 기기에서 칩을 추출해 신제품에 재사용하고 있다. 2027년까지 재활용 비중이 두 배로 늘어날 전망이다.",
-      "effects": {
-        "short": {
-          "tone": "neg",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "neg",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "neg",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-4 관련",
-        "B-7 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxOSVZ2bGlkYzFBaFdOUFViOGVKQ1U5aUhURU9qc08waElIS19JM0ZHc0U4aUdnVmpuT210VUVUaFpvRUhobVoyMWx0VlpaNXhVQWxueTJ5eHNvdlVwQl9yLVNtWV9QcXlWRU9kSWlvU29QcUFsZTlyZmxMOTBOVkc5LWxyNmthbGdnc0kwTVJwREx3ZEVSYUdRSzlHWVAtZk9zSWwxWnpHSGxUUDlCZ1ZZazl1VWt5am9zWHF4OGN6S2xTTldNRXpYZHN1bGdDazJKX3ZXa09LQ0pWYWU0QUg0ajFQTk12Y0pOZ2F0ckdGZTJzU0NkdHhhZm5CdTBKUi10REpIcnB2ZUtHYWZ6cW1JV3lSdVQ5S1dUZGY4WTZWQ1dJdWhYQjY4MUZVNTZMa1pEd3lIUG14OTVhcEpubUlpMG1DQUdxZm9rVDhBWFZOXzA5dTJVbUo1dXg3TU9yRnFERHBj?oc=5"
-    },
-    {
-      "date": "2026-11-09",
-      "title": "삼성·SK하이닉스 현금 보유액 329조 원 돌파",
-      "titleEn": "Samsung, SK hynix cash holdings top 329 trillion won as investment, shareholder returns grow",
-      "source": "Korea JoongAng Daily",
-      "score": 0.5,
-      "tone": "pos",
-      "conf": 89,
-      "hot": false,
-      "summary": "양사의 현금 보유액이 329조 원을 넘어서며 투자 및 주주 환원 여력이 확대되었다. 향후 설비 투자 확대가 기대된다.",
-      "effects": {
-        "short": {
-          "tone": "pos",
-          "text": "단기 분석"
-        },
-        "mid": {
-          "tone": "pos",
-          "text": "중기 분석"
-        },
-        "long": {
-          "tone": "pos",
-          "text": "장기 분석"
-        }
-      },
-      "linked": [
-        "A-2 관련",
-        "B-1 관련"
-      ],
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOaWF1dFNLTmR0VlNyZkRnenRleGVOdzB6MmN2aHkyUG14eWVnSmhMM255ZjZMalZsS1hJRWllbTROQ2hDWkVlRmpnVm1EbmJub0xpel8xenJPdHlhTE53WVNCZGU1M1BBNWdMZTliMmhGU2MwOUpPM3ZPT0lMTXpfa0s3Q0d2bWdLamljQURFaXRzNThyVmF1Q2F4emQ0c25mOWZCNE15ZmY1TjkzbHhOUFZUcjROOG5BTXRVaXcxRGZXTWI5SlV2VFR5aTVJdGhhRE83bkxhVmt1UGs?oc=5"
-    },
-    {
-      "date": "2026-11-09",
-      "title": "대중국 반도체 장비 수출 급감",
-      "titleEn": "Global Semiconductor Equipment Sales to China Plummet Under U.S. Export Controls - 조선일보",
-      "source": "RSS",
-      "score": -0.4,
-      "tone": "neg",
-      "conf": 87,
-      "hot": false,
-      "summary": "미국의 수출 통제로 인해 중국으로 향하는 반도체 장비 매출이 급감했다. 글로벌 공급망 재편이 가속화되고 있다.",
+      "summary": "연방 판사가 삼성, 마이크론, SK하이닉스 등 메모리 제조업체들의 방어를 기각하고 집단 소송 반독점 소송을 진행하기로 했습니다. 이들은 인위적인 D램 부족 사태에 대한 책임을 져야 합니다. 이는 D램 시장의 투명성과 가격 결정 방식에 큰 영향을 미칠 수 있습니다.",
       "effects": {
         "short": {
           "tone": "neg",
@@ -241,69 +31,279 @@
       },
       "linked": [
         "A-1 관련",
-        "B-4 관련"
+        "B-1 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOS1lTZnlHREk1ZkpsTzYzMmZFUDRaZjVPdllfTlRobkxnR0dicEdEaTZJd2tUbEFzMkVMVUZ6V3NBSElzQ3hZOUhMTEZRcUl2NFM1RDByOWo4THNZUzZwZzR2U0dnMkM5Q1E0Y2xET093c2tpcllpMDBaNE5MaXZIbmFyM0xMZ1It?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQTy1tcHhMeldLcnJHTk1Jd1IzNTdjNnNFMVBzcy1UNHE0Y2FHbGdiV2lQRHFlczdUZXEzZ244YWxiMGJyMnNEZVY2VkdoeXNIeXBYOU5Od2JyLTVfQ0lLODZYOFdoSGp0Rll2bXhPV1h6WDlQVEstNkprcXlpVFFRS1k5dkQ0Qmh2UUlpZkhDTW84VTBvLS1ZSTFPSFpyNGV0cW5Ed3dSOENpUE1PNjg0S9IBtgFBVV95cUxNTXNacVA1YXdhbWIwMDB5QlNSNHR2TlBNMDZrQ1dsMWdxMEM3THVNRVdnS0FoUmNYYXNOT3o5THRYbC1MVWFQNnF2dmw3V18yVG9SVlBIdVRrUllScGpJcFJyQnNiYkktR1lWdGN4RXlfRVhVMDdQMm5BMUhaUWhTMmJOdFNoM2NLd21jNG81OUVIWkQzS3VOc3Q2V05xU1V3NUZ3QklxVm9pME54alBET3FGVWNyQQ?oc=5"
     },
     {
-      "date": "2026-11-06",
-      "title": "DRAM 랠리 제동, 내년 상반기까지 공급 부족 지속",
-      "titleEn": "DRAM Rally Hits the Brakes! Transcend's Shu Chong-Wan: Prices Have Peaked, Shortages May Drag Into First Half of Next Year",
-      "source": "BigGo Finance",
-      "score": 0.3,
-      "tone": "neu",
-      "conf": 85,
-      "hot": false,
-      "summary": "DRAM 가격 상승세가 다소 둔화되었으나, 공급 부족 현상은 내년 상반기까지 이어질 것으로 보인다. 시장의 과열 양상이 진정 국면에 접어들었다.",
+      "date": "2026-11-15",
+      "title": "D램 가격 담합 소송 기각 요청 거부",
+      "titleEn": "Judge denies motion to dismiss DRAM price-fixing lawsuit against Micron, Samsung, and SK hynix, finds evidence of DRAM collusion plausible after 500% price surge — says chipmakers acted like ‘hawks flying in formation - Tom's Hardware",
+      "source": "RSS",
+      "score": -0.9,
+      "tone": "neg",
+      "conf": 92,
+      "hot": true,
+      "summary": "마이크론, 삼성, SK하이닉스에 대한 D램 가격 담합 소송 기각 요청이 거부되었습니다. 법원은 500% 가격 급등 후 담합 증거가 타당하다고 판단했습니다. 이는 D램 제조업체들에게 법적 리스크를 증가시키고 시장 신뢰도에 부정적인 영향을 줄 것입니다.",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "단기 분석"
         },
         "mid": {
-          "tone": "neu",
+          "tone": "neg",
           "text": "중기 분석"
         },
         "long": {
-          "tone": "neu",
+          "tone": "neg",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-1 관련",
+        "B-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMihANBVV95cUxNWF9LOG43blJKd2xmWmthTnNHZndKUHoxUjJQWlNnbmNDN2xXdGxOcFNoRjRRYUdrZ2hxSl9hWFgtMWMyT3dsbGRuQUhHeXFXcUQ2Y09jazdpTTBEY0NtUHhnVndVMjhzQVB0TXdnLWNmbktGRnR5SlhhZFd1MjlqT3doNUZBSXF5d0JQWV8tZGE2U0M4ZWpZNHhET0V3TDFHMDVkMFlsSlE3NWtyNGU4aWNUb1duM3ZYVjNQbnlITVF3Y1dINmlHc1RfWWZkeTJvWFBTWEZ0UHl1ZjNLQVJodTJGX0hhbDRsMmo2dzJPNzJXTDRTQm1iLUgwSS1IeDMtUUgyOXBvd1hRM0lCWG90WUIwbDA3dFUtTzVuNjdVdW13QlREZElRM2JPVnhueVNjRXBVTVE4WHhjaUVzMTRkNEdPWnJHSGlrNWF0cFh4aW5qZHptbnJGaHNEMUFYMlE3NWNKbkI5bV91UUZFdnVkb1dKanZ5dUNXVms0UWNucjFESWhE?oc=5"
+    },
+    {
+      "date": "2026-11-17",
+      "title": "D램 가격 급등, 스마트폰 리볼링",
+      "titleEn": "Smartphone brands turn to reballed memory as DRAM prices surge",
+      "source": "Communications Today",
+      "score": 0.85,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "D램 가격이 급등하면서 스마트폰 브랜드들이 리볼링된 메모리를 사용하기 시작했습니다. 이는 D램 시장의 강한 가격 상승 압력을 반영하며, 공급 부족이 심화되고 있음을 시사합니다. 단기적으로 D램 가격 상승세가 지속될 가능성이 높습니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
           "text": "장기 분석"
         }
       },
       "linked": [
         "A-4 관련",
-        "B-5 관련"
+        "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE84SFE3VmJ6dURnNWhQZnJaNWs2Q29ySXBRMVVCMndGd2RVZmNlTWFNOWVjcnVuRXVkNlowQmpIZC1nYUF5ZFpGVTBOTWplcmFSRDNoU2hucktkVzlFT2l1TU9yWlJrMUl5cHprckc5Y0VRMmg1M2c?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPdmJ0U2JKRjVFc1o1ZGJjUWRYT2doWHFpSjdsU1lGcUtsZDk3eTVIM3ZoUno5alpRb2JDUlh3Rmd5bklsbVpxZkRQRlZ0US1pV3VKOWphU1JGYjFhRkhNSXVSd1hhNElfczlNcnlaUng1OTVIanQwTDc3SWpzc2tNaTlvWm9EZWNreHkzQ213RllKT0FaVVplMm1SQTRBVEs3RHRn?oc=5"
     },
     {
-      "date": "2026-11-06",
-      "title": "DRAM 가격 상승으로 OLED 투자 속도 조절",
-      "titleEn": "DRAM Price Surge Slows OLED Investment",
-      "source": "Businesskorea",
-      "score": -0.2,
-      "tone": "neu",
-      "conf": 80,
-      "hot": false,
-      "summary": "메모리 가격 급등이 디스플레이 업계의 투자 비용 부담으로 이어지고 있다. DRAM 가격 상승이 타 산업의 투자 계획에 영향을 미치고 있다.",
+      "date": "2026-11-14",
+      "title": "2027년 D램 공급 부족 심화 경고",
+      "titleEn": "TeamGroup CEO Warns 2027 DRAM Shortage Could Become So Severe That Even Money Won’t Guarantee Supply",
+      "source": "Wccftech",
+      "score": 0.8,
+      "tone": "pos",
+      "conf": 90,
+      "hot": true,
+      "summary": "팀그룹 CEO는 2027년 D램 부족 현상이 심화되어 돈으로도 공급을 보장할 수 없을 것이라고 경고했습니다. 이는 향후 D램 가격 상승 압력을 시사하며, 장기적인 공급망 안정성에 대한 우려를 높입니다. AI 수요 증가가 주요 원인으로 지목됩니다.",
       "effects": {
         "short": {
-          "tone": "neu",
+          "tone": "pos",
           "text": "단기 분석"
         },
         "mid": {
-          "tone": "neu",
+          "tone": "pos",
           "text": "중기 분석"
         },
         "long": {
-          "tone": "neu",
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNOGJ1eWthRFpOcnhZNEI0MWVrTXg1SDdKdUxDeWFKTzNMdzA5TWZObGV2akIyaWhqYzJXSGNjY3BkVG91Vm5PbU1aQlVLc3JXV014QnpYUURrWHFQZHpWWXBGNHpRUkZXbVNxNGJvRVRTZnQwZ0g2NWFyVm5ZOF9hdjBjM3NIVmh5aW5SeDNESHd1TUw1RHJJWXctQzlNd2ltM1JIV192aWltV1NfUHdrUkFxS0RHd1UyV2p1ctIBwgFBVV95cUxQNHZNZ1RrZGlkOFlGXzhZdkpra3MzbzY3X3UtMU9CNzVyVTJJcDlnbmprbzJ1dUV3NlVuS3RCYUtmSExyVjRzZndiV2ZOa3czZHh2UEthWnRVUDdnYXRUYXlSYmF4bmNOU3FyS2lTT085eE1ucEtlcXRKUEZCdW1KRUFnSEFpU3BSaHpvNFBkZXlGaDRLRFBld3E1aG1ySWRRLUJPb0FROU1menA3Qnd4TkxuS0FtRmNQM1BsM2VjRmhIZw?oc=5"
+    },
+    {
+      "date": "2026-11-11",
+      "title": "램 부족으로 구형 칩 재활용",
+      "titleEn": "RAM shortage pushes brands to reuse old chips",
+      "source": "Cybernews",
+      "score": 0.75,
+      "tone": "pos",
+      "conf": 88,
+      "hot": true,
+      "summary": "램 부족 현상이 심화되면서 여러 브랜드들이 오래된 칩을 재활용하는 상황에 이르렀습니다. 이는 현재 시장의 공급 부족을 명확히 보여주며, D램 가격 상승의 주요 원인 중 하나입니다. 신규 칩 공급이 수요를 따라가지 못하고 있음을 나타냅니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-4 관련",
+        "B-6 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5sWlNtVjQtQ1NaQjM3TUpKcUgxNGtXN09CaXJWXzJfZDNqcWVGZUxDalFMRHZ1UmNnelB0OHAwRG16VnAxSFAwSW1PZGloaGxsMXJOZzBqQ1dIYUI0bWRRbXdZMzlaSGYxb0ZVUA?oc=5"
+    },
+    {
+      "date": "2026-11-17",
+      "title": "AMD, 서버 D램 사용량 절반 감소 기술",
+      "titleEn": "Affordable memory, delivered: AMD's MEXT software promises half the DRAM on Venice servers, while new power controls fit more of them in every rack",
+      "source": "iTWire",
+      "score": -0.7,
+      "tone": "neg",
+      "conf": 85,
+      "hot": true,
+      "summary": "AMD의 MEXT 소프트웨어가 베니스 서버에서 D램 사용량을 절반으로 줄일 수 있다고 약속했습니다. 이는 서버당 D램 수요를 감소시켜 D램 시장에 부정적인 영향을 미칠 수 있습니다. 기술 혁신이 장기적인 D램 수요 트렌드를 변화시킬 가능성이 있습니다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "neg",
           "text": "장기 분석"
         }
       },
       "linked": [
         "A-2 관련",
-        "B-7 관련"
+        "B-6 관련"
       ],
-      "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9UZGZhYzlZYUVCaVV5Q0xEMzRHTHB3eThzSzJGVURZazRDcmxOYkpoT0k1X1pDb25pcjFaMzFSWVV4ZktsZFJQSnVGTFZWMlVoYzJseE9KZmFYZk1IdjVlSnNnVW9aaHJUMHE1UzFtYlZlOWFH?oc=5"
+      "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOZlVxSDdmdjNXbUpIOXNwdXB2eGlKVk9uRE9ZNjczc1pZa3MtT3F3a01jcUp6cXZxMGRiY2F0MWVuOEswc2c1TXdRM0JFQVlmSmpYZU5ZYUttTVVaOVlPSDBXTlZlNzJpM3FrUmVaem1vbmFuekpiNGZ6cUhtVS16Q2N6d2k5VE1KMHJFcG1iVGEyRlhKc0w5NTFQOXNmOW1iekxwX3ZUalpZbFAtd3RhaExSOGJPb0J6enVza0N2Q2prSjZBWXlubjhkYVNYbktZY09aWHA1cW9UU21WR2tQSjYxdWg5cGRLa1pIQ193TGp6T3l1cGN3X09ubnY2RFNHanp3X3RQUElmMlNmMERpLXNR?oc=5"
+    },
+    {
+      "date": "2026-11-15",
+      "title": "엔비디아 블랙웰 칩, 中 AI 훈련에 사용",
+      "titleEn": "Nvidia Blackwell Chips Reportedly Trained Leading Chinese AI Models Despite Export Ban",
+      "source": "Technobezz",
+      "score": -0.65,
+      "tone": "neg",
+      "conf": 85,
+      "hot": true,
+      "summary": "엔비디아의 블랙웰 칩이 수출 금지에도 불구하고 중국의 선도적인 AI 모델 훈련에 사용되었다는 보도가 나왔습니다. 이는 중국의 AI 기술 발전과 미국의 제재 회피 문제를 부각시킵니다. 고성능 AI 칩 수요가 지속되고 있음을 보여줍니다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "B-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9BNmw2d1V3eDhQR203bTZROXdGaUV0dHhWV3JSN0R5bS0wNWFNZjNyeDIwemNGb0ZIR1czMXhSYXh5cHBMQVZIbjhDVWRwRXQxb09vaXh1M0lWWFVFTW9BZUQ5TVl1ZUtmMUw5NDJBU1Fiek1uMG94YnljUmw?oc=5"
+    },
+    {
+      "date": "2026-11-16",
+      "title": "중국, 금지된 엔비디아 칩 사용 의혹",
+      "titleEn": "Did China use export-banned Nvidia chips to train its most advanced AI models?",
+      "source": "The Indian Express",
+      "score": -0.6,
+      "tone": "neg",
+      "conf": 82,
+      "hot": true,
+      "summary": "중국이 수출 금지된 엔비디아 칩을 사용하여 최첨단 AI 모델을 훈련했다는 의혹이 제기되었습니다. 이는 미국의 수출 통제에도 불구하고 중국의 AI 개발이 지속되고 있음을 시사합니다. 글로벌 반도체 시장의 지정학적 긴장감을 높이는 요인입니다.",
+      "effects": {
+        "short": {
+          "tone": "neg",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "neg",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "neg",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "B-4 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxONzYzemlScDdHdUFyTnV6R0s0eEplSlhVYW1mQkstX1JZZWtRb1BKYlhDdERyWm4yUms0UzktWU93c0dGSFZzMjQ5dThMNmtjTHM1Tl9rNks3OHN0bThkZHdUQzVDUVgtNnljdUJ3MmJHYUxLZ1h0VXd3VDI1cmQ4a0QycGtja0c1ZlNnU1hHSE9jRXQxd2l1Qk5IWmpDb0ZDek9BVFU4Z2R3eTBKeTVNN0hkU29mb281U3VuYXlR0gHEAUFVX3lxTE9ZOXd2WkhwdFRyN1pPVVkzZVJ6Wm92azkxeXNESkZ1ZU5fYU54UVVuZEdjU002MUhrTjhfS21ZbjBZYWplNG1BdjYtYVJtcFNkVU51TF9WTnNJZVhBblkteTFVOHFyRGhLR21Md1lhTUVOVEZLajRVTEZGN2tWZnc5VWNvZjBTOTQxM0lhWmEzVWxpcDVSSGV2WWpUWTFYdmtvazlVWGRQeFRGMElKZ21FdUJKa2UyS2NmRU9fU2x6V0pVNFQ?oc=5"
+    },
+    {
+      "date": "2026-11-16",
+      "title": "TSMC 설비 투자, 2028년 반도체 수요 지표",
+      "titleEn": "Taiwan Semiconductor's 2027 Capex Outlook Among Leading Indicators for 2028 Semiconductor Demand, BofA Says",
+      "source": "marketscreener.com",
+      "score": 0.6,
+      "tone": "pos",
+      "conf": 80,
+      "hot": true,
+      "summary": "뱅크오브아메리카는 TSMC의 2027년 설비 투자 전망이 2028년 반도체 수요의 주요 선행 지표 중 하나라고 밝혔습니다. 이는 전반적인 반도체 시장의 긍정적인 전망을 시사하며, D램 수요에도 간접적으로 긍정적인 영향을 줄 수 있습니다. 파운드리 투자는 미래 반도체 생산 능력의 기반이 됩니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "A-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxOQWwyWHJvdzdxZjJLbThTLTVoVWVkRmRrSjZzMDhSdE5WZ2hyRE9URXNSb013eXRYX1dKNU1icFVUc1l5Q01ZcGJHMWpTcVRrNkE2azBvVkRnZWlNd0JRa2x5VW9LRlUtVURpejFqb2hzb05JdEw1NkJsTmxaOFkxeDFJWjk0S09kRWs1MzBNU1NHWHVWRllrR052YVd4NGtBeWM4UFFpTDVwUTJqUWUzSmRfRUNabXkyN01YS3R6Y1YzRkY4UTBKVFlsR3c4Tko0VHY4WkRFSVp6bjFIWVIyalJXaGd1amM?oc=5"
+    },
+    {
+      "date": "2026-11-17",
+      "title": "삼성·SK하이닉스, 88조원 설비 투자",
+      "titleEn": "Samsung, SK hynix spend W88tr on capex as cash holdings soar",
+      "source": "The Korea Herald",
+      "score": 0.5,
+      "tone": "pos",
+      "conf": 85,
+      "hot": false,
+      "summary": "삼성과 SK하이닉스가 현금 보유액이 급증함에 따라 88조 원을 설비 투자에 지출했습니다. 이는 미래 수요에 대한 자신감을 보여주며 장기적으로는 공급 증가로 이어질 수 있습니다. 단기적으로는 시장의 긍정적인 신호로 해석될 수 있습니다.",
+      "effects": {
+        "short": {
+          "tone": "pos",
+          "text": "단기 분석"
+        },
+        "mid": {
+          "tone": "pos",
+          "text": "중기 분석"
+        },
+        "long": {
+          "tone": "pos",
+          "text": "장기 분석"
+        }
+      },
+      "linked": [
+        "A-2 관련",
+        "B-1 관련"
+      ],
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9pZXBVZV9IU0ZWVmJxUFlReTNwUmtrQWowTkphQWVpbV9VRm1GWUs1OTg0NUo4dmxpTmtmOXhUWWhrbzdtNjQtbjZSalVsOWQ3VHB0WW5oSQ?oc=5"
     }
   ]
 }
